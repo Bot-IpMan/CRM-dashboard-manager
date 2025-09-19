@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Файловий менеджер - CRM Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            height: fit-content;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-item:hover {
+            background: #f1f5f9;
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .content {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            min-height: 600px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            width: 300px;
+            font-size: 0.875rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .view-toggle {
+            display: flex;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .view-btn {
+            padding: 0.5rem 0.75rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .file-list {
+            display: none;
+        }
+
+        .file-list.active {
+            display: block;
+        }
+
+        .file-grid.active {
+            display: grid;
+        }
+
+        .file-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .file-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .file-item.selected {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .file-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .file-icon.folder {
+            color: var(--warning);
+        }
+
+        .file-icon.image {
+            color: var(--success);
+        }
+
+        .file-icon.document {
+            color: var(--danger);
+        }
+
+        .file-name {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+
+        .file-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .file-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .file-item:hover .file-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .action-btn.edit {
+            background: var(--warning);
+            color: white;
+        }
+
+        .action-btn.delete {
+            background: var(--danger);
+            color: white;
+        }
+
+        .action-btn.download {
+            background: var(--success);
+            color: white;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .list-item:hover {
+            background: #f8fafc;
+        }
+
+        .list-item.selected {
+            background: rgba(37, 99, 235, 0.05);
+        }
+
+        .list-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--primary);
+            width: 24px;
+        }
+
+        .list-icon.folder {
+            color: var(--warning);
+        }
+
+        .list-icon.image {
+            color: var(--success);
+        }
+
+        .list-icon.document {
+            color: var(--danger);
+        }
+
+        .list-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-name {
+            font-weight: 500;
+        }
+
+        .list-meta {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 0.5rem;
+        }
+
+        .breadcrumb-item {
+            cursor: pointer;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb-item:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-muted);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .context-menu {
+            position: fixed;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-lg);
+            padding: 0.5rem 0;
+            z-index: 1001;
+            display: none;
+            min-width: 150px;
+        }
+
+        .context-menu.active {
+            display: block;
+        }
+
+        .context-menu-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+
+        .context-menu-item:hover {
+            background: var(--bg);
+        }
+
+        .status-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .drag-zone {
+            border: 2px dashed var(--border);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-muted);
+            transition: all 0.2s;
+            margin-bottom: 2rem;
+        }
+
+        .drag-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .main {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1rem auto;
+                padding: 0 1rem;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .search-input {
+                width: 200px;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .file-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-folder-open"></i>
+                Файловий менеджер CRM
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openUploadModal()">
+                    <i class="fas fa-upload"></i>
+                    Завантажити
+                </button>
+                <button class="btn btn-success" onclick="openNewFolderModal()">
+                    <i class="fas fa-folder-plus"></i>
+                    Нова папка
+                </button>
+                <button class="btn btn-secondary" onclick="openNewFileModal()">
+                    <i class="fas fa-file-plus"></i>
+                    Новий файл
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">Навігація</div>
+                <div class="nav-item active" onclick="navigateToFolder('root')">
+                    <i class="fas fa-home"></i>
+                    Головна
+                </div>
+                <div class="nav-item" onclick="navigateToFolder('documents')">
+                    <i class="fas fa-file-text"></i>
+                    Документи
+                </div>
+                <div class="nav-item" onclick="navigateToFolder('images')">
+                    <i class="fas fa-image"></i>
+                    Зображення
+                </div>
+                <div class="nav-item" onclick="navigateToFolder('videos')">
+                    <i class="fas fa-video"></i>
+                    Відео
+                </div>
+                <div class="nav-item" onclick="navigateToFolder('trash')">
+                    <i class="fas fa-trash"></i>
+                    Кошик
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Мітки</div>
+                <div class="nav-item">
+                    <i class="fas fa-star" style="color: var(--warning)"></i>
+                    Важливе
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-bookmark" style="color: var(--success)"></i>
+                    Закладки
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-clock" style="color: var(--danger)"></i>
+                    Недавні
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Статистика</div>
+                <div style="font-size: 0.875rem; color: var(--text-muted);">
+                    <div style="margin-bottom: 0.5rem;">Файлів: <span id="fileCount">0</span></div>
+                    <div style="margin-bottom: 0.5rem;">Папок: <span id="folderCount">0</span></div>
+                    <div>Розмір: <span id="totalSize">0 байт</span></div>
+                </div>
+            </div>
+        </aside>
+
+        <div class="content">
+            <div class="breadcrumb" id="breadcrumb">
+                <a href="#" class="breadcrumb-item" onclick="navigateToFolder('root')">Головна</a>
+            </div>
+
+            <div class="toolbar">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Пошук файлів..." oninput="searchFiles(this.value)">
+                    </div>
+                    <select onchange="sortFiles(this.value)" style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--border);">
+                        <option value="name">За назвою</option>
+                        <option value="date">За датою</option>
+                        <option value="size">За розміром</option>
+                        <option value="type">За типом</option>
+                    </select>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" onclick="toggleView('grid')">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" onclick="toggleView('list')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="drag-zone" id="dropZone">
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
+                <div>Перетягніть файли сюди або клікніть "Завантажити"</div>
+            </div>
+
+            <div class="file-grid active" id="fileGrid">
+                <!-- Файли будуть додаватися тут динамічно -->
+            </div>
+
+            <div class="file-list" id="fileList">
+                <!-- Список файлів -->
+            </div>
+        </div>
+    </main>
+
+    <div class="status-bar">
+        <div id="statusInfo">Готовий</div>
+        <div id="selectionInfo"></div>
+    </div>
+
+    <!-- Модальні вікна -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Завантажити файли</div>
+                <button class="modal-close" onclick="closeModal('uploadModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <input type="file" id="fileInput" multiple class="form-input" onchange="handleFileUpload(this)">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('uploadModal')">Скасувати</button>
+                <button class="btn btn-primary" onclick="uploadFiles()">Завантажити</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="newFolderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Створити папку</div>
+                <button class="modal-close" onclick="closeModal('newFolderModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Назва папки</label>
+                <input type="text" id="folderNameInput" class="form-input" placeholder="Введіть назву папки">
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('newFolderModal')">Скасувати</button>
+                <button class="btn btn-success" onclick="createFolder()">Створити</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="newFileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Створити файл</div>
+                <button class="modal-close" onclick="closeModal('newFileModal')">&times;</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Назва файлу</label>
+                <input type="text" id="fileNameInput" class="form-input" placeholder="document.txt">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Тип файлу</label>
+                <select id="fileTypeSelect" class="form-input">
+                    <option value="txt">Текстовий файл (.txt)</option>
+                    <option value="html">HTML файл (.html)</option>
+                    <option value="css">CSS файл (.css)</option>
+                    <option value="js">JavaScript файл (.js)</option>
+                    <option value="json">JSON файл (.json)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Вміст файлу</label>
+                <textarea id="fileContentInput" class="form-input form-textarea" placeholder="Введіть вміст файлу..."></textarea>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="closeModal('newFileModal')">Скасувати</button>
+                <button class="btn btn-success" onclick="createFile()">Створити</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Контекстне меню -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" onclick="renameItem()">
+            <i class="fas fa-edit"></i>
+            Перейменувати
+        </div>
+        <div class="context-menu-item" onclick="downloadItem()">
+            <i class="fas fa-download"></i>
+            Завантажити
+        </div>
+        <div class="context-menu-item" onclick="deleteItem()">
+            <i class="fas fa-trash"></i>
+            Видалити
+        </div>
+    </div>
+
+    <script>
+        // Глобальні змінні
+        let currentFolder = 'root';
+        let selectedItems = [];
+        let currentView = 'grid';
+        let fileSystem = JSON.parse(localStorage.getItem('fileSystem')) || {
+            root: {
+                folders: ['documents', 'images', 'videos'],
+                files: [
+                    { name: 'Readme.txt', type: 'txt', size: 1024, date: new Date().toISOString(), content: 'Ласкаво просимо до файлового менеджера!' },
+                    { name: 'example.html', type: 'html', size: 2048, date: new Date().toISOString(), content: '<!DOCTYPE html><html><head><title>Приклад</title></head><body><h1>Привіт світ!</h1></body></html>' }
+                ]
+            },
+            documents: { folders: [], files: [] },
+            images: { folders: [], files: [] },
+            videos: { folders: [], files: [] },
+            trash: { folders: [], files: [] }
+        };
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFiles();
+            updateStats();
+            setupDragAndDrop();
+        });
+
+        // Функція відображення файлів
+        function renderFiles() {
+            const fileGrid = document.getElementById('fileGrid');
+            const fileList = document.getElementById('fileList');
+            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
+
+            // Очищуємо контейнери
+            fileGrid.innerHTML = '';
+            fileList.innerHTML = '';
+
+            // Відображаємо папки
+            currentData.folders.forEach(folderName => {
+                const folderData = fileSystem[folderName] || { folders: [], files: [] };
+                const folderSize = calculateFolderSize(folderData);
+                
+                if (currentView === 'grid') {
+                    fileGrid.innerHTML += createFolderGridItem(folderName, folderSize);
+                } else {
+                    fileList.innerHTML += createFolderListItem(folderName, folderSize);
+                }
+            });
+
+            // Відображаємо файли
+            currentData.files.forEach(file => {
+                if (currentView === 'grid') {
+                    fileGrid.innerHTML += createFileGridItem(file);
+                } else {
+                    fileList.innerHTML += createFileListItem(file);
+                }
+            });
+
+            updateStats();
+        }
+
+        function createFolderGridItem(folderName, size) {
+            return `
+                <div class="file-item" data-type="folder" data-name="${folderName}" onclick="selectItem(this)" ondblclick="navigateToFolder('${folderName}')" oncontextmenu="showContextMenu(event, this)">
+                    <div class="file-actions">
+                        <button class="action-btn edit" onclick="event.stopPropagation(); renameFolder('${folderName}')" title="Перейменувати">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="event.stopPropagation(); deleteFolder('${folderName}')" title="Видалити">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="file-icon folder">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="file-name">${folderName}</div>
+                    <div class="file-meta">${formatBytes(size)}</div>
+                </div>
+            `;
+        }
+
+        function createFileGridItem(file) {
+            const icon = getFileIcon(file.type);
+            return `
+                <div class="file-item" data-type="file" data-name="${file.name}" onclick="selectItem(this)" ondblclick="openFile('${file.name}')" oncontextmenu="showContextMenu(event, this)">
+                    <div class="file-actions">
+                        <button class="action-btn edit" onclick="event.stopPropagation(); editFile('${file.name}')" title="Редагувати">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn download" onclick="event.stopPropagation(); downloadFile('${file.name}')" title="Завантажити">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="event.stopPropagation(); deleteFile('${file.name}')" title="Видалити">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="file-icon ${getFileIconClass(file.type)}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="file-name">${file.name}</div>
+                    <div class="file-meta">${formatBytes(file.size)} • ${formatDate(file.date)}</div>
+                </div>
+            `;
+        }
+
+        function createFolderListItem(folderName, size) {
+            return `
+                <div class="list-item" data-type="folder" data-name="${folderName}" onclick="selectItem(this)" ondblclick="navigateToFolder('${folderName}')">
+                    <div class="list-icon folder">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-name">${folderName}</div>
+                        <div class="list-meta">
+                            <span>${formatBytes(size)}</span>
+                            <span>Папка</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createFileListItem(file) {
+            const icon = getFileIcon(file.type);
+            return `
+                <div class="list-item" data-type="file" data-name="${file.name}" onclick="selectItem(this)" ondblclick="openFile('${file.name}')">
+                    <div class="list-icon ${getFileIconClass(file.type)}">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-name">${file.name}</div>
+                        <div class="list-meta">
+                            <span>${formatBytes(file.size)}</span>
+                            <span>${formatDate(file.date)}</span>
+                            <span>${file.type.toUpperCase()}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Функції для роботи з файлами
+        function getFileIcon(type) {
+            const icons = {
+                'txt': 'fa-file-text',
+                'html': 'fa-file-code',
+                'css': 'fa-file-code',
+                'js': 'fa-file-code',
+                'json': 'fa-file-code',
+                'pdf': 'fa-file-pdf',
+                'doc': 'fa-file-word',
+                'docx': 'fa-file-word',
+                'xls': 'fa-file-excel',
+                'xlsx': 'fa-file-excel',
+                'jpg': 'fa-file-image',
+                'jpeg': 'fa-file-image',
+                'png': 'fa-file-image',
+                'gif': 'fa-file-image',
+                'mp4': 'fa-file-video',
+                'mp3': 'fa-file-audio',
+                'zip': 'fa-file-archive'
+            };
+            return icons[type] || 'fa-file';
+        }
+
+        function getFileIconClass(type) {
+            if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(type)) return 'image';
+            if (['txt', 'html', 'css', 'js', 'json', 'pdf', 'doc', 'docx'].includes(type)) return 'document';
+            return 'file';
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('uk-UA');
+        }
+
+        function calculateFolderSize(folderData) {
+            let size = 0;
+            folderData.files.forEach(file => size += file.size);
+            folderData.folders.forEach(folderName => {
+                const subFolder = fileSystem[folderName];
+                if (subFolder) size += calculateFolderSize(subFolder);
+            });
+            return size;
+        }
+
+        // Навігація
+        function navigateToFolder(folderName) {
+            currentFolder = folderName;
+            updateBreadcrumb();
+            renderFiles();
+            
+            // Оновлюємо активну навігацію
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const paths = {
+                'root': 'Головна',
+                'documents': 'Документи',
+                'images': 'Зображення',
+                'videos': 'Відео',
+                'trash': 'Кошик'
+            };
+            
+            breadcrumb.innerHTML = `
+                <a href="#" class="breadcrumb-item" onclick="navigateToFolder('root')">Головна</a>
+                ${currentFolder !== 'root' ? `<span class="breadcrumb-separator">/</span>
+                <span>${paths[currentFolder] || currentFolder}</span>` : ''}
+            `;
+        }
+
+        // Вибір елементів
+        function selectItem(element) {
+            if (!event.ctrlKey) {
+                document.querySelectorAll('.file-item, .list-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                selectedItems = [];
+            }
+            
+            element.classList.toggle('selected');
+            const name = element.dataset.name;
+            const type = element.dataset.type;
+            
+            if (element.classList.contains('selected')) {
+                selectedItems.push({ name, type });
+            } else {
+                selectedItems = selectedItems.filter(item => item.name !== name);
+            }
+            
+            updateSelectionInfo();
+        }
+
+        function updateSelectionInfo() {
+            const selectionInfo = document.getElementById('selectionInfo');
+            if (selectedItems.length > 0) {
+                selectionInfo.textContent = `Вибрано: ${selectedItems.length} елементів`;
+            } else {
+                selectionInfo.textContent = '';
+            }
+        }
+
+        // Перемикання виду
+        function toggleView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[onclick="toggleView('${view}')"]`).classList.add('active');
+            
+            const fileGrid = document.getElementById('fileGrid');
+            const fileList = document.getElementById('fileList');
+            
+            if (view === 'grid') {
+                fileGrid.classList.add('active');
+                fileList.classList.remove('active');
+            } else {
+                fileGrid.classList.remove('active');
+                fileList.classList.add('active');
+            }
+            
+            renderFiles();
+        }
+
+        // Створення папки
+        function openNewFolderModal() {
+            document.getElementById('newFolderModal').classList.add('active');
+            document.getElementById('folderNameInput').focus();
+        }
+
+        function createFolder() {
+            const name = document.getElementById('folderNameInput').value.trim();
+            if (!name) {
+                alert('Введіть назву папки');
+                return;
+            }
+            
+            if (!fileSystem[currentFolder]) {
+                fileSystem[currentFolder] = { folders: [], files: [] };
+            }
+            
+            if (fileSystem[currentFolder].folders.includes(name)) {
+                alert('Папка з такою назвою вже існує');
+                return;
+            }
+            
+            fileSystem[currentFolder].folders.push(name);
+            fileSystem[name] = { folders: [], files: [] };
+            
+            saveFileSystem();
+            renderFiles();
+            closeModal('newFolderModal');
+            document.getElementById('folderNameInput').value = '';
+        }
+
+        // Створення файлу
+        function openNewFileModal() {
+            document.getElementById('newFileModal').classList.add('active');
+            document.getElementById('fileNameInput').focus();
+        }
+
+        function createFile() {
+            const name = document.getElementById('fileNameInput').value.trim();
+            const type = document.getElementById('fileTypeSelect').value;
+            const content = document.getElementById('fileContentInput').value;
+            
+            if (!name) {
+                alert('Введіть назву файлу');
+                return;
+            }
+            
+            const fileName = name.includes('.') ? name : `${name}.${type}`;
+            
+            if (!fileSystem[currentFolder]) {
+                fileSystem[currentFolder] = { folders: [], files: [] };
+            }
+            
+            if (fileSystem[currentFolder].files.some(f => f.name === fileName)) {
+                alert('Файл з такою назвою вже існує');
+                return;
+            }
+            
+            const file = {
+                name: fileName,
+                type: type,
+                size: new Blob([content]).size,
+                date: new Date().toISOString(),
+                content: content
+            };
+            
+            fileSystem[currentFolder].files.push(file);
+            
+            saveFileSystem();
+            renderFiles();
+            closeModal('newFileModal');
+            
+            // Очищуємо форму
+            document.getElementById('fileNameInput').value = '';
+            document.getElementById('fileContentInput').value = '';
+        }
+
+        // Завантаження файлів
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+        }
+
+        function handleFileUpload(input) {
+            const files = Array.from(input.files);
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileObj = {
+                        name: file.name,
+                        type: file.name.split('.').pop().toLowerCase(),
+                        size: file.size,
+                        date: new Date().toISOString(),
+                        content: e.target.result
+                    };
+                    
+                    if (!fileSystem[currentFolder]) {
+                        fileSystem[currentFolder] = { folders: [], files: [] };
+                    }
+                    
+                    fileSystem[currentFolder].files.push(fileObj);
+                    saveFileSystem();
+                    renderFiles();
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        function uploadFiles() {
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length > 0) {
+                handleFileUpload(fileInput);
+                closeModal('uploadModal');
+                fileInput.value = '';
+            }
+        }
+
+        // Видалення
+        function deleteFile(fileName) {
+            if (confirm(`Видалити файл "${fileName}"?`)) {
+                fileSystem[currentFolder].files = fileSystem[currentFolder].files.filter(f => f.name !== fileName);
+                saveFileSystem();
+                renderFiles();
+            }
+        }
+
+        function deleteFolder(folderName) {
+            if (confirm(`Видалити папку "${folderName}" та весь її вміст?`)) {
+                fileSystem[currentFolder].folders = fileSystem[currentFolder].folders.filter(f => f !== folderName);
+                delete fileSystem[folderName];
+                saveFileSystem();
+                renderFiles();
+            }
+        }
+
+        // Завантаження файлу
+        function downloadFile(fileName) {
+            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
+            if (file) {
+                const blob = new Blob([file.content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        // Редагування файлу
+        function editFile(fileName) {
+            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
+            if (file) {
+                const newContent = prompt('Редагувати файл:', file.content);
+                if (newContent !== null) {
+                    file.content = newContent;
+                    file.size = new Blob([newContent]).size;
+                    file.date = new Date().toISOString();
+                    saveFileSystem();
+                    renderFiles();
+                }
+            }
+        }
+
+        // Відкриття файлу
+        function openFile(fileName) {
+            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
+            if (file) {
+                if (['html', 'txt', 'css', 'js', 'json'].includes(file.type)) {
+                    const newWindow = window.open();
+                    if (file.type === 'html') {
+                        newWindow.document.write(file.content);
+                    } else {
+                        newWindow.document.write(`<pre>${file.content}</pre>`);
+                    }
+                } else {
+                    alert(`Тип файлу ${file.type} не підтримується для перегляду`);
+                }
+            }
+        }
+
+        // Пошук
+        function searchFiles(query) {
+            if (!query.trim()) {
+                renderFiles();
+                return;
+            }
+            
+            const fileGrid = document.getElementById('fileGrid');
+            const fileList = document.getElementById('fileList');
+            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
+            
+            fileGrid.innerHTML = '';
+            fileList.innerHTML = '';
+            
+            // Пошук по папках
+            currentData.folders.filter(folder => 
+                folder.toLowerCase().includes(query.toLowerCase())
+            ).forEach(folderName => {
+                const folderData = fileSystem[folderName] || { folders: [], files: [] };
+                const folderSize = calculateFolderSize(folderData);
+                
+                if (currentView === 'grid') {
+                    fileGrid.innerHTML += createFolderGridItem(folderName, folderSize);
+                } else {
+                    fileList.innerHTML += createFolderListItem(folderName, folderSize);
+                }
+            });
+            
+            // Пошук по файлах
+            currentData.files.filter(file => 
+                file.name.toLowerCase().includes(query.toLowerCase())
+            ).forEach(file => {
+                if (currentView === 'grid') {
+                    fileGrid.innerHTML += createFileGridItem(file);
+                } else {
+                    fileList.innerHTML += createFileListItem(file);
+                }
+            });
+        }
+
+        // Сортування
+        function sortFiles(criteria) {
+            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
+            
+            switch(criteria) {
+                case 'name':
+                    currentData.folders.sort();
+                    currentData.files.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'date':
+                    currentData.files.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'size':
+                    currentData.files.sort((a, b) => b.size - a.size);
+                    break;
+                case 'type':
+                    currentData.files.sort((a, b) => a.type.localeCompare(b.type));
+                    break;
+            }
+            
+            saveFileSystem();
+            renderFiles();
+        }
+
+        // Оновлення статистики
+        function updateStats() {
+            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
+            document.getElementById('fileCount').textContent = currentData.files.length;
+            document.getElementById('folderCount').textContent = currentData.folders.length;
+            
+            const totalSize = currentData.files.reduce((sum, file) => sum + file.size, 0);
+            document.getElementById('totalSize').textContent = formatBytes(totalSize);
+        }
+
+        // Контекстне меню
+        function showContextMenu(event, element) {
+            event.preventDefault();
+            const contextMenu = document.getElementById('contextMenu');
+            contextMenu.style.left = event.pageX + 'px';
+            contextMenu.style.top = event.pageY + 'px';
+            contextMenu.classList.add('active');
+            
+            // Зберігаємо посилання на елемент
+            contextMenu.dataset.target = element.dataset.name;
+            contextMenu.dataset.type = element.dataset.type;
+        }
+
+        // Закриття контекстного меню
+        document.addEventListener('click', function() {
+            document.getElementById('contextMenu').classList.remove('active');
+        });
+
+        // Функції контекстного меню
+        function renameItem() {
+            const contextMenu = document.getElementById('contextMenu');
+            const name = contextMenu.dataset.target;
+            const type = contextMenu.dataset.type;
+            
+            const newName = prompt('Нова назва:', name);
+            if (newName && newName !== name) {
+                if (type === 'folder') {
+                    // Перейменування папки
+                    const index = fileSystem[currentFolder].folders.indexOf(name);
+                    if (index !== -1) {
+                        fileSystem[currentFolder].folders[index] = newName;
+                        fileSystem[newName] = fileSystem[name];
+                        delete fileSystem[name];
+                    }
+                } else {
+                    // Перейменування файлу
+                    const file = fileSystem[currentFolder].files.find(f => f.name === name);
+                    if (file) {
+                        file.name = newName;
+                    }
+                }
+                saveFileSystem();
+                renderFiles();
+            }
+        }
+
+        function downloadItem() {
+            const contextMenu = document.getElementById('contextMenu');
+            const name = contextMenu.dataset.target;
+            const type = contextMenu.dataset.type;
+            
+            if (type === 'file') {
+                downloadFile(name);
+            }
+        }
+
+        function deleteItem() {
+            const contextMenu = document.getElementById('contextMenu');
+            const name = contextMenu.dataset.target;
+            const type = contextMenu.dataset.type;
+            
+            if (type === 'folder') {
+                deleteFolder(name);
+            } else {
+                deleteFile(name);
+            }
+        }
+
+        // Drag & Drop
+        function setupDragAndDrop() {
+            const dropZone = document.getElementById('dropZone');
+            
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+            
+            dropZone.addEventListener('dragleave', function() {
+                dropZone.classList.remove('dragover');
+            });
+            
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                
+                const files = Array.from(e.dataTransfer.files);
+                files.forEach(file => {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        const fileObj = {
+                            name: file.name,
+                            type: file.name.split('.').pop().toLowerCase(),
+                            size: file.size,
+                            date: new Date().toISOString(),
+                            content: event.target.result
+                        };
+                        
+                        if (!fileSystem[currentFolder]) {
+                            fileSystem[currentFolder] = { folders: [], files: [] };
+                        }
+                        
+                        fileSystem[currentFolder].files.push(fileObj);
+                        saveFileSystem();
+                        renderFiles();
+                    };
+                    reader.readAsText(file);
+                });
+            });
+            
+            dropZone.addEventListener('click', function() {
+                openUploadModal();
+            });
+        }
+
+        // Збереження файлової системи
+        function saveFileSystem() {
+            localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
+        }
+
+        // Закриття модального вікна
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Клавіатурні скорочення
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey) {
+                switch(e.key) {
+                    case 'n':
+                        e.preventDefault();
+                        openNewFileModal();
+                        break;
+                    case 'k':
+                        e.preventDefault();
+                        openNewFolderModal();
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        openUploadModal();
+                        break;
+                }
+            }
+            
+            if (e.key === 'Delete' && selectedItems.length > 0) {
+                selectedItems.forEach(item => {
+                    if (item.type === 'folder') {
+                        deleteFolder(item.name);
+                    } else {
+                        deleteFile(item.name);
+                    }
+                });
+                selectedItems = [];
+                updateSelectionInfo();
+            }
+        });
+    </script>
+</body>
+</html>
