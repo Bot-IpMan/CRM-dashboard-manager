@@ -3,1474 +3,3269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Файловий менеджер - CRM Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Домашня CRM-панель</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-soft: rgba(99, 102, 241, 0.12);
+            --accent: #22d3ee;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #0ea5e9;
+            --bg: #f4f6fb;
+            --surface: rgba(255, 255, 255, 0.95);
+            --border: rgba(99, 102, 241, 0.08);
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+            --glass: rgba(255, 255, 255, 0.75);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #64748b;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --border: #e2e8f0;
-            --text: #1e293b;
-            --text-muted: #64748b;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg);
+            margin: 0;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(180deg, #f9fbff 0%, #eef2ff 100%);
             color: var(--text);
-            line-height: 1.6;
+            min-height: 100vh;
         }
 
-        .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-            padding: 1rem 2rem;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+        h1, h2, h3, h4 {
+            margin: 0;
         }
 
-        .header-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        p {
+            margin: 0;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--primary);
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .main {
-            max-width: 1400px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+        .app-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
-            gap: 2rem;
+            min-height: 100vh;
         }
 
         .sidebar {
-            background: var(--surface);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            height: fit-content;
-            box-shadow: var(--shadow);
+            background: linear-gradient(200deg, #111827 0%, #1e1b4b 100%);
+            color: white;
+            padding: 32px 28px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
             position: sticky;
-            top: 100px;
+            top: 0;
+            height: 100vh;
         }
 
-        .sidebar-section {
-            margin-bottom: 2rem;
+        .sidebar::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top, rgba(99, 102, 241, 0.15), transparent 60%);
+            pointer-events: none;
         }
 
-        .sidebar-title {
+        .sidebar-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            flex: 1;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(34, 211, 238, 0.25) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text);
+            letter-spacing: 1px;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .brand p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            font-size: 15px;
+            background: transparent;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-bottom: 0.5rem;
+            transition: all 0.2s ease;
         }
 
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        .nav-item.active,
         .nav-item:hover {
-            background: #f1f5f9;
-        }
-
-        .nav-item.active {
-            background: var(--primary);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
             color: white;
         }
 
-        .content {
-            background: var(--surface);
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            min-height: 600px;
+        .nav-item.active {
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(18px);
         }
 
-        .toolbar {
+        .sidebar-footer {
+            margin-top: auto;
             display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-stats {
+            background: rgba(15, 23, 42, 0.55);
+            padding: 18px;
+            border-radius: var(--radius-md);
+            display: grid;
+            gap: 12px;
+        }
+
+        .sidebar-stats h4 {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .sidebar-stats strong {
+            font-size: 20px;
+            color: white;
+        }
+
+        .btn {
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 12px;
+            padding: 12px 18px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            box-shadow: 0 18px 35px rgba(99, 102, 241, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 20px 45px rgba(99, 102, 241, 0.45);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .main-content {
+            padding: 36px 48px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
             justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            gap: 24px;
+            margin-bottom: 32px;
         }
 
-        .toolbar-left {
+        .topbar h2 {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .topbar-sub {
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-size: 15px;
+        }
+
+        .topbar-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 18px;
         }
 
-        .search-box {
+        .search-wrapper {
             position: relative;
         }
 
-        .search-input {
-            padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+        .search-wrapper input {
+            background: var(--surface);
+            border-radius: 14px;
             border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            width: 300px;
-            font-size: 0.875rem;
-        }
-
-        .search-input:focus {
+            padding: 12px 16px 12px 42px;
+            width: 320px;
+            box-shadow: var(--shadow);
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            font-size: 15px;
         }
 
-        .search-icon {
+        .search-wrapper i {
             position: absolute;
-            left: 0.75rem;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
         }
 
-        .view-toggle {
-            display: flex;
-            border-radius: 0.5rem;
-            overflow: hidden;
-            border: 1px solid var(--border);
-        }
-
-        .view-btn {
-            padding: 0.5rem 0.75rem;
-            border: none;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .view-btn.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .file-list {
+        .search-results {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            box-shadow: 0 25px 45px rgba(15, 23, 42, 0.12);
+            padding: 16px;
             display: none;
+            z-index: 20;
         }
 
-        .file-list.active {
+        .search-results.active {
             display: block;
         }
 
-        .file-grid.active {
-            display: grid;
+        .search-group + .search-group {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(148, 163, 184, 0.3);
         }
 
-        .file-item {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            position: relative;
-        }
-
-        .file-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .file-item.selected {
-            border-color: var(--primary);
-            background: rgba(37, 99, 235, 0.05);
-        }
-
-        .file-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .file-icon.folder {
-            color: var(--warning);
-        }
-
-        .file-icon.image {
-            color: var(--success);
-        }
-
-        .file-icon.document {
-            color: var(--danger);
-        }
-
-        .file-name {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            word-break: break-word;
-        }
-
-        .file-meta {
-            font-size: 0.75rem;
+        .search-group-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
             color: var(--text-muted);
+            margin-bottom: 10px;
         }
 
-        .file-actions {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
+        .search-result {
             display: flex;
-            gap: 0.25rem;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .file-item:hover .file-actions {
-            opacity: 1;
-        }
-
-        .action-btn {
-            width: 24px;
-            height: 24px;
-            border: none;
-            border-radius: 0.25rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 12px;
             cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-result:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .search-empty {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .section-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .metric-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: 20px;
+            color: var(--primary-dark);
+            background: var(--primary-soft);
         }
 
-        .action-btn.edit {
-            background: var(--warning);
-            color: white;
-        }
-
-        .action-btn.delete {
-            background: var(--danger);
-            color: white;
-        }
-
-        .action-btn.download {
-            background: var(--success);
-            color: white;
-        }
-
-        .list-item {
-            display: flex;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .list-item:hover {
-            background: #f8fafc;
-        }
-
-        .list-item.selected {
-            background: rgba(37, 99, 235, 0.05);
-        }
-
-        .list-icon {
-            font-size: 1.5rem;
-            margin-right: 1rem;
-            color: var(--primary);
-            width: 24px;
-        }
-
-        .list-icon.folder {
-            color: var(--warning);
-        }
-
-        .list-icon.image {
-            color: var(--success);
-        }
-
-        .list-icon.document {
-            color: var(--danger);
-        }
-
-        .list-content {
-            flex: 1;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .list-name {
-            font-weight: 500;
-        }
-
-        .list-meta {
-            font-size: 0.875rem;
+        .metric-label {
+            font-size: 14px;
             color: var(--text-muted);
-            display: flex;
-            gap: 2rem;
+            margin-bottom: 6px;
         }
 
-        .breadcrumb {
+        .metric-value {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .metric-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .metric-progress {
+            margin-left: auto;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) var(--angle), rgba(148, 163, 184, 0.35) 0);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            background: #f8fafc;
-            border-radius: 0.5rem;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
         }
 
-        .breadcrumb-item {
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 22px 24px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .stage-distribution {
+            display: grid;
+            gap: 14px;
+        }
+
+        .stage-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .stage-info {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .stage-bar {
+            width: 160px;
+            height: 8px;
+            border-radius: 6px;
+            background: rgba(148, 163, 184, 0.25);
+            overflow: hidden;
+        }
+
+        .stage-bar span {
+            display: block;
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(79, 70, 229, 0.9));
+        }
+
+        .timeline {
+            display: grid;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 14px;
+            background: rgba(99, 102, 241, 0.06);
+            border-radius: 12px;
+        }
+
+        .timeline-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-time {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .upcoming-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .upcoming-item {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .badge {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.12);
+            color: #b45309;
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.12);
+            color: #b91c1c;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.12);
+            color: #15803d;
+        }
+
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .pipeline-column {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            min-height: 360px;
+        }
+
+        .column-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .column-head h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .column-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .column-body {
+            display: grid;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .column-body.drop-active {
+            outline: 2px dashed rgba(99, 102, 241, 0.5);
+            outline-offset: -10px;
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .deal-card {
+            background: rgba(248, 250, 255, 0.85);
+            border-radius: 18px;
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            cursor: grab;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .deal-card:active {
+            cursor: grabbing;
+        }
+
+        .deal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px rgba(99, 102, 241, 0.18);
+        }
+
+        .deal-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .deal-stage {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--primary-dark);
+        }
+
+        .deal-title {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .deal-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .deal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .tag {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: rgba(15, 23, 42, 0.08);
+            color: var(--text);
+        }
+
+        .deal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(34, 211, 238, 0.3));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .empty-state {
+            padding: 18px;
+            border: 1px dashed rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .contacts-table {
+            display: grid;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .table-head,
+        .table-row {
+            display: grid;
+            grid-template-columns: 2.2fr 1.4fr 1.4fr 1.2fr 1fr 1fr;
+            padding: 16px 22px;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .table-head {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            background: rgba(99, 102, 241, 0.06);
+            border-top-left-radius: var(--radius-lg);
+            border-top-right-radius: var(--radius-lg);
+        }
+
+        .table-row {
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+            transition: background 0.2s ease;
+        }
+
+        .table-row:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .contact-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .contact-info {
+            display: grid;
+            gap: 4px;
+        }
+
+        .contact-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .status-badge {
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.15);
+            color: #15803d;
+        }
+
+        .status-potential {
+            background: rgba(14, 165, 233, 0.15);
+            color: #0c4a6e;
+        }
+
+        .status-partner {
+            background: rgba(249, 115, 22, 0.15);
+            color: #9a3412;
+        }
+
+        .status-cold {
+            background: rgba(148, 163, 184, 0.22);
+            color: #475569;
+        }
+
+        .task-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+        }
+
+        .task-column {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 12px;
+        }
+
+        .task-column-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .task-column-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .task-column-header span {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .task-items {
+            display: grid;
+            gap: 12px;
+        }
+
+        .task-card {
+            background: rgba(99, 102, 241, 0.06);
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: grid;
+            gap: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+        }
+
+        .task-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .task-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .task-actions button {
+            border: none;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            color: var(--primary);
-            text-decoration: none;
+            transition: background 0.2s ease;
         }
 
-        .breadcrumb-item:hover {
-            text-decoration: underline;
+        .btn-small-primary {
+            background: rgba(79, 70, 229, 0.16);
+            color: var(--primary-dark);
         }
 
-        .breadcrumb-separator {
+        .btn-small-primary:hover {
+            background: rgba(79, 70, 229, 0.24);
+        }
+
+        .btn-small-muted {
+            background: rgba(148, 163, 184, 0.16);
+            color: #1f2937;
+        }
+
+        .btn-small-muted:hover {
+            background: rgba(148, 163, 184, 0.24);
+        }
+
+        .priority {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .priority-high {
+            background: rgba(239, 68, 68, 0.18);
+            color: #b91c1c;
+        }
+
+        .priority-medium {
+            background: rgba(245, 158, 11, 0.18);
+            color: #b45309;
+        }
+
+        .priority-low {
+            background: rgba(34, 197, 94, 0.18);
+            color: #15803d;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .progress-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .progress-item {
+            display: grid;
+            gap: 6px;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            border-radius: 8px;
+            background: rgba(148, 163, 184, 0.2);
+            overflow: hidden;
+        }
+
+        .progress-value {
+            height: 100%;
+            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.85), rgba(79, 70, 229, 0.95));
+        }
+
+        .lead-focus-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .lead-focus-item {
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            display: grid;
+            gap: 6px;
+        }
+
+        .focus-meta {
+            font-size: 13px;
             color: var(--text-muted);
         }
 
         .modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
             display: none;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
+            padding: 24px;
+            z-index: 50;
+            backdrop-filter: blur(12px);
         }
 
         .modal.active {
             display: flex;
         }
 
-        .modal-content {
-            background: white;
-            border-radius: 1rem;
-            padding: 2rem;
-            max-width: 500px;
-            width: 90%;
+        .modal-dialog {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 28px;
+            width: min(680px, 90vw);
             max-height: 90vh;
             overflow-y: auto;
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            box-shadow: 0 30px 60px rgba(15, 23, 42, 0.18);
+        }
+
+        .modal-dialog.wide {
+            width: min(860px, 92vw);
         }
 
         .modal-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
 
-        .modal-title {
-            font-size: 1.25rem;
+        .modal-header h3 {
+            font-size: 20px;
             font-weight: 600;
         }
 
         .modal-close {
-            background: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             border: none;
-            font-size: 1.5rem;
+            background: rgba(15, 23, 42, 0.08);
             cursor: pointer;
-            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px 18px;
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            display: grid;
+            gap: 8px;
         }
 
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            padding: 12px 14px;
+            font-size: 15px;
+            font-family: inherit;
+            background: rgba(248, 250, 255, 0.9);
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 110px;
+        }
+
+        .modal-actions {
+            margin-top: 24px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .lead-details {
+            display: grid;
+            gap: 18px;
+        }
+
+        .lead-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+
+        .highlight-card {
+            background: rgba(99, 102, 241, 0.06);
+            border-radius: 16px;
+            padding: 14px 16px;
+            display: grid;
+            gap: 6px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+        }
+
+        .highlight-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .highlight-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .lead-columns {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+            gap: 18px;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-item {
+            display: grid;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .info-value {
+            font-size: 15px;
             font-weight: 500;
         }
 
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
+        .notes-list {
+            display: grid;
+            gap: 12px;
+            margin-top: 12px;
         }
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        .note-item {
+            padding: 12px 14px;
+            background: rgba(148, 163, 184, 0.12);
+            border-radius: 12px;
+            display: grid;
+            gap: 6px;
         }
 
-        .form-textarea {
-            min-height: 100px;
-            resize: vertical;
+        .note-meta {
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: flex-end;
+        .timeline-list {
+            display: grid;
+            gap: 10px;
         }
 
-        .context-menu {
-            position: fixed;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            box-shadow: var(--shadow-lg);
-            padding: 0.5rem 0;
-            z-index: 1001;
-            display: none;
-            min-width: 150px;
+        .timeline-entry {
+            border-left: 2px solid rgba(99, 102, 241, 0.3);
+            padding-left: 12px;
+            margin-left: 6px;
         }
 
-        .context-menu.active {
+        .timeline-entry strong {
             display: block;
+            font-weight: 600;
         }
 
-        .context-menu-item {
-            padding: 0.5rem 1rem;
-            cursor: pointer;
+        .timeline-entry span {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .chip {
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .probability-control {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: background 0.2s;
+            gap: 12px;
+            margin-top: 12px;
         }
 
-        .context-menu-item:hover {
-            background: var(--bg);
+        .probability-value {
+            font-weight: 600;
+            color: var(--primary-dark);
+            min-width: 56px;
         }
 
-        .status-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            border-top: 1px solid var(--border);
-            padding: 0.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.875rem;
-            color: var(--text-muted);
+        .probability-control input[type="range"] {
+            flex: 1;
+            accent-color: var(--primary);
         }
 
-        .drag-zone {
-            border: 2px dashed var(--border);
-            border-radius: 1rem;
-            padding: 3rem;
-            text-align: center;
-            color: var(--text-muted);
-            transition: all 0.2s;
-            margin-bottom: 2rem;
+        .divider {
+            height: 1px;
+            background: rgba(148, 163, 184, 0.25);
+            margin: 14px 0;
         }
 
-        .drag-zone.dragover {
-            border-color: var(--primary);
-            background: rgba(37, 99, 235, 0.05);
-            color: var(--primary);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            .main {
+        @media (max-width: 1200px) {
+            .app-layout {
+                grid-template-columns: 240px 1fr;
+            }
+
+            .main-content {
+                padding: 32px;
+            }
+
+            .table-head,
+            .table-row {
+                grid-template-columns: 2fr 1.4fr 1.4fr 1fr 1fr;
+            }
+
+            .table-row .contact-sub {
+                display: none;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .app-layout {
                 grid-template-columns: 1fr;
-                gap: 1rem;
-                margin: 1rem auto;
-                padding: 0 1rem;
             }
 
             .sidebar {
-                position: static;
+                position: sticky;
+                top: 0;
+                height: auto;
+                border-bottom-left-radius: var(--radius-lg);
+                border-bottom-right-radius: var(--radius-lg);
             }
 
-            .search-input {
-                width: 200px;
+            .main-content {
+                padding: 28px;
             }
 
-            .toolbar {
+            .topbar {
                 flex-direction: column;
-                align-items: stretch;
+                align-items: flex-start;
             }
 
-            .file-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            .topbar-actions {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .search-wrapper input {
+                width: 100%;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pipeline {
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            }
+
+            .lead-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .table-head,
+            .table-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 10px;
+            }
+
+            .table-head div:nth-child(n+3),
+            .table-row div:nth-child(n+3) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-content {
+                padding: 24px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .task-board {
+                grid-template-columns: 1fr;
+            }
+
+            .search-results {
+                right: auto;
+                width: calc(100vw - 64px);
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <i class="fas fa-folder-open"></i>
-                Файловий менеджер CRM
-            </div>
-            <div class="header-actions">
-                <button class="btn btn-primary" onclick="openUploadModal()">
-                    <i class="fas fa-upload"></i>
-                    Завантажити
-                </button>
-                <button class="btn btn-success" onclick="openNewFolderModal()">
-                    <i class="fas fa-folder-plus"></i>
-                    Нова папка
-                </button>
-                <button class="btn btn-secondary" onclick="openNewFileModal()">
-                    <i class="fas fa-file-plus"></i>
-                    Новий файл
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <main class="main">
+    <div class="app-layout">
         <aside class="sidebar">
-            <div class="sidebar-section">
-                <div class="sidebar-title">Навігація</div>
-                <div class="nav-item active" onclick="navigateToFolder('root')">
-                    <i class="fas fa-home"></i>
-                    Головна
+            <div class="sidebar-inner">
+                <div class="brand">
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-sparkles"></i>
+                    </div>
+                    <div>
+                        <h1>HomeFlow CRM</h1>
+                        <p>Ваш персональний центр керування</p>
+                    </div>
                 </div>
-                <div class="nav-item" onclick="navigateToFolder('documents')">
-                    <i class="fas fa-file-text"></i>
-                    Документи
-                </div>
-                <div class="nav-item" onclick="navigateToFolder('images')">
-                    <i class="fas fa-image"></i>
-                    Зображення
-                </div>
-                <div class="nav-item" onclick="navigateToFolder('videos')">
-                    <i class="fas fa-video"></i>
-                    Відео
-                </div>
-                <div class="nav-item" onclick="navigateToFolder('trash')">
-                    <i class="fas fa-trash"></i>
-                    Кошик
-                </div>
-            </div>
 
-            <div class="sidebar-section">
-                <div class="sidebar-title">Мітки</div>
-                <div class="nav-item">
-                    <i class="fas fa-star" style="color: var(--warning)"></i>
-                    Важливе
-                </div>
-                <div class="nav-item">
-                    <i class="fas fa-bookmark" style="color: var(--success)"></i>
-                    Закладки
-                </div>
-                <div class="nav-item">
-                    <i class="fas fa-clock" style="color: var(--danger)"></i>
-                    Недавні
-                </div>
-            </div>
+                <nav class="nav">
+                    <button class="nav-item active" data-section-target="dashboardSection">
+                        <i class="fa-solid fa-chart-line"></i>
+                        Аналітика
+                    </button>
+                    <button class="nav-item" data-section-target="pipelineSection">
+                        <i class="fa-solid fa-diagram-project"></i>
+                        Воронка продажів
+                    </button>
+                    <button class="nav-item" data-section-target="contactsSection">
+                        <i class="fa-solid fa-user-group"></i>
+                        Контакти
+                    </button>
+                    <button class="nav-item" data-section-target="tasksSection">
+                        <i class="fa-solid fa-square-check"></i>
+                        Завдання
+                    </button>
+                    <button class="nav-item" data-section-target="analyticsSection">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                        Інсайти
+                    </button>
+                </nav>
 
-            <div class="sidebar-section">
-                <div class="sidebar-title">Статистика</div>
-                <div style="font-size: 0.875rem; color: var(--text-muted);">
-                    <div style="margin-bottom: 0.5rem;">Файлів: <span id="fileCount">0</span></div>
-                    <div style="margin-bottom: 0.5rem;">Папок: <span id="folderCount">0</span></div>
-                    <div>Розмір: <span id="totalSize">0 байт</span></div>
+                <div class="sidebar-footer">
+                    <div class="sidebar-stats">
+                        <div>
+                            <h4>Активні угоди</h4>
+                            <strong id="sidebarDeals">0</strong>
+                        </div>
+                        <div>
+                            <h4>Воронка</h4>
+                            <strong id="sidebarPipeline">0 ₴</strong>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" id="resetDataBtn">
+                        <i class="fa-solid fa-rotate"></i>
+                        Скинути демо-дані
+                    </button>
                 </div>
             </div>
         </aside>
 
-        <div class="content">
-            <div class="breadcrumb" id="breadcrumb">
-                <a href="#" class="breadcrumb-item" onclick="navigateToFolder('root')">Головна</a>
-            </div>
-
-            <div class="toolbar">
-                <div class="toolbar-left">
-                    <div class="search-box">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" class="search-input" placeholder="Пошук файлів..." oninput="searchFiles(this.value)">
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <h2>Вітаю у вашій сучасній CRM</h2>
+                    <p class="topbar-sub">Контролюйте угоди, контакти й задачі з одного місця</p>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-wrapper" id="globalSearchWrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="globalSearch" placeholder="Пошук угод, контактів, задач...">
+                        <div class="search-results" id="searchResults"></div>
                     </div>
-                    <select onchange="sortFiles(this.value)" style="padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--border);">
-                        <option value="name">За назвою</option>
-                        <option value="date">За датою</option>
-                        <option value="size">За розміром</option>
-                        <option value="type">За типом</option>
+                    <button class="btn btn-primary" id="openLeadModalBtn">
+                        <i class="fa-solid fa-plus"></i>
+                        Новий лід
+                    </button>
+                </div>
+            </header>
+
+            <section id="dashboardSection" class="section active">
+                <div class="section-header">
+                    <div>
+                        <h2>Огляд показників</h2>
+                        <p>Ключові метрики вашої системи продажів у реальному часі</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn btn-small-muted" id="refreshDashboardBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            Оновити
+                        </button>
+                    </div>
+                </div>
+
+                <div class="metrics-grid" id="metricCards"></div>
+
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3>Розподіл воронки</h3>
+                        <div class="stage-distribution" id="stageDistribution"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Майбутні активності</h3>
+                        <div class="upcoming-list" id="upcomingActivities"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Останні оновлення</h3>
+                        <div class="timeline" id="activityTimeline"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Прогноз доходу</h3>
+                        <div id="forecastCard"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="pipelineSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Воронка продажів</h2>
+                        <p>Відстежуйте стан кожної можливості та працюйте з ними інтерактивно</p>
+                    </div>
+                    <div class="section-actions">
+                        <select id="pipelineOwnerFilter">
+                            <option value="all">Всі менеджери</option>
+                        </select>
+                        <button class="btn btn-primary" id="addPipelineLeadBtn">
+                            <i class="fa-solid fa-plus"></i>
+                            Додати угоду
+                        </button>
+                    </div>
+                </div>
+                <div class="pipeline" id="pipelineBoard"></div>
+            </section>
+
+            <section id="contactsSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Контактна база</h2>
+                        <p>Усі клієнти, партнери та ключові особи у вашій екосистемі</p>
+                    </div>
+                    <div class="section-actions">
+                        <input type="text" id="contactSearch" placeholder="Швидкий пошук...">
+                        <select id="contactStatusFilter">
+                            <option value="all">Всі статуси</option>
+                            <option value="active">Активні</option>
+                            <option value="potential">Потенційні</option>
+                            <option value="partner">Партнери</option>
+                            <option value="cold">Холодні</option>
+                        </select>
+                        <button class="btn btn-primary" id="openContactModalBtn">
+                            <i class="fa-solid fa-user-plus"></i>
+                            Новий контакт
+                        </button>
+                    </div>
+                </div>
+                <div class="contacts-table">
+                    <div class="table-head">
+                        <div>Контакт</div>
+                        <div>Компанія</div>
+                        <div>Електронна пошта</div>
+                        <div>Телефон</div>
+                        <div>Статус</div>
+                        <div>Відповідальний</div>
+                    </div>
+                    <div id="contactsTable"></div>
+                </div>
+            </section>
+
+            <section id="tasksSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Планер дій</h2>
+                        <p>Пріоритетні задачі команди з можливістю швидкого оновлення статусу</p>
+                    </div>
+                    <div class="section-actions">
+                        <button class="btn btn-primary" id="openTaskModalBtn">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            Нове завдання
+                        </button>
+                    </div>
+                </div>
+                <div class="task-board" id="taskBoard"></div>
+            </section>
+
+            <section id="analyticsSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Глибинні інсайти</h2>
+                        <p>Показники ефективності команди та здоров'я воронки</p>
+                    </div>
+                    <div class="section-actions">
+                        <span class="badge badge-success" id="insightUpdated"></span>
+                    </div>
+                </div>
+                <div class="analytics-grid">
+                    <div class="card">
+                        <h3>Конверсія по етапах</h3>
+                        <div class="progress-list" id="conversionInsights"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Продуктивність менеджерів</h3>
+                        <div class="progress-list" id="teamPerformance"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Угоди, що потребують уваги</h3>
+                        <div class="lead-focus-list" id="leadFocus"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Темп закриття</h3>
+                        <div id="velocityInsights"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Модальні вікна -->
+    <div class="modal" id="addLeadModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Новий лід</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
+            </div>
+            <form id="leadForm" class="form-grid">
+                <div class="form-group">
+                    <label for="leadTitle">Назва можливості</label>
+                    <input type="text" id="leadTitle" placeholder="Наприклад, Розробка CRM для NovaPay" required>
+                </div>
+                <div class="form-group">
+                    <label for="leadCompany">Компанія</label>
+                    <input type="text" id="leadCompany" placeholder="Компанія або бренд" required>
+                </div>
+                <div class="form-group">
+                    <label for="leadValue">Бюджет, ₴</label>
+                    <input type="number" id="leadValue" min="0" step="1000" required>
+                </div>
+                <div class="form-group">
+                    <label for="leadStage">Етап</label>
+                    <select id="leadStage" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="leadProbability">Ймовірність, %</label>
+                    <input type="number" id="leadProbability" min="0" max="100" step="5" value="30">
+                </div>
+                <div class="form-group">
+                    <label for="leadOwner">Менеджер</label>
+                    <select id="leadOwner" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="leadContactName">Контактна особа</label>
+                    <input type="text" id="leadContactName" placeholder="Ім'я та прізвище">
+                </div>
+                <div class="form-group">
+                    <label for="leadContactEmail">Email</label>
+                    <input type="email" id="leadContactEmail" placeholder="name@company.ua">
+                </div>
+                <div class="form-group">
+                    <label for="leadContactPhone">Телефон</label>
+                    <input type="tel" id="leadContactPhone" placeholder="+380">
+                </div>
+                <div class="form-group full">
+                    <label for="leadTags">Мітки</label>
+                    <input type="text" id="leadTags" placeholder="Введіть через кому: Терміново, VIP">
+                </div>
+                <div class="form-group full">
+                    <label for="leadNotes">Примітка</label>
+                    <textarea id="leadNotes" placeholder="Вкажіть додаткові деталі..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="addContactModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Новий контакт</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
+            </div>
+            <form id="contactForm" class="form-grid">
+                <div class="form-group">
+                    <label for="contactName">ПІБ</label>
+                    <input type="text" id="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactCompany">Компанія</label>
+                    <input type="text" id="contactCompany">
+                </div>
+                <div class="form-group">
+                    <label for="contactRole">Роль</label>
+                    <input type="text" id="contactRole" placeholder="Посада або роль">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail">
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Телефон</label>
+                    <input type="tel" id="contactPhone">
+                </div>
+                <div class="form-group">
+                    <label for="contactStatus">Статус</label>
+                    <select id="contactStatus">
+                        <option value="active">Активний</option>
+                        <option value="potential">Потенційний</option>
+                        <option value="partner">Партнер</option>
+                        <option value="cold">Холодний</option>
                     </select>
                 </div>
-                <div class="view-toggle">
-                    <button class="view-btn active" onclick="toggleView('grid')">
-                        <i class="fas fa-th"></i>
-                    </button>
-                    <button class="view-btn" onclick="toggleView('list')">
-                        <i class="fas fa-list"></i>
-                    </button>
+                <div class="form-group">
+                    <label for="contactOwner">Менеджер</label>
+                    <select id="contactOwner"></select>
                 </div>
-            </div>
-
-            <div class="drag-zone" id="dropZone">
-                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
-                <div>Перетягніть файли сюди або клікніть "Завантажити"</div>
-            </div>
-
-            <div class="file-grid active" id="fileGrid">
-                <!-- Файли будуть додаватися тут динамічно -->
-            </div>
-
-            <div class="file-list" id="fileList">
-                <!-- Список файлів -->
-            </div>
+                <div class="form-group full">
+                    <label for="contactTags">Мітки</label>
+                    <input type="text" id="contactTags" placeholder="VIP, Рекомендація">
+                </div>
+                <div class="form-group full">
+                    <label for="contactNotes">Нотатка</label>
+                    <textarea id="contactNotes"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
+                    <button type="submit" class="btn btn-primary">Додати контакт</button>
+                </div>
+            </form>
         </div>
-    </main>
-
-    <div class="status-bar">
-        <div id="statusInfo">Готовий</div>
-        <div id="selectionInfo"></div>
     </div>
 
-    <!-- Модальні вікна -->
-    <div class="modal" id="uploadModal">
-        <div class="modal-content">
+    <div class="modal" id="addTaskModal">
+        <div class="modal-dialog">
             <div class="modal-header">
-                <div class="modal-title">Завантажити файли</div>
-                <button class="modal-close" onclick="closeModal('uploadModal')">&times;</button>
+                <h3>Нове завдання</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
             </div>
-            <div class="form-group">
-                <input type="file" id="fileInput" multiple class="form-input" onchange="handleFileUpload(this)">
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-secondary" onclick="closeModal('uploadModal')">Скасувати</button>
-                <button class="btn btn-primary" onclick="uploadFiles()">Завантажити</button>
-            </div>
+            <form id="taskForm" class="form-grid">
+                <div class="form-group">
+                    <label for="taskTitle">Назва</label>
+                    <input type="text" id="taskTitle" placeholder="Наприклад, Підготувати презентацію" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskOwner">Відповідальний</label>
+                    <select id="taskOwner" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="taskDueDate">Термін</label>
+                    <input type="date" id="taskDueDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriority">Пріоритет</label>
+                    <select id="taskPriority">
+                        <option value="high">Високий</option>
+                        <option value="medium">Середній</option>
+                        <option value="low">Низький</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskStatus">Статус</label>
+                    <select id="taskStatus">
+                        <option value="todo">До виконання</option>
+                        <option value="inProgress">В роботі</option>
+                        <option value="done">Завершено</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskLead">Пов'язаний лід</label>
+                    <select id="taskLead">
+                        <option value="">Без прив'язки</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <label for="taskDescription">Коментар</label>
+                    <textarea id="taskDescription" placeholder="Опишіть наступні кроки..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
+                    <button type="submit" class="btn btn-primary">Додати завдання</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="modal" id="newFolderModal">
-        <div class="modal-content">
+    <div class="modal" id="leadDetailsModal">
+        <div class="modal-dialog wide">
             <div class="modal-header">
-                <div class="modal-title">Створити папку</div>
-                <button class="modal-close" onclick="closeModal('newFolderModal')">&times;</button>
+                <h3 id="leadDetailsTitle">Деталі угоди</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
             </div>
-            <div class="form-group">
-                <label class="form-label">Назва папки</label>
-                <input type="text" id="folderNameInput" class="form-input" placeholder="Введіть назву папки">
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-secondary" onclick="closeModal('newFolderModal')">Скасувати</button>
-                <button class="btn btn-success" onclick="createFolder()">Створити</button>
-            </div>
+            <div class="lead-details" id="leadDetailsContent"></div>
         </div>
     </div>
-
-    <div class="modal" id="newFileModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">Створити файл</div>
-                <button class="modal-close" onclick="closeModal('newFileModal')">&times;</button>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Назва файлу</label>
-                <input type="text" id="fileNameInput" class="form-input" placeholder="document.txt">
-            </div>
-            <div class="form-group">
-                <label class="form-label">Тип файлу</label>
-                <select id="fileTypeSelect" class="form-input">
-                    <option value="txt">Текстовий файл (.txt)</option>
-                    <option value="html">HTML файл (.html)</option>
-                    <option value="css">CSS файл (.css)</option>
-                    <option value="js">JavaScript файл (.js)</option>
-                    <option value="json">JSON файл (.json)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Вміст файлу</label>
-                <textarea id="fileContentInput" class="form-input form-textarea" placeholder="Введіть вміст файлу..."></textarea>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-secondary" onclick="closeModal('newFileModal')">Скасувати</button>
-                <button class="btn btn-success" onclick="createFile()">Створити</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Контекстне меню -->
-    <div class="context-menu" id="contextMenu">
-        <div class="context-menu-item" onclick="renameItem()">
-            <i class="fas fa-edit"></i>
-            Перейменувати
-        </div>
-        <div class="context-menu-item" onclick="downloadItem()">
-            <i class="fas fa-download"></i>
-            Завантажити
-        </div>
-        <div class="context-menu-item" onclick="deleteItem()">
-            <i class="fas fa-trash"></i>
-            Видалити
-        </div>
-    </div>
-
     <script>
-        // Глобальні змінні
-        let currentFolder = 'root';
-        let selectedItems = [];
-        let currentView = 'grid';
-        let fileSystem = JSON.parse(localStorage.getItem('fileSystem')) || {
-            root: {
-                folders: ['documents', 'images', 'videos'],
-                files: [
-                    { name: 'Readme.txt', type: 'txt', size: 1024, date: new Date().toISOString(), content: 'Ласкаво просимо до файлового менеджера!' },
-                    { name: 'example.html', type: 'html', size: 2048, date: new Date().toISOString(), content: '<!DOCTYPE html><html><head><title>Приклад</title></head><body><h1>Привіт світ!</h1></body></html>' }
-                ]
-            },
-            documents: { folders: [], files: [] },
-            images: { folders: [], files: [] },
-            videos: { folders: [], files: [] },
-            trash: { folders: [], files: [] }
+        const STORAGE_KEY = 'homeCRMData_v2';
+        const STAGES = ['Новий', 'Кваліфікація', 'Пропозиція', 'Переговори', 'Угода', 'Втрачено'];
+        const TASK_COLUMNS = [
+            { id: 'todo', title: 'До виконання' },
+            { id: 'inProgress', title: 'В роботі' },
+            { id: 'done', title: 'Завершено' }
+        ];
+        const TEAM_MEMBERS = ['Марина', 'Олександр', 'Вікторія', 'Дмитро'];
+        const STATUS_LABELS = {
+            active: 'Активний',
+            potential: 'Потенційний',
+            partner: 'Партнер',
+            cold: 'Холодний'
         };
 
-        // Ініціалізація
-        document.addEventListener('DOMContentLoaded', function() {
-            renderFiles();
-            updateStats();
-            setupDragAndDrop();
-        });
+        let crmData = null;
+        let activeLeadId = null;
+        let pipelineFilterOwner = 'all';
+        let contactStatusFilter = 'all';
+        let searchTimer = null;
 
-        // Функція відображення файлів
-        function renderFiles() {
-            const fileGrid = document.getElementById('fileGrid');
-            const fileList = document.getElementById('fileList');
-            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
-
-            // Очищуємо контейнери
-            fileGrid.innerHTML = '';
-            fileList.innerHTML = '';
-
-            // Відображаємо папки
-            currentData.folders.forEach(folderName => {
-                const folderData = fileSystem[folderName] || { folders: [], files: [] };
-                const folderSize = calculateFolderSize(folderData);
-                
-                if (currentView === 'grid') {
-                    fileGrid.innerHTML += createFolderGridItem(folderName, folderSize);
-                } else {
-                    fileList.innerHTML += createFolderListItem(folderName, folderSize);
-                }
-            });
-
-            // Відображаємо файли
-            currentData.files.forEach(file => {
-                if (currentView === 'grid') {
-                    fileGrid.innerHTML += createFileGridItem(file);
-                } else {
-                    fileList.innerHTML += createFileListItem(file);
-                }
-            });
-
-            updateStats();
-        }
-
-        function createFolderGridItem(folderName, size) {
-            return `
-                <div class="file-item" data-type="folder" data-name="${folderName}" onclick="selectItem(this)" ondblclick="navigateToFolder('${folderName}')" oncontextmenu="showContextMenu(event, this)">
-                    <div class="file-actions">
-                        <button class="action-btn edit" onclick="event.stopPropagation(); renameFolder('${folderName}')" title="Перейменувати">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn delete" onclick="event.stopPropagation(); deleteFolder('${folderName}')" title="Видалити">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="file-icon folder">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <div class="file-name">${folderName}</div>
-                    <div class="file-meta">${formatBytes(size)}</div>
-                </div>
-            `;
-        }
-
-        function createFileGridItem(file) {
-            const icon = getFileIcon(file.type);
-            return `
-                <div class="file-item" data-type="file" data-name="${file.name}" onclick="selectItem(this)" ondblclick="openFile('${file.name}')" oncontextmenu="showContextMenu(event, this)">
-                    <div class="file-actions">
-                        <button class="action-btn edit" onclick="event.stopPropagation(); editFile('${file.name}')" title="Редагувати">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="action-btn download" onclick="event.stopPropagation(); downloadFile('${file.name}')" title="Завантажити">
-                            <i class="fas fa-download"></i>
-                        </button>
-                        <button class="action-btn delete" onclick="event.stopPropagation(); deleteFile('${file.name}')" title="Видалити">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="file-icon ${getFileIconClass(file.type)}">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="file-name">${file.name}</div>
-                    <div class="file-meta">${formatBytes(file.size)} • ${formatDate(file.date)}</div>
-                </div>
-            `;
-        }
-
-        function createFolderListItem(folderName, size) {
-            return `
-                <div class="list-item" data-type="folder" data-name="${folderName}" onclick="selectItem(this)" ondblclick="navigateToFolder('${folderName}')">
-                    <div class="list-icon folder">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <div class="list-content">
-                        <div class="list-name">${folderName}</div>
-                        <div class="list-meta">
-                            <span>${formatBytes(size)}</span>
-                            <span>Папка</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function createFileListItem(file) {
-            const icon = getFileIcon(file.type);
-            return `
-                <div class="list-item" data-type="file" data-name="${file.name}" onclick="selectItem(this)" ondblclick="openFile('${file.name}')">
-                    <div class="list-icon ${getFileIconClass(file.type)}">
-                        <i class="fas ${icon}"></i>
-                    </div>
-                    <div class="list-content">
-                        <div class="list-name">${file.name}</div>
-                        <div class="list-meta">
-                            <span>${formatBytes(file.size)}</span>
-                            <span>${formatDate(file.date)}</span>
-                            <span>${file.type.toUpperCase()}</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Функції для роботи з файлами
-        function getFileIcon(type) {
-            const icons = {
-                'txt': 'fa-file-text',
-                'html': 'fa-file-code',
-                'css': 'fa-file-code',
-                'js': 'fa-file-code',
-                'json': 'fa-file-code',
-                'pdf': 'fa-file-pdf',
-                'doc': 'fa-file-word',
-                'docx': 'fa-file-word',
-                'xls': 'fa-file-excel',
-                'xlsx': 'fa-file-excel',
-                'jpg': 'fa-file-image',
-                'jpeg': 'fa-file-image',
-                'png': 'fa-file-image',
-                'gif': 'fa-file-image',
-                'mp4': 'fa-file-video',
-                'mp3': 'fa-file-audio',
-                'zip': 'fa-file-archive'
-            };
-            return icons[type] || 'fa-file';
-        }
-
-        function getFileIconClass(type) {
-            if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(type)) return 'image';
-            if (['txt', 'html', 'css', 'js', 'json', 'pdf', 'doc', 'docx'].includes(type)) return 'document';
-            return 'file';
-        }
-
-        function formatBytes(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('uk-UA');
-        }
-
-        function calculateFolderSize(folderData) {
-            let size = 0;
-            folderData.files.forEach(file => size += file.size);
-            folderData.folders.forEach(folderName => {
-                const subFolder = fileSystem[folderName];
-                if (subFolder) size += calculateFolderSize(subFolder);
-            });
-            return size;
-        }
-
-        // Навігація
-        function navigateToFolder(folderName) {
-            currentFolder = folderName;
-            updateBreadcrumb();
-            renderFiles();
-            
-            // Оновлюємо активну навігацію
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-        }
-
-        function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            const paths = {
-                'root': 'Головна',
-                'documents': 'Документи',
-                'images': 'Зображення',
-                'videos': 'Відео',
-                'trash': 'Кошик'
-            };
-            
-            breadcrumb.innerHTML = `
-                <a href="#" class="breadcrumb-item" onclick="navigateToFolder('root')">Головна</a>
-                ${currentFolder !== 'root' ? `<span class="breadcrumb-separator">/</span>
-                <span>${paths[currentFolder] || currentFolder}</span>` : ''}
-            `;
-        }
-
-        // Вибір елементів
-        function selectItem(element) {
-            if (!event.ctrlKey) {
-                document.querySelectorAll('.file-item, .list-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-                selectedItems = [];
-            }
-            
-            element.classList.toggle('selected');
-            const name = element.dataset.name;
-            const type = element.dataset.type;
-            
-            if (element.classList.contains('selected')) {
-                selectedItems.push({ name, type });
-            } else {
-                selectedItems = selectedItems.filter(item => item.name !== name);
-            }
-            
-            updateSelectionInfo();
-        }
-
-        function updateSelectionInfo() {
-            const selectionInfo = document.getElementById('selectionInfo');
-            if (selectedItems.length > 0) {
-                selectionInfo.textContent = `Вибрано: ${selectedItems.length} елементів`;
-            } else {
-                selectionInfo.textContent = '';
-            }
-        }
-
-        // Перемикання виду
-        function toggleView(view) {
-            currentView = view;
-            document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`[onclick="toggleView('${view}')"]`).classList.add('active');
-            
-            const fileGrid = document.getElementById('fileGrid');
-            const fileList = document.getElementById('fileList');
-            
-            if (view === 'grid') {
-                fileGrid.classList.add('active');
-                fileList.classList.remove('active');
-            } else {
-                fileGrid.classList.remove('active');
-                fileList.classList.add('active');
-            }
-            
-            renderFiles();
-        }
-
-        // Створення папки
-        function openNewFolderModal() {
-            document.getElementById('newFolderModal').classList.add('active');
-            document.getElementById('folderNameInput').focus();
-        }
-
-        function createFolder() {
-            const name = document.getElementById('folderNameInput').value.trim();
-            if (!name) {
-                alert('Введіть назву папки');
-                return;
-            }
-            
-            if (!fileSystem[currentFolder]) {
-                fileSystem[currentFolder] = { folders: [], files: [] };
-            }
-            
-            if (fileSystem[currentFolder].folders.includes(name)) {
-                alert('Папка з такою назвою вже існує');
-                return;
-            }
-            
-            fileSystem[currentFolder].folders.push(name);
-            fileSystem[name] = { folders: [], files: [] };
-            
-            saveFileSystem();
-            renderFiles();
-            closeModal('newFolderModal');
-            document.getElementById('folderNameInput').value = '';
-        }
-
-        // Створення файлу
-        function openNewFileModal() {
-            document.getElementById('newFileModal').classList.add('active');
-            document.getElementById('fileNameInput').focus();
-        }
-
-        function createFile() {
-            const name = document.getElementById('fileNameInput').value.trim();
-            const type = document.getElementById('fileTypeSelect').value;
-            const content = document.getElementById('fileContentInput').value;
-            
-            if (!name) {
-                alert('Введіть назву файлу');
-                return;
-            }
-            
-            const fileName = name.includes('.') ? name : `${name}.${type}`;
-            
-            if (!fileSystem[currentFolder]) {
-                fileSystem[currentFolder] = { folders: [], files: [] };
-            }
-            
-            if (fileSystem[currentFolder].files.some(f => f.name === fileName)) {
-                alert('Файл з такою назвою вже існує');
-                return;
-            }
-            
-            const file = {
-                name: fileName,
-                type: type,
-                size: new Blob([content]).size,
-                date: new Date().toISOString(),
-                content: content
-            };
-            
-            fileSystem[currentFolder].files.push(file);
-            
-            saveFileSystem();
-            renderFiles();
-            closeModal('newFileModal');
-            
-            // Очищуємо форму
-            document.getElementById('fileNameInput').value = '';
-            document.getElementById('fileContentInput').value = '';
-        }
-
-        // Завантаження файлів
-        function openUploadModal() {
-            document.getElementById('uploadModal').classList.add('active');
-        }
-
-        function handleFileUpload(input) {
-            const files = Array.from(input.files);
-            files.forEach(file => {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const fileObj = {
-                        name: file.name,
-                        type: file.name.split('.').pop().toLowerCase(),
-                        size: file.size,
-                        date: new Date().toISOString(),
-                        content: e.target.result
-                    };
-                    
-                    if (!fileSystem[currentFolder]) {
-                        fileSystem[currentFolder] = { folders: [], files: [] };
-                    }
-                    
-                    fileSystem[currentFolder].files.push(fileObj);
-                    saveFileSystem();
-                    renderFiles();
-                };
-                reader.readAsText(file);
-            });
-        }
-
-        function uploadFiles() {
-            const fileInput = document.getElementById('fileInput');
-            if (fileInput.files.length > 0) {
-                handleFileUpload(fileInput);
-                closeModal('uploadModal');
-                fileInput.value = '';
-            }
-        }
-
-        // Видалення
-        function deleteFile(fileName) {
-            if (confirm(`Видалити файл "${fileName}"?`)) {
-                fileSystem[currentFolder].files = fileSystem[currentFolder].files.filter(f => f.name !== fileName);
-                saveFileSystem();
-                renderFiles();
-            }
-        }
-
-        function deleteFolder(folderName) {
-            if (confirm(`Видалити папку "${folderName}" та весь її вміст?`)) {
-                fileSystem[currentFolder].folders = fileSystem[currentFolder].folders.filter(f => f !== folderName);
-                delete fileSystem[folderName];
-                saveFileSystem();
-                renderFiles();
-            }
-        }
-
-        // Завантаження файлу
-        function downloadFile(fileName) {
-            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
-            if (file) {
-                const blob = new Blob([file.content], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }
-        }
-
-        // Редагування файлу
-        function editFile(fileName) {
-            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
-            if (file) {
-                const newContent = prompt('Редагувати файл:', file.content);
-                if (newContent !== null) {
-                    file.content = newContent;
-                    file.size = new Blob([newContent]).size;
-                    file.date = new Date().toISOString();
-                    saveFileSystem();
-                    renderFiles();
-                }
-            }
-        }
-
-        // Відкриття файлу
-        function openFile(fileName) {
-            const file = fileSystem[currentFolder].files.find(f => f.name === fileName);
-            if (file) {
-                if (['html', 'txt', 'css', 'js', 'json'].includes(file.type)) {
-                    const newWindow = window.open();
-                    if (file.type === 'html') {
-                        newWindow.document.write(file.content);
-                    } else {
-                        newWindow.document.write(`<pre>${file.content}</pre>`);
-                    }
-                } else {
-                    alert(`Тип файлу ${file.type} не підтримується для перегляду`);
-                }
-            }
-        }
-
-        // Пошук
-        function searchFiles(query) {
-            if (!query.trim()) {
-                renderFiles();
-                return;
-            }
-            
-            const fileGrid = document.getElementById('fileGrid');
-            const fileList = document.getElementById('fileList');
-            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
-            
-            fileGrid.innerHTML = '';
-            fileList.innerHTML = '';
-            
-            // Пошук по папках
-            currentData.folders.filter(folder => 
-                folder.toLowerCase().includes(query.toLowerCase())
-            ).forEach(folderName => {
-                const folderData = fileSystem[folderName] || { folders: [], files: [] };
-                const folderSize = calculateFolderSize(folderData);
-                
-                if (currentView === 'grid') {
-                    fileGrid.innerHTML += createFolderGridItem(folderName, folderSize);
-                } else {
-                    fileList.innerHTML += createFolderListItem(folderName, folderSize);
-                }
-            });
-            
-            // Пошук по файлах
-            currentData.files.filter(file => 
-                file.name.toLowerCase().includes(query.toLowerCase())
-            ).forEach(file => {
-                if (currentView === 'grid') {
-                    fileGrid.innerHTML += createFileGridItem(file);
-                } else {
-                    fileList.innerHTML += createFileListItem(file);
-                }
-            });
-        }
-
-        // Сортування
-        function sortFiles(criteria) {
-            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
-            
-            switch(criteria) {
-                case 'name':
-                    currentData.folders.sort();
-                    currentData.files.sort((a, b) => a.name.localeCompare(b.name));
-                    break;
-                case 'date':
-                    currentData.files.sort((a, b) => new Date(b.date) - new Date(a.date));
-                    break;
-                case 'size':
-                    currentData.files.sort((a, b) => b.size - a.size);
-                    break;
-                case 'type':
-                    currentData.files.sort((a, b) => a.type.localeCompare(b.type));
-                    break;
-            }
-            
-            saveFileSystem();
-            renderFiles();
-        }
-
-        // Оновлення статистики
-        function updateStats() {
-            const currentData = fileSystem[currentFolder] || { folders: [], files: [] };
-            document.getElementById('fileCount').textContent = currentData.files.length;
-            document.getElementById('folderCount').textContent = currentData.folders.length;
-            
-            const totalSize = currentData.files.reduce((sum, file) => sum + file.size, 0);
-            document.getElementById('totalSize').textContent = formatBytes(totalSize);
-        }
-
-        // Контекстне меню
-        function showContextMenu(event, element) {
-            event.preventDefault();
-            const contextMenu = document.getElementById('contextMenu');
-            contextMenu.style.left = event.pageX + 'px';
-            contextMenu.style.top = event.pageY + 'px';
-            contextMenu.classList.add('active');
-            
-            // Зберігаємо посилання на елемент
-            contextMenu.dataset.target = element.dataset.name;
-            contextMenu.dataset.type = element.dataset.type;
-        }
-
-        // Закриття контекстного меню
-        document.addEventListener('click', function() {
-            document.getElementById('contextMenu').classList.remove('active');
-        });
-
-        // Функції контекстного меню
-        function renameItem() {
-            const contextMenu = document.getElementById('contextMenu');
-            const name = contextMenu.dataset.target;
-            const type = contextMenu.dataset.type;
-            
-            const newName = prompt('Нова назва:', name);
-            if (newName && newName !== name) {
-                if (type === 'folder') {
-                    // Перейменування папки
-                    const index = fileSystem[currentFolder].folders.indexOf(name);
-                    if (index !== -1) {
-                        fileSystem[currentFolder].folders[index] = newName;
-                        fileSystem[newName] = fileSystem[name];
-                        delete fileSystem[name];
-                    }
-                } else {
-                    // Перейменування файлу
-                    const file = fileSystem[currentFolder].files.find(f => f.name === name);
-                    if (file) {
-                        file.name = newName;
-                    }
-                }
-                saveFileSystem();
-                renderFiles();
-            }
-        }
-
-        function downloadItem() {
-            const contextMenu = document.getElementById('contextMenu');
-            const name = contextMenu.dataset.target;
-            const type = contextMenu.dataset.type;
-            
-            if (type === 'file') {
-                downloadFile(name);
-            }
-        }
-
-        function deleteItem() {
-            const contextMenu = document.getElementById('contextMenu');
-            const name = contextMenu.dataset.target;
-            const type = contextMenu.dataset.type;
-            
-            if (type === 'folder') {
-                deleteFolder(name);
-            } else {
-                deleteFile(name);
-            }
-        }
-
-        // Drag & Drop
-        function setupDragAndDrop() {
-            const dropZone = document.getElementById('dropZone');
-            
-            dropZone.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                dropZone.classList.add('dragover');
-            });
-            
-            dropZone.addEventListener('dragleave', function() {
-                dropZone.classList.remove('dragover');
-            });
-            
-            dropZone.addEventListener('drop', function(e) {
-                e.preventDefault();
-                dropZone.classList.remove('dragover');
-                
-                const files = Array.from(e.dataTransfer.files);
-                files.forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = function(event) {
-                        const fileObj = {
-                            name: file.name,
-                            type: file.name.split('.').pop().toLowerCase(),
-                            size: file.size,
-                            date: new Date().toISOString(),
-                            content: event.target.result
-                        };
-                        
-                        if (!fileSystem[currentFolder]) {
-                            fileSystem[currentFolder] = { folders: [], files: [] };
+        const defaultData = {
+            leads: [
+                {
+                    id: 'lead-1',
+                    name: 'Редизайн порталу NovaPay',
+                    company: 'NovaPay',
+                    stage: 'Кваліфікація',
+                    value: 58000,
+                    probability: 45,
+                    owner: 'Марина',
+                    status: 'active',
+                    expectedClose: '2024-07-10',
+                    contact: {
+                        id: 'contact-1',
+                        person: 'Андрій Коваленко',
+                        email: 'a.kovalenko@novapay.ua',
+                        phone: '+380 67 123 45 67'
+                    },
+                    tags: ['High value', 'Веб'],
+                    createdAt: '2024-05-18T09:24:00.000Z',
+                    updatedAt: '2024-06-02T12:15:00.000Z',
+                    notes: [
+                        {
+                            id: 'note-1',
+                            text: 'Очікують детальний план робіт до кінця тижня.',
+                            author: 'Марина',
+                            date: '2024-06-02T12:15:00.000Z'
                         }
-                        
-                        fileSystem[currentFolder].files.push(fileObj);
-                        saveFileSystem();
-                        renderFiles();
-                    };
-                    reader.readAsText(file);
-                });
-            });
-            
-            dropZone.addEventListener('click', function() {
-                openUploadModal();
-            });
+                    ],
+                    timeline: [
+                        { id: 'tl-1', text: 'Лід створено Марина', date: '2024-05-18T09:24:00.000Z' },
+                        { id: 'tl-2', text: 'Стадія змінена на «Кваліфікація»', date: '2024-05-20T14:00:00.000Z' }
+                    ]
+                },
+                {
+                    id: 'lead-2',
+                    name: 'Автоматизація логістики Rozetka',
+                    company: 'Rozetka',
+                    stage: 'Пропозиція',
+                    value: 72000,
+                    probability: 55,
+                    owner: 'Олександр',
+                    status: 'active',
+                    expectedClose: '2024-07-25',
+                    contact: {
+                        id: 'contact-2',
+                        person: 'Ірина Мельник',
+                        email: 'i.melnyk@rozetka.ua',
+                        phone: '+380 50 777 23 11'
+                    },
+                    tags: ['Автоматизація', 'Пріоритет'],
+                    createdAt: '2024-05-10T08:42:00.000Z',
+                    updatedAt: '2024-06-04T09:30:00.000Z',
+                    notes: [
+                        {
+                            id: 'note-2',
+                            text: 'Потрібно погодити комерційну пропозицію до 12 червня.',
+                            author: 'Олександр',
+                            date: '2024-06-01T11:00:00.000Z'
+                        }
+                    ],
+                    timeline: [
+                        { id: 'tl-3', text: 'Запит на автоматизацію логістики', date: '2024-05-10T08:42:00.000Z' },
+                        { id: 'tl-4', text: 'Відправлено попередній кошторис', date: '2024-05-26T15:20:00.000Z' }
+                    ]
+                },
+                {
+                    id: 'lead-3',
+                    name: 'CRM для GreenBank',
+                    company: 'GreenBank',
+                    stage: 'Переговори',
+                    value: 91000,
+                    probability: 70,
+                    owner: 'Вікторія',
+                    status: 'active',
+                    expectedClose: '2024-08-05',
+                    contact: {
+                        id: 'contact-3',
+                        person: 'Олег Данилюк',
+                        email: 'o.danyliuk@greenbank.ua',
+                        phone: '+380 63 555 14 78'
+                    },
+                    tags: ['Фінанси', 'Інтеграція'],
+                    createdAt: '2024-04-28T10:00:00.000Z',
+                    updatedAt: '2024-06-03T15:45:00.000Z',
+                    notes: [
+                        {
+                            id: 'note-3',
+                            text: 'Запросили інтеграцію з внутрішньою системою KYC.',
+                            author: 'Вікторія',
+                            date: '2024-06-03T15:45:00.000Z'
+                        }
+                    ],
+                    timeline: [
+                        { id: 'tl-5', text: 'Проведено демонстрацію продукту', date: '2024-05-14T13:30:00.000Z' },
+                        { id: 'tl-6', text: 'Вікторія оновила стадію на «Переговори»', date: '2024-06-03T15:45:00.000Z' }
+                    ]
+                },
+                {
+                    id: 'lead-4',
+                    name: 'Digital-маркетинг для OKKO',
+                    company: 'OKKO',
+                    stage: 'Новий',
+                    value: 26000,
+                    probability: 25,
+                    owner: 'Дмитро',
+                    status: 'active',
+                    expectedClose: '2024-07-30',
+                    contact: {
+                        id: 'contact-4',
+                        person: 'Світлана Романюк',
+                        email: 's.romaniuk@okko.ua',
+                        phone: '+380 44 123 90 12'
+                    },
+                    tags: ['Маркетинг'],
+                    createdAt: '2024-06-05T09:15:00.000Z',
+                    updatedAt: '2024-06-05T09:15:00.000Z',
+                    notes: [],
+                    timeline: [
+                        { id: 'tl-7', text: 'Новий лід додано Дмитро', date: '2024-06-05T09:15:00.000Z' }
+                    ]
+                },
+                {
+                    id: 'lead-5',
+                    name: 'Мобільний додаток для Uklon',
+                    company: 'Uklon',
+                    stage: 'Угода',
+                    value: 45000,
+                    probability: 100,
+                    owner: 'Марина',
+                    status: 'won',
+                    expectedClose: '2024-05-30',
+                    closedAt: '2024-05-30T16:10:00.000Z',
+                    contact: {
+                        id: 'contact-5',
+                        person: 'Роман Лещенко',
+                        email: 'r.leshchenko@uklon.com',
+                        phone: '+380 50 120 34 56'
+                    },
+                    tags: ['Мобільний', 'Гаряча'],
+                    createdAt: '2024-04-02T08:25:00.000Z',
+                    updatedAt: '2024-05-30T16:10:00.000Z',
+                    notes: [
+                        {
+                            id: 'note-5',
+                            text: 'Угода виграна, запускаємо реалізацію у липні.',
+                            author: 'Марина',
+                            date: '2024-05-30T16:10:00.000Z'
+                        }
+                    ],
+                    timeline: [
+                        { id: 'tl-8', text: 'Презентація рішень проведена', date: '2024-04-20T11:40:00.000Z' },
+                        { id: 'tl-9', text: 'Угода виграна!', date: '2024-05-30T16:10:00.000Z' }
+                    ]
+                },
+                {
+                    id: 'lead-6',
+                    name: 'Інтеграція ERP для Intertop',
+                    company: 'Intertop',
+                    stage: 'Втрачено',
+                    value: 38000,
+                    probability: 0,
+                    owner: 'Олександр',
+                    status: 'lost',
+                    expectedClose: '2024-05-15',
+                    contact: {
+                        id: 'contact-6',
+                        person: 'Катерина Сніжко',
+                        email: 'k.snizhko@intertop.ua',
+                        phone: '+380 44 890 45 67'
+                    },
+                    tags: ['ERP', 'Конкурент'],
+                    createdAt: '2024-03-18T09:00:00.000Z',
+                    updatedAt: '2024-05-16T10:45:00.000Z',
+                    notes: [
+                        {
+                            id: 'note-6',
+                            text: 'Клієнт обрав рішення конкурента через ціну.',
+                            author: 'Олександр',
+                            date: '2024-05-16T10:45:00.000Z'
+                        }
+                    ],
+                    timeline: [
+                        { id: 'tl-10', text: 'Запит на інтеграцію ERP', date: '2024-03-18T09:00:00.000Z' },
+                        { id: 'tl-11', text: 'Угоду втрачено', date: '2024-05-16T10:45:00.000Z' }
+                    ]
+                }
+            ],
+            contacts: [
+                {
+                    id: 'contact-1',
+                    name: 'Андрій Коваленко',
+                    company: 'NovaPay',
+                    role: 'COO',
+                    email: 'a.kovalenko@novapay.ua',
+                    phone: '+380 67 123 45 67',
+                    status: 'active',
+                    owner: 'Марина',
+                    tags: ['VIP'],
+                    lastActivity: '2024-06-02T12:15:00.000Z'
+                },
+                {
+                    id: 'contact-2',
+                    name: 'Ірина Мельник',
+                    company: 'Rozetka',
+                    role: 'Head of Logistics',
+                    email: 'i.melnyk@rozetka.ua',
+                    phone: '+380 50 777 23 11',
+                    status: 'potential',
+                    owner: 'Олександр',
+                    tags: ['Priority'],
+                    lastActivity: '2024-06-01T11:00:00.000Z'
+                },
+                {
+                    id: 'contact-3',
+                    name: 'Олег Данилюк',
+                    company: 'GreenBank',
+                    role: 'Digital Transformation Lead',
+                    email: 'o.danyliuk@greenbank.ua',
+                    phone: '+380 63 555 14 78',
+                    status: 'active',
+                    owner: 'Вікторія',
+                    tags: ['Фінанси'],
+                    lastActivity: '2024-06-03T15:45:00.000Z'
+                },
+                {
+                    id: 'contact-4',
+                    name: 'Світлана Романюк',
+                    company: 'OKKO',
+                    role: 'Marketing Director',
+                    email: 's.romaniuk@okko.ua',
+                    phone: '+380 44 123 90 12',
+                    status: 'potential',
+                    owner: 'Дмитро',
+                    tags: ['Marketing'],
+                    lastActivity: '2024-06-05T09:15:00.000Z'
+                },
+                {
+                    id: 'contact-5',
+                    name: 'Роман Лещенко',
+                    company: 'Uklon',
+                    role: 'Product Owner',
+                    email: 'r.leshchenko@uklon.com',
+                    phone: '+380 50 120 34 56',
+                    status: 'partner',
+                    owner: 'Марина',
+                    tags: ['Strategic'],
+                    lastActivity: '2024-05-30T16:10:00.000Z'
+                }
+            ],
+            tasks: [
+                {
+                    id: 'task-1',
+                    title: 'Підготувати технічний аудит для NovaPay',
+                    status: 'inProgress',
+                    priority: 'high',
+                    owner: 'Марина',
+                    dueDate: '2024-06-08',
+                    relatedLeadId: 'lead-1',
+                    description: 'Зібрати технічні вимоги та запланувати воркшоп з командою клієнта.'
+                },
+                {
+                    id: 'task-2',
+                    title: 'Оновити комерційну пропозицію Rozetka',
+                    status: 'todo',
+                    priority: 'high',
+                    owner: 'Олександр',
+                    dueDate: '2024-06-07',
+                    relatedLeadId: 'lead-2',
+                    description: 'Додати блок про інтеграцію з WMS та підрахувати ROI.'
+                },
+                {
+                    id: 'task-3',
+                    title: 'Запланувати демонстрацію KYC-модуля',
+                    status: 'todo',
+                    priority: 'medium',
+                    owner: 'Вікторія',
+                    dueDate: '2024-06-12',
+                    relatedLeadId: 'lead-3',
+                    description: 'Підготувати сценарій демонстрації та приклади звітів.'
+                },
+                {
+                    id: 'task-4',
+                    title: 'Підбір кейсів для OKKO',
+                    status: 'inProgress',
+                    priority: 'medium',
+                    owner: 'Дмитро',
+                    dueDate: '2024-06-09',
+                    relatedLeadId: 'lead-4',
+                    description: 'Підібрати релевантні кейси з рітейлу та оформити презентацію.'
+                },
+                {
+                    id: 'task-5',
+                    title: 'Ретроспектива після запуску Uklon',
+                    status: 'done',
+                    priority: 'low',
+                    owner: 'Марина',
+                    dueDate: '2024-06-01',
+                    relatedLeadId: 'lead-5',
+                    description: 'Зафіксувати висновки та рекомендації для наступних запусків.',
+                    completedAt: '2024-06-01'
+                }
+            ],
+            activities: [
+                {
+                    id: 'act-1',
+                    type: 'stage',
+                    entityId: 'lead-3',
+                    message: 'Вікторія оновила стадію GreenBank до «Переговори».',
+                    timestamp: '2024-06-03T15:45:00.000Z'
+                },
+                {
+                    id: 'act-2',
+                    type: 'note',
+                    entityId: 'lead-2',
+                    message: 'Олександр додав нотатку до Rozetka: потребують нову комерційну пропозицію.',
+                    timestamp: '2024-06-01T11:00:00.000Z'
+                },
+                {
+                    id: 'act-3',
+                    type: 'task',
+                    entityId: 'task-4',
+                    message: 'Створено нове завдання для OKKO.',
+                    timestamp: '2024-06-05T09:15:00.000Z'
+                },
+                {
+                    id: 'act-4',
+                    type: 'won',
+                    entityId: 'lead-5',
+                    message: 'Марина закрила угоду з Uklon на 45 000 ₴.',
+                    timestamp: '2024-05-30T16:10:00.000Z'
+                },
+                {
+                    id: 'act-5',
+                    type: 'lost',
+                    entityId: 'lead-6',
+                    message: 'Intertop обрав рішення конкурента. Угоду позначено як втрачено.',
+                    timestamp: '2024-05-16T10:45:00.000Z'
+                }
+            ]
+        };
+        const deepClone = (data) => JSON.parse(JSON.stringify(data));
+
+        function generateId(prefix = 'id') {
+            return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
         }
 
-        // Збереження файлової системи
-        function saveFileSystem() {
-            localStorage.setItem('fileSystem', JSON.stringify(fileSystem));
-        }
-
-        // Закриття модального вікна
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        // Клавіатурні скорочення
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey) {
-                switch(e.key) {
-                    case 'n':
-                        e.preventDefault();
-                        openNewFileModal();
-                        break;
-                    case 'k':
-                        e.preventDefault();
-                        openNewFolderModal();
-                        break;
-                    case 'u':
-                        e.preventDefault();
-                        openUploadModal();
-                        break;
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    if (parsed && typeof parsed === 'object') {
+                        return parsed;
+                    }
+                } catch (error) {
+                    console.warn('Не вдалося прочитати збережені дані CRM, використовую демо-набір.', error);
                 }
             }
-            
-            if (e.key === 'Delete' && selectedItems.length > 0) {
-                selectedItems.forEach(item => {
-                    if (item.type === 'folder') {
-                        deleteFolder(item.name);
-                    } else {
-                        deleteFile(item.name);
+            return deepClone(defaultData);
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(crmData));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            crmData = loadData();
+            setupUI();
+            renderAll();
+        });
+
+        function setupUI() {
+            populateDropdowns();
+            setupNavigation();
+            setupModals();
+            setupForms();
+            setupSearch();
+            setupFilters();
+            document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
+            document.getElementById('refreshDashboardBtn').addEventListener('click', () => {
+                renderDashboard();
+                renderAnalytics();
+            });
+            document.getElementById('openLeadModalBtn').addEventListener('click', () => openModal('addLeadModal'));
+            document.getElementById('addPipelineLeadBtn').addEventListener('click', () => openModal('addLeadModal'));
+            document.getElementById('openContactModalBtn').addEventListener('click', () => openModal('addContactModal'));
+            document.getElementById('openTaskModalBtn').addEventListener('click', () => openTaskModal());
+        }
+
+        function populateDropdowns() {
+            const stageSelect = document.getElementById('leadStage');
+            stageSelect.innerHTML = STAGES.filter(stage => stage !== 'Втрачено').map(stage => `<option value="${stage}">${stage}</option>`).join('');
+
+            const ownerSelects = [document.getElementById('leadOwner'), document.getElementById('contactOwner'), document.getElementById('taskOwner')];
+            ownerSelects.forEach(select => {
+                select.innerHTML = TEAM_MEMBERS.map(member => `<option value="${member}">${member}</option>`).join('');
+            });
+
+            const pipelineFilter = document.getElementById('pipelineOwnerFilter');
+            TEAM_MEMBERS.forEach(member => {
+                const option = document.createElement('option');
+                option.value = member;
+                option.textContent = member;
+                pipelineFilter.appendChild(option);
+            });
+
+            updateTaskLeadOptions();
+        }
+
+        function updateTaskLeadOptions() {
+            const taskLeadSelect = document.getElementById('taskLead');
+            const options = ['<option value="">Без прив'язки</option>'];
+            crmData.leads.forEach(lead => {
+                options.push(`<option value="${lead.id}">${lead.name} (${lead.company})</option>`);
+            });
+            taskLeadSelect.innerHTML = options.join('');
+        }
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const target = item.dataset.sectionTarget;
+                    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                    document.getElementById(target).classList.add('active');
+                    navItems.forEach(btn => btn.classList.remove('active'));
+                    item.classList.add('active');
+                });
+            });
+        }
+
+        function setupModals() {
+            document.querySelectorAll('[data-close]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const modal = btn.closest('.modal');
+                    if (modal) closeModal(modal.id);
+                });
+            });
+
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', event => {
+                    if (event.target === modal) {
+                        closeModal(modal.id);
                     }
                 });
-                selectedItems = [];
-                updateSelectionInfo();
+            });
+        }
+
+        function setupForms() {
+            document.getElementById('leadForm').addEventListener('submit', handleLeadSubmit);
+            document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
+            document.getElementById('taskForm').addEventListener('submit', handleTaskSubmit);
+        }
+
+        function setupSearch() {
+            const wrapper = document.getElementById('globalSearchWrapper');
+            const input = document.getElementById('globalSearch');
+            const results = document.getElementById('searchResults');
+
+            input.addEventListener('input', event => {
+                const value = event.target.value;
+                clearTimeout(searchTimer);
+                searchTimer = setTimeout(() => handleGlobalSearch(value), 180);
+            });
+
+            document.addEventListener('click', event => {
+                if (!wrapper.contains(event.target)) {
+                    hideSearchResults();
+                }
+            });
+        }
+
+        function setupFilters() {
+            document.getElementById('pipelineOwnerFilter').addEventListener('change', event => {
+                pipelineFilterOwner = event.target.value;
+                renderPipeline();
+            });
+
+            document.getElementById('contactSearch').addEventListener('input', event => {
+                renderContacts(event.target.value);
+            });
+
+            document.getElementById('contactStatusFilter').addEventListener('change', event => {
+                contactStatusFilter = event.target.value;
+                renderContacts(document.getElementById('contactSearch').value);
+            });
+        }
+        function renderAll() {
+            renderDashboard();
+            renderPipeline();
+            renderContacts(document.getElementById('contactSearch').value || '');
+            renderTasks();
+            renderAnalytics();
+        }
+
+        function updateSidebar() {
+            const activeLeads = crmData.leads.filter(lead => lead.stage !== 'Втрачено');
+            const pipelineValue = activeLeads.reduce((sum, lead) => sum + lead.value, 0);
+            document.getElementById('sidebarDeals').textContent = activeLeads.length;
+            document.getElementById('sidebarPipeline').textContent = formatCurrency(pipelineValue, true);
+        }
+
+        function renderDashboard() {
+            updateSidebar();
+            const metricCards = document.getElementById('metricCards');
+            const activeLeads = crmData.leads.filter(lead => lead.stage !== 'Втрачено');
+            const wonDeals = crmData.leads.filter(lead => lead.stage === 'Угода');
+            const lostDeals = crmData.leads.filter(lead => lead.stage === 'Втрачено');
+            const pipelineValue = activeLeads.reduce((sum, lead) => sum + lead.value, 0);
+            const expectedRevenue = activeLeads.reduce((sum, lead) => sum + lead.value * (lead.probability / 100), 0);
+            const winRate = wonDeals.length + lostDeals.length === 0 ? 0 : Math.round((wonDeals.length / (wonDeals.length + lostDeals.length)) * 100);
+            const tasksDueToday = crmData.tasks.filter(task => task.status !== 'done' && isDueToday(task.dueDate)).length;
+            const hotDeals = activeLeads.filter(lead => lead.probability >= 60).length;
+
+            metricCards.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Активні угоди</div>
+                        <div class="metric-value">${activeLeads.length}</div>
+                        <div class="metric-sub">${hotDeals} гарячих можливостей</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Вартість воронки</div>
+                        <div class="metric-value">${formatCurrency(pipelineValue)}</div>
+                        <div class="metric-sub">${formatCurrency(expectedRevenue)} прогнозовано</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div>
+                        <div class="metric-label">Win rate</div>
+                        <div class="metric-value">${winRate}%</div>
+                        <div class="metric-sub">${wonDeals.length} виграно / ${lostDeals.length} втрачено</div>
+                    </div>
+                    <div class="metric-progress" style="--angle: ${winRate * 3.6}deg">${winRate}%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Завдання на сьогодні</div>
+                        <div class="metric-value">${tasksDueToday}</div>
+                        <div class="metric-sub">${crmData.tasks.filter(t => t.status !== 'done').length} активних задач</div>
+                    </div>
+                </div>
+            `;
+
+            renderStageDistribution();
+            renderUpcomingActivities();
+            renderActivityTimeline();
+            renderForecastCard(pipelineValue, expectedRevenue);
+        }
+
+        function renderStageDistribution() {
+            const container = document.getElementById('stageDistribution');
+            const totalValue = crmData.leads.filter(lead => lead.stage !== 'Втрачено').reduce((sum, lead) => sum + lead.value, 0);
+            container.innerHTML = STAGES.map(stage => {
+                const stageLeads = crmData.leads.filter(lead => lead.stage === stage);
+                const stageValue = stageLeads.reduce((sum, lead) => sum + lead.value, 0);
+                const percent = totalValue ? Math.round((stageValue / totalValue) * 100) : 0;
+                const badgeClass = stage === 'Угода' ? 'badge-success' : stage === 'Втрачено' ? 'badge-danger' : '';
+                return `
+                    <div class="stage-item">
+                        <div class="stage-info">
+                            <strong>${stage}</strong>
+                            <div class="stage-bar"><span style="width: ${percent || stageLeads.length ? Math.max(percent, 6) : 4}%"></span></div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div>${formatCurrency(stageValue)}</div>
+                            <div class="metric-sub">${stageLeads.length} угод${stage === 'Угода' ? `<span class="badge ${badgeClass}" style="margin-left:8px;">успіх</span>` : stage === 'Втрачено' ? `<span class="badge ${badgeClass}" style="margin-left:8px;">потрібна увага</span>` : ''}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderUpcomingActivities() {
+            const container = document.getElementById('upcomingActivities');
+            const upcoming = [];
+            const today = new Date();
+
+            crmData.tasks.filter(task => task.status !== 'done' && task.dueDate).forEach(task => {
+                upcoming.push({
+                    type: 'task',
+                    title: task.title,
+                    owner: task.owner,
+                    dueDate: task.dueDate,
+                    relatedLeadId: task.relatedLeadId,
+                    priority: task.priority
+                });
+            });
+
+            crmData.leads.filter(lead => !['Угода', 'Втрачено'].includes(lead.stage) && lead.expectedClose).forEach(lead => {
+                upcoming.push({
+                    type: 'lead',
+                    title: `Очікуване закриття: ${lead.name}`,
+                    owner: lead.owner,
+                    dueDate: lead.expectedClose,
+                    relatedLeadId: lead.id,
+                    priority: lead.probability >= 60 ? 'high' : 'medium'
+                });
+            });
+
+            const soon = upcoming
+                .filter(item => item.dueDate)
+                .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+                .slice(0, 5);
+
+            if (soon.length === 0) {
+                container.innerHTML = '<div class="empty-state">Найближчі активності відсутні — додайте нові завдання.</div>';
+                return;
             }
-        });
+
+            container.innerHTML = soon.map(item => {
+                const due = formatDate(item.dueDate);
+                const overdue = new Date(item.dueDate) < today && !isSameDay(new Date(item.dueDate), today);
+                const badge = item.type === 'task' ? (item.priority === 'high' ? 'badge-danger' : item.priority === 'medium' ? 'badge-warning' : 'badge-success') : 'badge-warning';
+                return `
+                    <div class="upcoming-item">
+                        <div class="badge ${badge}">${item.type === 'task' ? 'Завдання' : 'Угода'}</div>
+                        <div>
+                            <strong>${item.title}</strong>
+                            <div class="metric-sub">${due}${overdue ? ' • прострочено' : ''}${item.owner ? ` • ${item.owner}` : ''}</div>
+                        </div>
+                        ${item.relatedLeadId ? `<button class="btn btn-small-muted" data-open-lead="${item.relatedLeadId}">Деталі</button>` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            container.querySelectorAll('[data-open-lead]').forEach(btn => {
+                btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+        }
+
+        function renderActivityTimeline() {
+            const container = document.getElementById('activityTimeline');
+            const latest = crmData.activities.slice(0, 6);
+            if (latest.length === 0) {
+                container.innerHTML = '<div class="empty-state">Ще не було активностей. Додайте перші угоди!</div>';
+                return;
+            }
+
+            container.innerHTML = latest.map(activity => {
+                const icon = getActivityIcon(activity.type);
+                return `
+                    <div class="timeline-item">
+                        <div class="timeline-icon"><i class="${icon}"></i></div>
+                        <div class="timeline-content">
+                            <div>${activity.message}</div>
+                            <div class="timeline-time">${formatRelativeTime(activity.timestamp)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderForecastCard(pipelineValue, expectedRevenue) {
+            const container = document.getElementById('forecastCard');
+            const target = 200000;
+            const coverage = Math.min(100, Math.round((pipelineValue / target) * 100));
+            const weighted = Math.round(expectedRevenue);
+            const topDeals = crmData.leads
+                .filter(lead => lead.stage !== 'Втрачено')
+                .sort((a, b) => b.value - a.value)
+                .slice(0, 3);
+
+            container.innerHTML = `
+                <div class="highlight-card">
+                    <div class="highlight-label">Покриття цілі</div>
+                    <div class="highlight-value">${coverage}%</div>
+                    <div class="metric-sub">Поточна мета: ${formatCurrency(target)}</div>
+                </div>
+                <div class="divider"></div>
+                <div class="metric-sub">Очікуваний дохід за ймовірностями</div>
+                <h2 style="margin: 6px 0 14px;">${formatCurrency(weighted)}</h2>
+                <div class="metric-sub">ТОП-угоди</div>
+                <div class="timeline-list">
+                    ${topDeals.map(lead => `
+                        <div class="timeline-entry">
+                            <strong>${lead.name}</strong>
+                            <span>${lead.company} • ${formatCurrency(lead.value)} • ${lead.probability}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+        function renderPipeline() {
+            const board = document.getElementById('pipelineBoard');
+            const leads = pipelineFilterOwner === 'all' ? crmData.leads : crmData.leads.filter(lead => lead.owner === pipelineFilterOwner);
+            board.innerHTML = STAGES.map(stage => {
+                const stageLeads = leads.filter(lead => lead.stage === stage);
+                const stageValue = stageLeads.reduce((sum, lead) => sum + lead.value, 0);
+                return `
+                    <div class="pipeline-column" data-stage="${stage}">
+                        <div class="column-head">
+                            <h4>${stage}</h4>
+                            <div class="column-meta">
+                                <span>${stageLeads.length} угод</span>
+                                <span>${formatCurrency(stageValue)}</span>
+                            </div>
+                        </div>
+                        <div class="column-body" data-drop-zone>
+                            ${stageLeads.length ? stageLeads.map(createDealCard).join('') : `<div class="empty-state">Немає угод</div>`}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            setupPipelineInteractions();
+        }
+
+        function createDealCard(lead) {
+            const tags = lead.tags && lead.tags.length ? lead.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
+            const contact = lead.contact?.person ? `<div class="metric-sub"><i class="fa-regular fa-user"></i> ${lead.contact.person}</div>` : '';
+            const stageClass = lead.stage === 'Угода' ? 'badge-success' : lead.stage === 'Втрачено' ? 'badge-danger' : 'badge-warning';
+            return `
+                <div class="deal-card" draggable="true" data-lead-id="${lead.id}">
+                    <div class="deal-card-top">
+                        <span class="deal-stage ${stageClass}">${lead.stage}</span>
+                        <span class="metric-sub">${formatRelativeTime(lead.updatedAt)}</span>
+                    </div>
+                    <div class="deal-title">${lead.name}</div>
+                    <div class="metric-sub"><i class="fa-regular fa-building"></i> ${lead.company}</div>
+                    ${contact}
+                    <div class="deal-meta">
+                        <span><i class="fa-solid fa-coins"></i> ${formatCurrency(lead.value)}</span>
+                        <span><i class="fa-solid fa-bullseye"></i> ${lead.probability}%</span>
+                    </div>
+                    <div class="deal-footer">
+                        <div class="avatar">${lead.owner.charAt(0)}</div>
+                        <div class="deal-tags">${tags}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        let draggedLeadId = null;
+
+        function setupPipelineInteractions() {
+            document.querySelectorAll('.deal-card').forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+                card.addEventListener('click', () => openLeadDetails(card.dataset.leadId));
+            });
+
+            document.querySelectorAll('[data-drop-zone]').forEach(zone => {
+                zone.addEventListener('dragover', handleDragOver);
+                zone.addEventListener('dragleave', handleDragLeave);
+                zone.addEventListener('drop', handleDrop);
+            });
+        }
+
+        function handleDragStart(event) {
+            draggedLeadId = event.currentTarget.dataset.leadId;
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', draggedLeadId);
+        }
+
+        function handleDragEnd() {
+            draggedLeadId = null;
+            document.querySelectorAll('[data-drop-zone]').forEach(zone => zone.classList.remove('drop-active'));
+        }
+
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.currentTarget.classList.add('drop-active');
+        }
+
+        function handleDragLeave(event) {
+            event.currentTarget.classList.remove('drop-active');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const stage = event.currentTarget.closest('.pipeline-column').dataset.stage;
+            event.currentTarget.classList.remove('drop-active');
+            const leadId = draggedLeadId || event.dataTransfer.getData('text/plain');
+            if (leadId) {
+                moveLeadToStage(leadId, stage);
+            }
+            draggedLeadId = null;
+        }
+        function renderContacts(searchTerm = '') {
+            const container = document.getElementById('contactsTable');
+            const query = searchTerm.trim().toLowerCase();
+            let contacts = crmData.contacts;
+
+            if (contactStatusFilter !== 'all') {
+                contacts = contacts.filter(contact => contact.status === contactStatusFilter);
+            }
+
+            if (query) {
+                contacts = contacts.filter(contact => {
+                    return [contact.name, contact.company, contact.email, contact.phone, contact.role]
+                        .filter(Boolean)
+                        .some(value => value.toLowerCase().includes(query));
+                });
+            }
+
+            if (contacts.length === 0) {
+                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Немає контактів за обраними фільтрами.</div>';
+                return;
+            }
+
+            container.innerHTML = contacts.map(contact => {
+                const statusClass = `status-${contact.status}`;
+                const tags = contact.tags && contact.tags.length ? contact.tags.map(tag => `<span class="chip">${tag}</span>`).join('') : '';
+                return `
+                    <div class="table-row" data-contact-id="${contact.id}">
+                        <div class="contact-main">
+                            <div class="avatar">${contact.name.charAt(0)}</div>
+                            <div class="contact-info">
+                                <strong>${contact.name}</strong>
+                                <span class="contact-sub">${contact.role || ''}</span>
+                            </div>
+                        </div>
+                        <div>${contact.company || ''}</div>
+                        <div>${contact.email || ''}</div>
+                        <div>${contact.phone || ''}</div>
+                        <div>
+                            <span class="status-badge ${statusClass}">${STATUS_LABELS[contact.status] || contact.status}</span>
+                            ${tags ? `<div class="chips" style="margin-top:6px;">${tags}</div>` : ''}
+                        </div>
+                        <div>${contact.owner || ''}</div>
+                    </div>
+                `;
+            }).join('');
+
+            container.querySelectorAll('.table-row').forEach(row => {
+                row.addEventListener('click', () => {
+                    const contactId = row.dataset.contactId;
+                    const contact = crmData.contacts.find(item => item.id === contactId);
+                    if (contact && contact.company) {
+                        const lead = crmData.leads.find(l => l.company === contact.company);
+                        if (lead) {
+                            openLeadDetails(lead.id);
+                        }
+                    }
+                });
+            });
+        }
+
+        function renderTasks() {
+            const board = document.getElementById('taskBoard');
+            board.innerHTML = TASK_COLUMNS.map(column => {
+                const tasks = crmData.tasks.filter(task => task.status === column.id);
+                return `
+                    <div class="task-column" data-status="${column.id}">
+                        <div class="task-column-header">
+                            <h4>${column.title}</h4>
+                            <span>${tasks.length}</span>
+                        </div>
+                        <div class="task-items">
+                            ${tasks.length ? tasks.map(createTaskCard).join('') : '<div class="empty-state">Немає завдань</div>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            setupTaskBoardInteractions();
+        }
+
+        function createTaskCard(task) {
+            const lead = task.relatedLeadId ? crmData.leads.find(lead => lead.id === task.relatedLeadId) : null;
+            const overdue = task.status !== 'done' && task.dueDate && new Date(task.dueDate) < new Date() && !isSameDay(new Date(task.dueDate), new Date());
+            const priorityLabel = task.priority === 'high' ? 'Високий' : task.priority === 'medium' ? 'Середній' : 'Низький';
+            return `
+                <div class="task-card" data-task-id="${task.id}">
+                    <div class="task-header">
+                        <span class="priority priority-${task.priority}">${priorityLabel}</span>
+                        <span class="metric-sub">${task.status === 'done' ? 'завершено ' + formatDate(task.completedAt || task.dueDate) : formatRelativeTime(task.dueDate)}</span>
+                    </div>
+                    <div class="task-title">${task.title}</div>
+                    <div class="task-meta">
+                        <span><i class="fa-regular fa-calendar"></i> ${formatDate(task.dueDate)}${overdue ? ' • прострочено' : ''}</span>
+                        <span><i class="fa-regular fa-user"></i> ${task.owner}</span>
+                    </div>
+                    ${lead ? `<div class="metric-sub" data-open-lead="${lead.id}"><i class="fa-solid fa-link"></i> ${lead.name}</div>` : ''}
+                    ${task.description ? `<div class="metric-sub">${task.description}</div>` : ''}
+                    <div class="task-actions">
+                        ${task.status === 'inProgress' ? `<button class="btn-small-muted" data-task-action="back">Повернути</button>` : ''}
+                        ${task.status === 'done' ? `<span class="badge badge-success">Виконано</span>` : `<button class="btn-small-primary" data-task-action="${task.status === 'todo' ? 'start' : 'done'}">${task.status === 'todo' ? 'Розпочати' : 'Завершити'}</button>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        function setupTaskBoardInteractions() {
+            document.querySelectorAll('#taskBoard [data-task-action]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const taskId = btn.closest('.task-card').dataset.taskId;
+                    const action = btn.dataset.taskAction;
+                    if (action === 'start') {
+                        updateTaskStatus(taskId, 'inProgress');
+                    } else if (action === 'done') {
+                        updateTaskStatus(taskId, 'done');
+                    } else if (action === 'back') {
+                        updateTaskStatus(taskId, 'todo');
+                    }
+                });
+            });
+
+            document.querySelectorAll('#taskBoard [data-open-lead]').forEach(link => {
+                link.addEventListener('click', () => openLeadDetails(link.dataset.openLead));
+            });
+        }
+
+        function renderAnalytics() {
+            document.getElementById('insightUpdated').textContent = `Оновлено ${formatTime(new Date())}`;
+            renderConversionInsights();
+            renderTeamPerformance();
+            renderLeadFocus();
+            renderVelocityInsights();
+        }
+
+        function renderConversionInsights() {
+            const container = document.getElementById('conversionInsights');
+            const total = crmData.leads.length || 1;
+            container.innerHTML = STAGES.map(stage => {
+                const count = crmData.leads.filter(lead => lead.stage === stage).length;
+                const percent = Math.round((count / total) * 100);
+                return `
+                    <div class="progress-item">
+                        <div><strong>${stage}</strong><div class="metric-sub">${percent}% угод</div></div>
+                        <div class="progress-track"><div class="progress-value" style="width:${percent || count ? Math.max(percent, 6) : 4}%"></div></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTeamPerformance() {
+            const container = document.getElementById('teamPerformance');
+            container.innerHTML = TEAM_MEMBERS.map(member => {
+                const leads = crmData.leads.filter(lead => lead.owner === member && lead.stage !== 'Втрачено');
+                const value = leads.reduce((sum, lead) => sum + lead.value, 0);
+                const tasksTotal = crmData.tasks.filter(task => task.owner === member).length;
+                const tasksDone = crmData.tasks.filter(task => task.owner === member && task.status === 'done').length;
+                const completion = tasksTotal ? Math.round((tasksDone / tasksTotal) * 100) : 0;
+                return `
+                    <div class="progress-item">
+                        <div>
+                            <strong>${member}</strong>
+                            <div class="metric-sub">${formatCurrency(value)} у воронці</div>
+                        </div>
+                        <div class="progress-track"><div class="progress-value" style="width:${completion || leads.length ? Math.max(completion, 6) : 4}%"></div></div>
+                        <div class="metric-sub">${completion}% виконання задач</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderLeadFocus() {
+            const container = document.getElementById('leadFocus');
+            const now = new Date();
+            const focus = crmData.leads
+                .filter(lead => !['Угода', 'Втрачено'].includes(lead.stage))
+                .map(lead => {
+                    const daysIdle = daysBetween(new Date(lead.updatedAt), now);
+                    const tasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id && task.status !== 'done');
+                    const overdue = tasks.filter(task => task.dueDate && new Date(task.dueDate) < now && !isSameDay(new Date(task.dueDate), now)).length;
+                    return { lead, daysIdle, overdue, tasks: tasks.length };
+                })
+                .filter(item => item.daysIdle > 7 || item.overdue > 0)
+                .sort((a, b) => b.overdue - a.overdue || b.daysIdle - a.daysIdle)
+                .slice(0, 4);
+
+            if (focus.length === 0) {
+                container.innerHTML = '<div class="empty-state">Немає угод, що потребують негайної уваги.</div>';
+                return;
+            }
+
+            container.innerHTML = focus.map(item => `
+                <div class="lead-focus-item">
+                    <strong>${item.lead.name}</strong>
+                    <div class="focus-meta">${item.lead.company} • не оновлювалась ${item.daysIdle} дн.</div>
+                    <div class="focus-meta">Відкритих задач: ${item.tasks}${item.overdue ? ` • <span style="color:#b91c1c;">прострочено ${item.overdue}</span>` : ''}</div>
+                    <button class="btn btn-small-primary" data-open-lead="${item.lead.id}">Перейти до угоди</button>
+                </div>
+            `).join('');
+
+            container.querySelectorAll('[data-open-lead]').forEach(btn => {
+                btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+        }
+
+        function renderVelocityInsights() {
+            const container = document.getElementById('velocityInsights');
+            const now = new Date();
+            const won = crmData.leads.filter(lead => lead.status === 'won' && lead.closedAt);
+            const avgWin = won.length ? Math.round(won.reduce((sum, lead) => sum + daysBetween(new Date(lead.createdAt), new Date(lead.closedAt)), 0) / won.length) : 0;
+            const active = crmData.leads.filter(lead => !['Угода', 'Втрачено'].includes(lead.stage));
+            const avgAge = active.length ? Math.round(active.reduce((sum, lead) => sum + daysBetween(new Date(lead.createdAt), now), 0) / active.length) : 0;
+            const stale = active.filter(lead => daysBetween(new Date(lead.updatedAt), now) > 14);
+
+            container.innerHTML = `
+                <div class="highlight-card">
+                    <div class="highlight-label">Середній час до перемоги</div>
+                    <div class="highlight-value">${avgWin || '-'} дн.</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="highlight-label">Середній вік активних угод</div>
+                    <div class="highlight-value">${avgAge || '-'} дн.</div>
+                </div>
+                <div class="metric-sub" style="margin-top:12px;">Без активності > 14 днів: ${stale.length}</div>
+                ${stale.slice(0, 3).map(lead => `<div class="timeline-entry"><strong>${lead.name}</strong><span>${lead.company} • оновлено ${formatRelativeTime(lead.updatedAt)}</span></div>`).join('')}
+            `;
+        }
+        function handleGlobalSearch(value) {
+            const results = document.getElementById('searchResults');
+            const query = value.trim().toLowerCase();
+            if (!query) {
+                hideSearchResults();
+                return;
+            }
+
+            const leadMatches = crmData.leads.filter(lead => {
+                return [lead.name, lead.company, lead.contact?.person]
+                    .filter(Boolean)
+                    .some(field => field.toLowerCase().includes(query));
+            }).slice(0, 4);
+
+            const contactMatches = crmData.contacts.filter(contact => {
+                return [contact.name, contact.company, contact.email]
+                    .filter(Boolean)
+                    .some(field => field.toLowerCase().includes(query));
+            }).slice(0, 4);
+
+            const taskMatches = crmData.tasks.filter(task => task.title.toLowerCase().includes(query)).slice(0, 3);
+
+            if (!leadMatches.length && !contactMatches.length && !taskMatches.length) {
+                results.innerHTML = '<div class="search-empty">Нічого не знайдено</div>';
+                results.classList.add('active');
+                return;
+            }
+
+            results.innerHTML = `
+                ${leadMatches.length ? `
+                    <div class="search-group">
+                        <div class="search-group-title">Угоди</div>
+                        ${leadMatches.map(lead => `<div class="search-result" data-result-lead="${lead.id}"><span>${lead.name}</span><span class="metric-sub">${lead.company}</span></div>`).join('')}
+                    </div>` : ''}
+                ${contactMatches.length ? `
+                    <div class="search-group">
+                        <div class="search-group-title">Контакти</div>
+                        ${contactMatches.map(contact => `<div class="search-result" data-result-contact="${contact.id}"><span>${contact.name}</span><span class="metric-sub">${contact.company || ''}</span></div>`).join('')}
+                    </div>` : ''}
+                ${taskMatches.length ? `
+                    <div class="search-group">
+                        <div class="search-group-title">Завдання</div>
+                        ${taskMatches.map(task => `<div class="search-result" data-result-task="${task.id}"><span>${task.title}</span><span class="metric-sub">${formatDate(task.dueDate)}</span></div>`).join('')}
+                    </div>` : ''}
+            `;
+
+            results.classList.add('active');
+
+            results.querySelectorAll('[data-result-lead]').forEach(item => {
+                item.addEventListener('click', () => {
+                    openLeadDetails(item.dataset.resultLead);
+                    hideSearchResults();
+                });
+            });
+
+            results.querySelectorAll('[data-result-contact]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const contact = crmData.contacts.find(c => c.id === item.dataset.resultContact);
+                    if (contact) {
+                        const relatedLead = crmData.leads.find(lead => lead.company === contact.company);
+                        if (relatedLead) {
+                            openLeadDetails(relatedLead.id);
+                        }
+                    }
+                    hideSearchResults();
+                });
+            });
+
+            results.querySelectorAll('[data-result-task]').forEach(item => {
+                item.addEventListener('click', () => {
+                    const task = crmData.tasks.find(t => t.id === item.dataset.resultTask);
+                    if (task?.relatedLeadId) {
+                        openLeadDetails(task.relatedLeadId);
+                    }
+                    hideSearchResults();
+                });
+            });
+        }
+
+        function hideSearchResults() {
+            const results = document.getElementById('searchResults');
+            results.classList.remove('active');
+            results.innerHTML = '';
+        }
+
+        function getActivityIcon(type) {
+            switch (type) {
+                case 'stage':
+                    return 'fa-solid fa-diagram-project';
+                case 'note':
+                    return 'fa-solid fa-pen-to-square';
+                case 'task':
+                    return 'fa-solid fa-square-check';
+                case 'won':
+                    return 'fa-solid fa-trophy';
+                case 'lost':
+                    return 'fa-solid fa-face-frown';
+                default:
+                    return 'fa-solid fa-circle-info';
+            }
+        }
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.add('active');
+            }
+        }
+
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.classList.remove('active');
+                if (id === 'leadDetailsModal') {
+                    activeLeadId = null;
+                }
+            }
+        }
+
+        function resetDemoData() {
+            if (confirm('Скинути дані та повернути демо-набір?')) {
+                crmData = deepClone(defaultData);
+                saveData();
+                populateDropdowns();
+                renderAll();
+            }
+        }
+
+        function handleLeadSubmit(event) {
+            event.preventDefault();
+            const now = new Date().toISOString();
+            const lead = {
+                id: generateId('lead'),
+                name: document.getElementById('leadTitle').value.trim(),
+                company: document.getElementById('leadCompany').value.trim(),
+                stage: document.getElementById('leadStage').value,
+                value: Number(document.getElementById('leadValue').value) || 0,
+                probability: Number(document.getElementById('leadProbability').value) || 0,
+                owner: document.getElementById('leadOwner').value,
+                status: 'active',
+                expectedClose: document.getElementById('leadStage').value === 'Угода' ? now.split('T')[0] : '',
+                contact: {
+                    id: generateId('contact'),
+                    person: document.getElementById('leadContactName').value.trim(),
+                    email: document.getElementById('leadContactEmail').value.trim(),
+                    phone: document.getElementById('leadContactPhone').value.trim()
+                },
+                tags: document.getElementById('leadTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                createdAt: now,
+                updatedAt: now,
+                notes: [],
+                timeline: []
+            };
+
+            if (lead.stage === 'Угода') {
+                lead.status = 'won';
+                lead.closedAt = now;
+                lead.probability = 100;
+            }
+
+            const initialNote = document.getElementById('leadNotes').value.trim();
+            if (initialNote) {
+                lead.notes.push({ id: generateId('note'), text: initialNote, author: 'Ви', date: now });
+            }
+
+            addTimelineEntry(lead, `Створено лід ${lead.name}`);
+            addTimelineEntry(lead, `Стадія встановлена: ${lead.stage}`);
+
+            crmData.leads.unshift(lead);
+
+            if (lead.contact.person || lead.contact.email) {
+                const existingContact = crmData.contacts.find(contact => contact.email && contact.email === lead.contact.email);
+                if (!existingContact) {
+                    crmData.contacts.unshift({
+                        id: lead.contact.id,
+                        name: lead.contact.person || lead.name,
+                        company: lead.company,
+                        role: '',
+                        email: lead.contact.email,
+                        phone: lead.contact.phone,
+                        status: 'potential',
+                        owner: lead.owner,
+                        tags: lead.tags,
+                        lastActivity: now
+                    });
+                }
+            }
+
+            logActivity(`Додано нову угоду ${lead.name} для ${lead.company}.`, 'stage', lead.id);
+            saveData();
+            updateTaskLeadOptions();
+            renderAll();
+            closeModal('addLeadModal');
+            event.target.reset();
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const now = new Date().toISOString();
+            const contact = {
+                id: generateId('contact'),
+                name: document.getElementById('contactName').value.trim(),
+                company: document.getElementById('contactCompany').value.trim(),
+                role: document.getElementById('contactRole').value.trim(),
+                email: document.getElementById('contactEmail').value.trim(),
+                phone: document.getElementById('contactPhone').value.trim(),
+                status: document.getElementById('contactStatus').value,
+                owner: document.getElementById('contactOwner').value,
+                tags: document.getElementById('contactTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                lastActivity: now
+            };
+
+            crmData.contacts.unshift(contact);
+            logActivity(`Додано новий контакт ${contact.name}.`, 'note', contact.id);
+            saveData();
+            renderContacts(document.getElementById('contactSearch').value || '');
+            closeModal('addContactModal');
+            event.target.reset();
+        }
+
+        function openTaskModal(leadId = '') {
+            updateTaskLeadOptions();
+            const select = document.getElementById('taskLead');
+            select.value = leadId || '';
+            document.getElementById('taskStatus').value = 'todo';
+            document.getElementById('taskPriority').value = 'medium';
+            const dateInput = document.getElementById('taskDueDate');
+            if (!dateInput.value) {
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                dateInput.valueAsDate = tomorrow;
+            }
+            openModal('addTaskModal');
+        }
+
+        function handleTaskSubmit(event) {
+            event.preventDefault();
+            const task = {
+                id: generateId('task'),
+                title: document.getElementById('taskTitle').value.trim(),
+                owner: document.getElementById('taskOwner').value,
+                dueDate: document.getElementById('taskDueDate').value,
+                priority: document.getElementById('taskPriority').value,
+                status: document.getElementById('taskStatus').value,
+                relatedLeadId: document.getElementById('taskLead').value,
+                description: document.getElementById('taskDescription').value.trim()
+            };
+
+            if (task.status === 'done') {
+                task.completedAt = new Date().toISOString();
+            }
+
+            crmData.tasks.unshift(task);
+            if (task.relatedLeadId) {
+                const lead = crmData.leads.find(item => item.id === task.relatedLeadId);
+                if (lead) {
+                    addTimelineEntry(lead, `Додано завдання: ${task.title}`);
+                }
+            }
+            logActivity(`Нове завдання: ${task.title}.`, 'task', task.id);
+            saveData();
+            renderTasks();
+            renderUpcomingActivities();
+            renderLeadFocus();
+            closeModal('addTaskModal');
+            event.target.reset();
+        }
+
+        function updateTaskStatus(taskId, status) {
+            const task = crmData.tasks.find(item => item.id === taskId);
+            if (!task) return;
+            task.status = status;
+            if (status === 'done') {
+                task.completedAt = new Date().toISOString();
+            }
+            saveData();
+            renderTasks();
+            renderDashboard();
+            renderLeadFocus();
+        }
+
+        function logActivity(message, type = 'note', entityId = null) {
+            crmData.activities.unshift({
+                id: generateId('act'),
+                type,
+                entityId,
+                message,
+                timestamp: new Date().toISOString()
+            });
+            crmData.activities = crmData.activities.slice(0, 40);
+        }
+
+        function addTimelineEntry(lead, text) {
+            lead.timeline.unshift({ id: generateId('tl'), text, date: new Date().toISOString() });
+        }
+
+        function moveLeadToStage(leadId, stage) {
+            const lead = crmData.leads.find(item => item.id === leadId);
+            if (!lead || lead.stage === stage) return;
+            const previousStage = lead.stage;
+            lead.stage = stage;
+            lead.updatedAt = new Date().toISOString();
+            if (stage === 'Угода') {
+                lead.status = 'won';
+                lead.closedAt = new Date().toISOString();
+                lead.probability = 100;
+            } else if (stage === 'Втрачено') {
+                lead.status = 'lost';
+                lead.probability = 0;
+            } else {
+                lead.status = 'active';
+            }
+            addTimelineEntry(lead, `Стадія змінена з ${previousStage} на ${stage}`);
+            logActivity(`Лід ${lead.name} переміщено на етап ${stage}.`, 'stage', lead.id);
+            saveData();
+            renderPipeline();
+            renderDashboard();
+            renderAnalytics();
+            if (activeLeadId === lead.id) {
+                renderLeadDetails(lead.id);
+            }
+        }
+        function openLeadDetails(leadId) {
+            activeLeadId = leadId;
+            renderLeadDetails(leadId);
+            openModal('leadDetailsModal');
+        }
+
+        function renderLeadDetails(leadId) {
+            const lead = crmData.leads.find(item => item.id === leadId);
+            if (!lead) return;
+            document.getElementById('leadDetailsTitle').textContent = lead.name;
+            const content = document.getElementById('leadDetailsContent');
+            const contact = lead.contact || {};
+            const relatedTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id);
+
+            content.innerHTML = `
+                <div class="lead-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-label">Вартість</div>
+                        <div class="highlight-value">${formatCurrency(lead.value)}</div>
+                        <div class="metric-sub">Ймовірність ${lead.probability}%</div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-label">Стадія</div>
+                        <div class="highlight-value">${lead.stage}</div>
+                        <div class="metric-sub">Оновлено ${formatRelativeTime(lead.updatedAt)}</div>
+                    </div>
+                    <div class="highlight-card">
+                        <div class="highlight-label">Менеджер</div>
+                        <div class="highlight-value">${lead.owner}</div>
+                        <div class="metric-sub">Створено ${formatDate(lead.createdAt)}</div>
+                    </div>
+                </div>
+
+                <div class="lead-columns">
+                    <div class="card">
+                        <h3>Інформація про угоду</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Компанія</div>
+                                <div class="info-value">${lead.company}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Контакт</div>
+                                <div class="info-value">${contact.person || '—'}${contact.email ? `<br><span class="metric-sub">${contact.email}</span>` : ''}${contact.phone ? `<br><span class="metric-sub">${contact.phone}</span>` : ''}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Етап</div>
+                                <select id="leadStageSelect" style="margin-top:6px;">
+                                    ${STAGES.map(stage => `<option value="${stage}" ${stage === lead.stage ? 'selected' : ''}>${stage}</option>`).join('')}
+                                </select>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Ймовірність</div>
+                                <div class="probability-control">
+                                    <input type="range" id="leadProbabilityRange" min="0" max="100" step="5" value="${lead.probability}">
+                                    <span class="probability-value" id="leadProbabilityValue">${lead.probability}%</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Мітки</div>
+                                <div class="chips">${lead.tags && lead.tags.length ? lead.tags.map(tag => `<span class="chip">${tag}</span>`).join('') : '—'}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Примітки</h3>
+                        <div class="notes-list" id="leadNotesList">
+                            ${lead.notes && lead.notes.length ? lead.notes.map(note => `
+                                <div class="note-item">
+                                    <div>${note.text}</div>
+                                    <div class="note-meta">${note.author || 'CRM'} • ${formatDate(note.date)}</div>
+                                </div>
+                            `).join('') : '<div class="empty-state">Ще немає приміток</div>'}
+                        </div>
+                        <form id="leadNoteForm" class="form-group full" style="margin-top:16px;">
+                            <label for="leadNoteText">Додати примітку</label>
+                            <textarea id="leadNoteText" required placeholder="Що зроблено? Які наступні кроки?"></textarea>
+                            <div class="modal-actions" style="justify-content:flex-start;">
+                                <button type="submit" class="btn btn-small-primary">Зберегти примітку</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="lead-columns">
+                    <div class="card">
+                        <div class="section-header" style="margin-bottom:12px;">
+                            <div>
+                                <h3>Завдання по угоді</h3>
+                                <p>${relatedTasks.length} завдань</p>
+                            </div>
+                            <button class="btn btn-small-primary" id="addLeadTaskBtn"><i class="fa-solid fa-circle-plus"></i> Нове завдання</button>
+                        </div>
+                        <div class="task-items">
+                            ${relatedTasks.length ? relatedTasks.map(task => `
+                                <div class="task-card" data-task-id="${task.id}">
+                                    <div class="task-header">
+                                        <span class="priority priority-${task.priority}">${task.priority === 'high' ? 'Високий' : task.priority === 'medium' ? 'Середній' : 'Низький'}</span>
+                                        <span class="metric-sub">${task.status === 'done' ? 'виконано' : task.status === 'inProgress' ? 'в роботі' : 'до виконання'}</span>
+                                    </div>
+                                    <div class="task-title">${task.title}</div>
+                                    <div class="task-meta">
+                                        <span><i class="fa-regular fa-calendar"></i> ${formatDate(task.dueDate)}</span>
+                                        <span><i class="fa-regular fa-user"></i> ${task.owner}</span>
+                                    </div>
+                                </div>
+                            `).join('') : '<div class="empty-state">Завдання ще не додані</div>'}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Хронологія</h3>
+                        <div class="timeline-list">
+                            ${lead.timeline && lead.timeline.length ? lead.timeline.slice(0, 8).map(item => `
+                                <div class="timeline-entry">
+                                    <strong>${item.text}</strong>
+                                    <span>${formatRelativeTime(item.date)}</span>
+                                </div>
+                            `).join('') : '<div class="empty-state">Історія поки порожня</div>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('leadStageSelect').addEventListener('change', event => {
+                moveLeadToStage(lead.id, event.target.value);
+            });
+
+            const probabilityRange = document.getElementById('leadProbabilityRange');
+            const probabilityValue = document.getElementById('leadProbabilityValue');
+            probabilityRange.addEventListener('input', event => {
+                probabilityValue.textContent = `${event.target.value}%`;
+            });
+            probabilityRange.addEventListener('change', event => {
+                updateLeadProbability(lead.id, Number(event.target.value));
+            });
+
+            document.getElementById('leadNoteForm').addEventListener('submit', event => {
+                event.preventDefault();
+                const text = document.getElementById('leadNoteText').value.trim();
+                if (!text) return;
+                lead.notes.unshift({ id: generateId('note'), text, author: 'Ви', date: new Date().toISOString() });
+                addTimelineEntry(lead, `Нова примітка: ${text.slice(0, 80)}`);
+                logActivity(`Додано примітку до ${lead.name}.`, 'note', lead.id);
+                saveData();
+                renderLeadDetails(lead.id);
+                renderActivityTimeline();
+            });
+
+            document.getElementById('addLeadTaskBtn').addEventListener('click', () => openTaskModal(lead.id));
+        }
+
+        function updateLeadProbability(leadId, probability) {
+            const lead = crmData.leads.find(item => item.id === leadId);
+            if (!lead) return;
+            lead.probability = probability;
+            lead.updatedAt = new Date().toISOString();
+            addTimelineEntry(lead, `Ймовірність змінена на ${probability}%`);
+            logActivity(`Оновлено прогноз для ${lead.name} (${probability}%).`, 'note', lead.id);
+            saveData();
+            renderDashboard();
+            renderForecastCard(
+                crmData.leads.filter(l => l.stage !== 'Втрачено').reduce((sum, l) => sum + l.value, 0),
+                crmData.leads.filter(l => l.stage !== 'Втрачено').reduce((sum, l) => sum + l.value * (l.probability / 100), 0)
+            );
+            renderAnalytics();
+        }
+        function formatCurrency(value, compact = false) {
+            if (!Number.isFinite(value)) return '0 ₴';
+            return new Intl.NumberFormat('uk-UA', {
+                style: 'currency',
+                currency: 'UAH',
+                maximumFractionDigits: 0,
+                notation: compact ? 'compact' : 'standard'
+            }).format(value);
+        }
+
+        function formatDate(dateInput, options = { day: '2-digit', month: 'short' }) {
+            if (!dateInput) return '—';
+            const date = new Date(dateInput);
+            if (Number.isNaN(date.getTime())) return '—';
+            return new Intl.DateTimeFormat('uk-UA', options).format(date);
+        }
+
+        function formatTime(dateInput) {
+            const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
+            if (Number.isNaN(date.getTime())) return '';
+            return new Intl.DateTimeFormat('uk-UA', { hour: '2-digit', minute: '2-digit' }).format(date);
+        }
+
+        function formatRelativeTime(dateInput) {
+            if (!dateInput) return '';
+            const date = new Date(dateInput);
+            if (Number.isNaN(date.getTime())) return '';
+            const now = new Date();
+            const diffSeconds = Math.round((date.getTime() - now.getTime()) / 1000);
+            const rtf = new Intl.RelativeTimeFormat('uk-UA', { numeric: 'auto' });
+            const divisions = [
+                { amount: 60, unit: 'second' },
+                { amount: 60, unit: 'minute' },
+                { amount: 24, unit: 'hour' },
+                { amount: 7, unit: 'day' },
+                { amount: 4.34524, unit: 'week' },
+                { amount: 12, unit: 'month' },
+                { amount: Number.POSITIVE_INFINITY, unit: 'year' }
+            ];
+            let duration = diffSeconds;
+            for (const division of divisions) {
+                if (Math.abs(duration) < division.amount) {
+                    return rtf.format(Math.round(duration), division.unit);
+                }
+                duration /= division.amount;
+            }
+            return '';
+        }
+
+        function daysBetween(startDate, endDate = new Date()) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            const diff = end.getTime() - start.getTime();
+            return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+        }
+
+        function isSameDay(dateA, dateB) {
+            return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth() && dateA.getDate() === dateB.getDate();
+        }
+
+        function isDueToday(dateInput) {
+            if (!dateInput) return false;
+            const due = new Date(dateInput);
+            const today = new Date();
+            return isSameDay(due, today);
+        }
     </script>
 </body>
 </html>
