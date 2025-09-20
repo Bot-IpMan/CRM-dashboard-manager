@@ -1712,10 +1712,354 @@
             color: #475569;
         }
 
+        .task-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 320px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .task-main {
+            display: grid;
+            gap: 18px;
+        }
+
+        .task-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .task-search {
+            position: relative;
+            flex: 1 1 220px;
+            max-width: 380px;
+        }
+
+        .task-search i {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .task-search input {
+            width: 100%;
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            border-radius: 12px;
+            padding: 10px 12px 10px 38px;
+            font-size: 14px;
+            outline: none;
+            background: rgba(248, 250, 255, 0.9);
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .task-search input:focus {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .task-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .task-filter {
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 9px 12px;
+            font-size: 13px;
+            background: rgba(248, 250, 255, 0.9);
+            color: var(--text);
+            min-width: 140px;
+        }
+
+        .task-filter:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.45);
+        }
+
+        .task-filter-reset {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.22);
+            border-radius: 12px;
+            padding: 9px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+            cursor: pointer;
+            transition: background 0.2s ease, border 0.2s ease;
+        }
+
+        .task-filter-reset:hover {
+            background: rgba(99, 102, 241, 0.18);
+            border-color: rgba(99, 102, 241, 0.32);
+        }
+
+        .task-filter-reset i {
+            font-size: 14px;
+        }
+
+        .task-process-summary {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            padding: 18px 20px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 12px;
+        }
+
+        .process-summary-main {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .process-summary-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .process-summary-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.16);
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        .process-summary-indicator.has-warning {
+            background: rgba(239, 68, 68, 0.18);
+            color: #b91c1c;
+        }
+
+        .process-summary-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .process-summary-filter {
+            margin-top: -4px;
+        }
+
         .task-board {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 18px;
+        }
+
+        .task-sidebar {
+            display: grid;
+            gap: 16px;
+        }
+
+        .task-sidebar-card {
+            display: grid;
+            gap: 14px;
+        }
+
+        .task-sidebar-header h3 {
+            margin-bottom: 6px;
+        }
+
+        .task-summary-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .task-summary-card {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            background: rgba(248, 250, 255, 0.9);
+        }
+
+        .task-summary-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.16);
+            color: var(--primary-dark);
+            font-size: 16px;
+        }
+
+        .task-summary-icon-warning {
+            background: rgba(245, 158, 11, 0.18);
+            color: #b45309;
+        }
+
+        .task-summary-icon-success {
+            background: rgba(34, 197, 94, 0.18);
+            color: #15803d;
+        }
+
+        .task-summary-icon-info {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0c4a6e;
+        }
+
+        .task-summary-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .task-summary-value {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 4px 0;
+        }
+
+        .task-flow-list,
+        .task-workload-list,
+        .task-feature-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .task-flow-item,
+        .task-workload-item,
+        .task-feature-item {
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 12px 14px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .task-flow-header,
+        .task-workload-header,
+        .task-feature-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .task-workload-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .task-feature-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .task-feature-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+        }
+
+        .task-feature-value {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .task-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--text);
+        }
+
+        .task-pill i {
+            font-size: 12px;
+        }
+
+        .task-pill-info {
+            background: rgba(14, 165, 233, 0.14);
+            color: #0c4a6e;
+        }
+
+        .task-pill-warning {
+            background: rgba(245, 158, 11, 0.16);
+            color: #b45309;
+        }
+
+        .task-pill-danger {
+            background: rgba(239, 68, 68, 0.16);
+            color: #b91c1c;
+        }
+
+        .task-pill-muted {
+            background: rgba(148, 163, 184, 0.16);
+            color: #1f2937;
+        }
+
+        @media (max-width: 1280px) {
+            .task-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .task-sidebar {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .task-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .task-filters {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .task-filter {
+                flex: 1 1 auto;
+            }
+
+            .task-sidebar {
+                grid-template-columns: 1fr;
+            }
         }
 
         .task-column {
@@ -3521,7 +3865,61 @@
                         </button>
                     </div>
                 </div>
-                <div class="task-board" id="taskBoard"></div>
+                <div class="task-layout">
+                    <div class="task-main">
+                        <div class="task-controls">
+                            <div class="task-search">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="search" id="taskSearchInput" placeholder="Пошук у задачах..." aria-label="Пошук задач">
+                            </div>
+                            <div class="task-filters">
+                                <select id="taskOwnerFilter" class="task-filter" aria-label="Фільтр за відповідальним">
+                                    <option value="all">Вся команда</option>
+                                </select>
+                                <select id="taskPriorityFilter" class="task-filter" aria-label="Фільтр за пріоритетом">
+                                    <option value="all">Всі пріоритети</option>
+                                    <option value="high">Високий</option>
+                                    <option value="medium">Середній</option>
+                                    <option value="low">Низький</option>
+                                </select>
+                                <select id="taskDueFilter" class="task-filter" aria-label="Фільтр за дедлайном">
+                                    <option value="all">Всі дедлайни</option>
+                                    <option value="overdue">Прострочені</option>
+                                    <option value="today">На сьогодні</option>
+                                    <option value="week">На 7 днів</option>
+                                    <option value="done">Завершені</option>
+                                </select>
+                                <button type="button" class="task-filter-reset" id="resetTaskFilters">
+                                    <i class="fa-solid fa-filter-circle-xmark"></i>
+                                    Скинути
+                                </button>
+                            </div>
+                        </div>
+                        <div class="task-process-summary" id="taskProcessSummary"></div>
+                        <div class="task-board" id="taskBoard"></div>
+                    </div>
+                    <aside class="task-sidebar">
+                        <div class="card task-sidebar-card">
+                            <div class="task-sidebar-header">
+                                <h3>Моніторинг процесів</h3>
+                                <p class="metric-sub">Оновлюється під час роботи з задачами</p>
+                            </div>
+                            <div class="task-summary-grid" id="taskSummaryGrid"></div>
+                        </div>
+                        <div class="card task-sidebar-card">
+                            <h3>Розподіл по статусах</h3>
+                            <div class="task-flow-list" id="taskFlowBreakdown"></div>
+                        </div>
+                        <div class="card task-sidebar-card">
+                            <h3>Навантаження команди</h3>
+                            <div class="task-workload-list" id="taskTeamWorkload"></div>
+                        </div>
+                        <div class="card task-sidebar-card">
+                            <h3>Залученість функціоналу</h3>
+                            <div class="task-feature-list" id="taskFeatureInsights"></div>
+                        </div>
+                    </aside>
+                </div>
             </section>
 
             <section id="filesSection" class="section">
@@ -4038,6 +4436,17 @@
             { id: 'inProgress', title: 'В роботі' },
             { id: 'done', title: 'Завершено' }
         ];
+        const TASK_PRIORITY_LABELS = {
+            high: 'Високий',
+            medium: 'Середній',
+            low: 'Низький'
+        };
+        const TASK_FILTER_DEFAULTS = {
+            search: '',
+            owner: 'all',
+            priority: 'all',
+            due: 'all'
+        };
         const TEAM_MEMBERS = ['Марина', 'Олександр', 'Вікторія', 'Дмитро'];
         const CURRENT_USER = {
             name: 'Марина',
@@ -4125,6 +4534,7 @@
         let pendingFileSourceId = null;
         let fileSearchTerm = '';
         let isScanningFolder = false;
+        let taskFilters = { ...TASK_FILTER_DEFAULTS };
 
         const persistentStorage = (() => {
             try {
@@ -6397,6 +6807,46 @@
                         probabilityLabel.textContent = `${projectMinProbability}%+`;
                     }
                     renderProjects(projectSearchTerm);
+                });
+            }
+
+            const taskSearchInput = document.getElementById('taskSearchInput');
+            if (taskSearchInput) {
+                taskSearchInput.addEventListener('input', event => {
+                    taskFilters.search = event.target.value;
+                    renderTasks();
+                });
+            }
+
+            const taskOwnerSelect = document.getElementById('taskOwnerFilter');
+            if (taskOwnerSelect) {
+                taskOwnerSelect.addEventListener('change', event => {
+                    taskFilters.owner = event.target.value;
+                    renderTasks();
+                });
+            }
+
+            const taskPrioritySelect = document.getElementById('taskPriorityFilter');
+            if (taskPrioritySelect) {
+                taskPrioritySelect.addEventListener('change', event => {
+                    taskFilters.priority = event.target.value;
+                    renderTasks();
+                });
+            }
+
+            const taskDueSelect = document.getElementById('taskDueFilter');
+            if (taskDueSelect) {
+                taskDueSelect.addEventListener('change', event => {
+                    taskFilters.due = event.target.value;
+                    renderTasks();
+                });
+            }
+
+            const resetTaskFiltersBtn = document.getElementById('resetTaskFilters');
+            if (resetTaskFiltersBtn) {
+                resetTaskFiltersBtn.addEventListener('click', () => {
+                    taskFilters = { ...TASK_FILTER_DEFAULTS };
+                    renderTasks();
                 });
             }
 
@@ -9352,30 +9802,411 @@
             });
         }
 
-        function renderTasks() {
-            const board = document.getElementById('taskBoard');
-            board.innerHTML = TASK_COLUMNS.map(column => {
-                const tasks = crmData.tasks.filter(task => task.status === column.id);
+        function updateTaskFilterControls() {
+            const tasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
+            const ownerSelect = document.getElementById('taskOwnerFilter');
+            if (ownerSelect) {
+                const owners = Array.from(new Set(tasks
+                    .map(task => (typeof task.owner === 'string' ? task.owner.trim() : ''))
+                    .filter(Boolean)));
+                owners.sort((a, b) => a.localeCompare(b, 'uk', { sensitivity: 'base' }));
+                const previousSelection = taskFilters.owner;
+                ownerSelect.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = 'all';
+                defaultOption.textContent = 'Вся команда';
+                ownerSelect.appendChild(defaultOption);
+                owners.forEach(owner => {
+                    const option = document.createElement('option');
+                    option.value = owner;
+                    option.textContent = owner;
+                    ownerSelect.appendChild(option);
+                });
+                if (!owners.includes(previousSelection)) {
+                    taskFilters.owner = 'all';
+                }
+                ownerSelect.value = taskFilters.owner;
+            }
+
+            const prioritySelect = document.getElementById('taskPriorityFilter');
+            if (prioritySelect) {
+                prioritySelect.value = taskFilters.priority;
+            }
+
+            const dueSelect = document.getElementById('taskDueFilter');
+            if (dueSelect) {
+                dueSelect.value = taskFilters.due;
+            }
+
+            const searchInput = document.getElementById('taskSearchInput');
+            if (searchInput && searchInput.value !== taskFilters.search) {
+                searchInput.value = taskFilters.search;
+            }
+        }
+
+        function getFilteredTasks() {
+            const tasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
+            const leads = crmData && Array.isArray(crmData.leads) ? crmData.leads : [];
+            const searchTerm = taskFilters.search.trim().toLowerCase();
+            return tasks.filter(task => {
+                const ownerName = typeof task.owner === 'string' ? task.owner.trim() : '';
+                if (taskFilters.owner !== 'all' && ownerName !== taskFilters.owner) {
+                    return false;
+                }
+                if (taskFilters.priority !== 'all' && task.priority !== taskFilters.priority) {
+                    return false;
+                }
+                if (taskFilters.due !== 'all' && !matchesDueFilter(task, taskFilters.due)) {
+                    return false;
+                }
+                if (searchTerm) {
+                    const lead = task.relatedLeadId ? leads.find(item => item.id === task.relatedLeadId) : null;
+                    const haystackParts = [
+                        task.title,
+                        task.description,
+                        ownerName,
+                        ...(Array.isArray(task.tags) ? task.tags : []),
+                        lead ? lead.name : '',
+                        lead ? lead.company : ''
+                    ];
+                    const haystack = haystackParts.filter(Boolean).join(' ').toLowerCase();
+                    if (!haystack.includes(searchTerm)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+        }
+
+        function matchesDueFilter(task, filterValue) {
+            switch (filterValue) {
+                case 'overdue':
+                    return task.status !== 'done' && isOverdue(task.dueDate);
+                case 'today':
+                    return task.status !== 'done' && isDueToday(task.dueDate);
+                case 'week':
+                    return task.status !== 'done' && isDueWithinDays(task.dueDate, 7);
+                case 'done':
+                    return task.status === 'done';
+                default:
+                    return true;
+            }
+        }
+
+        function renderTaskProcessSummary(filteredTasks) {
+            const container = document.getElementById('taskProcessSummary');
+            if (!container) {
+                return;
+            }
+            const tasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
+            if (!tasks.length) {
+                container.innerHTML = '<div class="empty-state">Додайте перші задачі, щоб почати відстеження процесу.</div>';
+                return;
+            }
+
+            const total = tasks.length;
+            const completed = tasks.filter(task => task.status === 'done').length;
+            const active = tasks.filter(task => task.status !== 'done');
+            const inProgress = active.filter(task => task.status === 'inProgress').length;
+            const overdue = active.filter(task => isOverdue(task.dueDate)).length;
+            const dueSoon = active.filter(task => isDueWithinDays(task.dueDate, 3)).length;
+            const completionRate = total ? Math.round((completed / total) * 100) : 0;
+            const filteredCount = filteredTasks.length;
+            const indicatorIcon = overdue ? 'fa-triangle-exclamation' : 'fa-circle-check';
+            const indicatorClass = overdue ? 'process-summary-indicator has-warning' : 'process-summary-indicator';
+            const indicatorText = overdue ? `${overdue} прострочено` : 'Прострочень немає';
+
+            container.innerHTML = `
+                <div class="process-summary-main">
+                    <div>
+                        <div class="process-summary-title">${completionRate}% виконання</div>
+                        <div class="metric-sub">${completed} завершено • ${active.length} активні</div>
+                    </div>
+                    <div class="${indicatorClass}">
+                        <i class="fa-solid ${indicatorIcon}"></i>
+                        <span>${indicatorText}</span>
+                    </div>
+                </div>
+                <div class="progress-track"><div class="progress-value" style="width:${completionRate ? Math.max(completionRate, 6) : 0}%"></div></div>
+                <div class="process-summary-meta">
+                    <span class="task-pill task-pill-info"><i class="fa-solid fa-person-running"></i> У роботі: ${inProgress}</span>
+                    <span class="task-pill task-pill-warning"><i class="fa-solid fa-calendar-day"></i> Ближчі 3 дні: ${dueSoon}</span>
+                    <span class="task-pill task-pill-muted"><i class="fa-solid fa-layer-group"></i> Всього: ${total}</span>
+                </div>
+                ${filteredCount !== total ? `<div class="metric-sub process-summary-filter">Фільтровано: ${filteredCount} із ${total} задач</div>` : ''}
+            `;
+        }
+
+        function calculateAverageCycleTime(tasks) {
+            if (!Array.isArray(tasks) || !tasks.length) {
+                return null;
+            }
+            let totalDays = 0;
+            let counted = 0;
+            tasks.forEach(task => {
+                if (task.status !== 'done') {
+                    return;
+                }
+                const start = task.createdAt ? new Date(task.createdAt) : null;
+                const endSource = task.completedAt || task.dueDate;
+                const end = endSource ? new Date(endSource) : null;
+                if (!start || Number.isNaN(start.getTime()) || !end || Number.isNaN(end.getTime())) {
+                    return;
+                }
+                totalDays += daysBetween(start, end);
+                counted += 1;
+            });
+            if (!counted) {
+                return null;
+            }
+            return Math.max(0, Math.round(totalDays / counted));
+        }
+
+        function renderTaskSummaryInsights(filteredTasks) {
+            const container = document.getElementById('taskSummaryGrid');
+            if (!container) {
+                return;
+            }
+            const tasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
+            if (!tasks.length) {
+                container.innerHTML = '<div class="empty-state">Додайте перші задачі, щоб запустити трекінг.</div>';
+                return;
+            }
+
+            const total = tasks.length;
+            const activeTasks = tasks.filter(task => task.status !== 'done');
+            const highPriorityActive = activeTasks.filter(task => task.priority === 'high').length;
+            const overdueTasks = activeTasks.filter(task => isOverdue(task.dueDate)).length;
+            const dueSoon = activeTasks.filter(task => isDueWithinDays(task.dueDate, 3)).length;
+            const completedTasks = tasks.filter(task => task.status === 'done');
+            const completedThisWeek = completedTasks.filter(task => task.completedAt && daysBetween(task.completedAt, new Date()) <= 7).length;
+            const completionRate = total ? Math.round((completedTasks.length / total) * 100) : 0;
+            const averageCycle = calculateAverageCycleTime(tasks);
+            const filteredHighPriority = filteredTasks.filter(task => task.priority === 'high' && task.status !== 'done').length;
+            const filteredText = filteredTasks.length !== total ? `${filteredTasks.length} у фокусі` : `${activeTasks.length} активні`;
+
+            container.innerHTML = `
+                <div class="task-summary-card">
+                    <div class="task-summary-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <div>
+                        <div class="task-summary-label">Активні задачі</div>
+                        <div class="task-summary-value">${activeTasks.length}</div>
+                        <div class="metric-sub">${highPriorityActive} високий пріоритет</div>
+                    </div>
+                </div>
+                <div class="task-summary-card">
+                    <div class="task-summary-icon task-summary-icon-warning"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    <div>
+                        <div class="task-summary-label">Прострочено</div>
+                        <div class="task-summary-value">${overdueTasks}</div>
+                        <div class="metric-sub">${dueSoon} дедлайн у 3 дні</div>
+                    </div>
+                </div>
+                <div class="task-summary-card">
+                    <div class="task-summary-icon task-summary-icon-success"><i class="fa-solid fa-check-double"></i></div>
+                    <div>
+                        <div class="task-summary-label">Завершено (7 днів)</div>
+                        <div class="task-summary-value">${completedThisWeek}</div>
+                        <div class="metric-sub">${completionRate}% виконання</div>
+                    </div>
+                </div>
+                <div class="task-summary-card">
+                    <div class="task-summary-icon task-summary-icon-info"><i class="fa-solid fa-chart-simple"></i></div>
+                    <div>
+                        <div class="task-summary-label">Середній цикл</div>
+                        <div class="task-summary-value">${averageCycle !== null ? `${averageCycle} дн.` : '—'}</div>
+                        <div class="metric-sub">${filteredHighPriority ? `${filteredHighPriority} критичні в роботі` : filteredText}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTaskFlowBreakdown(allTasks) {
+            const container = document.getElementById('taskFlowBreakdown');
+            if (!container) {
+                return;
+            }
+            const tasks = Array.isArray(allTasks) ? allTasks : [];
+            if (!tasks.length) {
+                container.innerHTML = '<div class="empty-state">Задачі ще не додані.</div>';
+                return;
+            }
+
+            const total = tasks.length;
+            container.innerHTML = TASK_COLUMNS.map(column => {
+                const columnTasks = tasks.filter(task => task.status === column.id);
+                const count = columnTasks.length;
+                const percent = total ? Math.round((count / total) * 100) : 0;
+                const barWidth = count ? Math.max(percent, 6) : 0;
+                const overdue = column.id === 'done' ? 0 : columnTasks.filter(task => isOverdue(task.dueDate)).length;
+                const overdueText = overdue ? ` • прострочено: ${overdue}` : '';
                 return `
-                    <div class="task-column" data-status="${column.id}">
-                        <div class="task-column-header">
-                            <h4>${column.title}</h4>
-                            <span>${tasks.length}</span>
+                    <div class="task-flow-item">
+                        <div class="task-flow-header">
+                            <strong>${column.title}</strong>
+                            <span>${count}</span>
                         </div>
-                        <div class="task-items">
-                            ${tasks.length ? tasks.map(createTaskCard).join('') : '<div class="empty-state">Немає завдань</div>'}
+                        <div class="progress-track"><div class="progress-value" style="width:${barWidth}%"></div></div>
+                        <div class="metric-sub">${percent}% від усіх задач${overdueText}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTaskTeamWorkload(allTasks) {
+            const container = document.getElementById('taskTeamWorkload');
+            if (!container) {
+                return;
+            }
+            const tasks = Array.isArray(allTasks) ? allTasks : [];
+            if (!tasks.length) {
+                container.innerHTML = '<div class="empty-state">Задачі ще не призначені.</div>';
+                return;
+            }
+
+            const workload = {};
+            tasks.forEach(task => {
+                const ownerName = typeof task.owner === 'string' ? task.owner.trim() : '';
+                const owner = ownerName || 'Без виконавця';
+                if (!workload[owner]) {
+                    workload[owner] = { total: 0, done: 0, inProgress: 0, todo: 0, overdue: 0 };
+                }
+                const stats = workload[owner];
+                stats.total += 1;
+                if (task.status === 'done') {
+                    stats.done += 1;
+                } else if (task.status === 'inProgress') {
+                    stats.inProgress += 1;
+                } else if (task.status === 'todo') {
+                    stats.todo += 1;
+                }
+                if (task.status !== 'done' && isOverdue(task.dueDate)) {
+                    stats.overdue += 1;
+                }
+            });
+
+            const items = Object.entries(workload).sort((a, b) => b[1].total - a[1].total);
+            container.innerHTML = items.map(([owner, stats]) => {
+                const completion = stats.total ? Math.round((stats.done / stats.total) * 100) : 0;
+                const barWidth = completion ? Math.max(completion, 6) : 0;
+                return `
+                    <div class="task-workload-item">
+                        <div class="task-workload-header">
+                            <strong>${escapeHtml(owner)}</strong>
+                            <span class="metric-sub">${stats.total} задач</span>
+                        </div>
+                        <div class="progress-track"><div class="progress-value" style="width:${barWidth}%"></div></div>
+                        <div class="task-workload-meta">
+                            <span class="task-pill task-pill-info">У роботі: ${stats.inProgress}</span>
+                            <span class="task-pill task-pill-muted">Заплановано: ${stats.todo}</span>
+                            ${stats.overdue ? `<span class="task-pill task-pill-danger">Прострочено: ${stats.overdue}</span>` : ''}
                         </div>
                     </div>
                 `;
             }).join('');
+        }
 
+        function renderTaskFeatureInsights(allTasks) {
+            const container = document.getElementById('taskFeatureInsights');
+            if (!container) {
+                return;
+            }
+            const tasks = Array.isArray(allTasks) ? allTasks : [];
+            if (!tasks.length) {
+                container.innerHTML = '<div class="empty-state">Додайте задачі, щоб відстежувати використання функцій.</div>';
+                return;
+            }
+
+            const total = tasks.length;
+            const linked = tasks.filter(task => task.relatedLeadId).length;
+            const withAttachments = tasks.filter(task => Array.isArray(task.attachments) && task.attachments.length).length;
+            const withTags = tasks.filter(task => Array.isArray(task.tags) && task.tags.length).length;
+            const withoutContext = tasks.filter(task => task.status !== 'done' && (!task.description || task.description.trim().length < 10)).length;
+            const toPercent = count => (total ? Math.round((count / total) * 100) : 0);
+
+            const insights = [
+                {
+                    icon: 'fa-link',
+                    label: 'Пов&#39;язані з угодами',
+                    value: linked,
+                    sub: `${toPercent(linked)}% задач синхронізовані з воронкою`
+                },
+                {
+                    icon: 'fa-paperclip',
+                    label: 'Документи у задачах',
+                    value: withAttachments,
+                    sub: withAttachments ? `${withAttachments} задач із файлами` : 'Додайте файли для спільної роботи'
+                },
+                {
+                    icon: 'fa-tags',
+                    label: 'Категорії та теги',
+                    value: withTags,
+                    sub: `${toPercent(withTags)}% задач мають тегування`
+                },
+                {
+                    icon: 'fa-circle-exclamation',
+                    label: 'Потрібно деталізувати',
+                    value: withoutContext,
+                    sub: withoutContext ? `${withoutContext} активних задач без опису` : 'Усі активні задачі мають контекст'
+                }
+            ];
+
+            container.innerHTML = insights.map(item => `
+                <div class="task-feature-item">
+                    <div class="task-feature-header">
+                        <div class="task-feature-content">
+                            <span class="task-feature-icon"><i class="fa-solid ${item.icon}"></i></span>
+                            <div>
+                                <strong>${item.label}</strong>
+                                <div class="metric-sub">${item.sub}</div>
+                            </div>
+                        </div>
+                        <div class="task-feature-value">${item.value}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTaskBoardColumns(tasks) {
+            const board = document.getElementById('taskBoard');
+            if (!board) {
+                return;
+            }
+            const scopedTasks = Array.isArray(tasks) ? tasks : [];
+            board.innerHTML = TASK_COLUMNS.map(column => {
+                const columnTasks = scopedTasks.filter(task => task.status === column.id);
+                return `
+                    <div class="task-column" data-status="${column.id}">
+                        <div class="task-column-header">
+                            <h4>${column.title}</h4>
+                            <span>${columnTasks.length}</span>
+                        </div>
+                        <div class="task-items">
+                            ${columnTasks.length ? columnTasks.map(createTaskCard).join('') : '<div class="empty-state">Немає завдань</div>'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTasks() {
+            updateTaskFilterControls();
+            const filteredTasks = getFilteredTasks();
+            renderTaskProcessSummary(filteredTasks);
+            renderTaskSummaryInsights(filteredTasks);
+            const allTasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
+            renderTaskFlowBreakdown(allTasks);
+            renderTaskTeamWorkload(allTasks);
+            renderTaskFeatureInsights(allTasks);
+            renderTaskBoardColumns(filteredTasks);
             setupTaskBoardInteractions();
         }
 
         function createTaskCard(task) {
-            const lead = task.relatedLeadId ? crmData.leads.find(lead => lead.id === task.relatedLeadId) : null;
-            const overdue = task.status !== 'done' && task.dueDate && new Date(task.dueDate) < new Date() && !isSameDay(new Date(task.dueDate), new Date());
-            const priorityLabel = task.priority === 'high' ? 'Високий' : task.priority === 'medium' ? 'Середній' : 'Низький';
+            const leads = crmData && Array.isArray(crmData.leads) ? crmData.leads : [];
+            const lead = task.relatedLeadId ? leads.find(item => item.id === task.relatedLeadId) : null;
+            const overdue = task.status !== 'done' && isOverdue(task.dueDate);
+            const priorityLabel = TASK_PRIORITY_LABELS[task.priority] || 'Середній';
             const tags = Array.isArray(task.tags) ? task.tags.filter(Boolean) : [];
             const attachmentsCount = Array.isArray(task.attachments) ? task.attachments.length : 0;
             const extras = [];
@@ -10399,6 +11230,27 @@
 
         function isSameDay(dateA, dateB) {
             return dateA.getFullYear() === dateB.getFullYear() && dateA.getMonth() === dateB.getMonth() && dateA.getDate() === dateB.getDate();
+        }
+
+        function isOverdue(dateInput) {
+            if (!dateInput) return false;
+            const due = new Date(dateInput);
+            if (Number.isNaN(due.getTime())) return false;
+            const now = new Date();
+            if (isSameDay(due, now)) {
+                return false;
+            }
+            return due.getTime() < now.getTime();
+        }
+
+        function isDueWithinDays(dateInput, days) {
+            if (!dateInput || !Number.isFinite(days) || days < 0) return false;
+            const due = new Date(dateInput);
+            if (Number.isNaN(due.getTime())) return false;
+            const now = new Date();
+            const diff = due.getTime() - now.getTime();
+            const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            return diffDays >= 0 && diffDays <= days;
         }
 
         function isDueToday(dateInput) {
