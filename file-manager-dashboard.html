@@ -1173,6 +1173,144 @@
             gap: 18px;
         }
 
+        .file-sources {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .file-sources-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .file-sources-header h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .file-sources-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-sources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .file-source-card {
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: var(--radius-md);
+            background: rgba(99, 102, 241, 0.04);
+            padding: 16px;
+            display: grid;
+            gap: 12px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .file-source-card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .file-source-card.active {
+            border-color: rgba(99, 102, 241, 0.45);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.18);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .file-source-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-source-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(79, 70, 229, 0.12);
+            color: var(--primary-dark);
+            font-size: 18px;
+        }
+
+        .file-source-title strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .file-source-status {
+            margin-left: auto;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .file-source-status.status-online {
+            background: rgba(34, 197, 94, 0.16);
+            color: #15803d;
+        }
+
+        .file-source-status.status-offline {
+            background: rgba(148, 163, 184, 0.18);
+            color: #475569;
+        }
+
+        .file-source-status.status-syncing {
+            background: rgba(14, 165, 233, 0.16);
+            color: #0e7490;
+        }
+
+        .file-source-body {
+            display: grid;
+            gap: 10px;
+        }
+
+        .file-source-path {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-source-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-source-stats strong {
+            display: block;
+            font-size: 16px;
+            color: var(--text);
+        }
+
+        .file-source-updated {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-source-footer {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         .file-actions {
             display: flex;
             flex-wrap: wrap;
@@ -1890,6 +2028,14 @@
                 width: 100%;
                 min-width: 0;
             }
+
+            .file-sources {
+                padding: 18px;
+            }
+
+            .file-sources-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
         }
 
         @media (max-width: 640px) {
@@ -1917,6 +2063,14 @@
 
             .file-summary {
                 flex-direction: column;
+            }
+
+            .file-sources-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .file-source-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
     </style>
@@ -2194,6 +2348,21 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                             <input type="text" id="fileSearchInput" placeholder="Пошук у вибраній папці...">
                         </div>
+                    </div>
+                    <div class="file-sources">
+                        <div class="file-sources-header">
+                            <div>
+                                <h3>Підключені джерела</h3>
+                                <p class="metric-sub">Локальні папки та хмарні каталоги, доступні для швидкого огляду.</p>
+                            </div>
+                            <div class="file-sources-actions">
+                                <button class="btn btn-small-muted" id="addCloudSourceBtn">
+                                    <i class="fa-solid fa-cloud-plus"></i>
+                                    Додати хмарний каталог
+                                </button>
+                            </div>
+                        </div>
+                        <div class="file-sources-grid" id="fileSourceGrid"></div>
                     </div>
                     <div class="file-summary" id="fileSummary"></div>
                     <div class="file-tree">
@@ -2518,6 +2687,8 @@
         let searchTimer = null;
         let pendingLeadFiles = [];
         let activeFileSnapshotId = null;
+        let activeFileSourceId = null;
+        let pendingFileSourceId = null;
         let fileSearchTerm = '';
         let isScanningFolder = false;
 
@@ -2941,7 +3112,185 @@
                     timestamp: '2024-05-16T10:45:00.000Z'
                 }
             ],
-            fileLibrary: []
+            fileLibrary: [
+                {
+                    id: 'snapshot-marketing-folder',
+                    rootName: 'D:/O',
+                    scannedAt: '2024-06-05T08:45:00.000Z',
+                    source: 'demo',
+                    tree: {
+                        type: 'directory',
+                        name: 'D:/O',
+                        path: 'D:/O',
+                        children: [
+                            {
+                                type: 'directory',
+                                name: 'Campaigns',
+                                path: 'D:/O/Campaigns',
+                                children: [
+                                    {
+                                        type: 'directory',
+                                        name: 'Digital',
+                                        path: 'D:/O/Campaigns/Digital',
+                                        children: [
+                                            {
+                                                type: 'file',
+                                                name: 'spring-launch-plan.pdf',
+                                                path: 'D:/O/Campaigns/Digital/spring-launch-plan.pdf',
+                                                size: 2880512,
+                                                lastModified: Date.parse('2024-04-11T08:10:00.000Z'),
+                                                mimeType: 'application/pdf'
+                                            },
+                                            {
+                                                type: 'file',
+                                                name: 'social-calendar.xlsx',
+                                                path: 'D:/O/Campaigns/Digital/social-calendar.xlsx',
+                                                size: 512000,
+                                                lastModified: Date.parse('2024-04-09T14:25:00.000Z'),
+                                                mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: 'directory',
+                                        name: 'Offline',
+                                        path: 'D:/O/Campaigns/Offline',
+                                        children: [
+                                            {
+                                                type: 'file',
+                                                name: 'billboards.ai',
+                                                path: 'D:/O/Campaigns/Offline/billboards.ai',
+                                                size: 4200000,
+                                                lastModified: Date.parse('2024-03-29T11:40:00.000Z'),
+                                                mimeType: 'application/postscript'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        type: 'file',
+                                        name: 'budget.xlsx',
+                                        path: 'D:/O/Campaigns/budget.xlsx',
+                                        size: 768000,
+                                        lastModified: Date.parse('2024-04-20T09:05:00.000Z'),
+                                        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                                    }
+                                ]
+                            },
+                            {
+                                type: 'directory',
+                                name: 'Design',
+                                path: 'D:/O/Design',
+                                children: [
+                                    {
+                                        type: 'file',
+                                        name: 'brandbook.pdf',
+                                        path: 'D:/O/Design/brandbook.pdf',
+                                        size: 5120000,
+                                        lastModified: Date.parse('2024-05-18T13:32:00.000Z'),
+                                        mimeType: 'application/pdf'
+                                    },
+                                    {
+                                        type: 'file',
+                                        name: 'logo-pack.zip',
+                                        path: 'D:/O/Design/logo-pack.zip',
+                                        size: 6553600,
+                                        lastModified: Date.parse('2024-05-15T10:22:00.000Z'),
+                                        mimeType: 'application/zip'
+                                    }
+                                ]
+                            },
+                            {
+                                type: 'directory',
+                                name: 'Case Studies',
+                                path: 'D:/O/Case Studies',
+                                children: [
+                                    {
+                                        type: 'file',
+                                        name: 'fintech-demo.pptx',
+                                        path: 'D:/O/Case Studies/fintech-demo.pptx',
+                                        size: 4718592,
+                                        lastModified: Date.parse('2024-05-05T17:05:00.000Z'),
+                                        mimeType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                                    },
+                                    {
+                                        type: 'file',
+                                        name: 'retail-overview.pptx',
+                                        path: 'D:/O/Case Studies/retail-overview.pptx',
+                                        size: 3932160,
+                                        lastModified: Date.parse('2024-05-03T09:55:00.000Z'),
+                                        mimeType: 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+                                    }
+                                ]
+                            },
+                            {
+                                type: 'file',
+                                name: 'readme.txt',
+                                path: 'D:/O/readme.txt',
+                                size: 2048,
+                                lastModified: Date.parse('2024-02-01T08:00:00.000Z'),
+                                mimeType: 'text/plain'
+                            },
+                            {
+                                type: 'file',
+                                name: 'q1-report.csv',
+                                path: 'D:/O/q1-report.csv',
+                                size: 128000,
+                                lastModified: Date.parse('2024-04-05T07:45:00.000Z'),
+                                mimeType: 'text/csv'
+                            }
+                        ]
+                    }
+                }
+            ],
+            fileSources: [
+                {
+                    id: 'source-local-marketing',
+                    name: 'Маркетингові матеріали',
+                    type: 'local',
+                    path: 'D:\\O',
+                    status: 'online',
+                    connected: true,
+                    autoSync: false,
+                    totalFiles: 10,
+                    totalFolders: 5,
+                    totalSize: 28814912,
+                    lastSynced: '2024-06-05T08:50:00.000Z',
+                    snapshotId: 'snapshot-marketing-folder',
+                    favorite: true
+                },
+                {
+                    id: 'source-google-drive',
+                    name: 'Google Drive • Brand Assets',
+                    type: 'cloud',
+                    provider: 'Google Drive',
+                    path: 'Marketing/Brand Assets',
+                    status: 'online',
+                    connected: true,
+                    autoSync: true,
+                    totalFiles: 86,
+                    totalFolders: 12,
+                    totalSize: 892000000,
+                    lastSynced: '2024-06-04T10:45:00.000Z',
+                    snapshotId: null,
+                    favorite: false
+                },
+                {
+                    id: 'source-dropbox-sales',
+                    name: 'Dropbox • Sales Kits',
+                    type: 'cloud',
+                    provider: 'Dropbox',
+                    path: 'CRM/Sales Kits',
+                    status: 'offline',
+                    connected: false,
+                    autoSync: true,
+                    totalFiles: 0,
+                    totalFolders: 0,
+                    totalSize: 0,
+                    lastSynced: null,
+                    snapshotId: null,
+                    favorite: false
+                }
+            ]
         };
         const deepClone = (data) => JSON.parse(JSON.stringify(data));
 
@@ -2987,6 +3336,14 @@
             } else {
                 data.fileLibrary = data.fileLibrary
                     .map(normalizeFileSnapshot)
+                    .filter(Boolean);
+            }
+
+            if (!Array.isArray(data.fileSources)) {
+                data.fileSources = deepClone(defaultData.fileSources);
+            } else {
+                data.fileSources = data.fileSources
+                    .map(normalizeFileSource)
                     .filter(Boolean);
             }
 
@@ -3038,6 +3395,50 @@
             };
         }
 
+        function normalizeFileSource(source) {
+            if (!source || typeof source !== 'object') {
+                return null;
+            }
+
+            const id = typeof source.id === 'string' && source.id.trim().length
+                ? source.id.trim()
+                : generateId('source');
+            const typeValue = typeof source.type === 'string' ? source.type.toLowerCase() : '';
+            const type = typeValue === 'cloud' ? 'cloud' : 'local';
+
+            let status = typeof source.status === 'string' ? source.status.toLowerCase() : '';
+            let connected = typeof source.connected === 'boolean' ? source.connected : status === 'online';
+
+            if (status === 'syncing') {
+                connected = true;
+            }
+
+            if (!['online', 'offline', 'syncing'].includes(status)) {
+                status = connected ? 'online' : 'offline';
+            }
+
+            if (!connected && status === 'online') {
+                connected = true;
+            }
+
+            return {
+                id,
+                name: typeof source.name === 'string' && source.name.trim().length ? source.name.trim() : 'Джерело файлів',
+                type,
+                path: typeof source.path === 'string' ? source.path : '',
+                provider: typeof source.provider === 'string' ? source.provider : '',
+                status,
+                connected,
+                autoSync: 'autoSync' in source ? Boolean(source.autoSync) : type === 'cloud',
+                totalFiles: Math.max(0, Number(source.totalFiles) || 0),
+                totalFolders: Math.max(0, Number(source.totalFolders) || 0),
+                totalSize: Math.max(0, Number(source.totalSize) || 0),
+                lastSynced: typeof source.lastSynced === 'string' && source.lastSynced ? source.lastSynced : null,
+                snapshotId: typeof source.snapshotId === 'string' && source.snapshotId ? source.snapshotId : null,
+                favorite: Boolean(source.favorite)
+            };
+        }
+
         function loadData() {
             let saved = null;
 
@@ -3078,9 +3479,18 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             crmData = loadData();
-            activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
-                ? crmData.fileLibrary[0].id
+            const snapshots = Array.isArray(crmData.fileLibrary) ? crmData.fileLibrary : [];
+            const linkedSnapshot = Array.isArray(crmData.fileSources)
+                ? snapshots.find(snapshot => crmData.fileSources.some(source => source.snapshotId === snapshot.id))
                 : null;
+            const fallbackSnapshot = snapshots.length ? snapshots[0] : null;
+            const initialSnapshot = linkedSnapshot || fallbackSnapshot;
+            activeFileSnapshotId = initialSnapshot ? initialSnapshot.id : null;
+            const initialSource = Array.isArray(crmData.fileSources)
+                ? crmData.fileSources.find(source => source.snapshotId === activeFileSnapshotId) || null
+                : null;
+            activeFileSourceId = initialSource ? initialSource.id : null;
+            pendingFileSourceId = null;
             setupUI();
             renderAll();
         });
@@ -3633,7 +4043,7 @@
             const select = document.getElementById('folderSnapshotsSelect');
 
             if (connectBtn) {
-                connectBtn.addEventListener('click', handleFolderConnect);
+                connectBtn.addEventListener('click', () => handleFolderConnect());
             }
 
             if (fallbackInput) {
@@ -3657,6 +4067,49 @@
 
             updateFileSnapshotsSelect();
             renderFileExplorer(fileSearchTerm);
+            setupFileSources();
+        }
+
+        function setupFileSources() {
+            const addCloudBtn = document.getElementById('addCloudSourceBtn');
+
+            if (addCloudBtn && !addCloudBtn.dataset.bound) {
+                addCloudBtn.addEventListener('click', () => {
+                    const name = prompt('Назва каталогу (наприклад, Google Drive / Команда маркетингу)');
+                    if (!name || !name.trim()) {
+                        return;
+                    }
+
+                    const path = prompt('Вкажіть шлях або посилання на каталог (необов\'язково)') || '';
+                    const provider = name.includes('/') ? name.split('/')[0].trim() : '';
+                    const newSource = normalizeFileSource({
+                        id: generateId('source'),
+                        name: name.trim(),
+                        type: 'cloud',
+                        provider,
+                        path: path.trim(),
+                        status: 'offline',
+                        connected: false,
+                        autoSync: true,
+                        totalFiles: 0,
+                        totalFolders: 0,
+                        totalSize: 0,
+                        lastSynced: null,
+                        snapshotId: null
+                    });
+
+                    if (!Array.isArray(crmData.fileSources)) {
+                        crmData.fileSources = [];
+                    }
+
+                    crmData.fileSources = [newSource, ...crmData.fileSources];
+                    saveData();
+                    renderFileSources();
+                });
+                addCloudBtn.dataset.bound = 'true';
+            }
+
+            renderFileSources();
         }
 
         function updateFileScanStatus(message) {
@@ -3666,20 +4119,27 @@
             }
         }
 
-        function triggerFolderFallback() {
+        function triggerFolderFallback(sourceId = null) {
+            pendingFileSourceId = sourceId;
             const fallbackInput = document.getElementById('folderInput');
             if (fallbackInput) {
                 fallbackInput.click();
             }
         }
 
-        async function handleFolderConnect() {
+        async function handleFolderConnect(sourceId = null) {
             if (isScanningFolder) {
                 return;
             }
 
+            const source = sourceId ? getFileSourceById(sourceId) : null;
+            const previousStatus = source ? source.status : null;
+            const previousConnection = source ? source.connected : null;
+            const previousActiveSource = activeFileSourceId;
+            let snapshotStored = false;
+
             if (typeof window.showDirectoryPicker !== 'function') {
-                triggerFolderFallback();
+                triggerFolderFallback(sourceId);
                 return;
             }
 
@@ -3687,13 +4147,21 @@
 
             try {
                 isScanningFolder = true;
+                pendingFileSourceId = sourceId;
+                if (source) {
+                    source.status = 'syncing';
+                    source.connected = true;
+                    activeFileSourceId = source.id;
+                    renderFileSources();
+                }
                 if (connectBtn) {
                     connectBtn.disabled = true;
                 }
                 updateFileScanStatus('Скануємо папку...');
                 const snapshot = await scanDirectoryWithPicker();
                 if (snapshot) {
-                    storeFolderSnapshot(snapshot);
+                    snapshotStored = true;
+                    storeFolderSnapshot(snapshot, sourceId);
                 }
             } catch (error) {
                 if (error?.name !== 'AbortError') {
@@ -3702,11 +4170,19 @@
                 }
             } finally {
                 isScanningFolder = false;
+                pendingFileSourceId = null;
                 if (connectBtn) {
                     connectBtn.disabled = false;
                 }
                 updateFileScanStatus('');
                 renderFileExplorer(fileSearchTerm);
+                if (source && !snapshotStored) {
+                    source.status = previousStatus || (previousConnection ? 'online' : 'offline');
+                    source.connected = Boolean(previousConnection);
+                    activeFileSourceId = previousActiveSource;
+                    renderFileSources();
+                    saveData();
+                }
             }
         }
 
@@ -3716,12 +4192,25 @@
                 return;
             }
 
+            const sourceId = pendingFileSourceId;
+            const source = sourceId ? getFileSourceById(sourceId) : null;
+            const previousStatus = source ? source.status : null;
+            const previousConnection = source ? source.connected : null;
+            const previousActiveSource = activeFileSourceId;
+            let snapshotStored = false;
             try {
                 isScanningFolder = true;
                 updateFileScanStatus('Опрацьовуємо вибрані файли...');
+                if (source) {
+                    source.status = 'syncing';
+                    source.connected = true;
+                    activeFileSourceId = source.id;
+                    renderFileSources();
+                }
                 const snapshot = buildSnapshotFromFileList(files);
                 if (snapshot) {
-                    storeFolderSnapshot(snapshot);
+                    snapshotStored = true;
+                    storeFolderSnapshot(snapshot, sourceId);
                 } else {
                     alert('Не вдалося побудувати структуру цієї папки. Спробуйте інший каталог.');
                 }
@@ -3730,9 +4219,17 @@
                 alert('Не вдалося обробити вибрані файли. Будь ласка, спробуйте ще раз.');
             } finally {
                 isScanningFolder = false;
+                pendingFileSourceId = null;
                 updateFileScanStatus('');
                 event.target.value = '';
                 renderFileExplorer(fileSearchTerm);
+                if (source && !snapshotStored) {
+                    source.status = previousStatus || (previousConnection ? 'online' : 'offline');
+                    source.connected = Boolean(previousConnection);
+                    activeFileSourceId = previousActiveSource;
+                    renderFileSources();
+                    saveData();
+                }
             }
         }
 
@@ -3982,7 +4479,7 @@
             };
         }
 
-        function storeFolderSnapshot(snapshot) {
+        function storeFolderSnapshot(snapshot, sourceId = null) {
             if (!snapshot) {
                 return;
             }
@@ -3994,9 +4491,37 @@
             const filtered = crmData.fileLibrary.filter(item => item.id !== snapshot.id && item.rootName !== snapshot.rootName);
             crmData.fileLibrary = [snapshot, ...filtered].slice(0, FILE_LIBRARY_LIMIT);
             activeFileSnapshotId = snapshot.id;
+
+            const targetSourceId = sourceId
+                || (Array.isArray(crmData.fileSources)
+                    ? (crmData.fileSources.find(item => item.snapshotId === snapshot.id)?.id || null)
+                    : null);
+
+            if (targetSourceId) {
+                attachSnapshotToSource(snapshot, targetSourceId);
+            } else if (Array.isArray(crmData.fileSources)) {
+                const matchedSource = crmData.fileSources.find(item => {
+                    if (item.snapshotId) {
+                        return false;
+                    }
+                    if (item.type !== 'local') {
+                        return false;
+                    }
+                    if (!item.path || !snapshot.rootName) {
+                        return false;
+                    }
+                    return item.path.replace(/\\/g, '/').toLowerCase() === snapshot.rootName.replace(/\\/g, '/').toLowerCase();
+                });
+                if (matchedSource) {
+                    attachSnapshotToSource(snapshot, matchedSource.id);
+                }
+            }
+
+            pendingFileSourceId = null;
             saveData();
             updateFileSnapshotsSelect();
             renderFileExplorer(fileSearchTerm);
+            renderFileSources();
         }
 
         function updateFileSnapshotsSelect() {
@@ -4072,6 +4597,9 @@
 
             const snapshot = snapshots.find(item => item.id === activeFileSnapshotId) || snapshots[0];
             activeFileSnapshotId = snapshot?.id || null;
+            const previousSourceId = activeFileSourceId;
+            const linkedSource = getFileSourceBySnapshotId(snapshot?.id);
+            activeFileSourceId = linkedSource ? linkedSource.id : null;
             updateFileSummary(snapshot);
 
             if (!snapshot) {
@@ -4120,6 +4648,231 @@
                     </div>
                 `;
             }).join('');
+
+            if (previousSourceId !== activeFileSourceId) {
+                renderFileSources();
+            }
+        }
+
+        function renderFileSources() {
+            const grid = document.getElementById('fileSourceGrid');
+            if (!grid) {
+                return;
+            }
+
+            const sources = Array.isArray(crmData.fileSources) ? crmData.fileSources.filter(Boolean) : [];
+            if (!sources.length) {
+                grid.innerHTML = '<div class="empty-state" style="padding: 20px;">Додайте локальну папку або підключіть хмарний каталог, щоб швидко отримати доступ до матеріалів.</div>';
+                return;
+            }
+
+            grid.innerHTML = sources.map(createFileSourceCard).join('');
+
+            grid.querySelectorAll('[data-source-connect]').forEach(button => {
+                button.addEventListener('click', () => handleFileSourceConnect(button.dataset.sourceConnect));
+            });
+
+            grid.querySelectorAll('[data-source-open]').forEach(button => {
+                button.addEventListener('click', () => handleFileSourceOpen(button.dataset.sourceOpen));
+            });
+
+            grid.querySelectorAll('[data-source-sync]').forEach(button => {
+                button.addEventListener('click', () => handleFileSourceSync(button.dataset.sourceSync));
+            });
+        }
+
+        function createFileSourceCard(source) {
+            const status = getFileSourceStatus(source);
+            const statusLabel = getFileSourceStatusLabel(status);
+            const icon = source?.type === 'cloud' ? 'fa-cloud' : 'fa-folder-tree';
+            const provider = source?.type === 'cloud'
+                ? (source?.provider && source.provider.trim().length ? source.provider : 'Хмарне сховище')
+                : 'Локальна папка';
+            const pathLabel = source?.path && source.path.trim().length
+                ? escapeHtml(source.path)
+                : escapeHtml(source?.type === 'cloud' ? 'Хмарний каталог' : 'Локальна папка');
+            const filesValue = formatIntegerDisplay(source?.totalFiles);
+            const foldersValue = formatIntegerDisplay(source?.totalFolders);
+            const sizeValue = Number(source?.totalSize) > 0 ? formatBytes(source.totalSize) : '—';
+            const updatedText = source?.lastSynced
+                ? `Оновлено ${formatDate(source.lastSynced, { day: '2-digit', month: 'short', year: 'numeric' })} ${formatTime(source.lastSynced)}`
+                : (source?.connected ? 'Очікує синхронізацію' : 'Ще не підключено');
+            const autoSyncText = source?.autoSync ? 'Автосинхронізація увімкнена' : 'Ручне оновлення';
+            const hasSnapshot = Boolean(source?.snapshotId)
+                && Array.isArray(crmData.fileLibrary)
+                && crmData.fileLibrary.some(snapshot => snapshot.id === source.snapshotId);
+            const isActive = Boolean(activeFileSourceId) && source?.id === activeFileSourceId;
+
+            let actionHtml = '';
+            if (!source?.connected || (source?.type === 'local' && !hasSnapshot)) {
+                actionHtml = `<button type="button" class="btn btn-small-muted" data-source-connect="${source.id}">Підключити</button>`;
+            } else if (hasSnapshot) {
+                actionHtml = `<button type="button" class="btn btn-small-muted" data-source-open="${source.id}">Відкрити</button>`;
+            } else if (source?.type === 'cloud') {
+                actionHtml = `<button type="button" class="btn btn-small-muted" data-source-sync="${source.id}">Синхронізувати</button>`;
+            }
+
+            return `
+                <article class="file-source-card${isActive ? ' active' : ''}" data-source-id="${source.id}">
+                    <header class="file-source-header">
+                        <div class="file-source-icon">
+                            <i class="fa-solid ${icon}"></i>
+                        </div>
+                        <div class="file-source-title">
+                            <strong>${escapeHtml(source?.name || 'Джерело файлів')}</strong>
+                            <span class="metric-sub">${escapeHtml(provider)}</span>
+                        </div>
+                        <span class="file-source-status status-${status}">${statusLabel}</span>
+                    </header>
+                    <div class="file-source-body">
+                        <div class="file-source-path"><i class="fa-solid fa-location-dot"></i> ${pathLabel}</div>
+                        <div class="file-source-stats">
+                            <div><strong>${filesValue}</strong><span>файлів</span></div>
+                            <div><strong>${foldersValue}</strong><span>папок</span></div>
+                            <div><strong>${sizeValue}</strong><span>обсяг</span></div>
+                        </div>
+                        <div class="file-source-updated">${escapeHtml(updatedText)}</div>
+                        <div class="metric-sub">${autoSyncText}${source?.favorite ? ' • В обраних' : ''}</div>
+                    </div>
+                    ${actionHtml ? `<footer class="file-source-footer">${actionHtml}</footer>` : ''}
+                </article>
+            `;
+        }
+
+        function handleFileSourceConnect(sourceId) {
+            if (!sourceId) {
+                return;
+            }
+
+            const source = getFileSourceById(sourceId);
+            if (!source) {
+                return;
+            }
+
+            if (source.type === 'cloud') {
+                source.connected = true;
+                source.status = 'online';
+                source.lastSynced = new Date().toISOString();
+                activeFileSourceId = source.id;
+                saveData();
+                renderFileSources();
+                return;
+            }
+
+            handleFolderConnect(sourceId);
+        }
+
+        function handleFileSourceOpen(sourceId) {
+            if (!sourceId) {
+                return;
+            }
+
+            const source = getFileSourceById(sourceId);
+            if (!source || !source.snapshotId) {
+                return;
+            }
+
+            const snapshotExists = Array.isArray(crmData.fileLibrary)
+                && crmData.fileLibrary.some(snapshot => snapshot.id === source.snapshotId);
+
+            if (!snapshotExists) {
+                alert('Збережений знімок каталогу недоступний. Підключіть джерело повторно.');
+                source.status = 'offline';
+                source.connected = false;
+                source.snapshotId = null;
+                saveData();
+                renderFileSources();
+                return;
+            }
+
+            activeFileSourceId = source.id;
+            activeFileSnapshotId = source.snapshotId;
+            renderFileExplorer(fileSearchTerm);
+            updateFileSnapshotsSelect();
+        }
+
+        function handleFileSourceSync(sourceId) {
+            if (!sourceId) {
+                return;
+            }
+
+            const source = getFileSourceById(sourceId);
+            if (!source) {
+                return;
+            }
+
+            source.status = 'syncing';
+            renderFileSources();
+
+            setTimeout(() => {
+                source.status = 'online';
+                source.connected = true;
+                source.lastSynced = new Date().toISOString();
+                saveData();
+                renderFileSources();
+            }, 700);
+        }
+
+        function attachSnapshotToSource(snapshot, sourceId) {
+            if (!snapshot || !sourceId) {
+                return;
+            }
+
+            const source = getFileSourceById(sourceId);
+            if (!source) {
+                return;
+            }
+
+            source.snapshotId = snapshot.id;
+            source.connected = true;
+            source.status = 'online';
+            source.totalFiles = snapshot.totals?.files ?? 0;
+            source.totalFolders = snapshot.totals?.folders ?? 0;
+            source.totalSize = snapshot.totals?.size ?? 0;
+            source.lastSynced = snapshot.scannedAt || new Date().toISOString();
+            if (!source.path) {
+                source.path = snapshot.rootName;
+            }
+            activeFileSourceId = source.id;
+        }
+
+        function getFileSourceById(sourceId) {
+            if (!sourceId || !Array.isArray(crmData.fileSources)) {
+                return null;
+            }
+            return crmData.fileSources.find(source => source.id === sourceId) || null;
+        }
+
+        function getFileSourceBySnapshotId(snapshotId) {
+            if (!snapshotId || !Array.isArray(crmData.fileSources)) {
+                return null;
+            }
+            return crmData.fileSources.find(source => source.snapshotId === snapshotId) || null;
+        }
+
+        function getFileSourceStatus(source) {
+            if (!source || typeof source !== 'object') {
+                return 'offline';
+            }
+
+            const status = typeof source.status === 'string' ? source.status.toLowerCase() : '';
+            if (status === 'online' || status === 'offline' || status === 'syncing') {
+                return status;
+            }
+
+            return source.connected ? 'online' : 'offline';
+        }
+
+        function getFileSourceStatusLabel(status) {
+            switch (status) {
+                case 'online':
+                    return 'Онлайн';
+                case 'syncing':
+                    return 'Синхронізація';
+                case 'offline':
+                default:
+                    return 'Не підключено';
+            }
         }
 
         function flattenFileTree(node, level = 0, acc = []) {
@@ -5169,6 +5922,10 @@
                 activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
                     ? crmData.fileLibrary[0].id
                     : null;
+                const snapshotSources = Array.isArray(crmData.fileSources) ? crmData.fileSources : [];
+                const linkedSource = snapshotSources.find(source => source.snapshotId === activeFileSnapshotId) || null;
+                activeFileSourceId = linkedSource ? linkedSource.id : null;
+                pendingFileSourceId = null;
                 fileSearchTerm = '';
                 projectStageFilter = 'all';
                 projectMinProbability = 0;
@@ -5193,6 +5950,7 @@
                 if (projectProbabilityValue) {
                     projectProbabilityValue.textContent = '0%+';
                 }
+                renderFileSources();
             }
         }
 
@@ -5746,6 +6504,14 @@
 
             const formatted = size >= 10 || index === 0 ? size.toFixed(0) : size.toFixed(1);
             return `${formatted} ${units[index]}`;
+        }
+
+        function formatIntegerDisplay(value) {
+            const number = Number(value);
+            if (!Number.isFinite(number) || number <= 0) {
+                return '0';
+            }
+            return Math.round(number).toLocaleString('uk-UA');
         }
 
         function formatRelativeTime(dateInput) {
