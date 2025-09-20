@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import os
 import threading
 from datetime import datetime
 from pathlib import Path
@@ -16,9 +15,7 @@ from pydantic import BaseModel, ConfigDict
 from .config import ServiceConfig, load_config
 from .database import EventDatabase
 from .service import FileEventService, configure_logging
-
-CONFIG_ENV_VAR = "CRM_SERVICE_CONFIG"
-DEFAULT_CONFIG_PATH = Path("config.json")
+from .settings import resolve_config_path
 STREAM_SLEEP_SECONDS = 1.0
 
 LOGGER = logging.getLogger(__name__)
@@ -92,7 +89,7 @@ def create_app(config_path: Optional[Path] = None) -> FastAPI:
         ``config.json`` in the working directory.
     """
 
-    resolved_path = _resolve_config_path(config_path)
+    resolved_path = resolve_config_path(config_path)
     try:
         service_config = load_config(resolved_path)
     except FileNotFoundError as exc:  # pragma: no cover - depends on local setup
@@ -174,15 +171,6 @@ def create_app(config_path: Optional[Path] = None) -> FastAPI:
             database.close()
 
     return app
-
-
-def _resolve_config_path(explicit_path: Optional[Path]) -> Path:
-    if explicit_path is not None:
-        return explicit_path
-    env_path = os.getenv(CONFIG_ENV_VAR)
-    if env_path:
-        return Path(env_path)
-    return DEFAULT_CONFIG_PATH
 
 
 def _row_to_payload(row: Dict[str, Any]) -> EventPayload:

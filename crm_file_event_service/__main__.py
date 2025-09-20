@@ -7,6 +7,7 @@ from pathlib import Path
 
 from .config import load_config
 from .service import FileEventService, configure_logging
+from .settings import CONFIG_ENV_VAR, resolve_config_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -14,8 +15,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--config",
         type=Path,
-        required=True,
-        help="Path to the JSON configuration file.",
+        default=None,
+        help=(
+            "Path to the JSON configuration file. When omitted the path is "
+            f"taken from the {CONFIG_ENV_VAR} environment variable or defaults "
+            "to 'config.json' in the current directory."
+        ),
     )
     parser.add_argument(
         "--log-level",
@@ -32,10 +37,11 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    config = load_config(args.config)
+    config_path = resolve_config_path(args.config)
+    config = load_config(config_path)
     log_level = args.log_level or config.log_level
     configure_logging(log_level)
-    logging.getLogger(__name__).info("Loaded configuration from %s", args.config)
+    logging.getLogger(__name__).info("Loaded configuration from %s", config_path)
 
     service = FileEventService(config)
     if args.once:
