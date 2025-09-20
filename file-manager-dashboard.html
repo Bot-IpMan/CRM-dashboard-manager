@@ -6081,7 +6081,9 @@
 
         function resetDemoData() {
             if (confirm('Скинути дані та повернути демо-набір?')) {
-                crmData = deepClone(defaultData);
+                crmData = upgradeDataStructure(deepClone(defaultData));
+                activeLeadId = null;
+                pendingLeadFiles = [];
                 activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
                     ? crmData.fileLibrary[0].id
                     : null;
@@ -6090,29 +6092,57 @@
                 activeFileSourceId = linkedSource ? linkedSource.id : null;
                 pendingFileSourceId = null;
                 fileSearchTerm = '';
+                pipelineFilterOwner = 'all';
+                contactStatusFilter = 'all';
                 projectStageFilter = 'all';
                 projectMinProbability = 0;
                 projectSearchTerm = '';
                 saveData();
                 populateDropdowns();
-                renderAll();
-                updateFileSnapshotsSelect();
+
+                const pipelineFilter = document.getElementById('pipelineOwnerFilter');
+                if (pipelineFilter) {
+                    pipelineFilter.value = pipelineFilterOwner;
+                }
+
+                const contactSearchInput = document.getElementById('contactSearch');
+                if (contactSearchInput) {
+                    contactSearchInput.value = '';
+                }
+
+                const contactStatusSelect = document.getElementById('contactStatusFilter');
+                if (contactStatusSelect) {
+                    contactStatusSelect.value = contactStatusFilter;
+                }
+
+                const globalSearchInput = document.getElementById('globalSearch');
+                if (globalSearchInput) {
+                    globalSearchInput.value = '';
+                }
+                hideSearchResults();
+
                 const projectSearchInput = document.getElementById('projectSearch');
                 if (projectSearchInput) {
                     projectSearchInput.value = '';
                 }
+
                 const projectStageSelect = document.getElementById('projectStageFilter');
                 if (projectStageSelect) {
                     projectStageSelect.value = 'all';
                 }
+
                 const projectProbabilityRange = document.getElementById('projectProbabilityRange');
                 if (projectProbabilityRange) {
                     projectProbabilityRange.value = 0;
                 }
+
                 const projectProbabilityValue = document.getElementById('projectProbabilityValue');
                 if (projectProbabilityValue) {
                     projectProbabilityValue.textContent = '0%+';
                 }
+
+                renderAll();
+                updateFileSnapshotsSelect();
                 renderFileSources();
             }
         }
