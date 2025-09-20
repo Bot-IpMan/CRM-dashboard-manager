@@ -114,10 +114,95 @@
             font-size: 14px;
         }
 
+        .nav-controls {
+            display: grid;
+            gap: 16px;
+        }
+
+        .nav-search {
+            position: relative;
+        }
+
+        .nav-search input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s ease, background 0.2s ease;
+        }
+
+        .nav-search input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .nav-search input:focus {
+            border-color: rgba(255, 255, 255, 0.45);
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        .nav-search i {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 15px;
+        }
+
+        .nav-filter {
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            padding: 10px 12px;
+            background: rgba(15, 23, 42, 0.45);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 14px;
+            outline: none;
+        }
+
+        .nav-filter:focus {
+            border-color: rgba(255, 255, 255, 0.45);
+        }
+
         .nav {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 18px;
+        }
+
+        .nav-empty {
+            display: none;
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px dashed rgba(255, 255, 255, 0.18);
+            background: rgba(15, 23, 42, 0.45);
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .nav-empty.is-visible {
+            display: block;
+        }
+
+        .nav-group {
+            display: grid;
+            gap: 10px;
+        }
+
+        .nav-group + .nav-group {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 14px;
+        }
+
+        .nav-group-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.55);
         }
 
         .nav-item {
@@ -133,6 +218,14 @@
             background: transparent;
             cursor: pointer;
             transition: all 0.2s ease;
+        }
+
+        .nav-item.is-hidden {
+            display: none;
+        }
+
+        .nav-group.is-collapsed {
+            display: none;
         }
 
         .nav-item i {
@@ -1785,9 +1878,9 @@
         }
 
         .file-item {
-            display: flex;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
             align-items: center;
-            justify-content: space-between;
             gap: 12px;
             padding: 10px 12px;
             border-radius: 12px;
@@ -1816,6 +1909,71 @@
         .file-meta {
             font-size: 12px;
             color: var(--text-muted);
+        }
+
+        .file-progress {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-progress-track {
+            flex: 1;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.16);
+            overflow: hidden;
+        }
+
+        .file-progress-value {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.85), rgba(129, 140, 248, 0.95));
+            transition: width 0.2s ease;
+        }
+
+        .file-progress-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            min-width: 38px;
+            text-align: right;
+        }
+
+        .upload-progress {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            background: rgba(99, 102, 241, 0.08);
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .upload-progress.active {
+            display: flex;
+        }
+
+        .upload-progress strong {
+            color: var(--primary-dark);
+        }
+
+        .upload-progress-track {
+            flex: 1;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.16);
+            overflow: hidden;
+        }
+
+        .upload-progress-value {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, rgba(129, 140, 248, 0.95), rgba(56, 189, 248, 0.9));
+            transition: width 0.2s ease;
         }
 
         .file-remove {
@@ -2022,6 +2180,169 @@
             letter-spacing: 0.03em;
         }
 
+        .role-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 18px;
+        }
+
+        .role-definition-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .role-card {
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            border-radius: var(--radius-md);
+            background: rgba(99, 102, 241, 0.06);
+            padding: 16px 18px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .role-card h4 {
+            font-size: 15px;
+            margin: 0;
+        }
+
+        .role-card p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .role-permissions {
+            display: grid;
+            gap: 6px;
+            margin: 0;
+            padding-left: 18px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(79, 70, 229, 0.18);
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .role-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            background: rgba(239, 68, 68, 0.14);
+            color: #991b1b;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .role-table {
+            display: grid;
+            gap: 10px;
+        }
+
+        .role-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1.6fr);
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            align-items: center;
+        }
+
+        .role-member {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .role-member-details strong {
+            display: block;
+        }
+
+        .role-member-details .role-meta {
+            display: block;
+            margin-top: 2px;
+        }
+
+        .role-row.role-head {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.2);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .role-row select {
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            padding: 8px 10px;
+            font-size: 14px;
+            background: rgba(248, 250, 255, 0.9);
+        }
+
+        .role-row select:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.6);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        .role-permission-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .role-permission-tag {
+            background: rgba(15, 23, 42, 0.08);
+            color: var(--text);
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .role-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .role-summary {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .role-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .role-form .form-group {
+            margin: 0;
+        }
+
+        .role-form textarea {
+            min-height: 90px;
+        }
+
         .probability-control {
             display: flex;
             align-items: center;
@@ -2212,35 +2533,72 @@
                     </div>
                 </div>
 
-                <nav class="nav">
-                    <button class="nav-item active" data-section-target="dashboardSection">
-                        <i class="fa-solid fa-chart-line"></i>
-                        Аналітика
-                    </button>
-                    <button class="nav-item" data-section-target="pipelineSection">
-                        <i class="fa-solid fa-diagram-project"></i>
-                        Воронка продажів
-                    </button>
-                    <button class="nav-item" data-section-target="projectsSection">
-                        <i class="fa-solid fa-briefcase"></i>
-                        Проекти
-                    </button>
-                    <button class="nav-item" data-section-target="contactsSection">
-                        <i class="fa-solid fa-user-group"></i>
-                        Контакти
-                    </button>
-                    <button class="nav-item" data-section-target="tasksSection">
-                        <i class="fa-solid fa-square-check"></i>
-                        Завдання
-                    </button>
-                    <button class="nav-item" data-section-target="filesSection">
-                        <i class="fa-solid fa-folder-tree"></i>
-                        Файли
-                    </button>
-                    <button class="nav-item" data-section-target="analyticsSection">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i>
-                        Інсайти
-                    </button>
+                <div class="nav-controls">
+                    <div class="nav-search">
+                        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                        <input type="search" id="navSearch" placeholder="Шукати модуль..." aria-label="Пошук по меню">
+                    </div>
+                    <select id="navFilter" class="nav-filter" aria-label="Фільтр модулів">
+                        <option value="all">Усі модулі</option>
+                        <option value="sales">Продажі</option>
+                        <option value="operations">Операційні</option>
+                        <option value="analytics">Аналітика</option>
+                        <option value="admin">Адміністрування</option>
+                    </select>
+                </div>
+
+                <nav class="nav" id="mainNav">
+                    <div class="nav-group" data-group="core">
+                        <div class="nav-group-label">Головне</div>
+                        <button class="nav-item active" data-section-target="dashboardSection" data-nav-category="sales analytics" data-nav-keywords="дашборд показники аналітика огляд">
+                            <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
+                            Дашборд
+                        </button>
+                        <button class="nav-item" data-section-target="pipelineSection" data-nav-category="sales" data-nav-keywords="воронка продажів ліди процес">
+                            <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>
+                            Воронка продажів
+                        </button>
+                        <button class="nav-item" data-section-target="projectsSection" data-nav-category="sales operations" data-nav-keywords="проекти угоди бюджет">
+                            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+                            Проекти
+                        </button>
+                    </div>
+
+                    <div class="nav-group" data-group="clients">
+                        <div class="nav-group-label">Клієнти та робота</div>
+                        <button class="nav-item" data-section-target="contactsSection" data-nav-category="sales" data-nav-keywords="контакти клієнти партнери база">
+                            <i class="fa-solid fa-user-group" aria-hidden="true"></i>
+                            Контакти
+                        </button>
+                        <button class="nav-item" data-section-target="tasksSection" data-nav-category="operations sales" data-nav-keywords="завдання планер дії">
+                            <i class="fa-solid fa-square-check" aria-hidden="true"></i>
+                            Завдання
+                        </button>
+                    </div>
+
+                    <div class="nav-group" data-group="operations">
+                        <div class="nav-group-label">Операційні</div>
+                        <button class="nav-item" data-section-target="filesSection" data-nav-category="operations" data-nav-keywords="файли документи сховище drag">
+                            <i class="fa-solid fa-folder-tree" aria-hidden="true"></i>
+                            Файли
+                        </button>
+                    </div>
+
+                    <div class="nav-group" data-group="analytics">
+                        <div class="nav-group-label">Аналітика</div>
+                        <button class="nav-item" data-section-target="analyticsSection" data-nav-category="analytics" data-nav-keywords="інсайти звіти конверсія">
+                            <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
+                            Інсайти
+                        </button>
+                    </div>
+
+                    <div class="nav-group" data-group="admin">
+                        <div class="nav-group-label">Адміністрування</div>
+                        <button class="nav-item" data-section-target="rolesSection" data-nav-category="admin" data-nav-keywords="ролі права доступ команда">
+                            <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                            Ролі та доступи
+                        </button>
+                    </div>
                 </nav>
 
                 <div class="sidebar-footer">
@@ -2568,6 +2926,60 @@
                     </div>
                 </div>
             </section>
+
+            <section id="rolesSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Ролі та доступи</h2>
+                        <p>Розподіляйте відповідальність та обмежуйте доступ до критичних дій</p>
+                    </div>
+                    <div class="section-actions">
+                        <span class="badge badge-info" id="currentUserBadge">
+                            <i class="fa-solid fa-user" aria-hidden="true"></i>
+                            <span id="currentUserName">Користувач</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="role-layout">
+                    <div class="card">
+                        <h3>Модель доступу</h3>
+                        <p class="role-summary">CRM містить набір рекомендованих ролей: Owner, Manager, Storekeeper та Support. Кожна роль має власні межі видимості даних і дозволів на зміни.</p>
+                        <div class="role-definition-grid" id="roleDefinitionGrid"></div>
+                        <div class="role-warning" role="alert">
+                            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                            <span>Менеджери не можуть призначити собі роль Owner. Передача прав власника доступна лише чинному Owner або адміністратору.</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Ролі команди</h3>
+                        <p class="role-summary">Призначте кожному учаснику відповідну роль та перегляньте дозволи.</p>
+                        <div class="role-table" id="roleAssignmentsTable"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Створити кастомну роль</h3>
+                    <p class="role-summary">Додайте власну роль для окремих відділів. Базові права можна успадкувати з існуючих ролей.</p>
+                    <form id="customRoleForm" class="role-form">
+                        <div class="form-group">
+                            <label for="customRoleName">Назва ролі</label>
+                            <input type="text" id="customRoleName" placeholder="Наприклад, Analyst" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customRoleBase">Базувати на</label>
+                            <select id="customRoleBase"></select>
+                        </div>
+                        <div class="form-group full">
+                            <label for="customRoleNotes">Доступні дії</label>
+                            <textarea id="customRoleNotes" placeholder="Опишіть, що може робити ця роль."></textarea>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="submit" class="btn btn-small-primary">Зберегти роль</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
         </main>
     </div>
     <!-- Модальні вікна -->
@@ -2631,6 +3043,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="upload-progress" id="leadUploadProgress" role="status" aria-live="polite">
+                        <strong id="leadUploadLabel">Готово</strong>
+                        <div class="upload-progress-track">
+                            <div class="upload-progress-value" id="leadUploadBar"></div>
+                        </div>
+                        <span id="leadUploadText">Очікування файлів…</span>
+                    </div>
                     <div class="file-list" id="leadFileList"></div>
                 </div>
                 <div class="form-group full">
@@ -2658,7 +3077,7 @@
                 </div>
                 <div class="form-group">
                     <label for="projectCompany">Компанія</label>
-                    <input type="text" id="projectCompany" placeholder="Компанія або бренд">
+                    <input type="text" id="projectCompany" placeholder="Компанія або бренд" required>
                 </div>
                 <div class="form-group">
                     <label for="projectBudget">Бюджет, ₴</label>
@@ -2693,6 +3112,32 @@
                     <label for="projectSummary">Короткий опис</label>
                     <textarea id="projectSummary" placeholder="Основні задачі або наступні кроки"></textarea>
                 </div>
+                <div class="form-group full">
+                    <label for="projectFiles">Вкладення</label>
+                    <div class="file-dropzone" id="projectFileDropzone" role="button" tabindex="0" aria-describedby="projectFileHint">
+                        <input type="file" id="projectFiles" class="file-input-hidden" multiple aria-label="Додати файли до проекту">
+                        <div class="file-dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <div class="file-dropzone-text">
+                                <strong>Перетягніть документи проекту</strong>
+                                <div class="file-dropzone-actions">або <button type="button" class="file-browse-btn" id="projectFileBrowseBtn">оберіть</button> вручну</div>
+                                <p class="upload-hint" id="projectFileHint">Підтримуються бриф, кошториси, медіаплани та інші документи.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="projectUploadProgress" role="status" aria-live="polite">
+                        <strong id="projectUploadLabel">Готово</strong>
+                        <div class="upload-progress-track">
+                            <div class="upload-progress-value" id="projectUploadBar"></div>
+                        </div>
+                        <span id="projectUploadText">Очікування файлів…</span>
+                    </div>
+                    <div class="file-list" id="projectFileList"></div>
+                </div>
+                <div class="form-group full">
+                    <label for="projectNotes">Нотатки</label>
+                    <textarea id="projectNotes" placeholder="Кожну думку вводьте з нового рядка"></textarea>
+                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
                     <button type="submit" class="btn btn-primary">Додати проект</button>
@@ -2714,7 +3159,7 @@
                 </div>
                 <div class="form-group">
                     <label for="contactCompany">Компанія</label>
-                    <input type="text" id="contactCompany">
+                    <input type="text" id="contactCompany" placeholder="Організація або бренд" required>
                 </div>
                 <div class="form-group">
                     <label for="contactRole">Роль</label>
@@ -2746,8 +3191,30 @@
                     <input type="text" id="contactTags" placeholder="VIP, Рекомендація">
                 </div>
                 <div class="form-group full">
+                    <label for="contactFiles">Вкладення</label>
+                    <div class="file-dropzone" id="contactFileDropzone" role="button" tabindex="0" aria-describedby="contactFileHint">
+                        <input type="file" id="contactFiles" class="file-input-hidden" multiple aria-label="Додати файли до контакту">
+                        <div class="file-dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <div class="file-dropzone-text">
+                                <strong>Прикріпіть документи клієнта</strong>
+                                <div class="file-dropzone-actions">або <button type="button" class="file-browse-btn" id="contactFileBrowseBtn">оберіть</button> вручну</div>
+                                <p class="upload-hint" id="contactFileHint">Завантажте договори, презентації чи листування.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="contactUploadProgress" role="status" aria-live="polite">
+                        <strong id="contactUploadLabel">Готово</strong>
+                        <div class="upload-progress-track">
+                            <div class="upload-progress-value" id="contactUploadBar"></div>
+                        </div>
+                        <span id="contactUploadText">Очікування файлів…</span>
+                    </div>
+                    <div class="file-list" id="contactFileList"></div>
+                </div>
+                <div class="form-group full">
                     <label for="contactNotes">Нотатка</label>
-                    <textarea id="contactNotes"></textarea>
+                    <textarea id="contactNotes" placeholder="Основні домовленості або наступні кроки"></textarea>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
@@ -2798,9 +3265,35 @@
                         <option value="">Без прив'язки</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="taskTags">Мітки</label>
+                    <input type="text" id="taskTags" placeholder="Наприклад, Follow-up, Пріоритет">
+                </div>
                 <div class="form-group full">
                     <label for="taskDescription">Коментар</label>
                     <textarea id="taskDescription" placeholder="Опишіть наступні кроки..."></textarea>
+                </div>
+                <div class="form-group full">
+                    <label for="taskFiles">Додати файли</label>
+                    <div class="file-dropzone" id="taskFileDropzone" role="button" tabindex="0" aria-describedby="taskFileHint">
+                        <input type="file" id="taskFiles" class="file-input-hidden" multiple aria-label="Додати файли до завдання">
+                        <div class="file-dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <div class="file-dropzone-text">
+                                <strong>Перетягніть матеріали для завдання</strong>
+                                <div class="file-dropzone-actions">або <button type="button" class="file-browse-btn" id="taskFileBrowseBtn">оберіть</button> вручну</div>
+                                <p class="upload-hint" id="taskFileHint">Додавайте бриф, шаблони листів чи зображення.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="upload-progress" id="taskUploadProgress" role="status" aria-live="polite">
+                        <strong id="taskUploadLabel">Готово</strong>
+                        <div class="upload-progress-track">
+                            <div class="upload-progress-value" id="taskUploadBar"></div>
+                        </div>
+                        <span id="taskUploadText">Очікування файлів…</span>
+                    </div>
+                    <div class="file-list" id="taskFileList"></div>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
@@ -2829,6 +3322,59 @@
             { id: 'done', title: 'Завершено' }
         ];
         const TEAM_MEMBERS = ['Марина', 'Олександр', 'Вікторія', 'Дмитро'];
+        const CURRENT_USER = {
+            name: 'Марина',
+            role: 'manager'
+        };
+        const ROLE_DEFINITIONS = [
+            {
+                id: 'owner',
+                name: 'Owner',
+                badge: 'Owner',
+                description: 'Повний контроль над CRM, може оновлювати налаштування та передавати права.',
+                permissions: [
+                    'Керування ролями та правами доступу',
+                    'Редагування бюджетів і фінансових звітів',
+                    'Перегляд усіх проектів та файлів'
+                ],
+                limitations: ['Тільки один користувач у компанії']
+            },
+            {
+                id: 'manager',
+                name: 'Sales Manager',
+                badge: 'Manager',
+                description: 'Веде комунікацію з клієнтами, контролює воронку продажів і задачі.',
+                permissions: [
+                    'Створення та редагування лідів і проектів',
+                    'Планування та виконання задач команди',
+                    'Завантаження файлів у своїх проектах'
+                ],
+                limitations: ['Не може змінювати роль Owner', 'Без доступу до системних налаштувань']
+            },
+            {
+                id: 'storekeeper',
+                name: 'Storekeeper',
+                badge: 'Storekeeper',
+                description: 'Опікується технічною документацією та ресурсами, контролює файлові бібліотеки.',
+                permissions: [
+                    'Доступ до файлового архіву',
+                    'Оновлення статусів постачань',
+                    'Коментування задач'
+                ],
+                limitations: ['Не бачить фінансові показники']
+            },
+            {
+                id: 'support',
+                name: 'Support',
+                badge: 'Support',
+                description: 'Працює зі зверненнями клієнтів і допомагає менеджерам.',
+                permissions: [
+                    'Перегляд контактів і нотаток',
+                    'Створення задач на звернення клієнтів'
+                ],
+                limitations: ['Без права змінювати бюджети та етапи угод']
+            }
+        ];
         const STATUS_LABELS = {
             active: 'Активний',
             potential: 'Потенційний',
@@ -2839,6 +3385,15 @@
         const MAX_ATTACHMENT_SIZE = 1.5 * 1024 * 1024; // 1.5 МБ
         const MAX_TOTAL_ATTACHMENTS_SIZE = 4 * 1024 * 1024; // 4 МБ
         const FILE_LIBRARY_LIMIT = 6;
+        const attachmentAreas = {};
+        const MODAL_ATTACHMENT_AREAS = {
+            addLeadModal: ['lead'],
+            addProjectModal: ['project'],
+            addContactModal: ['contact'],
+            addTaskModal: ['task']
+        };
+        const navigationState = { search: '', filter: 'all' };
+        let applyNavigationFilters = () => {};
 
         let crmData = null;
         let activeLeadId = null;
@@ -2848,7 +3403,6 @@
         let projectMinProbability = 0;
         let projectSearchTerm = '';
         let searchTimer = null;
-        let pendingLeadFiles = [];
         let activeFileSnapshotId = null;
         let activeFileSourceId = null;
         let pendingFileSourceId = null;
@@ -3089,6 +3643,21 @@
                     contact: 'Андрій Коваленко',
                     tags: ['CRM', 'Фінтех'],
                     description: 'Розширення можливостей для партнерів і омніканальних продажів.',
+                    notes: [
+                        { id: 'pnote-1', text: 'Запуск discovery-воркшопу 10 червня.', author: 'Марина', date: '2024-06-02T10:00:00.000Z' },
+                        { id: 'pnote-2', text: 'Погодити бюджет з фінансовим директором до 15 червня.', author: 'Вікторія', date: '2024-06-03T09:30:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'pfile-brief-novapay',
+                            name: 'NovaPay-roadmap.txt',
+                            path: 'NovaPay/Роудмап/NovaPay-roadmap.txt',
+                            size: 312,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-20T10:00:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,UGxhbm5pbmcgZG9rdW1lbnQgZm9yIE5vdmFQYXk='
+                        }
+                    ],
                     createdAt: '2024-04-25T09:10:00.000Z',
                     updatedAt: '2024-06-04T13:20:00.000Z'
                 },
@@ -3104,6 +3673,20 @@
                     contact: 'Ірина Мельник',
                     tags: ['Supply chain', 'Інтеграція'],
                     description: 'Впровадження планувальника маршрутів та мобільного додатку кур’єра.',
+                    notes: [
+                        { id: 'pnote-3', text: 'Зібрати відгуки пілотної групи кур’єрів.', author: 'Олександр', date: '2024-06-01T11:40:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'pfile-rozetka-scope',
+                            name: 'Rozetka-scope.txt',
+                            path: 'Rozetka/Scope/iteration-2.txt',
+                            size: 198,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-28T14:45:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,U2NvcGUgZm9yIExvZ2lzdGljcyBQaGFzZSAy'
+                        }
+                    ],
                     createdAt: '2024-04-12T08:35:00.000Z',
                     updatedAt: '2024-06-01T11:40:00.000Z'
                 },
@@ -3119,6 +3702,20 @@
                     contact: 'Світлана Романюк',
                     tags: ['Маркетинг', 'Discovery'],
                     description: 'Аналітика клієнтських сегментів і підготовка контент-стратегії.',
+                    notes: [
+                        { id: 'pnote-4', text: 'Затвердити перші три контент-спринти.', author: 'Дмитро', date: '2024-06-05T09:15:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'pfile-okko-brief',
+                            name: 'OKKO-creative-brief.txt',
+                            path: 'OKKO/Briefs/creative-brief.txt',
+                            size: 274,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-31T16:05:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,Q3JlYXRpdmUgYnJpZWYgZm9yIE9LS08gZGlnaXRhbCBjYW1wYWlnbg=='
+                        }
+                    ],
                     createdAt: '2024-05-02T10:20:00.000Z',
                     updatedAt: '2024-06-05T09:15:00.000Z'
                 }
@@ -3134,7 +3731,21 @@
                     status: 'active',
                     owner: 'Марина',
                     tags: ['VIP'],
-                    lastActivity: '2024-06-02T12:15:00.000Z'
+                    lastActivity: '2024-06-02T12:15:00.000Z',
+                    notes: [
+                        { id: 'cnote-1', text: 'Очікує фінальне узгодження roadmap.', author: 'Марина', date: '2024-06-02T12:15:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'cfile-novapay-agreement',
+                            name: 'NovaPay-agreement.txt',
+                            path: 'Contacts/NovaPay/agreement.txt',
+                            size: 256,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-30T07:20:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,Q29udHJhY3Qgc3VtbWFyeSBmb3IgTm92YVBheQ=='
+                        }
+                    ]
                 },
                 {
                     id: 'contact-2',
@@ -3146,7 +3757,11 @@
                     status: 'potential',
                     owner: 'Олександр',
                     tags: ['Priority'],
-                    lastActivity: '2024-06-01T11:00:00.000Z'
+                    lastActivity: '2024-06-01T11:00:00.000Z',
+                    notes: [
+                        { id: 'cnote-2', text: 'Надіслати оновлений KPI-лист до 14 червня.', author: 'Олександр', date: '2024-06-01T11:00:00.000Z' }
+                    ],
+                    attachments: []
                 },
                 {
                     id: 'contact-3',
@@ -3158,7 +3773,21 @@
                     status: 'active',
                     owner: 'Вікторія',
                     tags: ['Фінанси'],
-                    lastActivity: '2024-06-03T15:45:00.000Z'
+                    lastActivity: '2024-06-03T15:45:00.000Z',
+                    notes: [
+                        { id: 'cnote-3', text: 'Чекає демо KYC-модуля у середу.', author: 'Вікторія', date: '2024-06-03T15:45:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'cfile-greenbank-nda',
+                            name: 'GreenBank-NDA.txt',
+                            path: 'Contacts/GreenBank/NDA.txt',
+                            size: 188,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-18T09:40:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,TkRBIGZvciBHcmVlbkJhbms=' 
+                        }
+                    ]
                 },
                 {
                     id: 'contact-4',
@@ -3170,7 +3799,9 @@
                     status: 'potential',
                     owner: 'Дмитро',
                     tags: ['Marketing'],
-                    lastActivity: '2024-06-05T09:15:00.000Z'
+                    lastActivity: '2024-06-05T09:15:00.000Z',
+                    notes: [],
+                    attachments: []
                 },
                 {
                     id: 'contact-5',
@@ -3182,7 +3813,21 @@
                     status: 'partner',
                     owner: 'Марина',
                     tags: ['Strategic'],
-                    lastActivity: '2024-05-30T16:10:00.000Z'
+                    lastActivity: '2024-05-30T16:10:00.000Z',
+                    notes: [
+                        { id: 'cnote-4', text: 'Заплановано ретроспективу запуску на 12 червня.', author: 'Марина', date: '2024-05-31T09:00:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'cfile-uklon-summary',
+                            name: 'Uklon-summary.txt',
+                            path: 'Contacts/Uklon/summary.txt',
+                            size: 204,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-05-29T12:25:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,U3VtbWFyeSBmb3IgVWxrb24gc3VjY2VzcyBtb2R1bGU='
+                        }
+                    ]
                 }
             ],
             tasks: [
@@ -3194,7 +3839,20 @@
                     owner: 'Марина',
                     dueDate: '2024-06-08',
                     relatedLeadId: 'lead-1',
-                    description: 'Зібрати технічні вимоги та запланувати воркшоп з командою клієнта.'
+                    description: 'Зібрати технічні вимоги та запланувати воркшоп з командою клієнта.',
+                    tags: ['Discovery', 'NovaPay'],
+                    attachments: [
+                        {
+                            id: 'tfile-audit-checklist',
+                            name: 'audit-checklist.txt',
+                            path: 'Tasks/NovaPay/audit-checklist.txt',
+                            size: 164,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-06-01T09:00:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,QXVkaXQgY2hlY2tsaXN0IGZvciBOb3ZhUGF5IHRlYW0='
+                        }
+                    ],
+                    createdAt: '2024-05-30T09:15:00.000Z'
                 },
                 {
                     id: 'task-2',
@@ -3204,7 +3862,10 @@
                     owner: 'Олександр',
                     dueDate: '2024-06-07',
                     relatedLeadId: 'lead-2',
-                    description: 'Додати блок про інтеграцію з WMS та підрахувати ROI.'
+                    description: 'Додати блок про інтеграцію з WMS та підрахувати ROI.',
+                    tags: ['Proposal'],
+                    attachments: [],
+                    createdAt: '2024-05-28T08:20:00.000Z'
                 },
                 {
                     id: 'task-3',
@@ -3214,7 +3875,20 @@
                     owner: 'Вікторія',
                     dueDate: '2024-06-12',
                     relatedLeadId: 'lead-3',
-                    description: 'Підготувати сценарій демонстрації та приклади звітів.'
+                    description: 'Підготувати сценарій демонстрації та приклади звітів.',
+                    tags: ['Demo'],
+                    attachments: [
+                        {
+                            id: 'tfile-kyc-script',
+                            name: 'kyc-demo-script.txt',
+                            path: 'Tasks/GreenBank/kyc-demo-script.txt',
+                            size: 220,
+                            type: 'text/plain',
+                            lastModified: Date.parse('2024-06-03T15:00:00.000Z'),
+                            dataUrl: 'data:text/plain;base64,S1lDIGRlbW8gc2NyaXB0IGZvciBncmVlbmJhbmsgdGVhbQ=='
+                        }
+                    ],
+                    createdAt: '2024-05-31T10:45:00.000Z'
                 },
                 {
                     id: 'task-4',
@@ -3224,7 +3898,10 @@
                     owner: 'Дмитро',
                     dueDate: '2024-06-09',
                     relatedLeadId: 'lead-4',
-                    description: 'Підібрати релевантні кейси з рітейлу та оформити презентацію.'
+                    description: 'Підібрати релевантні кейси з рітейлу та оформити презентацію.',
+                    tags: ['Контент'],
+                    attachments: [],
+                    createdAt: '2024-05-29T12:00:00.000Z'
                 },
                 {
                     id: 'task-5',
@@ -3235,10 +3912,27 @@
                     dueDate: '2024-06-01',
                     relatedLeadId: 'lead-5',
                     description: 'Зафіксувати висновки та рекомендації для наступних запусків.',
-                    completedAt: '2024-06-01'
+                    tags: ['Retro'],
+                    attachments: [],
+                    completedAt: '2024-06-01',
+                    createdAt: '2024-05-20T14:10:00.000Z'
                 }
             ],
             activities: [
+                {
+                    id: 'act-3',
+                    type: 'task',
+                    entityId: 'task-4',
+                    message: 'Створено нове завдання для OKKO.',
+                    timestamp: '2024-06-05T09:15:00.000Z'
+                },
+                {
+                    id: 'act-6',
+                    type: 'role',
+                    entityId: 'member-victoria',
+                    message: 'Марина призначила Вікторію на роль Project Coordinator.',
+                    timestamp: '2024-06-04T16:30:00.000Z'
+                },
                 {
                     id: 'act-1',
                     type: 'stage',
@@ -3252,13 +3946,6 @@
                     entityId: 'lead-2',
                     message: 'Олександр додав нотатку до Rozetka: потребують нову комерційну пропозицію.',
                     timestamp: '2024-06-01T11:00:00.000Z'
-                },
-                {
-                    id: 'act-3',
-                    type: 'task',
-                    entityId: 'task-4',
-                    message: 'Створено нове завдання для OKKO.',
-                    timestamp: '2024-06-05T09:15:00.000Z'
                 },
                 {
                     id: 'act-4',
@@ -3275,6 +3962,116 @@
                     timestamp: '2024-05-16T10:45:00.000Z'
                 }
             ],
+            roles: {
+                customRoles: [
+                    {
+                        id: 'role-project-coordinator',
+                        name: 'Project Coordinator',
+                        badge: 'Coordinator',
+                        description: 'Відповідає за запуск проектів і синхронізацію команд.',
+                        permissions: [
+                            'Координація стартових зустрічей',
+                            'Контроль таймлайну проектів',
+                            'Перевірка завантажених матеріалів'
+                        ],
+                        limitations: ['Без права змінювати фінансові показники'],
+                        baseRoleId: 'manager',
+                        createdAt: '2024-04-22T09:00:00.000Z',
+                        createdBy: 'Марина',
+                        custom: true
+                    },
+                    {
+                        id: 'role-marketing-curator',
+                        name: 'Marketing Curator',
+                        badge: 'Curator',
+                        description: 'Опікується контентом та партнерськими активаціями.',
+                        permissions: [
+                            'Планування маркетингових задач',
+                            'Керування контент-бібліотекою',
+                            'Погодження матеріалів з клієнтами'
+                        ],
+                        limitations: ['Без доступу до налаштувань ролей'],
+                        baseRoleId: 'support',
+                        createdAt: '2024-04-28T14:30:00.000Z',
+                        createdBy: 'Дмитро',
+                        custom: true
+                    }
+                ],
+                assignments: [
+                    {
+                        id: 'member-oleksandr',
+                        name: 'Олександр',
+                        email: 'oleksandr@demo-crm.ua',
+                        department: 'Операційний відділ',
+                        title: 'Комерційний директор',
+                        phone: '+380 50 777 23 11',
+                        roleId: 'owner',
+                        responsibilities: [
+                            'Фінансове планування',
+                            'Стратегія розвитку продажів',
+                            'Затвердження бюджетів'
+                        ],
+                        note: 'Керує ключовими угодами та правами доступу.',
+                        updatedAt: '2024-06-01T08:30:00.000Z',
+                        updatedBy: 'Система',
+                        locked: true
+                    },
+                    {
+                        id: 'member-marina',
+                        name: 'Марина',
+                        email: 'marina@demo-crm.ua',
+                        department: 'Відділ продажів',
+                        title: 'Керівниця продажів',
+                        phone: '+380 67 123 45 67',
+                        roleId: 'manager',
+                        responsibilities: [
+                            'Керування воронкою продажів',
+                            'Контроль командних задач',
+                            'Підготовка демо для клієнтів'
+                        ],
+                        note: 'Фокусується на стратегічних клієнтах і нових угодах.',
+                        updatedAt: '2024-06-03T10:15:00.000Z',
+                        updatedBy: 'Олександр',
+                        locked: false
+                    },
+                    {
+                        id: 'member-victoria',
+                        name: 'Вікторія',
+                        email: 'victoria@demo-crm.ua',
+                        department: 'Доставка проектів',
+                        title: 'Project Coordinator',
+                        phone: '+380 63 555 14 78',
+                        roleId: 'role-project-coordinator',
+                        responsibilities: [
+                            'Онбординг нових проектів',
+                            'Комунікація з клієнтськими командами',
+                            'Актуалізація статусів задач'
+                        ],
+                        note: 'Призначено на координацію фінансового сектору.',
+                        updatedAt: '2024-06-04T16:30:00.000Z',
+                        updatedBy: 'Марина',
+                        locked: false
+                    },
+                    {
+                        id: 'member-dmytro',
+                        name: 'Дмитро',
+                        email: 'dmytro@demo-crm.ua',
+                        department: 'Маркетинг',
+                        title: 'Marketing Curator',
+                        phone: '+380 44 123 90 12',
+                        roleId: 'role-marketing-curator',
+                        responsibilities: [
+                            'Підготовка кейсів',
+                            'Узгодження креативних матеріалів',
+                            'Ведення контент-календаря'
+                        ],
+                        note: 'Відповідає за контент для партнерських програм.',
+                        updatedAt: '2024-06-05T09:15:00.000Z',
+                        updatedBy: 'Вікторія',
+                        locked: false
+                    }
+                ]
+            },
             fileLibrary: [
                 {
                     id: 'snapshot-marketing-folder',
@@ -3461,6 +4258,64 @@
             return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
         }
 
+        function normalizeAttachment(file, prefix = 'file') {
+            if (!file || typeof file !== 'object') {
+                return null;
+            }
+
+            const name = typeof file.name === 'string' && file.name.trim().length ? file.name.trim() : 'Файл';
+            const path = typeof file.path === 'string' && file.path.trim().length ? file.path.trim() : name;
+            const size = Math.max(0, Number(file.size) || 0);
+            const type = typeof file.type === 'string' && file.type.trim().length ? file.type : 'application/octet-stream';
+            const lastModified = Number(file.lastModified) || Date.now();
+            const dataUrl = typeof file.dataUrl === 'string' ? file.dataUrl : '';
+
+            return {
+                id: typeof file.id === 'string' && file.id.trim().length ? file.id : generateId(prefix),
+                name,
+                path,
+                size,
+                type,
+                lastModified,
+                dataUrl
+            };
+        }
+
+        function normalizeNote(note, prefix = 'note', fallbackAuthor = 'CRM') {
+            if (!note) {
+                return null;
+            }
+
+            if (typeof note === 'string') {
+                const text = note.trim();
+                if (!text.length) {
+                    return null;
+                }
+                return {
+                    id: generateId(prefix),
+                    text,
+                    author: fallbackAuthor,
+                    date: new Date().toISOString()
+                };
+            }
+
+            if (typeof note === 'object') {
+                const text = typeof note.text === 'string' ? note.text.trim() : '';
+                if (!text.length) {
+                    return null;
+                }
+
+                return {
+                    id: typeof note.id === 'string' && note.id.trim().length ? note.id : generateId(prefix),
+                    text,
+                    author: typeof note.author === 'string' && note.author.trim().length ? note.author.trim() : fallbackAuthor,
+                    date: typeof note.date === 'string' && note.date ? note.date : new Date().toISOString()
+                };
+            }
+
+            return null;
+        }
+
         function upgradeDataStructure(data) {
             if (!data || typeof data !== 'object') {
                 return deepClone(defaultData);
@@ -3468,46 +4323,85 @@
 
             if (!Array.isArray(data.leads)) {
                 data.leads = [];
+            } else {
+                data.leads = data.leads
+                    .filter(lead => lead && typeof lead === 'object')
+                    .map(lead => {
+                        const normalizedLead = { ...lead };
+                        normalizedLead.attachments = Array.isArray(lead.attachments)
+                            ? lead.attachments.map(file => normalizeAttachment(file, 'file')).filter(Boolean)
+                            : [];
+                        normalizedLead.notes = Array.isArray(lead.notes)
+                            ? lead.notes.map(note => normalizeNote(note, 'note', lead.owner || 'CRM')).filter(Boolean)
+                            : typeof lead.notes === 'string'
+                                ? [normalizeNote(lead.notes, 'note', lead.owner || 'CRM')].filter(Boolean)
+                                : [];
+                        if (!Array.isArray(normalizedLead.timeline)) {
+                            normalizedLead.timeline = [];
+                        }
+                        return normalizedLead;
+                    });
             }
 
-            data.leads.forEach(lead => {
-                if (!Array.isArray(lead.attachments)) {
-                    lead.attachments = [];
-                } else {
-                    lead.attachments = lead.attachments.map(file => ({
-                        id: file.id || generateId('file'),
-                        name: file.name,
-                        path: file.path || file.name,
-                        size: Number(file.size) || 0,
-                        type: file.type || 'application/octet-stream',
-                        lastModified: Number(file.lastModified) || Date.now(),
-                        dataUrl: file.dataUrl || ''
-                    }));
+            data.projects = Array.isArray(data.projects)
+                ? data.projects.map(normalizeProject).filter(Boolean)
+                : [];
+
+            data.contacts = Array.isArray(data.contacts)
+                ? data.contacts.map(normalizeContact).filter(Boolean)
+                : [];
+
+            data.tasks = Array.isArray(data.tasks)
+                ? data.tasks.map(normalizeTask).filter(Boolean)
+                : [];
+
+            data.fileLibrary = Array.isArray(data.fileLibrary)
+                ? data.fileLibrary.map(normalizeFileSnapshot).filter(Boolean)
+                : [];
+
+            data.fileSources = Array.isArray(data.fileSources)
+                ? data.fileSources.map(normalizeFileSource).filter(Boolean)
+                : deepClone(defaultData.fileSources);
+
+            if (!data.roles || typeof data.roles !== 'object') {
+                data.roles = deepClone(defaultData.roles);
+            }
+
+            data.roles.customRoles = Array.isArray(data.roles.customRoles)
+                ? data.roles.customRoles.map(role => normalizeRoleDefinition(role, true)).filter(Boolean)
+                : [];
+
+            data.roles.assignments = Array.isArray(data.roles.assignments)
+                ? data.roles.assignments.map(normalizeRoleAssignment).filter(Boolean)
+                : [];
+
+            const existingNames = new Set(data.roles.assignments.map(item => item.name));
+            TEAM_MEMBERS.forEach(memberName => {
+                if (!existingNames.has(memberName)) {
+                    const fallbackAssignment = normalizeRoleAssignment({
+                        id: generateId('member'),
+                        name: memberName,
+                        roleId: memberName === CURRENT_USER.name ? CURRENT_USER.role : 'manager',
+                        responsibilities: ['Доступ до CRM'],
+                        updatedAt: new Date().toISOString(),
+                        updatedBy: 'Система'
+                    });
+                    data.roles.assignments.push(fallbackAssignment);
+                    existingNames.add(memberName);
                 }
             });
 
-            if (!Array.isArray(data.projects)) {
-                data.projects = [];
-            } else {
-                data.projects = data.projects
-                    .map(normalizeProject)
-                    .filter(Boolean);
+            let ownerAssignment = data.roles.assignments.find(item => item.roleId === 'owner');
+            if (!ownerAssignment && data.roles.assignments.length) {
+                ownerAssignment = data.roles.assignments[0];
+                ownerAssignment.roleId = 'owner';
+                ownerAssignment.updatedAt = new Date().toISOString();
+                ownerAssignment.updatedBy = 'Система';
             }
 
-            if (!Array.isArray(data.fileLibrary)) {
-                data.fileLibrary = [];
-            } else {
-                data.fileLibrary = data.fileLibrary
-                    .map(normalizeFileSnapshot)
-                    .filter(Boolean);
-            }
-
-            if (!Array.isArray(data.fileSources)) {
-                data.fileSources = deepClone(defaultData.fileSources);
-            } else {
-                data.fileSources = data.fileSources
-                    .map(normalizeFileSource)
-                    .filter(Boolean);
+            const currentAssignment = data.roles.assignments.find(item => item.name === CURRENT_USER.name);
+            if (currentAssignment) {
+                CURRENT_USER.role = currentAssignment.roleId;
             }
 
             return data;
@@ -3540,6 +4434,19 @@
             const updatedAt = typeof project.updatedAt === 'string' && project.updatedAt
                 ? project.updatedAt
                 : createdAt;
+            const description = typeof project.description === 'string' && project.description.trim().length
+                ? project.description.trim()
+                : typeof project.summary === 'string'
+                    ? project.summary.trim()
+                    : '';
+            const attachments = Array.isArray(project.attachments)
+                ? project.attachments.map(file => normalizeAttachment(file, 'projectfile')).filter(Boolean)
+                : [];
+            const notes = Array.isArray(project.notes)
+                ? project.notes.map(note => normalizeNote(note, 'pnote', project.owner || 'CRM')).filter(Boolean)
+                : typeof project.notes === 'string'
+                    ? [normalizeNote(project.notes, 'pnote', project.owner || 'CRM')].filter(Boolean)
+                    : [];
 
             return {
                 id: typeof project.id === 'string' && project.id ? project.id : generateId('project'),
@@ -3552,10 +4459,291 @@
                 contact: typeof project.contact === 'string' ? project.contact.trim() : '',
                 team,
                 tags,
-                description: typeof project.description === 'string' ? project.description.trim() : '',
+                description,
+                notes,
+                attachments,
                 createdAt,
                 updatedAt
             };
+        }
+
+        function normalizeContact(contact) {
+            if (!contact || typeof contact !== 'object') {
+                return null;
+            }
+
+            const id = typeof contact.id === 'string' && contact.id.trim().length ? contact.id.trim() : generateId('contact');
+            const name = typeof contact.name === 'string' && contact.name.trim().length ? contact.name.trim() : 'Новий контакт';
+            const company = typeof contact.company === 'string' ? contact.company.trim() : '';
+            const role = typeof contact.role === 'string' ? contact.role.trim() : '';
+            const email = typeof contact.email === 'string' ? contact.email.trim() : '';
+            const phone = typeof contact.phone === 'string' ? contact.phone.trim() : '';
+            const status = typeof contact.status === 'string' && STATUS_LABELS[contact.status] ? contact.status : 'potential';
+            const owner = typeof contact.owner === 'string' && contact.owner.trim().length ? contact.owner.trim() : CURRENT_USER.name;
+            const tags = Array.isArray(contact.tags)
+                ? contact.tags.map(tag => typeof tag === 'string' ? tag.trim() : String(tag || '').trim()).filter(Boolean)
+                : typeof contact.tags === 'string' && contact.tags.trim().length
+                    ? contact.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+                    : [];
+            const attachments = Array.isArray(contact.attachments)
+                ? contact.attachments.map(file => normalizeAttachment(file, 'contactfile')).filter(Boolean)
+                : [];
+            const notes = Array.isArray(contact.notes)
+                ? contact.notes.map(note => normalizeNote(note, 'cnote', owner)).filter(Boolean)
+                : typeof contact.notes === 'string'
+                    ? [normalizeNote(contact.notes, 'cnote', owner)].filter(Boolean)
+                    : [];
+            const lastActivity = typeof contact.lastActivity === 'string' && contact.lastActivity
+                ? contact.lastActivity
+                : new Date().toISOString();
+
+            return {
+                id,
+                name,
+                company,
+                role,
+                email,
+                phone,
+                status,
+                owner,
+                tags,
+                attachments,
+                notes,
+                lastActivity
+            };
+        }
+
+        function normalizeTask(task) {
+            if (!task || typeof task !== 'object') {
+                return null;
+            }
+
+            const id = typeof task.id === 'string' && task.id.trim().length ? task.id.trim() : generateId('task');
+            const title = typeof task.title === 'string' && task.title.trim().length ? task.title.trim() : 'Нове завдання';
+            const owner = typeof task.owner === 'string' && task.owner.trim().length ? task.owner.trim() : CURRENT_USER.name;
+            const dueDate = typeof task.dueDate === 'string' ? task.dueDate : '';
+            const allowedStatuses = TASK_COLUMNS.map(column => column.id);
+            const status = allowedStatuses.includes(task.status) ? task.status : 'todo';
+            const priority = ['high', 'medium', 'low'].includes(task.priority) ? task.priority : 'medium';
+            const relatedLeadId = typeof task.relatedLeadId === 'string' ? task.relatedLeadId : '';
+            const description = typeof task.description === 'string' ? task.description.trim() : '';
+            const tags = Array.isArray(task.tags)
+                ? task.tags.map(tag => typeof tag === 'string' ? tag.trim() : String(tag || '').trim()).filter(Boolean)
+                : typeof task.tags === 'string' && task.tags.trim().length
+                    ? task.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+                    : [];
+            const attachments = Array.isArray(task.attachments)
+                ? task.attachments.map(file => normalizeAttachment(file, 'taskfile')).filter(Boolean)
+                : [];
+            const createdAt = typeof task.createdAt === 'string' && task.createdAt ? task.createdAt : new Date().toISOString();
+
+            const normalizedTask = {
+                id,
+                title,
+                owner,
+                dueDate,
+                priority,
+                status,
+                relatedLeadId,
+                description,
+                tags,
+                attachments,
+                createdAt
+            };
+
+            if (task.completedAt) {
+                normalizedTask.completedAt = task.completedAt;
+            }
+
+            return normalizedTask;
+        }
+
+        function normalizeRoleDefinition(role, isCustom = false) {
+            if (!role || typeof role !== 'object') {
+                return null;
+            }
+
+            const id = typeof role.id === 'string' && role.id.trim().length ? role.id.trim() : generateId('role');
+            const name = typeof role.name === 'string' && role.name.trim().length ? role.name.trim() : 'Нова роль';
+            const badge = typeof role.badge === 'string' && role.badge.trim().length ? role.badge.trim() : name;
+            const description = typeof role.description === 'string' ? role.description.trim() : '';
+            const permissions = Array.isArray(role.permissions)
+                ? role.permissions.map(item => typeof item === 'string' ? item.trim() : String(item || '').trim()).filter(Boolean)
+                : [];
+            const limitations = Array.isArray(role.limitations)
+                ? role.limitations.map(item => typeof item === 'string' ? item.trim() : String(item || '').trim()).filter(Boolean)
+                : [];
+            const baseRoleId = typeof role.baseRoleId === 'string' && role.baseRoleId.trim().length ? role.baseRoleId.trim() : null;
+            const createdAt = typeof role.createdAt === 'string' && role.createdAt ? role.createdAt : new Date().toISOString();
+            const createdBy = typeof role.createdBy === 'string' && role.createdBy.trim().length ? role.createdBy.trim() : 'Система';
+            const custom = isCustom || Boolean(role.custom);
+
+            return {
+                id,
+                name,
+                badge,
+                description,
+                permissions,
+                limitations,
+                baseRoleId,
+                createdAt,
+                createdBy,
+                custom
+            };
+        }
+
+        function normalizeRoleAssignment(assignment) {
+            if (!assignment || typeof assignment !== 'object') {
+                return null;
+            }
+
+            const name = typeof assignment.name === 'string' && assignment.name.trim().length ? assignment.name.trim() : '';
+            if (!name) {
+                return null;
+            }
+
+            const id = typeof assignment.id === 'string' && assignment.id.trim().length ? assignment.id.trim() : generateId('member');
+            const email = typeof assignment.email === 'string' ? assignment.email.trim() : '';
+            const department = typeof assignment.department === 'string' ? assignment.department.trim() : '';
+            const title = typeof assignment.title === 'string' ? assignment.title.trim() : '';
+            const phone = typeof assignment.phone === 'string' ? assignment.phone.trim() : '';
+            const roleId = typeof assignment.roleId === 'string' && assignment.roleId.trim().length ? assignment.roleId.trim() : 'manager';
+            const responsibilities = Array.isArray(assignment.responsibilities)
+                ? assignment.responsibilities.map(item => typeof item === 'string' ? item.trim() : String(item || '').trim()).filter(Boolean)
+                : typeof assignment.responsibilities === 'string' && assignment.responsibilities.trim().length
+                    ? assignment.responsibilities.split(',').map(item => item.trim()).filter(Boolean)
+                    : [];
+            const note = typeof assignment.note === 'string' ? assignment.note.trim() : '';
+            const updatedAt = typeof assignment.updatedAt === 'string' && assignment.updatedAt ? assignment.updatedAt : new Date().toISOString();
+            const updatedBy = typeof assignment.updatedBy === 'string' && assignment.updatedBy.trim().length ? assignment.updatedBy.trim() : 'Система';
+            const locked = Boolean(assignment.locked);
+
+            return {
+                id,
+                name,
+                email,
+                department,
+                title,
+                phone,
+                roleId,
+                responsibilities,
+                note,
+                updatedAt,
+                updatedBy,
+                locked
+            };
+        }
+
+        function getRoleDefinition(roleId) {
+            if (!roleId) {
+                return null;
+            }
+
+            const baseRole = ROLE_DEFINITIONS.find(role => role.id === roleId);
+            if (baseRole) {
+                return {
+                    id: baseRole.id,
+                    name: baseRole.name,
+                    badge: baseRole.badge,
+                    description: baseRole.description,
+                    permissions: Array.isArray(baseRole.permissions) ? [...baseRole.permissions] : [],
+                    limitations: Array.isArray(baseRole.limitations) ? [...baseRole.limitations] : [],
+                    baseRoleId: baseRole.baseRoleId || null,
+                    createdAt: baseRole.createdAt || '',
+                    createdBy: 'Система',
+                    custom: false
+                };
+            }
+
+            if (crmData && crmData.roles && Array.isArray(crmData.roles.customRoles)) {
+                const customRole = crmData.roles.customRoles.find(role => role.id === roleId);
+                if (customRole) {
+                    return normalizeRoleDefinition(customRole, true);
+                }
+            }
+
+            return null;
+        }
+
+        function getAllRoleDefinitions() {
+            const baseRoles = ROLE_DEFINITIONS.map(role => ({
+                id: role.id,
+                name: role.name,
+                badge: role.badge,
+                description: role.description,
+                permissions: Array.isArray(role.permissions) ? [...role.permissions] : [],
+                limitations: Array.isArray(role.limitations) ? [...role.limitations] : [],
+                baseRoleId: role.baseRoleId || null,
+                createdAt: role.createdAt || '',
+                createdBy: 'Система',
+                custom: false
+            }));
+
+            const customRoles = crmData && crmData.roles && Array.isArray(crmData.roles.customRoles)
+                ? crmData.roles.customRoles.map(role => normalizeRoleDefinition(role, true)).filter(Boolean)
+                : [];
+
+            return [...baseRoles, ...customRoles];
+        }
+
+        function getRoleLabel(roleId) {
+            const definition = getRoleDefinition(roleId);
+            return definition ? definition.name : roleId;
+        }
+
+        function getInitials(value) {
+            if (!value || typeof value !== 'string') {
+                return '—';
+            }
+
+            const parts = value.split(/\s+/).filter(Boolean);
+            if (!parts.length) {
+                return value.charAt(0).toUpperCase();
+            }
+
+            return parts
+                .slice(0, 2)
+                .map(part => part.charAt(0).toUpperCase())
+                .join('');
+        }
+
+        function updateCustomRoleBaseOptions() {
+            const select = document.getElementById('customRoleBase');
+            if (!select) {
+                return;
+            }
+
+            const roles = getAllRoleDefinitions();
+            const previousValue = select.value;
+            select.innerHTML = roles.map(role => `<option value="${role.id}">${escapeHtml(role.name)}</option>`).join('');
+
+            if (roles.some(role => role.id === previousValue)) {
+                select.value = previousValue;
+            } else if (roles.some(role => role.id === 'manager')) {
+                select.value = 'manager';
+            } else if (roles.length) {
+                select.value = roles[0].id;
+            }
+        }
+
+        function updateCurrentUserBadge() {
+            const badge = document.getElementById('currentUserBadge');
+            const nameElement = document.getElementById('currentUserName');
+            if (!badge || !nameElement) {
+                return;
+            }
+
+            const assignment = crmData && crmData.roles && Array.isArray(crmData.roles.assignments)
+                ? crmData.roles.assignments.find(item => item.name === CURRENT_USER.name)
+                : null;
+            const roleId = assignment ? assignment.roleId : CURRENT_USER.role;
+            const roleLabel = getRoleLabel(roleId);
+
+            nameElement.textContent = assignment
+                ? `${assignment.name} • ${roleLabel}`
+                : `${CURRENT_USER.name} • ${roleLabel}`;
+            badge.dataset.role = roleId;
+            badge.title = `Поточна роль: ${roleLabel}`;
         }
 
         function normalizeFileSource(source) {
@@ -3663,10 +4851,11 @@
             setupNavigation();
             setupModals();
             setupForms();
-            setupLeadFileUpload();
+            initializeAttachmentAreas();
             setupSearch();
             setupFilters();
             setupFileLibrary();
+            setupRoleManagement();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
             document.getElementById('refreshDashboardBtn').addEventListener('click', () => {
                 renderDashboard();
@@ -3739,16 +4928,99 @@
         }
 
         function setupNavigation() {
-            const navItems = document.querySelectorAll('.nav-item');
+            const nav = document.getElementById('mainNav');
+            if (!nav) {
+                return;
+            }
+
+            const navItems = Array.from(nav.querySelectorAll('.nav-item'));
+            const navGroups = Array.from(nav.querySelectorAll('.nav-group'));
+            const searchInput = document.getElementById('navSearch');
+            const filterSelect = document.getElementById('navFilter');
+
+            navigationState.search = searchInput ? searchInput.value || '' : '';
+            navigationState.filter = filterSelect ? filterSelect.value || 'all' : 'all';
+
+            const emptyState = document.createElement('div');
+            emptyState.className = 'nav-empty';
+            emptyState.setAttribute('role', 'status');
+            emptyState.setAttribute('aria-live', 'polite');
+            emptyState.setAttribute('aria-hidden', 'true');
+            emptyState.textContent = 'Немає модулів за вашим запитом.';
+            nav.appendChild(emptyState);
+
+            const activateItem = item => {
+                const target = item.dataset.sectionTarget;
+                if (!target) {
+                    return;
+                }
+
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                const section = document.getElementById(target);
+                if (section) {
+                    section.classList.add('active');
+                }
+
+                navItems.forEach(btn => btn.classList.remove('active'));
+                item.classList.add('active');
+            };
+
             navItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const target = item.dataset.sectionTarget;
-                    document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-                    document.getElementById(target).classList.add('active');
-                    navItems.forEach(btn => btn.classList.remove('active'));
-                    item.classList.add('active');
-                });
+                item.addEventListener('click', () => activateItem(item));
             });
+
+            applyNavigationFilters = () => {
+                const searchTerm = navigationState.search.trim().toLowerCase();
+                const filterValue = navigationState.filter;
+                let visibleCount = 0;
+
+                navItems.forEach(item => {
+                    const text = (item.textContent || '').toLowerCase();
+                    const keywords = (item.dataset.navKeywords || '').toLowerCase();
+                    const categories = (item.dataset.navCategory || '').split(/\s+/).filter(Boolean);
+                    const matchesSearch = !searchTerm || text.includes(searchTerm) || keywords.includes(searchTerm);
+                    const matchesFilter = filterValue === 'all' || categories.includes(filterValue);
+                    const isVisible = matchesSearch && matchesFilter;
+
+                    item.classList.toggle('is-hidden', !isVisible);
+                    item.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
+                    if (isVisible) {
+                        item.removeAttribute('tabindex');
+                        visibleCount += 1;
+                    } else {
+                        item.setAttribute('tabindex', '-1');
+                    }
+                });
+
+                navGroups.forEach(group => {
+                    const hasVisible = Array.from(group.querySelectorAll('.nav-item')).some(item => !item.classList.contains('is-hidden'));
+                    group.classList.toggle('is-collapsed', !hasVisible);
+                });
+
+                if (visibleCount === 0) {
+                    emptyState.classList.add('is-visible');
+                    emptyState.setAttribute('aria-hidden', 'false');
+                } else {
+                    emptyState.classList.remove('is-visible');
+                    emptyState.setAttribute('aria-hidden', 'true');
+                }
+            };
+
+            if (searchInput) {
+                searchInput.addEventListener('input', event => {
+                    navigationState.search = event.target.value;
+                    applyNavigationFilters();
+                });
+            }
+
+            if (filterSelect) {
+                filterSelect.addEventListener('change', event => {
+                    navigationState.filter = event.target.value;
+                    applyNavigationFilters();
+                });
+            }
+
+            applyNavigationFilters();
         }
 
         function setupModals() {
@@ -3778,29 +5050,114 @@
             }
         }
 
-        function setupLeadFileUpload() {
-            const dropzone = document.getElementById('leadFileDropzone');
-            const fileInput = document.getElementById('leadFiles');
-            const browseBtn = document.getElementById('leadFileBrowseBtn');
+        function initializeAttachmentAreas() {
+            const areas = [
+                {
+                    key: 'lead',
+                    dropzoneId: 'leadFileDropzone',
+                    inputId: 'leadFiles',
+                    browseButtonId: 'leadFileBrowseBtn',
+                    listId: 'leadFileList',
+                    progressId: 'leadUploadProgress',
+                    progressBarId: 'leadUploadBar',
+                    progressLabelId: 'leadUploadLabel',
+                    progressTextId: 'leadUploadText',
+                    allowDirectories: true,
+                    emptyText: 'Файли ще не обрано.'
+                },
+                {
+                    key: 'project',
+                    dropzoneId: 'projectFileDropzone',
+                    inputId: 'projectFiles',
+                    browseButtonId: 'projectFileBrowseBtn',
+                    listId: 'projectFileList',
+                    progressId: 'projectUploadProgress',
+                    progressBarId: 'projectUploadBar',
+                    progressLabelId: 'projectUploadLabel',
+                    progressTextId: 'projectUploadText',
+                    allowDirectories: false,
+                    emptyText: 'Документи проекту ще не додано.'
+                },
+                {
+                    key: 'contact',
+                    dropzoneId: 'contactFileDropzone',
+                    inputId: 'contactFiles',
+                    browseButtonId: 'contactFileBrowseBtn',
+                    listId: 'contactFileList',
+                    progressId: 'contactUploadProgress',
+                    progressBarId: 'contactUploadBar',
+                    progressLabelId: 'contactUploadLabel',
+                    progressTextId: 'contactUploadText',
+                    allowDirectories: false,
+                    emptyText: 'Прикріпіть договори чи листування.'
+                },
+                {
+                    key: 'task',
+                    dropzoneId: 'taskFileDropzone',
+                    inputId: 'taskFiles',
+                    browseButtonId: 'taskFileBrowseBtn',
+                    listId: 'taskFileList',
+                    progressId: 'taskUploadProgress',
+                    progressBarId: 'taskUploadBar',
+                    progressLabelId: 'taskUploadLabel',
+                    progressTextId: 'taskUploadText',
+                    allowDirectories: false,
+                    emptyText: 'Матеріали для завдання ще не додані.'
+                }
+            ];
 
-            if (!dropzone || !fileInput) {
+            areas.forEach(area => registerAttachmentArea(area.key, area));
+        }
+
+        function getAttachmentState(areaKey) {
+            return attachmentAreas[areaKey] || null;
+        }
+
+        function registerAttachmentArea(areaKey, config) {
+            const dropzone = document.getElementById(config.dropzoneId);
+            const input = document.getElementById(config.inputId);
+            const list = document.getElementById(config.listId);
+
+            if (!dropzone || !input || !list) {
                 return;
             }
 
-            const openPicker = () => fileInput.click();
+            const area = {
+                key: areaKey,
+                dropzone,
+                input,
+                list,
+                files: [],
+                progress: new Map(),
+                uploading: false,
+                options: {
+                    allowDirectories: config.allowDirectories !== false,
+                    maxItemSize: config.maxItemSize || MAX_ATTACHMENT_SIZE,
+                    maxTotalSize: config.maxTotalSize || MAX_TOTAL_ATTACHMENTS_SIZE,
+                    emptyText: config.emptyText || 'Файли ще не обрано.'
+                },
+                browseButton: config.browseButtonId ? document.getElementById(config.browseButtonId) : null,
+                progressContainer: config.progressId ? document.getElementById(config.progressId) : null,
+                progressBar: config.progressBarId ? document.getElementById(config.progressBarId) : null,
+                progressLabel: config.progressLabelId ? document.getElementById(config.progressLabelId) : null,
+                progressText: config.progressTextId ? document.getElementById(config.progressTextId) : null
+            };
 
-            if (browseBtn) {
-                browseBtn.addEventListener('click', event => {
+            attachmentAreas[areaKey] = area;
+
+            const openPicker = () => input.click();
+
+            if (area.browseButton) {
+                area.browseButton.addEventListener('click', event => {
                     event.stopPropagation();
                     openPicker();
                 });
             }
 
             dropzone.addEventListener('click', event => {
-                if (event.target.closest('.file-browse-btn')) {
-                    return;
+                if (!event.target.closest('.file-browse-btn')) {
+                    openPicker();
                 }
-                openPicker();
             });
 
             dropzone.addEventListener('keydown', event => {
@@ -3810,13 +5167,13 @@
                 }
             });
 
-            fileInput.addEventListener('change', event => {
-                const { files } = event.target;
+            input.addEventListener('change', event => {
+                const files = event.target.files;
                 if (files && files.length) {
-                    const normalizedFiles = Array.from(files).map(file =>
+                    const normalized = Array.from(files).map(file =>
                         setFileRelativePath(file, file.webkitRelativePath || file.name)
                     );
-                    addPendingLeadFiles(normalizedFiles);
+                    addFilesToAttachmentArea(areaKey, normalized);
                     event.target.value = '';
                 }
             });
@@ -3849,7 +5206,7 @@
 
                 try {
                     let files = [];
-                    if (dataTransfer.items && dataTransfer.items.length) {
+                    if (area.options.allowDirectories && dataTransfer.items && dataTransfer.items.length) {
                         files = await extractFilesFromDataTransferItems(dataTransfer.items);
                     }
 
@@ -3860,14 +5217,256 @@
                     }
 
                     if (files.length) {
-                        addPendingLeadFiles(files);
+                        addFilesToAttachmentArea(areaKey, files);
                     }
                 } catch (error) {
                     console.warn('Не вдалося обробити файли з папки', error);
                 }
             });
 
-            renderLeadFileList();
+            renderAttachmentArea(areaKey);
+        }
+
+        function addFilesToAttachmentArea(areaKey, files) {
+            const area = getAttachmentState(areaKey);
+            if (!area || !Array.isArray(files) || !files.length) {
+                return;
+            }
+
+            const existing = new Set(area.files.map(getFileKey));
+            files.forEach(file => {
+                const key = getFileKey(file);
+                if (!existing.has(key)) {
+                    area.files.push(file);
+                    existing.add(key);
+                }
+            });
+
+            renderAttachmentArea(areaKey);
+        }
+
+        function renderAttachmentArea(areaKey) {
+            const area = getAttachmentState(areaKey);
+            if (!area) {
+                return;
+            }
+
+            const { list, dropzone, files, options } = area;
+            if (!list) {
+                return;
+            }
+
+            if (files.length === 0) {
+                list.innerHTML = `<div class="file-empty">${options.emptyText}</div>`;
+            } else {
+                list.innerHTML = files.map((file, index) => {
+                    const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
+                    const relativePathRaw = getFileRelativePath(file);
+                    const safeName = escapeHtml(displayName);
+                    const safePath = relativePathRaw && relativePathRaw !== displayName ? escapeHtml(relativePathRaw) : '';
+                    const sizeLabel = formatBytes(Number(file.size) || 0);
+                    const metaText = safePath ? `${safePath} • ${sizeLabel}` : sizeLabel;
+                    const icon = getAttachmentIcon(file.type);
+                    const key = getFileKey(file);
+                    return `
+                        <div class="file-item">
+                            <div class="file-item-info">
+                                <div class="file-icon"><i class="fa-solid ${icon}"></i></div>
+                                <div>
+                                    <strong>${safeName}</strong>
+                                    <div class="file-meta">${metaText}</div>
+                                </div>
+                            </div>
+                            <button type="button" class="file-remove" data-remove="${index}" aria-label="Видалити файл ${safeName}">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <div class="file-progress" data-progress-key="${key}">
+                                <div class="file-progress-track"><div class="file-progress-value"></div></div>
+                                <span class="file-progress-label">0%</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                list.querySelectorAll('[data-remove]').forEach(btn => {
+                    btn.addEventListener('click', event => {
+                        event.stopPropagation();
+                        const index = Number(btn.dataset.remove);
+                        removeAttachmentFromArea(areaKey, index);
+                    });
+                });
+            }
+
+            if (dropzone) {
+                dropzone.classList.toggle('has-files', files.length > 0);
+            }
+
+            updateAttachmentProgressSummary(areaKey);
+        }
+
+        function removeAttachmentFromArea(areaKey, index) {
+            const area = getAttachmentState(areaKey);
+            if (!area || !Number.isInteger(index) || index < 0 || index >= area.files.length) {
+                return;
+            }
+
+            const [removed] = area.files.splice(index, 1);
+            if (removed) {
+                area.progress.delete(getFileKey(removed));
+            }
+
+            renderAttachmentArea(areaKey);
+        }
+
+        function resetAttachmentArea(areaKey) {
+            const area = getAttachmentState(areaKey);
+            if (!area) {
+                return;
+            }
+
+            area.files = [];
+            area.progress.clear();
+            area.uploading = false;
+            if (area.input) {
+                area.input.value = '';
+            }
+            renderAttachmentArea(areaKey);
+        }
+
+        function updateAttachmentProgressUI(areaKey, fileKey) {
+            const area = getAttachmentState(areaKey);
+            if (!area) {
+                return;
+            }
+
+            const entry = area.progress.get(fileKey);
+            const progressElement = area.list ? area.list.querySelector(`.file-progress[data-progress-key="${fileKey}"]`) : null;
+            if (progressElement && entry) {
+                const valueEl = progressElement.querySelector('.file-progress-value');
+                const labelEl = progressElement.querySelector('.file-progress-label');
+                const percent = entry.total ? Math.min(100, Math.round((entry.loaded / entry.total) * 100)) : 0;
+                if (valueEl) {
+                    valueEl.style.width = `${percent}%`;
+                }
+                if (labelEl) {
+                    labelEl.textContent = `${percent}%`;
+                }
+            }
+
+            updateAttachmentProgressSummary(areaKey);
+        }
+
+        function updateAttachmentProgressSummary(areaKey) {
+            const area = getAttachmentState(areaKey);
+            if (!area || !area.progressContainer) {
+                return;
+            }
+
+            const { progressContainer, progressBar, progressLabel, progressText, files, progress, uploading } = area;
+
+            if (!files.length) {
+                progressContainer.classList.remove('active');
+                if (progressBar) {
+                    progressBar.style.width = '0%';
+                }
+                if (progressLabel) {
+                    progressLabel.textContent = 'Готово';
+                }
+                if (progressText) {
+                    progressText.textContent = 'Очікування файлів…';
+                }
+                return;
+            }
+
+            const totalBytes = files.reduce((sum, file) => sum + (Number(file.size) || 0), 0);
+            const loadedBytes = Array.from(progress.values()).reduce((sum, entry) => sum + Math.min(entry.loaded, entry.total || 0), 0);
+            const percent = totalBytes > 0 ? Math.min(100, Math.round((loadedBytes / totalBytes) * 100)) : (uploading ? 0 : 100);
+            const finished = Array.from(progress.values()).filter(entry => entry.total && entry.loaded >= entry.total).length;
+
+            if (progressBar) {
+                progressBar.style.width = `${percent}%`;
+            }
+            if (progressLabel) {
+                progressLabel.textContent = `${percent}%`;
+            }
+            if (progressText) {
+                if (uploading) {
+                    progressText.textContent = `Опрацьовано ${finished}/${files.length} файлів`;
+                } else if (finished === files.length) {
+                    progressText.textContent = `Додано ${files.length} файл(и)`;
+                } else {
+                    progressText.textContent = `Готово до завантаження: ${files.length} файл(и)`;
+                }
+            }
+
+            progressContainer.classList.add('active');
+        }
+
+        async function prepareAttachmentsForArea(areaKey) {
+            const area = getAttachmentState(areaKey);
+            if (!area || area.files.length === 0) {
+                return [];
+            }
+
+            const attachments = [];
+            const skipped = [];
+            let totalSize = 0;
+
+            area.progress.clear();
+            area.uploading = true;
+            updateAttachmentProgressSummary(areaKey);
+
+            for (const file of area.files) {
+                const fileSize = Number(file.size) || 0;
+                const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
+                const relativePath = getFileRelativePath(file);
+
+                if (fileSize > area.options.maxItemSize) {
+                    skipped.push(`«${displayName}» перевищує обмеження ${formatBytes(area.options.maxItemSize)}.`);
+                    continue;
+                }
+
+                if (totalSize + fileSize > area.options.maxTotalSize) {
+                    skipped.push(`«${displayName}» не додано: перевищено загальний ліміт ${formatBytes(area.options.maxTotalSize)}.`);
+                    continue;
+                }
+
+                const fileKey = getFileKey(file);
+                area.progress.set(fileKey, { loaded: 0, total: fileSize });
+                updateAttachmentProgressUI(areaKey, fileKey);
+
+                try {
+                    const dataUrl = await readFileAsDataURL(file, (loaded, total) => {
+                        area.progress.set(fileKey, { loaded, total: total || fileSize });
+                        updateAttachmentProgressUI(areaKey, fileKey);
+                    });
+
+                    attachments.push({
+                        id: generateId('file'),
+                        name: displayName,
+                        path: relativePath || displayName,
+                        size: fileSize,
+                        type: file.type || 'application/octet-stream',
+                        lastModified: Number(file.lastModified) || Date.now(),
+                        dataUrl
+                    });
+                    totalSize += fileSize;
+                    area.progress.set(fileKey, { loaded: fileSize, total: fileSize });
+                    updateAttachmentProgressUI(areaKey, fileKey);
+                } catch (error) {
+                    console.error('Не вдалося прочитати файл', error);
+                    skipped.push(`Сталася помилка під час читання «${displayName}».`);
+                }
+            }
+
+            area.uploading = false;
+            updateAttachmentProgressSummary(areaKey);
+
+            if (skipped.length) {
+                alert(`Деякі файли не були додані:\n${skipped.join('\n')}`);
+            }
+
+            return attachments;
         }
 
         function setFileRelativePath(file, path) {
@@ -3994,145 +5593,34 @@
             return `${relativePath}__${lastModified}__${size}`;
         }
 
-        function addPendingLeadFiles(files) {
-            if (!Array.isArray(files) || files.length === 0) {
-                return;
-            }
-
-            const existingKeys = new Set(pendingLeadFiles.map(getFileKey));
-            files.forEach(file => {
-                const key = getFileKey(file);
-                if (!existingKeys.has(key)) {
-                    pendingLeadFiles.push(file);
-                    existingKeys.add(key);
-                }
-            });
-
-            renderLeadFileList();
-        }
-
-        function renderLeadFileList() {
-            const list = document.getElementById('leadFileList');
-            const dropzone = document.getElementById('leadFileDropzone');
-
-            if (!list) {
-                return;
-            }
-
-            if (pendingLeadFiles.length === 0) {
-                list.innerHTML = '<div class="file-empty">Файли ще не обрано.</div>';
-            } else {
-                list.innerHTML = pendingLeadFiles.map((file, index) => {
-                    const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
-                    const relativePathRaw = getFileRelativePath(file);
-                    const safeName = escapeHtml(displayName);
-                    const safePath = relativePathRaw && relativePathRaw !== displayName ? escapeHtml(relativePathRaw) : '';
-                    const sizeLabel = formatBytes(Number(file.size) || 0);
-                    const metaText = safePath ? `${safePath} • ${sizeLabel}` : sizeLabel;
-                    const icon = getAttachmentIcon(file.type);
-                    return `
-                        <div class="file-item">
-                            <div class="file-item-info">
-                                <div class="file-icon"><i class="fa-solid ${icon}"></i></div>
-                                <div>
-                                    <strong>${safeName}</strong>
-                                    <div class="file-meta">${metaText}</div>
-                                </div>
-                            </div>
-                            <button type="button" class="file-remove" data-remove-index="${index}" aria-label="Видалити файл ${safeName}">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                    `;
-                }).join('');
-
-                list.querySelectorAll('[data-remove-index]').forEach(btn => {
-                    btn.addEventListener('click', event => {
-                        event.stopPropagation();
-                        const index = Number(btn.dataset.removeIndex);
-                        removePendingLeadFile(index);
-                    });
-                });
-            }
-
-            if (dropzone) {
-                dropzone.classList.toggle('has-files', pendingLeadFiles.length > 0);
-            }
-        }
-
-        function removePendingLeadFile(index) {
-            if (!Number.isInteger(index) || index < 0 || index >= pendingLeadFiles.length) {
-                return;
-            }
-            pendingLeadFiles.splice(index, 1);
-            renderLeadFileList();
-        }
-
-        function resetLeadFileUpload() {
-            pendingLeadFiles = [];
-            const fileInput = document.getElementById('leadFiles');
-            if (fileInput) {
-                fileInput.value = '';
-            }
-            renderLeadFileList();
-        }
-
-        function readFileAsDataURL(file) {
+        function readFileAsDataURL(file, onProgress) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
+                reader.onload = () => {
+                    if (typeof onProgress === 'function') {
+                        try {
+                            const size = Number(file?.size) || 0;
+                            onProgress(size, size);
+                        } catch (error) {
+                            console.warn('Помилка обробки прогресу файлу', error);
+                        }
+                    }
+                    resolve(reader.result);
+                };
                 reader.onerror = () => reject(reader.error || new Error('Не вдалося прочитати файл.'));
+                if (typeof onProgress === 'function') {
+                    reader.onprogress = event => {
+                        if (event.lengthComputable) {
+                            try {
+                                onProgress(event.loaded, event.total || Number(file?.size) || 0);
+                            } catch (error) {
+                                console.warn('Помилка обробки прогресу файлу', error);
+                            }
+                        }
+                    };
+                }
                 reader.readAsDataURL(file);
             });
-        }
-
-        async function prepareLeadAttachments() {
-            if (pendingLeadFiles.length === 0) {
-                return [];
-            }
-
-            const attachments = [];
-            const skipped = [];
-            let totalSize = 0;
-
-            for (const file of pendingLeadFiles) {
-                const fileSize = Number(file.size) || 0;
-                const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
-                const relativePath = getFileRelativePath(file);
-
-                if (fileSize > MAX_ATTACHMENT_SIZE) {
-                    skipped.push(`«${displayName}» перевищує обмеження ${formatBytes(MAX_ATTACHMENT_SIZE)}.`);
-                    continue;
-                }
-
-                if (totalSize + fileSize > MAX_TOTAL_ATTACHMENTS_SIZE) {
-                    skipped.push(`«${displayName}» не додано: перевищено загальний ліміт ${formatBytes(MAX_TOTAL_ATTACHMENTS_SIZE)}.`);
-                    continue;
-                }
-
-                try {
-                    const dataUrl = await readFileAsDataURL(file);
-                    attachments.push({
-                        id: generateId('file'),
-                        name: displayName,
-                        path: relativePath || displayName,
-                        size: fileSize,
-                        type: file.type || 'application/octet-stream',
-                        lastModified: Number(file.lastModified) || Date.now(),
-                        dataUrl
-                    });
-                    totalSize += fileSize;
-                } catch (error) {
-                    console.error('Не вдалося прочитати файл', error);
-                    skipped.push(`Сталася помилка під час читання «${displayName}».`);
-                }
-            }
-
-            if (skipped.length) {
-                alert(`Деякі файли не були додані:\n${skipped.join('\n')}`);
-            }
-
-            return attachments;
         }
 
         function setupSearch() {
@@ -4273,6 +5761,17 @@
             }
 
             renderFileSources();
+        }
+
+        function setupRoleManagement() {
+            const form = document.getElementById('customRoleForm');
+            if (form && !form.dataset.bound) {
+                form.addEventListener('submit', handleCustomRoleSubmit);
+                form.dataset.bound = 'true';
+            }
+
+            updateCustomRoleBaseOptions();
+            updateCurrentUserBadge();
         }
 
         function updateFileScanStatus(message) {
@@ -5218,6 +6717,7 @@
             renderProjects(projectSearchTerm);
             renderContacts(document.getElementById('contactSearch').value || '');
             renderTasks();
+            renderRoles();
             renderFileExplorer(fileSearchTerm);
             renderAnalytics();
         }
@@ -5391,6 +6891,285 @@
             }).join('');
         }
 
+        function renderRoles() {
+            renderRoleDefinitions();
+            renderRoleAssignments();
+            updateCustomRoleBaseOptions();
+            updateCurrentUserBadge();
+        }
+
+        function renderRoleDefinitions() {
+            const container = document.getElementById('roleDefinitionGrid');
+            if (!container) {
+                return;
+            }
+
+            const definitions = getAllRoleDefinitions();
+            if (!definitions.length) {
+                container.innerHTML = '<div class="empty-state">Немає визначених ролей. Додайте першу роль, щоб налаштувати доступ.</div>';
+                return;
+            }
+
+            container.innerHTML = definitions.map(role => {
+                const permissionsMarkup = role.permissions && role.permissions.length
+                    ? `<ul class="role-permissions">${role.permissions.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+                    : '';
+                const limitationsMarkup = role.limitations && role.limitations.length
+                    ? `<div class="metric-sub">Обмеження: ${escapeHtml(role.limitations.join(', '))}</div>`
+                    : '';
+                const meta = role.custom
+                    ? `<div class="metric-sub">Створено ${escapeHtml(role.createdBy)} • ${formatDate(role.createdAt)}</div>`
+                    : '';
+                return `
+                    <div class="role-card">
+                        <span class="role-badge"><i class="fa-solid fa-user-shield" aria-hidden="true"></i> ${escapeHtml(role.badge)}</span>
+                        <h4>${escapeHtml(role.name)}</h4>
+                        ${role.description ? `<p>${escapeHtml(role.description)}</p>` : ''}
+                        ${permissionsMarkup}
+                        ${limitationsMarkup}
+                        ${meta}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderRoleAssignments() {
+            const container = document.getElementById('roleAssignmentsTable');
+            if (!container) {
+                return;
+            }
+
+            const assignments = crmData && crmData.roles && Array.isArray(crmData.roles.assignments)
+                ? [...crmData.roles.assignments]
+                : [];
+
+            if (!assignments.length) {
+                container.innerHTML = '<div class="empty-state">Додайте учасників команди для керування доступом.</div>';
+                return;
+            }
+
+            assignments.sort((a, b) => a.name.localeCompare(b.name, 'uk'));
+
+            const roles = getAllRoleDefinitions();
+            const head = `
+                <div class="role-row role-head">
+                    <div>Учасник</div>
+                    <div>Роль</div>
+                    <div>Права доступу</div>
+                </div>
+            `;
+
+            const rows = assignments.map(assignment => {
+                const roleDefinition = getRoleDefinition(assignment.roleId);
+                const combinedScopes = new Set();
+                if (roleDefinition?.permissions?.length) {
+                    roleDefinition.permissions.forEach(scope => combinedScopes.add(scope));
+                }
+                if (assignment.responsibilities?.length) {
+                    assignment.responsibilities.forEach(scope => combinedScopes.add(scope));
+                }
+                const scopeMarkup = combinedScopes.size
+                    ? `<div class="role-permission-tags">${Array.from(combinedScopes).slice(0, 6).map(scope => `<span class="role-permission-tag">${escapeHtml(scope)}</span>`).join('')}</div>`
+                    : '<span class="metric-sub">Додайте сфери відповідальності</span>';
+
+                const limitationMarkup = roleDefinition?.limitations?.length
+                    ? `<div class="metric-sub">Обмеження: ${escapeHtml(roleDefinition.limitations[0])}${roleDefinition.limitations.length > 1 ? '…' : ''}</div>`
+                    : '';
+
+                const metaParts = [];
+                if (assignment.updatedAt) {
+                    metaParts.push(`Оновлено ${escapeHtml(formatRelativeTime(assignment.updatedAt))}`);
+                }
+                if (assignment.updatedBy) {
+                    metaParts.push(escapeHtml(assignment.updatedBy));
+                }
+                const meta = metaParts.length ? `<div class="metric-sub">${metaParts.join(' • ')}</div>` : '';
+                const note = assignment.note ? `<div class="metric-sub">${escapeHtml(assignment.note)}</div>` : '';
+
+                const memberMetaParts = [];
+                if (assignment.title) memberMetaParts.push(assignment.title);
+                if (assignment.department) memberMetaParts.push(assignment.department);
+                if (assignment.email) memberMetaParts.push(assignment.email);
+                const memberMeta = memberMetaParts.length ? `<span class="role-meta">${escapeHtml(memberMetaParts.join(' • '))}</span>` : '';
+
+                const options = roles.map(role => {
+                    const disabled = role.id === 'owner' && assignment.name === CURRENT_USER.name && CURRENT_USER.role !== 'owner';
+                    const selected = role.id === assignment.roleId ? 'selected' : '';
+                    return `<option value="${role.id}" ${selected} ${disabled ? 'disabled' : ''}>${escapeHtml(role.name)}</option>`;
+                }).join('');
+                const hasCurrentRole = roles.some(role => role.id === assignment.roleId);
+                const fallbackOption = hasCurrentRole
+                    ? ''
+                    : `<option value="${escapeHtml(assignment.roleId)}" selected>${escapeHtml(getRoleLabel(assignment.roleId))}</option>`;
+
+                const initials = getInitials(assignment.name);
+                const disabledAttr = assignment.locked ? 'disabled' : '';
+                const selectLabel = `aria-label="Змінити роль для ${escapeHtml(assignment.name)}"`;
+
+                return `
+                    <div class="role-row">
+                        <div class="role-member">
+                            <div class="avatar avatar-sm">${escapeHtml(initials)}</div>
+                            <div class="role-member-details">
+                                <strong>${escapeHtml(assignment.name)}</strong>
+                                ${memberMeta}
+                            </div>
+                        </div>
+                        <div>
+                            <select data-role-assignment="${assignment.id}" ${selectLabel} ${disabledAttr}>
+                                ${fallbackOption}${options}
+                            </select>
+                            ${assignment.roleId === 'owner' ? '<div class="metric-sub">Єдиний власник акаунту</div>' : ''}
+                        </div>
+                        <div>
+                            ${scopeMarkup}
+                            ${limitationMarkup}
+                            ${meta}
+                            ${note}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = head + rows;
+
+            container.querySelectorAll('select[data-role-assignment]').forEach(select => {
+                const assignmentId = select.dataset.roleAssignment;
+                const assignment = crmData.roles.assignments.find(item => item.id === assignmentId);
+                if (assignment) {
+                    select.dataset.currentRole = assignment.roleId;
+                }
+                select.addEventListener('change', event => {
+                    handleRoleAssignmentChange(assignmentId, event.target.value, event.target);
+                });
+            });
+        }
+
+        function handleRoleAssignmentChange(assignmentId, newRoleId, selectElement) {
+            const assignments = crmData && crmData.roles && Array.isArray(crmData.roles.assignments)
+                ? crmData.roles.assignments
+                : [];
+            const assignment = assignments.find(item => item.id === assignmentId);
+
+            if (!assignment || !newRoleId || assignment.roleId === newRoleId) {
+                if (selectElement && assignment) {
+                    selectElement.value = assignment.roleId;
+                }
+                return;
+            }
+
+            if (newRoleId === 'owner' && assignment.name === CURRENT_USER.name && CURRENT_USER.role !== 'owner') {
+                alert('Менеджери не можуть самостійно призначити собі роль Owner. Зверніться до поточного власника.');
+                if (selectElement) {
+                    selectElement.value = assignment.roleId;
+                }
+                return;
+            }
+
+            if (assignment.roleId === 'owner' && newRoleId !== 'owner') {
+                const otherOwnerExists = assignments.some(item => item.roleId === 'owner' && item.id !== assignment.id);
+                if (!otherOwnerExists) {
+                    alert('У системі має залишатися хоча б один власник. Спочатку передайте роль іншому користувачу.');
+                    if (selectElement) {
+                        selectElement.value = assignment.roleId;
+                    }
+                    return;
+                }
+            }
+
+            if (newRoleId === 'owner') {
+                const currentOwner = assignments.find(item => item.roleId === 'owner');
+                if (currentOwner && currentOwner.id !== assignment.id) {
+                    const confirmTransfer = confirm(`Передати роль Owner від ${currentOwner.name} до ${assignment.name}?`);
+                    if (!confirmTransfer) {
+                        if (selectElement) {
+                            selectElement.value = assignment.roleId;
+                        }
+                        return;
+                    }
+                    currentOwner.roleId = 'manager';
+                    currentOwner.updatedAt = new Date().toISOString();
+                    currentOwner.updatedBy = CURRENT_USER.name;
+                    logActivity(`Роль ${currentOwner.name} змінена на ${getRoleLabel('manager')} після передачі Owner.`, 'role', currentOwner.id);
+                }
+            }
+
+            assignment.roleId = newRoleId;
+            assignment.updatedAt = new Date().toISOString();
+            assignment.updatedBy = CURRENT_USER.name;
+
+            if (assignment.name === CURRENT_USER.name) {
+                CURRENT_USER.role = newRoleId;
+            }
+
+            logActivity(`Роль ${assignment.name} змінена на ${getRoleLabel(newRoleId)}.`, 'role', assignment.id);
+            saveData();
+            renderRoles();
+            renderActivityTimeline();
+        }
+
+        function handleCustomRoleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const nameInput = document.getElementById('customRoleName');
+            const baseSelect = document.getElementById('customRoleBase');
+            const notesInput = document.getElementById('customRoleNotes');
+
+            const name = nameInput ? nameInput.value.trim() : '';
+            if (!name) {
+                return;
+            }
+
+            const baseRoleId = baseSelect ? baseSelect.value : 'manager';
+            const additionalNotes = notesInput
+                ? notesInput.value.split('\n').map(note => note.trim()).filter(Boolean)
+                : [];
+
+            const allRoles = getAllRoleDefinitions();
+            if (allRoles.some(role => role.name.toLowerCase() === name.toLowerCase())) {
+                alert('Роль з такою назвою вже існує. Оберіть іншу назву.');
+                return;
+            }
+
+            const baseRole = getRoleDefinition(baseRoleId);
+            const permissions = baseRole && Array.isArray(baseRole.permissions)
+                ? [...baseRole.permissions]
+                : [];
+            additionalNotes.forEach(note => {
+                if (!permissions.includes(note)) {
+                    permissions.push(note);
+                }
+            });
+
+            const limitations = baseRole && Array.isArray(baseRole.limitations)
+                ? [...baseRole.limitations]
+                : [];
+
+            const normalizedRole = normalizeRoleDefinition({
+                id: generateId('role'),
+                name,
+                badge: name,
+                description: baseRole ? `На основі ${baseRole.name}.` : 'Індивідуальна роль для вашої команди.',
+                permissions,
+                limitations,
+                baseRoleId,
+                createdAt: new Date().toISOString(),
+                createdBy: CURRENT_USER.name,
+                custom: true
+            }, true);
+
+            crmData.roles.customRoles.push(normalizedRole);
+            logActivity(`Створено нову роль ${name}.`, 'role', normalizedRole.id);
+            saveData();
+            renderRoles();
+            renderActivityTimeline();
+            form.reset();
+            updateCustomRoleBaseOptions();
+            if (nameInput) {
+                nameInput.focus();
+            }
+        }
+
         function renderForecastCard(pipelineValue, expectedRevenue) {
             const container = document.getElementById('forecastCard');
             const target = 200000;
@@ -5528,6 +7307,16 @@
                 const description = project.description
                     ? `<div class="metric-sub">${escapeHtml(project.description)}</div>`
                     : '';
+                const attachmentsCount = Array.isArray(project.attachments) ? project.attachments.length : 0;
+                const notesCount = Array.isArray(project.notes) ? project.notes.length : 0;
+                const indicatorParts = [];
+                if (attachmentsCount) {
+                    indicatorParts.push(`<span class="chip"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</span>`);
+                }
+                if (notesCount) {
+                    indicatorParts.push(`<span class="chip"><i class="fa-solid fa-note-sticky"></i> ${notesCount}</span>`);
+                }
+                const indicatorMarkup = indicatorParts.length ? `<div class="chips">${indicatorParts.join('')}</div>` : '';
                 const teamContent = project.team && project.team.length
                     ? `<div class="project-team">${project.team.map(member => `<span class="project-member-chip">${escapeHtml(member)}</span>`).join('')}</div>`
                     : '<span class="metric-sub">Не призначено</span>';
@@ -5543,6 +7332,7 @@
                             ${description}
                             <div class="project-updated">${escapeHtml(updatedLabel)}</div>
                             ${tags}
+                            ${indicatorMarkup}
                         </div>
                         <div>${teamContent}</div>
                         <div><strong>${formatCurrency(project.budget)}</strong></div>
@@ -5719,6 +7509,16 @@
             container.innerHTML = contacts.map(contact => {
                 const statusClass = `status-${contact.status}`;
                 const tags = contact.tags && contact.tags.length ? contact.tags.map(tag => `<span class="chip">${tag}</span>`).join('') : '';
+                const attachmentsCount = Array.isArray(contact.attachments) ? contact.attachments.length : 0;
+                const notesCount = Array.isArray(contact.notes) ? contact.notes.length : 0;
+                const extras = [];
+                if (attachmentsCount) {
+                    extras.push(`<span class="chip"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</span>`);
+                }
+                if (notesCount) {
+                    extras.push(`<span class="chip"><i class="fa-solid fa-note-sticky"></i> ${notesCount}</span>`);
+                }
+                const extrasMarkup = extras.length ? `<div class="chips" style="margin-top:6px;">${extras.join('')}</div>` : '';
                 return `
                     <div class="table-row" data-contact-id="${contact.id}">
                         <div class="contact-main">
@@ -5734,6 +7534,7 @@
                         <div>
                             <span class="status-badge ${statusClass}">${STATUS_LABELS[contact.status] || contact.status}</span>
                             ${tags ? `<div class="chips" style="margin-top:6px;">${tags}</div>` : ''}
+                            ${extrasMarkup}
                         </div>
                         <div>${contact.owner || ''}</div>
                     </div>
@@ -5778,6 +7579,16 @@
             const lead = task.relatedLeadId ? crmData.leads.find(lead => lead.id === task.relatedLeadId) : null;
             const overdue = task.status !== 'done' && task.dueDate && new Date(task.dueDate) < new Date() && !isSameDay(new Date(task.dueDate), new Date());
             const priorityLabel = task.priority === 'high' ? 'Високий' : task.priority === 'medium' ? 'Середній' : 'Низький';
+            const tags = Array.isArray(task.tags) ? task.tags.filter(Boolean) : [];
+            const attachmentsCount = Array.isArray(task.attachments) ? task.attachments.length : 0;
+            const extras = [];
+            if (tags.length) {
+                extras.push(`<div class="chips">${tags.map(tag => `<span class="chip">${escapeHtml(tag)}</span>`).join('')}</div>`);
+            }
+            if (attachmentsCount) {
+                extras.push(`<div class="metric-sub"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</div>`);
+            }
+            const extrasMarkup = extras.join('');
             return `
                 <div class="task-card" data-task-id="${task.id}">
                     <div class="task-header">
@@ -5791,6 +7602,7 @@
                     </div>
                     ${lead ? `<div class="metric-sub" data-open-lead="${lead.id}"><i class="fa-solid fa-link"></i> ${lead.name}</div>` : ''}
                     ${task.description ? `<div class="metric-sub">${task.description}</div>` : ''}
+                    ${extrasMarkup}
                     <div class="task-actions">
                         ${task.status === 'inProgress' ? `<button class="btn-small-muted" data-task-action="back">Повернути</button>` : ''}
                         ${task.status === 'done' ? `<span class="badge badge-success">Виконано</span>` : `<button class="btn-small-primary" data-task-action="${task.status === 'todo' ? 'start' : 'done'}">${task.status === 'todo' ? 'Розпочати' : 'Завершити'}</button>`}
@@ -6051,6 +7863,8 @@
                     return 'fa-solid fa-pen-to-square';
                 case 'task':
                     return 'fa-solid fa-square-check';
+                case 'role':
+                    return 'fa-solid fa-user-shield';
                 case 'won':
                     return 'fa-solid fa-trophy';
                 case 'lost':
@@ -6068,14 +7882,18 @@
 
         function closeModal(id) {
             const modal = document.getElementById(id);
-            if (modal) {
-                modal.classList.remove('active');
-                if (id === 'leadDetailsModal') {
-                    activeLeadId = null;
-                }
-                if (id === 'addLeadModal') {
-                    resetLeadFileUpload();
-                }
+            if (!modal) {
+                return;
+            }
+
+            modal.classList.remove('active');
+            if (id === 'leadDetailsModal') {
+                activeLeadId = null;
+            }
+
+            const areaKeys = MODAL_ATTACHMENT_AREAS[id];
+            if (Array.isArray(areaKeys)) {
+                areaKeys.forEach(resetAttachmentArea);
             }
         }
 
@@ -6083,7 +7901,9 @@
             if (confirm('Скинути дані та повернути демо-набір?')) {
                 crmData = upgradeDataStructure(deepClone(defaultData));
                 activeLeadId = null;
-                pendingLeadFiles = [];
+                Object.values(MODAL_ATTACHMENT_AREAS).forEach(areaList => {
+                    areaList.forEach(areaKey => resetAttachmentArea(areaKey));
+                });
                 activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
                     ? crmData.fileLibrary[0].id
                     : null;
@@ -6120,6 +7940,20 @@
                     globalSearchInput.value = '';
                 }
                 hideSearchResults();
+
+                const navSearchInput = document.getElementById('navSearch');
+                if (navSearchInput) {
+                    navSearchInput.value = '';
+                }
+
+                const navFilterSelect = document.getElementById('navFilter');
+                if (navFilterSelect) {
+                    navFilterSelect.value = 'all';
+                }
+
+                navigationState.search = '';
+                navigationState.filter = 'all';
+                applyNavigationFilters();
 
                 const projectSearchInput = document.getElementById('projectSearch');
                 if (projectSearchInput) {
@@ -6159,7 +7993,7 @@
                     submitButton.textContent = 'Збереження...';
                 }
 
-                const attachments = await prepareLeadAttachments();
+                const attachments = await prepareAttachmentsForArea('lead');
                 const now = new Date().toISOString();
                 const lead = {
                     id: generateId('lead'),
@@ -6233,7 +8067,7 @@
                 updateTaskLeadOptions();
                 renderAll();
                 form.reset();
-                resetLeadFileUpload();
+                resetAttachmentArea('lead');
                 closeModal('addLeadModal');
             } catch (error) {
                 console.error('Не вдалося створити лід', error);
@@ -6259,6 +8093,7 @@
                 }
 
                 const now = new Date().toISOString();
+                const attachments = await prepareAttachmentsForArea('project');
                 const teamSelect = document.getElementById('projectTeam');
                 const selectedTeam = teamSelect
                     ? Array.from(teamSelect.selectedOptions).map(option => option.value).filter(Boolean)
@@ -6267,6 +8102,11 @@
                     .split(',')
                     .map(tag => tag.trim())
                     .filter(Boolean);
+                const notes = document.getElementById('projectNotes').value
+                    .split('\n')
+                    .map(note => note.trim())
+                    .filter(Boolean)
+                    .map(text => ({ id: generateId('pnote'), text, author: CURRENT_USER.name, date: now }));
 
                 const project = {
                     id: generateId('project'),
@@ -6280,6 +8120,8 @@
                     team: selectedTeam,
                     tags,
                     description: document.getElementById('projectSummary').value.trim(),
+                    notes,
+                    attachments,
                     createdAt: now,
                     updatedAt: now
                 };
@@ -6302,6 +8144,7 @@
                 renderProjects(projectSearchTerm);
                 closeModal('addProjectModal');
                 form.reset();
+                resetAttachmentArea('project');
                 if (teamSelect) {
                     Array.from(teamSelect.options).forEach(option => {
                         option.selected = false;
@@ -6317,9 +8160,11 @@
             }
         }
 
-        function handleContactSubmit(event) {
+        async function handleContactSubmit(event) {
             event.preventDefault();
             const now = new Date().toISOString();
+            const attachments = await prepareAttachmentsForArea('contact');
+            const noteText = document.getElementById('contactNotes').value.trim();
             const contact = {
                 id: generateId('contact'),
                 name: document.getElementById('contactName').value.trim(),
@@ -6330,6 +8175,8 @@
                 status: document.getElementById('contactStatus').value,
                 owner: document.getElementById('contactOwner').value,
                 tags: document.getElementById('contactTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                attachments,
+                notes: noteText ? [{ id: generateId('cnote'), text: noteText, author: CURRENT_USER.name, date: now }] : [],
                 lastActivity: now
             };
 
@@ -6339,6 +8186,7 @@
             renderContacts(document.getElementById('contactSearch').value || '');
             closeModal('addContactModal');
             event.target.reset();
+            resetAttachmentArea('contact');
         }
 
         function openTaskModal(leadId = '') {
@@ -6356,8 +8204,9 @@
             openModal('addTaskModal');
         }
 
-        function handleTaskSubmit(event) {
+        async function handleTaskSubmit(event) {
             event.preventDefault();
+            const attachments = await prepareAttachmentsForArea('task');
             const task = {
                 id: generateId('task'),
                 title: document.getElementById('taskTitle').value.trim(),
@@ -6366,7 +8215,9 @@
                 priority: document.getElementById('taskPriority').value,
                 status: document.getElementById('taskStatus').value,
                 relatedLeadId: document.getElementById('taskLead').value,
-                description: document.getElementById('taskDescription').value.trim()
+                description: document.getElementById('taskDescription').value.trim(),
+                tags: document.getElementById('taskTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                attachments
             };
 
             if (task.status === 'done') {
@@ -6387,6 +8238,7 @@
             renderLeadFocus();
             closeModal('addTaskModal');
             event.target.reset();
+            resetAttachmentArea('task');
         }
 
         function updateTaskStatus(taskId, status) {
