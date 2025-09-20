@@ -1038,6 +1038,160 @@
             min-height: 110px;
         }
 
+        .file-dropzone {
+            border: 1px dashed rgba(99, 102, 241, 0.35);
+            border-radius: 16px;
+            background: rgba(99, 102, 241, 0.05);
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+            justify-items: center;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .file-input-hidden {
+            display: none;
+        }
+
+        .file-dropzone:hover,
+        .file-dropzone.has-files {
+            border-color: rgba(79, 70, 229, 0.55);
+            background: rgba(99, 102, 241, 0.09);
+        }
+
+        .file-dropzone:focus-visible {
+            outline: 3px solid rgba(99, 102, 241, 0.35);
+            outline-offset: 3px;
+        }
+
+        .file-dropzone.dragover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.14);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+        }
+
+        .file-dropzone-content {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .file-dropzone-text {
+            display: grid;
+            gap: 6px;
+            text-align: left;
+        }
+
+        .file-dropzone-actions {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-dropzone-actions .file-browse-btn {
+            margin: 0 6px;
+        }
+
+        .file-dropzone i {
+            font-size: 24px;
+            color: var(--primary-dark);
+        }
+
+        .file-dropzone strong {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .file-browse-btn {
+            border: none;
+            background: rgba(79, 70, 229, 0.16);
+            color: var(--primary-dark);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            pointer-events: auto;
+        }
+
+        .file-browse-btn:hover,
+        .file-browse-btn:focus {
+            background: rgba(79, 70, 229, 0.26);
+            outline: none;
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+        }
+
+        .file-item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            box-shadow: 0 8px 16px rgba(79, 70, 229, 0.18);
+        }
+
+        .file-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-remove {
+            border: none;
+            background: rgba(15, 23, 42, 0.12);
+            color: var(--text);
+            width: 30px;
+            height: 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .file-remove:hover,
+        .file-remove:focus {
+            background: rgba(15, 23, 42, 0.18);
+            outline: none;
+        }
+
+        .file-empty {
+            font-size: 13px;
+            color: var(--text-muted);
+            padding: 8px 0;
+        }
+
         .modal-actions {
             margin-top: 24px;
             display: flex;
@@ -1104,6 +1258,62 @@
         .info-value {
             font-size: 15px;
             font-weight: 500;
+        }
+
+        .attachment-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 6px;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(248, 250, 255, 0.9);
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+
+        .attachment-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.18);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .attachment-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.12);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+        }
+
+        .attachment-details {
+            display: grid;
+            gap: 4px;
+        }
+
+        .attachment-details strong {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .attachment-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .attachment-item i.fa-download {
+            margin-left: auto;
+            color: var(--primary-dark);
         }
 
         .notes-list {
@@ -1546,6 +1756,21 @@
                     <input type="text" id="leadTags" placeholder="Введіть через кому: Терміново, VIP">
                 </div>
                 <div class="form-group full">
+                    <label for="leadFiles">Файли та папки</label>
+                    <div class="file-dropzone" id="leadFileDropzone" role="button" tabindex="0" aria-describedby="leadFileHint">
+                        <input type="file" id="leadFiles" class="file-input-hidden" multiple webkitdirectory aria-label="Додати файли та папки до ліда">
+                        <div class="file-dropzone-content">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <div class="file-dropzone-text">
+                                <strong>Перетягніть сюди файли</strong>
+                                <div class="file-dropzone-actions">або <button type="button" class="file-browse-btn" id="leadFileBrowseBtn">оберіть</button> на пристрої</div>
+                                <p class="upload-hint" id="leadFileHint">Можна завантажувати декілька файлів та цілі папки (Chrome, Edge).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="file-list" id="leadFileList"></div>
+                </div>
+                <div class="form-group full">
                     <label for="leadNotes">Примітка</label>
                     <textarea id="leadNotes" placeholder="Вкажіть додаткові деталі..."></textarea>
                 </div>
@@ -1691,11 +1916,15 @@
             cold: 'Холодний'
         };
 
+        const MAX_ATTACHMENT_SIZE = 1.5 * 1024 * 1024; // 1.5 МБ
+        const MAX_TOTAL_ATTACHMENTS_SIZE = 4 * 1024 * 1024; // 4 МБ
+
         let crmData = null;
         let activeLeadId = null;
         let pipelineFilterOwner = 'all';
         let contactStatusFilter = 'all';
         let searchTimer = null;
+        let pendingLeadFiles = [];
 
         const defaultData = {
             leads: [
@@ -1729,6 +1958,17 @@
                     timeline: [
                         { id: 'tl-1', text: 'Лід створено Марина', date: '2024-05-18T09:24:00.000Z' },
                         { id: 'tl-2', text: 'Стадія змінена на «Кваліфікація»', date: '2024-05-20T14:00:00.000Z' }
+                    ],
+                    attachments: [
+                        {
+                            id: 'file-brief-novapay',
+                            name: 'Бриф NovaPay.txt',
+                            path: 'NovaPay/Бриф NovaPay.txt',
+                            size: 54,
+                            type: 'text/plain',
+                            lastModified: 1714640400000,
+                            dataUrl: 'data:text/plain;base64,0JrQvtGA0L7RgtC60LjQuSDQsdGA0LjRhCDQv9C+INCy0LjQvNC+0LPQsNC8IE5vdmFQYXku'
+                        }
                     ]
                 },
                 {
@@ -1761,7 +2001,8 @@
                     timeline: [
                         { id: 'tl-3', text: 'Запит на автоматизацію логістики', date: '2024-05-10T08:42:00.000Z' },
                         { id: 'tl-4', text: 'Відправлено попередній кошторис', date: '2024-05-26T15:20:00.000Z' }
-                    ]
+                    ],
+                    attachments: []
                 },
                 {
                     id: 'lead-3',
@@ -1793,7 +2034,8 @@
                     timeline: [
                         { id: 'tl-5', text: 'Проведено демонстрацію продукту', date: '2024-05-14T13:30:00.000Z' },
                         { id: 'tl-6', text: 'Вікторія оновила стадію на «Переговори»', date: '2024-06-03T15:45:00.000Z' }
-                    ]
+                    ],
+                    attachments: []
                 },
                 {
                     id: 'lead-4',
@@ -1817,7 +2059,8 @@
                     notes: [],
                     timeline: [
                         { id: 'tl-7', text: 'Новий лід додано Дмитро', date: '2024-06-05T09:15:00.000Z' }
-                    ]
+                    ],
+                    attachments: []
                 },
                 {
                     id: 'lead-5',
@@ -1850,7 +2093,8 @@
                     timeline: [
                         { id: 'tl-8', text: 'Презентація рішень проведена', date: '2024-04-20T11:40:00.000Z' },
                         { id: 'tl-9', text: 'Угода виграна!', date: '2024-05-30T16:10:00.000Z' }
-                    ]
+                    ],
+                    attachments: []
                 },
                 {
                     id: 'lead-6',
@@ -1882,7 +2126,8 @@
                     timeline: [
                         { id: 'tl-10', text: 'Запит на інтеграцію ERP', date: '2024-03-18T09:00:00.000Z' },
                         { id: 'tl-11', text: 'Угоду втрачено', date: '2024-05-16T10:45:00.000Z' }
-                    ]
+                    ],
+                    attachments: []
                 }
             ],
             contacts: [
@@ -2044,19 +2289,47 @@
             return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
         }
 
+        function upgradeDataStructure(data) {
+            if (!data || typeof data !== 'object') {
+                return deepClone(defaultData);
+            }
+
+            if (!Array.isArray(data.leads)) {
+                data.leads = [];
+            }
+
+            data.leads.forEach(lead => {
+                if (!Array.isArray(lead.attachments)) {
+                    lead.attachments = [];
+                } else {
+                    lead.attachments = lead.attachments.map(file => ({
+                        id: file.id || generateId('file'),
+                        name: file.name,
+                        path: file.path || file.name,
+                        size: Number(file.size) || 0,
+                        type: file.type || 'application/octet-stream',
+                        lastModified: Number(file.lastModified) || Date.now(),
+                        dataUrl: file.dataUrl || ''
+                    }));
+                }
+            });
+
+            return data;
+        }
+
         function loadData() {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
                     if (parsed && typeof parsed === 'object') {
-                        return parsed;
+                        return upgradeDataStructure(parsed);
                     }
                 } catch (error) {
                     console.warn('Не вдалося прочитати збережені дані CRM, використовую демо-набір.', error);
                 }
             }
-            return deepClone(defaultData);
+            return upgradeDataStructure(deepClone(defaultData));
         }
 
         function saveData() {
@@ -2074,6 +2347,7 @@
             setupNavigation();
             setupModals();
             setupForms();
+            setupLeadFileUpload();
             setupSearch();
             setupFilters();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
@@ -2150,6 +2424,217 @@
             document.getElementById('leadForm').addEventListener('submit', handleLeadSubmit);
             document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
             document.getElementById('taskForm').addEventListener('submit', handleTaskSubmit);
+        }
+
+        function setupLeadFileUpload() {
+            const dropzone = document.getElementById('leadFileDropzone');
+            const fileInput = document.getElementById('leadFiles');
+            const browseBtn = document.getElementById('leadFileBrowseBtn');
+
+            if (!dropzone || !fileInput) {
+                return;
+            }
+
+            const openPicker = () => fileInput.click();
+
+            if (browseBtn) {
+                browseBtn.addEventListener('click', event => {
+                    event.stopPropagation();
+                    openPicker();
+                });
+            }
+
+            dropzone.addEventListener('click', event => {
+                if (event.target.closest('.file-browse-btn')) {
+                    return;
+                }
+                openPicker();
+            });
+
+            dropzone.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    openPicker();
+                }
+            });
+
+            fileInput.addEventListener('change', event => {
+                if (event.target.files && event.target.files.length) {
+                    addPendingLeadFiles(Array.from(event.target.files));
+                    event.target.value = '';
+                }
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropzone.addEventListener(eventName, event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    dropzone.classList.add('dragover');
+                });
+            });
+
+            ['dragleave', 'dragend'].forEach(eventName => {
+                dropzone.addEventListener(eventName, event => {
+                    if (eventName === 'dragleave' && event.relatedTarget && dropzone.contains(event.relatedTarget)) {
+                        return;
+                    }
+                    dropzone.classList.remove('dragover');
+                });
+            });
+
+            dropzone.addEventListener('drop', event => {
+                event.preventDefault();
+                dropzone.classList.remove('dragover');
+                if (event.dataTransfer?.files?.length) {
+                    addPendingLeadFiles(Array.from(event.dataTransfer.files));
+                }
+            });
+
+            renderLeadFileList();
+        }
+
+        function getFileKey(file) {
+            const relativePath = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
+            return `${relativePath}__${file.lastModified || 0}__${file.size || 0}`;
+        }
+
+        function addPendingLeadFiles(files) {
+            if (!Array.isArray(files) || files.length === 0) {
+                return;
+            }
+
+            const existingKeys = new Set(pendingLeadFiles.map(getFileKey));
+            files.forEach(file => {
+                const key = getFileKey(file);
+                if (!existingKeys.has(key)) {
+                    pendingLeadFiles.push(file);
+                    existingKeys.add(key);
+                }
+            });
+
+            renderLeadFileList();
+        }
+
+        function renderLeadFileList() {
+            const list = document.getElementById('leadFileList');
+            const dropzone = document.getElementById('leadFileDropzone');
+
+            if (!list) {
+                return;
+            }
+
+            if (pendingLeadFiles.length === 0) {
+                list.innerHTML = '<div class="file-empty">Файли ще не обрано.</div>';
+            } else {
+                list.innerHTML = pendingLeadFiles.map((file, index) => {
+                    const relativePathRaw = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
+                    const safeName = escapeHtml(file.name || 'Файл');
+                    const safePath = relativePathRaw !== file.name ? escapeHtml(relativePathRaw) : '';
+                    const sizeLabel = formatBytes(Number(file.size) || 0);
+                    const metaText = safePath ? `${safePath} • ${sizeLabel}` : sizeLabel;
+                    const icon = getAttachmentIcon(file.type);
+                    return `
+                        <div class="file-item">
+                            <div class="file-item-info">
+                                <div class="file-icon"><i class="fa-solid ${icon}"></i></div>
+                                <div>
+                                    <strong>${safeName}</strong>
+                                    <div class="file-meta">${metaText}</div>
+                                </div>
+                            </div>
+                            <button type="button" class="file-remove" data-remove-index="${index}" aria-label="Видалити файл ${safeName}">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+
+                list.querySelectorAll('[data-remove-index]').forEach(btn => {
+                    btn.addEventListener('click', event => {
+                        event.stopPropagation();
+                        const index = Number(btn.dataset.removeIndex);
+                        removePendingLeadFile(index);
+                    });
+                });
+            }
+
+            if (dropzone) {
+                dropzone.classList.toggle('has-files', pendingLeadFiles.length > 0);
+            }
+        }
+
+        function removePendingLeadFile(index) {
+            if (!Number.isInteger(index) || index < 0 || index >= pendingLeadFiles.length) {
+                return;
+            }
+            pendingLeadFiles.splice(index, 1);
+            renderLeadFileList();
+        }
+
+        function resetLeadFileUpload() {
+            pendingLeadFiles = [];
+            const fileInput = document.getElementById('leadFiles');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            renderLeadFileList();
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error || new Error('Не вдалося прочитати файл.'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        async function prepareLeadAttachments() {
+            if (pendingLeadFiles.length === 0) {
+                return [];
+            }
+
+            const attachments = [];
+            const skipped = [];
+            let totalSize = 0;
+
+            for (const file of pendingLeadFiles) {
+                const fileSize = Number(file.size) || 0;
+                const relativePath = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
+
+                if (fileSize > MAX_ATTACHMENT_SIZE) {
+                    skipped.push(`«${file.name}» перевищує обмеження ${formatBytes(MAX_ATTACHMENT_SIZE)}.`);
+                    continue;
+                }
+
+                if (totalSize + fileSize > MAX_TOTAL_ATTACHMENTS_SIZE) {
+                    skipped.push(`«${file.name}» не додано: перевищено загальний ліміт ${formatBytes(MAX_TOTAL_ATTACHMENTS_SIZE)}.`);
+                    continue;
+                }
+
+                try {
+                    const dataUrl = await readFileAsDataURL(file);
+                    attachments.push({
+                        id: generateId('file'),
+                        name: file.name,
+                        path: relativePath,
+                        size: fileSize,
+                        type: file.type || 'application/octet-stream',
+                        lastModified: Number(file.lastModified) || Date.now(),
+                        dataUrl
+                    });
+                    totalSize += fileSize;
+                } catch (error) {
+                    console.error('Не вдалося прочитати файл', error);
+                    skipped.push(`Сталася помилка під час читання «${file.name}».`);
+                }
+            }
+
+            if (skipped.length) {
+                alert(`Деякі файли не були додані:\n${skipped.join('\n')}`);
+            }
+
+            return attachments;
         }
 
         function setupSearch() {
@@ -2798,6 +3283,21 @@
             results.innerHTML = '';
         }
 
+        function getAttachmentIcon(type = '') {
+            if (!type) return 'fa-file-lines';
+            const normalized = type.toLowerCase();
+            if (normalized.includes('pdf')) return 'fa-file-pdf';
+            if (normalized.startsWith('image/')) return 'fa-image';
+            if (normalized.startsWith('video/')) return 'fa-file-video';
+            if (normalized.startsWith('audio/')) return 'fa-file-audio';
+            if (normalized.includes('zip') || normalized.includes('compressed')) return 'fa-file-zipper';
+            if (normalized.includes('sheet') || normalized.includes('excel')) return 'fa-file-excel';
+            if (normalized.includes('presentation') || normalized.includes('powerpoint') || normalized.includes('ppt')) return 'fa-file-powerpoint';
+            if (normalized.includes('word') || normalized.includes('document')) return 'fa-file-word';
+            if (normalized.includes('text')) return 'fa-file-lines';
+            return 'fa-file';
+        }
+
         function getActivityIcon(type) {
             switch (type) {
                 case 'stage':
@@ -2828,6 +3328,9 @@
                 if (id === 'leadDetailsModal') {
                     activeLeadId = null;
                 }
+                if (id === 'addLeadModal') {
+                    resetLeadFileUpload();
+                }
             }
         }
 
@@ -2840,72 +3343,103 @@
             }
         }
 
-        function handleLeadSubmit(event) {
+        async function handleLeadSubmit(event) {
             event.preventDefault();
-            const now = new Date().toISOString();
-            const lead = {
-                id: generateId('lead'),
-                name: document.getElementById('leadTitle').value.trim(),
-                company: document.getElementById('leadCompany').value.trim(),
-                stage: document.getElementById('leadStage').value,
-                value: Number(document.getElementById('leadValue').value) || 0,
-                probability: Number(document.getElementById('leadProbability').value) || 0,
-                owner: document.getElementById('leadOwner').value,
-                status: 'active',
-                expectedClose: document.getElementById('leadStage').value === 'Угода' ? now.split('T')[0] : '',
-                contact: {
-                    id: generateId('contact'),
-                    person: document.getElementById('leadContactName').value.trim(),
-                    email: document.getElementById('leadContactEmail').value.trim(),
-                    phone: document.getElementById('leadContactPhone').value.trim()
-                },
-                tags: document.getElementById('leadTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
-                createdAt: now,
-                updatedAt: now,
-                notes: [],
-                timeline: []
-            };
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton ? submitButton.textContent : '';
 
-            if (lead.stage === 'Угода') {
-                lead.status = 'won';
-                lead.closedAt = now;
-                lead.probability = 100;
-            }
+            try {
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Збереження...';
+                }
 
-            const initialNote = document.getElementById('leadNotes').value.trim();
-            if (initialNote) {
-                lead.notes.push({ id: generateId('note'), text: initialNote, author: 'Ви', date: now });
-            }
+                const attachments = await prepareLeadAttachments();
+                const now = new Date().toISOString();
+                const lead = {
+                    id: generateId('lead'),
+                    name: document.getElementById('leadTitle').value.trim(),
+                    company: document.getElementById('leadCompany').value.trim(),
+                    stage: document.getElementById('leadStage').value,
+                    value: Number(document.getElementById('leadValue').value) || 0,
+                    probability: Number(document.getElementById('leadProbability').value) || 0,
+                    owner: document.getElementById('leadOwner').value,
+                    status: 'active',
+                    expectedClose: document.getElementById('leadStage').value === 'Угода' ? now.split('T')[0] : '',
+                    contact: {
+                        id: generateId('contact'),
+                        person: document.getElementById('leadContactName').value.trim(),
+                        email: document.getElementById('leadContactEmail').value.trim(),
+                        phone: document.getElementById('leadContactPhone').value.trim()
+                    },
+                    tags: document.getElementById('leadTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                    createdAt: now,
+                    updatedAt: now,
+                    notes: [],
+                    timeline: [],
+                    attachments
+                };
 
-            addTimelineEntry(lead, `Створено лід ${lead.name}`);
-            addTimelineEntry(lead, `Стадія встановлена: ${lead.stage}`);
+                if (lead.stage === 'Угода') {
+                    lead.status = 'won';
+                    lead.closedAt = now;
+                    lead.probability = 100;
+                }
 
-            crmData.leads.unshift(lead);
+                const initialNote = document.getElementById('leadNotes').value.trim();
+                if (initialNote) {
+                    lead.notes.push({ id: generateId('note'), text: initialNote, author: 'Ви', date: now });
+                }
 
-            if (lead.contact.person || lead.contact.email) {
-                const existingContact = crmData.contacts.find(contact => contact.email && contact.email === lead.contact.email);
-                if (!existingContact) {
-                    crmData.contacts.unshift({
-                        id: lead.contact.id,
-                        name: lead.contact.person || lead.name,
-                        company: lead.company,
-                        role: '',
-                        email: lead.contact.email,
-                        phone: lead.contact.phone,
-                        status: 'potential',
-                        owner: lead.owner,
-                        tags: lead.tags,
-                        lastActivity: now
-                    });
+                addTimelineEntry(lead, `Створено лід ${lead.name}`);
+                addTimelineEntry(lead, `Стадія встановлена: ${lead.stage}`);
+
+                if (attachments.length) {
+                    const preview = attachments.slice(0, 3).map(file => (file.name || '').replace(/[<>]/g, '')).join(', ');
+                    addTimelineEntry(lead, `Додано файли: ${preview}${attachments.length > 3 ? '…' : ''}`);
+                }
+
+                crmData.leads.unshift(lead);
+
+                if (lead.contact.person || lead.contact.email) {
+                    const existingContact = crmData.contacts.find(contact => contact.email && contact.email === lead.contact.email);
+                    if (!existingContact) {
+                        crmData.contacts.unshift({
+                            id: lead.contact.id,
+                            name: lead.contact.person || lead.name,
+                            company: lead.company,
+                            role: '',
+                            email: lead.contact.email,
+                            phone: lead.contact.phone,
+                            status: 'potential',
+                            owner: lead.owner,
+                            tags: lead.tags,
+                            lastActivity: now
+                        });
+                    }
+                }
+
+                logActivity(`Додано нову угоду ${lead.name} для ${lead.company}.`, 'stage', lead.id);
+                if (attachments.length) {
+                    logActivity(`Додано ${attachments.length} файл(и) до ${lead.name}.`, 'note', lead.id);
+                }
+
+                saveData();
+                updateTaskLeadOptions();
+                renderAll();
+                form.reset();
+                resetLeadFileUpload();
+                closeModal('addLeadModal');
+            } catch (error) {
+                console.error('Не вдалося створити лід', error);
+                alert('Не вдалося зберегти лід. Будь ласка, спробуйте ще раз.');
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
                 }
             }
-
-            logActivity(`Додано нову угоду ${lead.name} для ${lead.company}.`, 'stage', lead.id);
-            saveData();
-            updateTaskLeadOptions();
-            renderAll();
-            closeModal('addLeadModal');
-            event.target.reset();
         }
 
         function handleContactSubmit(event) {
@@ -3047,6 +3581,37 @@
             const content = document.getElementById('leadDetailsContent');
             const contact = lead.contact || {};
             const relatedTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id);
+            const attachments = Array.isArray(lead.attachments) ? lead.attachments : [];
+            const attachmentsMarkup = attachments.length ? `
+                <div class="attachment-list">
+                    ${attachments.map(file => {
+                        const safeName = escapeHtml(file.name || 'Файл');
+                        const downloadName = (file.name || 'file').replace(/["<>]/g, '');
+                        const safeRelativePath = file.path && file.path !== file.name ? escapeHtml(file.path) : '';
+                        const metaParts = [];
+                        if (safeRelativePath) {
+                            metaParts.push(safeRelativePath);
+                        }
+                        metaParts.push(formatBytes(Number(file.size) || 0));
+                        const metaText = metaParts.filter(Boolean).join(' • ');
+                        const hasData = typeof file.dataUrl === 'string' && file.dataUrl.startsWith('data:');
+                        const icon = getAttachmentIcon(file.type);
+                        const linkAttributes = hasData
+                            ? `href="${file.dataUrl}" download="${downloadName}" target="_blank" rel="noopener"`
+                            : 'href="#" onclick="return false;"';
+                        return `
+                            <a class="attachment-item" ${linkAttributes}>
+                                <div class="attachment-icon"><i class="fa-solid ${icon}"></i></div>
+                                <div class="attachment-details">
+                                    <strong>${safeName}</strong>
+                                    <div class="attachment-meta">${metaText}</div>
+                                </div>
+                                <i class="fa-solid fa-download"></i>
+                            </a>
+                        `;
+                    }).join('')}
+                </div>
+            ` : '<span class="metric-sub">Файли ще не додані</span>';
 
             content.innerHTML = `
                 <div class="lead-highlights">
@@ -3095,6 +3660,10 @@
                             <div class="info-item">
                                 <div class="info-label">Мітки</div>
                                 <div class="chips">${lead.tags && lead.tags.length ? lead.tags.map(tag => `<span class="chip">${tag}</span>`).join('') : '—'}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Вкладення</div>
+                                <div class="info-value">${attachmentsMarkup}</div>
                             </div>
                         </div>
                     </div>
@@ -3148,7 +3717,7 @@
                         <div class="timeline-list">
                             ${lead.timeline && lead.timeline.length ? lead.timeline.slice(0, 8).map(item => `
                                 <div class="timeline-entry">
-                                    <strong>${item.text}</strong>
+                                    <strong>${escapeHtml(item.text)}</strong>
                                     <span>${formatRelativeTime(item.date)}</span>
                                 </div>
                             `).join('') : '<div class="empty-state">Історія поки порожня</div>'}
@@ -3200,6 +3769,19 @@
             );
             renderAnalytics();
         }
+
+        function escapeHtml(value) {
+            if (typeof value !== 'string') {
+                return '';
+            }
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         function formatCurrency(value, compact = false) {
             if (!Number.isFinite(value)) return '0 ₴';
             return new Intl.NumberFormat('uk-UA', {
@@ -3221,6 +3803,25 @@
             const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
             if (Number.isNaN(date.getTime())) return '';
             return new Intl.DateTimeFormat('uk-UA', { hour: '2-digit', minute: '2-digit' }).format(date);
+        }
+
+        function formatBytes(bytes) {
+            const value = Number(bytes);
+            if (!Number.isFinite(value) || value <= 0) {
+                return '0 Б';
+            }
+
+            const units = ['Б', 'КБ', 'МБ', 'ГБ', 'ТБ'];
+            let size = value;
+            let index = 0;
+
+            while (size >= 1024 && index < units.length - 1) {
+                size /= 1024;
+                index += 1;
+            }
+
+            const formatted = size >= 10 || index === 0 ? size.toFixed(0) : size.toFixed(1);
+            return `${formatted} ${units[index]}`;
         }
 
         function formatRelativeTime(dateInput) {
