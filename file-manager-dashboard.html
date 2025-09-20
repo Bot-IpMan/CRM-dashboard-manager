@@ -940,6 +940,166 @@
             color: var(--text-muted);
         }
 
+        .file-manager {
+            display: grid;
+            gap: 18px;
+        }
+
+        .file-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .file-actions select {
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            padding: 10px 14px;
+            font-size: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .file-actions select:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .file-search {
+            position: relative;
+        }
+
+        .file-search input {
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 10px 14px 10px 40px;
+            font-size: 14px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            min-width: 240px;
+        }
+
+        .file-search i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .file-status {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .file-summary-card {
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            display: grid;
+            gap: 6px;
+            min-width: 180px;
+        }
+
+        .file-summary-card strong {
+            font-size: 16px;
+        }
+
+        .file-summary-card span {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .file-summary-card small {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-tree {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .file-tree-head,
+        .file-entry {
+            display: grid;
+            grid-template-columns: minmax(0, 2.5fr) minmax(0, 1fr) minmax(0, 1.1fr);
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+        }
+
+        .file-tree-head div:nth-child(2),
+        .file-tree-head div:nth-child(3),
+        .file-entry div:nth-child(2),
+        .file-entry div:nth-child(3) {
+            text-align: right;
+        }
+
+        .file-tree-head {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+            background: rgba(99, 102, 241, 0.06);
+        }
+
+        .file-tree-body {
+            max-height: 460px;
+            overflow-y: auto;
+        }
+
+        .file-entry {
+            border-top: 1px solid rgba(148, 163, 184, 0.18);
+            font-size: 14px;
+        }
+
+        .file-entry:hover {
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .file-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-left: calc(var(--level, 0) * 20px);
+            word-break: break-word;
+        }
+
+        .file-name i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-dark);
+        }
+
+        .file-name[data-type="directory"] i {
+            color: #f59e0b;
+        }
+
+        .file-entry .file-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-entry mark {
+            background: rgba(99, 102, 241, 0.18);
+            color: inherit;
+            padding: 0 2px;
+            border-radius: 4px;
+        }
+
         .modal {
             position: fixed;
             inset: 0;
@@ -1419,6 +1579,11 @@
             .table-row .contact-sub {
                 display: none;
             }
+
+            .file-tree-head,
+            .file-entry {
+                grid-template-columns: minmax(0, 2.2fr) minmax(0, 0.9fr) minmax(0, 1fr);
+            }
         }
 
         @media (max-width: 980px) {
@@ -1474,6 +1639,16 @@
             .table-row div:nth-child(n+3) {
                 display: none;
             }
+
+            .file-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .file-search input {
+                width: 100%;
+                min-width: 0;
+            }
         }
 
         @media (max-width: 640px) {
@@ -1492,6 +1667,15 @@
             .search-results {
                 right: auto;
                 width: calc(100vw - 64px);
+            }
+
+            .file-tree-head,
+            .file-entry {
+                grid-template-columns: minmax(0, 2fr) minmax(0, 0.8fr) minmax(0, 0.9fr);
+            }
+
+            .file-summary {
+                flex-direction: column;
             }
         }
     </style>
@@ -1526,6 +1710,10 @@
                     <button class="nav-item" data-section-target="tasksSection">
                         <i class="fa-solid fa-square-check"></i>
                         Завдання
+                    </button>
+                    <button class="nav-item" data-section-target="filesSection">
+                        <i class="fa-solid fa-folder-tree"></i>
+                        Файли
                     </button>
                     <button class="nav-item" data-section-target="analyticsSection">
                         <i class="fa-solid fa-magnifying-glass-chart"></i>
@@ -1674,6 +1862,41 @@
                     </div>
                 </div>
                 <div class="task-board" id="taskBoard"></div>
+            </section>
+
+            <section id="filesSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Файловий оглядач</h2>
+                        <p>Підключайте локальні папки (наприклад D:\O), щоб швидко переглядати маркетингові матеріали.</p>
+                    </div>
+                    <div class="section-actions">
+                        <span class="file-status" id="fileScanStatus"></span>
+                    </div>
+                </div>
+                <div class="file-manager">
+                    <div class="file-actions">
+                        <button class="btn btn-primary" id="connectFolderBtn">
+                            <i class="fa-solid fa-folder-open"></i>
+                            Підключити папку
+                        </button>
+                        <input type="file" id="folderInput" class="file-input-hidden" webkitdirectory aria-label="Обрати локальну папку">
+                        <select id="folderSnapshotsSelect" aria-label="Збережені папки"></select>
+                        <div class="file-search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="fileSearchInput" placeholder="Пошук у вибраній папці...">
+                        </div>
+                    </div>
+                    <div class="file-summary" id="fileSummary"></div>
+                    <div class="file-tree">
+                        <div class="file-tree-head">
+                            <div>Елемент</div>
+                            <div>Розмір</div>
+                            <div>Оновлено</div>
+                        </div>
+                        <div class="file-tree-body" id="fileTreeBody"></div>
+                    </div>
+                </div>
             </section>
 
             <section id="analyticsSection" class="section">
@@ -1918,6 +2141,7 @@
 
         const MAX_ATTACHMENT_SIZE = 1.5 * 1024 * 1024; // 1.5 МБ
         const MAX_TOTAL_ATTACHMENTS_SIZE = 4 * 1024 * 1024; // 4 МБ
+        const FILE_LIBRARY_LIMIT = 6;
 
         let crmData = null;
         let activeLeadId = null;
@@ -1925,6 +2149,9 @@
         let contactStatusFilter = 'all';
         let searchTimer = null;
         let pendingLeadFiles = [];
+        let activeFileSnapshotId = null;
+        let fileSearchTerm = '';
+        let isScanningFolder = false;
 
         const defaultData = {
             leads: [
@@ -2281,7 +2508,8 @@
                     message: 'Intertop обрав рішення конкурента. Угоду позначено як втрачено.',
                     timestamp: '2024-05-16T10:45:00.000Z'
                 }
-            ]
+            ],
+            fileLibrary: []
         };
         const deepClone = (data) => JSON.parse(JSON.stringify(data));
 
@@ -2314,6 +2542,14 @@
                 }
             });
 
+            if (!Array.isArray(data.fileLibrary)) {
+                data.fileLibrary = [];
+            } else {
+                data.fileLibrary = data.fileLibrary
+                    .map(normalizeFileSnapshot)
+                    .filter(Boolean);
+            }
+
             return data;
         }
 
@@ -2338,6 +2574,9 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             crmData = loadData();
+            activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
+                ? crmData.fileLibrary[0].id
+                : null;
             setupUI();
             renderAll();
         });
@@ -2350,6 +2589,7 @@
             setupLeadFileUpload();
             setupSearch();
             setupFilters();
+            setupFileLibrary();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
             document.getElementById('refreshDashboardBtn').addEventListener('click', () => {
                 renderDashboard();
@@ -2816,11 +3056,682 @@
                 renderContacts(document.getElementById('contactSearch').value);
             });
         }
+        function setupFileLibrary() {
+            const connectBtn = document.getElementById('connectFolderBtn');
+            const fallbackInput = document.getElementById('folderInput');
+            const searchInput = document.getElementById('fileSearchInput');
+            const select = document.getElementById('folderSnapshotsSelect');
+
+            if (connectBtn) {
+                connectBtn.addEventListener('click', handleFolderConnect);
+            }
+
+            if (fallbackInput) {
+                fallbackInput.addEventListener('change', handleFolderInputChange);
+            }
+
+            if (searchInput) {
+                searchInput.value = fileSearchTerm;
+                searchInput.addEventListener('input', event => {
+                    fileSearchTerm = event.target.value;
+                    renderFileExplorer(fileSearchTerm);
+                });
+            }
+
+            if (select) {
+                select.addEventListener('change', event => {
+                    activeFileSnapshotId = event.target.value || null;
+                    renderFileExplorer(fileSearchTerm);
+                });
+            }
+
+            updateFileSnapshotsSelect();
+            renderFileExplorer(fileSearchTerm);
+        }
+
+        function updateFileScanStatus(message) {
+            const status = document.getElementById('fileScanStatus');
+            if (status) {
+                status.textContent = message || '';
+            }
+        }
+
+        function triggerFolderFallback() {
+            const fallbackInput = document.getElementById('folderInput');
+            if (fallbackInput) {
+                fallbackInput.click();
+            }
+        }
+
+        async function handleFolderConnect() {
+            if (isScanningFolder) {
+                return;
+            }
+
+            if (typeof window.showDirectoryPicker !== 'function') {
+                triggerFolderFallback();
+                return;
+            }
+
+            const connectBtn = document.getElementById('connectFolderBtn');
+
+            try {
+                isScanningFolder = true;
+                if (connectBtn) {
+                    connectBtn.disabled = true;
+                }
+                updateFileScanStatus('Скануємо папку...');
+                const snapshot = await scanDirectoryWithPicker();
+                if (snapshot) {
+                    storeFolderSnapshot(snapshot);
+                }
+            } catch (error) {
+                if (error?.name !== 'AbortError') {
+                    console.error('Не вдалося прочитати вміст папки', error);
+                    alert('Не вдалося прочитати вміст папки. Переконайтесь, що надали доступ, або спробуйте інший спосіб.');
+                }
+            } finally {
+                isScanningFolder = false;
+                if (connectBtn) {
+                    connectBtn.disabled = false;
+                }
+                updateFileScanStatus('');
+                renderFileExplorer(fileSearchTerm);
+            }
+        }
+
+        function handleFolderInputChange(event) {
+            const { files } = event.target;
+            if (!files || !files.length) {
+                return;
+            }
+
+            try {
+                isScanningFolder = true;
+                updateFileScanStatus('Опрацьовуємо вибрані файли...');
+                const snapshot = buildSnapshotFromFileList(files);
+                if (snapshot) {
+                    storeFolderSnapshot(snapshot);
+                } else {
+                    alert('Не вдалося побудувати структуру цієї папки. Спробуйте інший каталог.');
+                }
+            } catch (error) {
+                console.error('Не вдалося обробити файли папки', error);
+                alert('Не вдалося обробити вибрані файли. Будь ласка, спробуйте ще раз.');
+            } finally {
+                isScanningFolder = false;
+                updateFileScanStatus('');
+                event.target.value = '';
+                renderFileExplorer(fileSearchTerm);
+            }
+        }
+
+        async function scanDirectoryWithPicker() {
+            if (typeof window.showDirectoryPicker !== 'function') {
+                return null;
+            }
+
+            const directoryHandle = await window.showDirectoryPicker();
+            if (!directoryHandle) {
+                return null;
+            }
+
+            const tree = await buildTreeFromDirectoryHandle(directoryHandle);
+            if (!tree) {
+                return null;
+            }
+
+            const snapshot = finalizeSnapshot(tree, 'picker', {
+                id: generateId('folder'),
+                rootName: directoryHandle.name || tree.name || 'Папка',
+                scannedAt: new Date().toISOString(),
+                source: 'picker'
+            });
+
+            snapshot.rootName = directoryHandle.name || snapshot.rootName;
+            return snapshot;
+        }
+
+        async function buildTreeFromDirectoryHandle(directoryHandle, parentPath = '') {
+            if (!directoryHandle) {
+                return null;
+            }
+
+            const rootName = directoryHandle.name || 'Папка';
+            const nodePath = joinPath(parentPath, rootName);
+            const node = createDirectoryNode(rootName, nodePath);
+
+            for await (const entry of directoryHandle.values()) {
+                if (!entry) {
+                    continue;
+                }
+
+                if (entry.kind === 'directory') {
+                    const childNode = await buildTreeFromDirectoryHandle(entry, node.path);
+                    if (childNode) {
+                        node.children.push(childNode);
+                    }
+                    continue;
+                }
+
+                if (entry.kind === 'file') {
+                    try {
+                        const file = await entry.getFile();
+                        node.children.push(createFileNode(entry.name, joinPath(node.path, entry.name), file.size, file.type, file.lastModified));
+                    } catch (error) {
+                        console.warn('Не вдалося прочитати файл з папки', error);
+                    }
+                }
+            }
+
+            sortDirectoryChildren(node);
+            return node;
+        }
+
+        function buildSnapshotFromFileList(fileList) {
+            const tree = buildTreeFromFileHandles(fileList);
+            if (!tree) {
+                return null;
+            }
+            return finalizeSnapshot(tree, 'upload');
+        }
+
+        function buildTreeFromFileHandles(fileList) {
+            const files = Array.from(fileList || []);
+            if (!files.length) {
+                return null;
+            }
+
+            const normalized = files
+                .map(file => {
+                    const relativePath = (file.webkitRelativePath || file._relativePath || file.name || '')
+                        .replace(/^[\/]+/, '')
+                        .replace(/\\/g, '/');
+                    return { file, relativePath };
+                })
+                .filter(item => item.relativePath);
+
+            if (!normalized.length) {
+                return null;
+            }
+
+            const rootName = normalized[0].relativePath.split('/')[0] || 'Папка';
+            const root = createDirectoryNode(rootName, rootName);
+
+            normalized.forEach(({ file, relativePath }) => {
+                const segments = relativePath.split('/').filter(Boolean);
+                if (!segments.length) {
+                    return;
+                }
+
+                if (segments[0] === root.name) {
+                    segments.shift();
+                }
+
+                const fileName = segments.pop() || relativePath;
+                let current = root;
+                segments.forEach(segment => {
+                    current = ensureDirectoryChild(current, segment);
+                });
+
+                const filePath = joinPath(current.path, fileName);
+                current.children.push(createFileNode(fileName, filePath, file.size, file.type, file.lastModified));
+            });
+
+            sortDirectoryChildren(root);
+            return root;
+        }
+
+        function joinPath(parentPath, segment) {
+            const base = (parentPath || '').replace(/\\/g, '/');
+            const addition = (segment || '').replace(/\\/g, '/');
+            const cleanBase = base.replace(/\/+$/, '');
+            const cleanAddition = addition.replace(/^\/+/, '');
+            if (!cleanBase) {
+                return cleanAddition;
+            }
+            if (!cleanAddition) {
+                return cleanBase;
+            }
+            return `${cleanBase}/${cleanAddition}`;
+        }
+
+        function createDirectoryNode(name, path) {
+            const safeName = name || 'Папка';
+            const safePath = (path || safeName).toString().replace(/\\/g, '/');
+            return {
+                type: 'directory',
+                name: safeName,
+                path: safePath,
+                children: []
+            };
+        }
+
+        function createFileNode(name, path, size = 0, mimeType = '', lastModified = 0) {
+            return {
+                type: 'file',
+                name: name || 'Файл',
+                path: (path || '').toString().replace(/\\/g, '/'),
+                size: Number(size) || 0,
+                mimeType: mimeType || '',
+                lastModified: Number(lastModified) || 0
+            };
+        }
+
+        function ensureDirectoryChild(parent, name) {
+            const safeName = name || 'Папка';
+            if (!parent || parent.type !== 'directory') {
+                return createDirectoryNode(safeName, safeName);
+            }
+
+            if (!Array.isArray(parent.children)) {
+                parent.children = [];
+            }
+
+            let child = parent.children.find(item => item.type === 'directory' && item.name === safeName);
+            if (!child) {
+                child = createDirectoryNode(safeName, joinPath(parent.path, safeName));
+                parent.children.push(child);
+            }
+
+            return child;
+        }
+
+        function sortDirectoryChildren(node) {
+            if (!node || node.type !== 'directory' || !Array.isArray(node.children)) {
+                return;
+            }
+
+            node.children.sort((a, b) => {
+                if (a.type === b.type) {
+                    return a.name.localeCompare(b.name, 'uk', { sensitivity: 'base' });
+                }
+                return a.type === 'directory' ? -1 : 1;
+            });
+
+            node.children.forEach(child => {
+                if (child.type === 'directory') {
+                    sortDirectoryChildren(child);
+                }
+            });
+        }
+        function computeNodeStats(node) {
+            if (!node) {
+                return { files: 0, folders: 0, size: 0, lastModified: 0 };
+            }
+
+            if (node.type === 'file') {
+                const size = Number(node.size) || 0;
+                const lastModified = Number(node.lastModified) || 0;
+                const stats = { files: 1, folders: 0, size, lastModified };
+                node.stats = stats;
+                return stats;
+            }
+
+            let files = 0;
+            let folders = 1;
+            let size = 0;
+            let lastModified = 0;
+
+            if (Array.isArray(node.children)) {
+                node.children.forEach(child => {
+                    const childStats = computeNodeStats(child);
+                    files += childStats.files;
+                    folders += childStats.folders;
+                    size += childStats.size;
+                    if (childStats.lastModified && childStats.lastModified > lastModified) {
+                        lastModified = childStats.lastModified;
+                    }
+                });
+            }
+
+            const stats = { files, folders, size, lastModified };
+            node.stats = stats;
+            return stats;
+        }
+
+        function finalizeSnapshot(rootNode, source = 'picker', base = null) {
+            if (!rootNode) {
+                return null;
+            }
+
+            sortDirectoryChildren(rootNode);
+            const stats = computeNodeStats(rootNode);
+
+            return {
+                id: base?.id || generateId('folder'),
+                rootName: (base?.rootName || rootNode.name || 'Папка').toString(),
+                scannedAt: base?.scannedAt || new Date().toISOString(),
+                source: base?.source || source,
+                tree: rootNode,
+                totals: {
+                    files: stats.files,
+                    folders: Math.max(stats.folders - 1, 0),
+                    size: stats.size
+                }
+            };
+        }
+
+        function storeFolderSnapshot(snapshot) {
+            if (!snapshot) {
+                return;
+            }
+
+            if (!Array.isArray(crmData.fileLibrary)) {
+                crmData.fileLibrary = [];
+            }
+
+            const filtered = crmData.fileLibrary.filter(item => item.id !== snapshot.id && item.rootName !== snapshot.rootName);
+            crmData.fileLibrary = [snapshot, ...filtered].slice(0, FILE_LIBRARY_LIMIT);
+            activeFileSnapshotId = snapshot.id;
+            saveData();
+            updateFileSnapshotsSelect();
+            renderFileExplorer(fileSearchTerm);
+        }
+
+        function updateFileSnapshotsSelect() {
+            const select = document.getElementById('folderSnapshotsSelect');
+            if (!select) {
+                return;
+            }
+
+            const snapshots = Array.isArray(crmData.fileLibrary) ? crmData.fileLibrary : [];
+            if (!snapshots.length) {
+                select.innerHTML = '<option value="">Папки ще не підключені</option>';
+                select.value = '';
+                select.disabled = true;
+                return;
+            }
+
+            select.disabled = false;
+            if (!activeFileSnapshotId) {
+                activeFileSnapshotId = snapshots[0].id;
+            }
+
+            const options = snapshots.map(snapshot => {
+                const dateLabel = snapshot.scannedAt
+                    ? `${formatDate(snapshot.scannedAt, { day: '2-digit', month: 'short', year: 'numeric' })} ${formatTime(snapshot.scannedAt)}`
+                    : '';
+                const label = `${snapshot.rootName}${dateLabel ? ` • ${dateLabel}` : ''}`;
+                const selected = snapshot.id === activeFileSnapshotId ? ' selected' : '';
+                return `<option value="${snapshot.id}"${selected}>${escapeHtml(label)}</option>`;
+            });
+
+            select.innerHTML = options.join('');
+            select.value = activeFileSnapshotId || '';
+        }
+
+        function renderFileExplorer(searchTerm = '') {
+            const treeBody = document.getElementById('fileTreeBody');
+            const summary = document.getElementById('fileSummary');
+            const searchInput = document.getElementById('fileSearchInput');
+
+            if (!treeBody || !summary) {
+                return;
+            }
+
+            fileSearchTerm = searchTerm || '';
+            if (searchInput && searchInput.value !== fileSearchTerm) {
+                searchInput.value = fileSearchTerm;
+            }
+
+            updateFileScanStatus(isScanningFolder ? 'Скануємо папку...' : '');
+
+            const snapshots = Array.isArray(crmData.fileLibrary) ? crmData.fileLibrary : [];
+            if (!snapshots.length) {
+                summary.innerHTML = '<div class="empty-state" style="padding: 24px;">Підключіть папку, щоб побачити її структуру. Дані зберігаються лише локально.</div>';
+                treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">Жодної папки ще не підключено.</div>';
+                const select = document.getElementById('folderSnapshotsSelect');
+                if (select) {
+                    select.innerHTML = '<option value="">Папки ще не підключені</option>';
+                    select.disabled = true;
+                }
+                return;
+            }
+
+            const select = document.getElementById('folderSnapshotsSelect');
+            if (select) {
+                select.disabled = false;
+                if (!activeFileSnapshotId) {
+                    activeFileSnapshotId = snapshots[0].id;
+                }
+                if (select.value !== activeFileSnapshotId) {
+                    select.value = activeFileSnapshotId;
+                }
+            }
+
+            const snapshot = snapshots.find(item => item.id === activeFileSnapshotId) || snapshots[0];
+            activeFileSnapshotId = snapshot?.id || null;
+            updateFileSummary(snapshot);
+
+            if (!snapshot) {
+                treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">Не вдалося завантажити вибране сканування.</div>';
+                return;
+            }
+
+            const entries = flattenFileTree(snapshot.tree);
+            const visibleEntries = getVisibleFileEntries(entries, fileSearchTerm);
+
+            if (!visibleEntries.length) {
+                treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">За вашим запитом нічого не знайдено.</div>';
+                return;
+            }
+
+            const rootPrefix = snapshot.rootName ? `${snapshot.rootName}/` : '';
+            treeBody.innerHTML = visibleEntries.map(entry => {
+                const icon = entry.type === 'directory'
+                    ? 'fa-solid fa-folder'
+                    : `fa-solid ${getAttachmentIcon(entry.mimeType || '')}`;
+                const nameHtml = highlightMatch(entry.name, fileSearchTerm);
+                const relativePath = entry.path.startsWith(rootPrefix)
+                    ? entry.path.slice(rootPrefix.length)
+                    : (entry.path === snapshot.rootName ? '' : entry.path);
+                const directoryMeta = entry.type === 'directory'
+                    ? `${entry.stats.files} файлів • ${Math.max(entry.stats.folders - 1, 0)} папок`
+                    : '';
+                const fileMeta = entry.type === 'file' && relativePath ? relativePath : '';
+                const metaText = directoryMeta || fileMeta;
+                const metaHtml = metaText ? `<div class="file-meta">${escapeHtml(metaText)}</div>` : '';
+                const sizeLabel = formatBytes(entry.size);
+                const modifiedLabel = entry.lastModified
+                    ? `${formatDate(entry.lastModified, { day: '2-digit', month: 'short', year: 'numeric' })} ${formatTime(entry.lastModified)}`
+                    : '—';
+                return `
+                    <div class="file-entry">
+                        <div class="file-name" data-type="${entry.type}" style="--level: ${entry.level}">
+                            <i class="${icon}"></i>
+                            <div>
+                                <div>${nameHtml}</div>
+                                ${metaHtml}
+                            </div>
+                        </div>
+                        <div>${sizeLabel}</div>
+                        <div>${modifiedLabel}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function flattenFileTree(node, level = 0, acc = []) {
+            if (!node) {
+                return acc;
+            }
+
+            acc.push({
+                type: node.type,
+                name: node.name,
+                path: node.path,
+                level,
+                size: node.type === 'file' ? Number(node.size) || 0 : Number(node.stats?.size) || 0,
+                lastModified: node.type === 'file'
+                    ? Number(node.lastModified) || 0
+                    : Number(node.stats?.lastModified) || 0,
+                mimeType: node.mimeType || '',
+                stats: node.stats || { files: 0, folders: 0, size: 0, lastModified: 0 }
+            });
+
+            if (node.type === 'directory' && Array.isArray(node.children)) {
+                node.children.forEach(child => flattenFileTree(child, level + 1, acc));
+            }
+
+            return acc;
+        }
+
+        function getVisibleFileEntries(entries, query) {
+            if (!Array.isArray(entries) || !entries.length) {
+                return [];
+            }
+
+            const trimmed = (query || '').trim().toLowerCase();
+            if (!trimmed) {
+                return entries;
+            }
+
+            const matched = entries.filter(entry => entry.path.toLowerCase().includes(trimmed) || entry.name.toLowerCase().includes(trimmed));
+            if (!matched.length) {
+                return [];
+            }
+
+            const visiblePaths = new Set();
+            matched.forEach(item => {
+                const segments = item.path.split('/');
+                let current = '';
+                segments.forEach((segment, index) => {
+                    if (!segment) {
+                        return;
+                    }
+                    current = index === 0 ? segment : `${current}/${segment}`;
+                    visiblePaths.add(current);
+                });
+            });
+
+            return entries.filter(entry => visiblePaths.has(entry.path));
+        }
+
+        function highlightMatch(text, query) {
+            const safe = escapeHtml(text || '');
+            if (!query) {
+                return safe;
+            }
+
+            try {
+                const regex = new RegExp(escapeRegExp(query), 'ig');
+                return safe.replace(regex, match => `<mark>${match}</mark>`);
+            } catch (error) {
+                return safe;
+            }
+        }
+
+        function escapeRegExp(value) {
+            return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        }
+
+        function updateFileSummary(snapshot) {
+            const container = document.getElementById('fileSummary');
+            if (!container) {
+                return;
+            }
+
+            if (!snapshot) {
+                container.innerHTML = '';
+                return;
+            }
+
+            const updatedLabel = snapshot.scannedAt
+                ? `${formatDate(snapshot.scannedAt, { day: '2-digit', month: 'short', year: 'numeric' })} ${formatTime(snapshot.scannedAt)}`
+                : '—';
+            const foldersTotal = snapshot.totals?.folders ?? 0;
+            const filesTotal = snapshot.totals?.files ?? 0;
+
+            container.innerHTML = `
+                <div class="file-summary-card">
+                    <span>Папка</span>
+                    <strong>${escapeHtml(snapshot.rootName)}</strong>
+                    <small>Оновлено ${escapeHtml(updatedLabel)}</small>
+                </div>
+                <div class="file-summary-card">
+                    <span>Файли</span>
+                    <strong>${filesTotal}</strong>
+                    <small>${foldersTotal} папок усередині</small>
+                </div>
+                <div class="file-summary-card">
+                    <span>Загальний розмір</span>
+                    <strong>${formatBytes(snapshot.totals?.size || 0)}</strong>
+                    <small>Дані зберігаються локально</small>
+                </div>
+            `;
+        }
+
+        function sanitizeFileNode(node, parentPath = '') {
+            if (!node || typeof node !== 'object') {
+                return null;
+            }
+
+            const nodeType = node.type === 'file' || node.type === 'directory'
+                ? node.type
+                : Array.isArray(node.children) ? 'directory' : 'file';
+
+            const rawName = typeof node.name === 'string' && node.name.trim()
+                ? node.name.trim()
+                : (typeof node.path === 'string' && node.path.trim()
+                    ? node.path.trim().split(/[\/]/).filter(Boolean).pop()
+                    : nodeType === 'file' ? 'Файл' : 'Папка');
+
+            const path = typeof node.path === 'string' && node.path.trim()
+                ? node.path.trim().replace(/\/g, '/')
+                : joinPath(parentPath, rawName);
+
+            if (nodeType === 'file') {
+                return {
+                    type: 'file',
+                    name: rawName,
+                    path,
+                    size: Number(node.size) || 0,
+                    lastModified: Number(node.lastModified) || 0,
+                    mimeType: typeof node.mimeType === 'string'
+                        ? node.mimeType
+                        : typeof node.fileType === 'string'
+                            ? node.fileType
+                            : ''
+                };
+            }
+
+            const children = Array.isArray(node.children)
+                ? node.children.map(child => sanitizeFileNode(child, path)).filter(Boolean)
+                : [];
+
+            return {
+                type: 'directory',
+                name: rawName,
+                path,
+                children
+            };
+        }
+
+        function normalizeFileSnapshot(snapshot) {
+            if (!snapshot || typeof snapshot !== 'object') {
+                return null;
+            }
+
+            const sanitizedTree = sanitizeFileNode(snapshot.tree);
+            if (!sanitizedTree) {
+                return null;
+            }
+
+            return finalizeSnapshot(sanitizedTree, snapshot.source || 'picker', {
+                id: typeof snapshot.id === 'string' ? snapshot.id : generateId('folder'),
+                rootName: typeof snapshot.rootName === 'string' ? snapshot.rootName : sanitizedTree.name,
+                scannedAt: snapshot.scannedAt,
+                source: snapshot.source || 'picker'
+            });
+        }
+
         function renderAll() {
             renderDashboard();
             renderPipeline();
             renderContacts(document.getElementById('contactSearch').value || '');
             renderTasks();
+            renderFileExplorer(fileSearchTerm);
             renderAnalytics();
         }
 
@@ -3483,9 +4394,14 @@
         function resetDemoData() {
             if (confirm('Скинути дані та повернути демо-набір?')) {
                 crmData = deepClone(defaultData);
+                activeFileSnapshotId = Array.isArray(crmData.fileLibrary) && crmData.fileLibrary.length
+                    ? crmData.fileLibrary[0].id
+                    : null;
+                fileSearchTerm = '';
                 saveData();
                 populateDropdowns();
                 renderAll();
+                updateFileSnapshotsSelect();
             }
         }
 
