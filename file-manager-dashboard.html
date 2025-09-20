@@ -5164,7 +5164,7 @@
                     : nodeType === 'file' ? 'Файл' : 'Папка');
 
             const path = typeof node.path === 'string' && node.path.trim()
-                ? node.path.trim().replace(/\/g, '/')
+                ? node.path.trim().replace(/\\/g, '/')
                 : joinPath(parentPath, rawName);
 
             if (nodeType === 'file') {
