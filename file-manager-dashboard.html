@@ -893,6 +893,223 @@
             gap: 18px;
         }
 
+        .pipeline-metrics {
+            margin-bottom: 24px;
+        }
+
+        .pipeline-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .pipeline-activity-card {
+            margin-top: 20px;
+        }
+
+        .stage-status-list,
+        .priority-list,
+        .owner-summary {
+            display: grid;
+            gap: 12px;
+        }
+
+        .stage-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(248, 250, 255, 0.78);
+        }
+
+        .stage-info {
+            display: grid;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .stage-name {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .stage-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .stage-risk {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #b45309;
+            background: rgba(245, 158, 11, 0.18);
+            border-radius: 999px;
+            padding: 4px 10px;
+            width: fit-content;
+        }
+
+        .stage-risk-danger {
+            color: #b91c1c;
+            background: rgba(239, 68, 68, 0.16);
+        }
+
+        .stage-progress {
+            display: grid;
+            gap: 6px;
+            min-width: 150px;
+            text-align: right;
+        }
+
+        .stage-share {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .stage-progress-track {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            overflow: hidden;
+        }
+
+        .stage-progress-value {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .stage-progress span {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .priority-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            background: rgba(99, 102, 241, 0.06);
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .priority-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .priority-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .priority-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .priority-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .priority-flag {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            padding: 4px 10px;
+        }
+
+        .priority-flag.danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #b91c1c;
+        }
+
+        .priority-flag.warning {
+            background: rgba(245, 158, 11, 0.18);
+            color: #92400e;
+        }
+
+        .priority-flag.info {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0c4a6e;
+        }
+
+        .owner-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(248, 250, 255, 0.78);
+            padding: 14px 16px;
+        }
+
+        .owner-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .owner-metrics {
+            display: grid;
+            gap: 6px;
+            min-width: 160px;
+            text-align: right;
+        }
+
+        .owner-progress-track {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            overflow: hidden;
+        }
+
+        .owner-progress-value {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .owner-metrics .metric-sub {
+            margin-top: 0;
+        }
+
+        .priority-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .priority-actions .btn-small-primary {
+            white-space: nowrap;
+        }
+
+        .pipeline-metrics .metric-card {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .pipeline-metrics .metric-icon {
+            background: rgba(99, 102, 241, 0.12);
+        }
+
         .pipeline-column {
             background: rgba(255, 255, 255, 0.92);
             border-radius: var(--radius-md);
@@ -2627,6 +2844,20 @@
                 grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             }
 
+            .pipeline-insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stage-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stage-progress {
+                text-align: left;
+                min-width: 0;
+            }
+
             .lead-columns {
                 grid-template-columns: 1fr;
             }
@@ -2668,6 +2899,20 @@
 
             .metrics-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .priority-item {
+                padding: 14px;
+            }
+
+            .owner-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .owner-metrics {
+                text-align: left;
+                width: 100%;
             }
 
             .task-board {
@@ -2919,7 +3164,26 @@
                         </button>
                     </div>
                 </div>
+                <div class="metrics-grid pipeline-metrics" id="pipelineMetrics"></div>
                 <div class="pipeline" id="pipelineBoard"></div>
+                <div class="pipeline-insights-grid">
+                    <div class="card">
+                        <h3>Статус етапів</h3>
+                        <div class="stage-status-list" id="pipelineStageStatus"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Фокус уваги</h3>
+                        <div class="priority-list" id="pipelinePriorityList"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Командне навантаження</h3>
+                        <div class="owner-summary" id="pipelineOwnerSummary"></div>
+                    </div>
+                </div>
+                <div class="card pipeline-activity-card">
+                    <h3>Активність по воронці</h3>
+                    <div class="timeline-list" id="pipelineActivityTimeline"></div>
+                </div>
             </section>
 
             <section id="projectsSection" class="section">
@@ -7689,6 +7953,10 @@
         function renderPipeline() {
             const board = document.getElementById('pipelineBoard');
             const leads = pipelineFilterOwner === 'all' ? crmData.leads : crmData.leads.filter(lead => lead.owner === pipelineFilterOwner);
+            if (!board) {
+                return;
+            }
+
             board.innerHTML = STAGES.map(stage => {
                 const stageLeads = leads.filter(lead => lead.stage === stage);
                 const stageValue = stageLeads.reduce((sum, lead) => sum + lead.value, 0);
@@ -7708,7 +7976,344 @@
                 `;
             }).join('');
 
+            renderPipelineMetrics(leads);
+            renderPipelineStageStatus(leads);
+            renderPipelinePriority(leads);
+            renderPipelineOwnerSummary(leads);
+            renderPipelineActivity(leads);
             setupPipelineInteractions();
+        }
+
+        function renderPipelineMetrics(leads) {
+            const container = document.getElementById('pipelineMetrics');
+            if (!container) {
+                return;
+            }
+
+            const now = new Date();
+            const activeLeads = leads.filter(lead => lead.stage !== 'Втрачено');
+            const totalValue = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+            const expectedRevenue = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100), 0);
+            const averageProbability = activeLeads.length
+                ? Math.round(activeLeads.reduce((sum, lead) => sum + (Number(lead.probability) || 0), 0) / activeLeads.length)
+                : 0;
+            const averageAge = activeLeads.length
+                ? Math.round(activeLeads.reduce((sum, lead) => {
+                    const baseDate = lead.createdAt || lead.updatedAt || now;
+                    return sum + daysBetween(baseDate, now);
+                }, 0) / activeLeads.length)
+                : 0;
+            const dueSoon = activeLeads.filter(lead => {
+                if (!lead.expectedClose) {
+                    return false;
+                }
+                const dueDate = new Date(lead.expectedClose);
+                if (Number.isNaN(dueDate.getTime())) {
+                    return false;
+                }
+                const diff = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                return diff >= 0 && diff <= 7;
+            }).length;
+            const won = leads.filter(lead => lead.stage === 'Угода').length;
+            const lost = leads.filter(lead => lead.stage === 'Втрачено').length;
+            const winRate = won + lost ? Math.round((won / (won + lost)) * 100) : (averageProbability || 0);
+            const averageAgeLabel = activeLeads.length ? `~${averageAge} дн.` : '—';
+            const dueSoonLabel = dueSoon ? `${dueSoon} закриттів протягом 7 днів` : 'Немає закриттів за 7 днів';
+
+            container.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Активні угоди</div>
+                        <div class="metric-value">${activeLeads.length}</div>
+                        <div class="metric-sub">${leads.length} угод у вибірці</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Вартість воронки</div>
+                        <div class="metric-value">${formatCurrency(totalValue)}</div>
+                        <div class="metric-sub">${formatCurrency(expectedRevenue)} прогнозовано</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-gauge-high"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Середня ймовірність</div>
+                        <div class="metric-value">${averageProbability}%</div>
+                        <div class="metric-sub">Win-rate ${winRate}%</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div>
+                        <div class="metric-label">Середній вік угоди</div>
+                        <div class="metric-value">${averageAgeLabel}</div>
+                        <div class="metric-sub">${dueSoonLabel}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPipelineStageStatus(leads) {
+            const container = document.getElementById('pipelineStageStatus');
+            if (!container) {
+                return;
+            }
+
+            const now = new Date();
+            const activeLeads = leads.filter(lead => lead.stage !== 'Втрачено');
+            const totalValue = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+
+            const rows = STAGES.filter(stage => stage !== 'Втрачено').map(stage => {
+                const stageLeads = leads.filter(lead => lead.stage === stage);
+                const stageValue = stageLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+                const valueShare = totalValue
+                    ? Math.round((stageValue / totalValue) * 100)
+                    : (activeLeads.length ? Math.round((stageLeads.length / activeLeads.length) * 100) : 0);
+                const averageIdle = stageLeads.length
+                    ? Math.round(stageLeads.reduce((sum, lead) => sum + daysBetween(lead.updatedAt || lead.createdAt || now, now), 0) / stageLeads.length)
+                    : 0;
+                const stuck = stageLeads.filter(lead => daysBetween(lead.updatedAt || lead.createdAt || now, now) > 10).length;
+                const width = stageLeads.length ? Math.max(valueShare, 6) : 2;
+                const shareLabel = totalValue ? `${valueShare}% вартості` : `${stageLeads.length} угод`;
+                const averageIdleLabel = stageLeads.length ? `${averageIdle} дн.` : '—';
+                const riskBadge = stuck
+                    ? `<span class="stage-risk"><i class="fa-solid fa-triangle-exclamation"></i> Застигло ${stuck}</span>`
+                    : '';
+
+                return `
+                    <div class="stage-row">
+                        <div class="stage-info">
+                            <div class="stage-name">${stage}</div>
+                            <div class="stage-meta">${stageLeads.length} угод • ${formatCurrency(stageValue)}</div>
+                            ${riskBadge}
+                        </div>
+                        <div class="stage-progress">
+                            <div class="stage-share">${shareLabel}</div>
+                            <div class="stage-progress-track"><span class="stage-progress-value" style="width:${Math.min(100, width)}%"></span></div>
+                            <span>Середнє очікування: ${averageIdleLabel}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const lostLeads = leads.filter(lead => lead.stage === 'Втрачено');
+            if (lostLeads.length) {
+                const lostValue = lostLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+                const lostShare = leads.length ? Math.round((lostLeads.length / leads.length) * 100) : 0;
+                const lostWidth = lostLeads.length ? Math.max(lostShare, 6) : 0;
+                rows.push(`
+                    <div class="stage-row">
+                        <div class="stage-info">
+                            <div class="stage-name">Втрачено</div>
+                            <div class="stage-meta">${lostLeads.length} угод • ${formatCurrency(lostValue)}</div>
+                            <span class="stage-risk stage-risk-danger"><i class="fa-solid fa-circle-xmark"></i> Потрібен аналіз</span>
+                        </div>
+                        <div class="stage-progress">
+                            <div class="stage-share">${lostShare}% угод</div>
+                            <div class="stage-progress-track"><span class="stage-progress-value" style="width:${Math.min(100, lostWidth)}%"></span></div>
+                            <span>Втрачено: ${formatCurrency(lostValue)}</span>
+                        </div>
+                    </div>
+                `);
+            }
+
+            container.innerHTML = rows.join('');
+        }
+
+        function renderPipelinePriority(leads) {
+            const container = document.getElementById('pipelinePriorityList');
+            if (!container) {
+                return;
+            }
+
+            const now = new Date();
+            const items = leads
+                .filter(lead => !['Втрачено', 'Угода'].includes(lead.stage))
+                .map(lead => {
+                    const idleDays = daysBetween(lead.updatedAt || lead.createdAt || now, now);
+                    const dueDate = lead.expectedClose ? new Date(lead.expectedClose) : null;
+                    let dueDiff = null;
+                    if (dueDate && !Number.isNaN(dueDate.getTime())) {
+                        dueDiff = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                    }
+                    const openTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id && task.status !== 'done');
+                    const flags = [];
+                    let score = 0;
+
+                    if (typeof dueDiff === 'number') {
+                        if (dueDiff < 0) {
+                            score += 3;
+                            flags.push({ type: 'danger', text: `Прострочено на ${Math.abs(dueDiff)} дн.` });
+                        } else if (dueDiff <= 7) {
+                            score += 2;
+                            const dueText = dueDiff === 0 ? 'Закриття сьогодні' : `Закриття за ${dueDiff} дн.`;
+                            flags.push({ type: 'warning', text: dueText });
+                        }
+                    }
+
+                    if (idleDays > 10) {
+                        score += 2;
+                        flags.push({ type: 'warning', text: `Без оновлень ${idleDays} дн.` });
+                    }
+
+                    if ((Number(lead.probability) || 0) < 30) {
+                        score += 1;
+                        flags.push({ type: 'info', text: `Ймовірність ${lead.probability}%` });
+                    }
+
+                    if ((Number(lead.value) || 0) >= 80000) {
+                        score += 1;
+                        flags.push({ type: 'info', text: 'Висока вартість' });
+                    }
+
+                    if (openTasks.length) {
+                        flags.push({ type: 'info', text: `Задач: ${openTasks.length}` });
+                    }
+
+                    return { lead, score, flags, idleDays };
+                })
+                .filter(item => item.score > 0 || item.flags.length > 0)
+                .sort((a, b) => b.score - a.score || (Number(b.lead.value) || 0) - (Number(a.lead.value) || 0))
+                .slice(0, 4);
+
+            if (!items.length) {
+                container.innerHTML = '<div class="empty-state">Усі угоди в комфортній зоні. Слідкуйте за новими змінами.</div>';
+                return;
+            }
+
+            container.innerHTML = items.map(item => {
+                const flagsMarkup = item.flags.map(flag => `<span class="priority-flag ${flag.type}">${flag.text}</span>`).join('');
+                const manager = item.lead.owner ? `Менеджер: ${item.lead.owner}` : 'Менеджер не призначений';
+                const idleText = item.idleDays > 0 ? ` • без оновлень ${item.idleDays} дн.` : '';
+                return `
+                    <div class="priority-item">
+                        <div class="priority-header">
+                            <div>
+                                <div class="priority-title">${item.lead.name}</div>
+                                <div class="priority-meta">${item.lead.company || 'Без компанії'} • ${item.lead.stage}</div>
+                            </div>
+                            <span class="badge badge-primary">${formatCurrency(Number(item.lead.value) || 0)}</span>
+                        </div>
+                        ${flagsMarkup ? `<div class="priority-flags">${flagsMarkup}</div>` : ''}
+                        <div class="priority-meta">${manager}${idleText}</div>
+                        <div class="priority-actions">
+                            <button class="btn btn-small-primary" data-open-lead="${item.lead.id}">Перейти</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.querySelectorAll('[data-open-lead]').forEach(btn => {
+                btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+        }
+
+        function renderPipelineOwnerSummary(leads) {
+            const container = document.getElementById('pipelineOwnerSummary');
+            if (!container) {
+                return;
+            }
+
+            const ownerMap = new Map();
+            leads.forEach(lead => {
+                const ownerName = lead.owner || 'Без менеджера';
+                if (!ownerMap.has(ownerName)) {
+                    ownerMap.set(ownerName, {
+                        owner: ownerName,
+                        leads: 0,
+                        value: 0,
+                        probabilitySum: 0,
+                        won: 0,
+                        lost: 0
+                    });
+                }
+
+                const entry = ownerMap.get(ownerName);
+                entry.leads += 1;
+                entry.value += Number(lead.value) || 0;
+                entry.probabilitySum += Number(lead.probability) || 0;
+                if (lead.stage === 'Угода') {
+                    entry.won += 1;
+                }
+                if (lead.stage === 'Втрачено') {
+                    entry.lost += 1;
+                }
+            });
+
+            const stats = Array.from(ownerMap.values()).map(entry => {
+                const openTasks = crmData.tasks.filter(task => task.owner === entry.owner && task.status !== 'done').length;
+                const avgProbability = entry.leads ? Math.round(entry.probabilitySum / entry.leads) : 0;
+                const winRate = entry.won + entry.lost ? Math.round((entry.won / (entry.won + entry.lost)) * 100) : avgProbability;
+                return {
+                    ...entry,
+                    avgProbability,
+                    winRate,
+                    openTasks
+                };
+            }).sort((a, b) => b.value - a.value);
+
+            if (!stats.length) {
+                container.innerHTML = '<div class="empty-state">Немає даних для відображення.</div>';
+                return;
+            }
+
+            container.innerHTML = stats.map(entry => {
+                const avatarLetter = entry.owner ? entry.owner.charAt(0).toUpperCase() : '?';
+                const progressWidth = entry.avgProbability > 0 ? Math.max(entry.avgProbability, 6) : 0;
+                return `
+                    <div class="owner-row">
+                        <div class="owner-info">
+                            <div class="avatar">${avatarLetter}</div>
+                            <div>
+                                <strong>${entry.owner}</strong>
+                                <div class="metric-sub">${entry.leads} угод • ${formatCurrency(entry.value)}</div>
+                            </div>
+                        </div>
+                        <div class="owner-metrics">
+                            <div class="owner-progress-track"><span class="owner-progress-value" style="width:${Math.min(100, progressWidth)}%"></span></div>
+                            <div class="metric-sub">Середня ймовірність ${entry.avgProbability}%</div>
+                            <div class="metric-sub">Win-rate ${entry.winRate}%</div>
+                            <div class="metric-sub">Активних задач: ${entry.openTasks}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderPipelineActivity(leads) {
+            const container = document.getElementById('pipelineActivityTimeline');
+            if (!container) {
+                return;
+            }
+
+            const leadIds = new Set(leads.map(lead => lead.id));
+            const relevantActivities = crmData.activities
+                .filter(activity => ['stage', 'note', 'won', 'lost'].includes(activity.type))
+                .filter(activity => leadIds.has(activity.entityId))
+                .slice(0, 8);
+
+            if (!relevantActivities.length) {
+                container.innerHTML = '<div class="empty-state">Поки немає нових подій по воронці.</div>';
+                return;
+            }
+
+            container.innerHTML = relevantActivities.map(activity => `
+                <div class="timeline-entry">
+                    <strong>${escapeHtml(activity.message)}</strong>
+                    <span>${formatRelativeTime(activity.timestamp)}</span>
+                </div>
+            `).join('');
         }
 
         function renderProjects(searchTerm = '') {
@@ -8721,6 +9326,7 @@
             saveData();
             renderTasks();
             renderUpcomingActivities();
+            renderPipeline();
             renderLeadFocus();
             closeModal('addTaskModal');
             event.target.reset();
@@ -8737,6 +9343,7 @@
             saveData();
             renderTasks();
             renderDashboard();
+            renderPipeline();
             renderLeadFocus();
         }
 
@@ -8749,6 +9356,11 @@
                 timestamp: new Date().toISOString()
             });
             crmData.activities = crmData.activities.slice(0, 40);
+
+            const currentLeads = pipelineFilterOwner === 'all'
+                ? crmData.leads
+                : crmData.leads.filter(lead => lead.owner === pipelineFilterOwner);
+            renderPipelineActivity(currentLeads);
         }
 
         function addTimelineEntry(lead, text) {
@@ -8975,6 +9587,7 @@
             addTimelineEntry(lead, `Ймовірність змінена на ${probability}%`);
             logActivity(`Оновлено прогноз для ${lead.name} (${probability}%).`, 'note', lead.id);
             saveData();
+            renderPipeline();
             renderDashboard();
             renderForecastCard(
                 crmData.leads.filter(l => l.stage !== 'Втрачено').reduce((sum, l) => sum + l.value, 0),
