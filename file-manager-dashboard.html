@@ -600,6 +600,21 @@
             color: #15803d;
         }
 
+        .badge-primary {
+            background: rgba(99, 102, 241, 0.18);
+            color: var(--primary-dark);
+        }
+
+        .badge-info {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0369a1;
+        }
+
+        .badge-neutral {
+            background: rgba(148, 163, 184, 0.2);
+            color: #334155;
+        }
+
         .pipeline {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -777,6 +792,162 @@
 
         .table-row:hover {
             background: rgba(99, 102, 241, 0.08);
+        }
+
+        .projects-table {
+            display: grid;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .projects-table .table-head,
+        .projects-table .table-row {
+            grid-template-columns: 2.4fr 1.6fr 1.1fr 1fr 1fr 1.4fr;
+        }
+
+        .project-main {
+            display: grid;
+            gap: 6px;
+        }
+
+        .project-main strong {
+            font-size: 15px;
+        }
+
+        .project-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .project-updated {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .project-tags .tag {
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+        }
+
+        .project-team {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .project-member-chip {
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .project-owner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-owner strong {
+            display: block;
+        }
+
+        .project-owner span {
+            display: block;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .avatar-sm {
+            width: 30px;
+            height: 30px;
+            font-size: 14px;
+        }
+
+        .probability-pill {
+            position: relative;
+            border-radius: 999px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 12px;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--primary-dark);
+            background: rgba(99, 102, 241, 0.12);
+            overflow: hidden;
+        }
+
+        .probability-pill::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(79, 70, 229, 0.45));
+            width: var(--fill, 0%);
+            border-radius: inherit;
+            transform-origin: left center;
+        }
+
+        .probability-pill span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .probability-pill.is-low {
+            color: #b45309;
+            background: rgba(245, 158, 11, 0.16);
+        }
+
+        .probability-pill.is-low::before {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.26), rgba(217, 119, 6, 0.45));
+        }
+
+        .probability-pill.is-high {
+            color: #166534;
+            background: rgba(34, 197, 94, 0.18);
+        }
+
+        .probability-pill.is-high::before {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.5));
+        }
+
+        .probability-filter {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 14px;
+            box-shadow: var(--shadow);
+        }
+
+        .probability-filter input[type="range"] {
+            width: 120px;
+            accent-color: var(--primary);
+        }
+
+        .probability-value-badge {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--primary-dark);
+        }
+
+        .input-hint {
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
         .contact-main {
@@ -1614,6 +1785,19 @@
             margin: 14px 0;
         }
 
+        .table-row.row-highlight {
+            animation: projectRowHighlight 1.6s ease;
+        }
+
+        @keyframes projectRowHighlight {
+            0% {
+                background: rgba(99, 102, 241, 0.18);
+            }
+            100% {
+                background: transparent;
+            }
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px); }
             to { opacity: 1; transform: translateY(0); }
@@ -1760,6 +1944,10 @@
                         <i class="fa-solid fa-diagram-project"></i>
                         Воронка продажів
                     </button>
+                    <button class="nav-item" data-section-target="projectsSection">
+                        <i class="fa-solid fa-briefcase"></i>
+                        Проекти
+                    </button>
                     <button class="nav-item" data-section-target="contactsSection">
                         <i class="fa-solid fa-user-group"></i>
                         Контакти
@@ -1897,6 +2085,41 @@
                     </div>
                 </div>
                 <div class="pipeline" id="pipelineBoard"></div>
+            </section>
+
+            <section id="projectsSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Портфель проектів</h2>
+                        <p>Контролюйте статус угод, команду та ймовірність успіху</p>
+                    </div>
+                    <div class="section-actions">
+                        <input type="text" id="projectSearch" placeholder="Пошук проектів...">
+                        <select id="projectStageFilter">
+                            <option value="all">Всі етапи</option>
+                        </select>
+                        <div class="probability-filter">
+                            <label for="projectProbabilityRange">Ймовірність</label>
+                            <input type="range" id="projectProbabilityRange" min="0" max="100" step="5" value="0">
+                            <span class="probability-value-badge" id="projectProbabilityValue">0%+</span>
+                        </div>
+                        <button class="btn btn-primary" id="openProjectModalBtn">
+                            <i class="fa-solid fa-plus"></i>
+                            Новий проект
+                        </button>
+                    </div>
+                </div>
+                <div class="projects-table">
+                    <div class="table-head">
+                        <div>Проект</div>
+                        <div>Команда</div>
+                        <div>Бюджет</div>
+                        <div>Етап</div>
+                        <div>Ймовірність</div>
+                        <div>Менеджер</div>
+                    </div>
+                    <div id="projectsTable"></div>
+                </div>
             </section>
 
             <section id="contactsSection" class="section">
@@ -2090,6 +2313,62 @@
         </div>
     </div>
 
+    <div class="modal" id="addProjectModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Новий проект</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
+            </div>
+            <form id="projectForm" class="form-grid">
+                <div class="form-group">
+                    <label for="projectName">Назва проекту</label>
+                    <input type="text" id="projectName" placeholder="Наприклад, CRM для NovaPay" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectCompany">Компанія</label>
+                    <input type="text" id="projectCompany" placeholder="Компанія або бренд">
+                </div>
+                <div class="form-group">
+                    <label for="projectBudget">Бюджет, ₴</label>
+                    <input type="number" id="projectBudget" min="0" step="1000" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectStage">Етап</label>
+                    <select id="projectStage" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="projectProbability">Ймовірність успіху, %</label>
+                    <input type="number" id="projectProbability" min="0" max="100" step="5" value="50" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectOwner">Відповідальний</label>
+                    <select id="projectOwner" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="projectTeam">Команда</label>
+                    <select id="projectTeam" multiple size="4"></select>
+                    <span class="input-hint">Утримуйте Ctrl / Command, щоб обрати кілька учасників.</span>
+                </div>
+                <div class="form-group">
+                    <label for="projectContact">Контактна особа</label>
+                    <input type="text" id="projectContact" placeholder="Ім'я та посада">
+                </div>
+                <div class="form-group full">
+                    <label for="projectTags">Мітки</label>
+                    <input type="text" id="projectTags" placeholder="CRM, Запуск, VIP">
+                </div>
+                <div class="form-group full">
+                    <label for="projectSummary">Короткий опис</label>
+                    <textarea id="projectSummary" placeholder="Основні задачі або наступні кроки"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
+                    <button type="submit" class="btn btn-primary">Додати проект</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div class="modal" id="addContactModal">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -2211,6 +2490,7 @@
     <script>
         const STORAGE_KEY = 'homeCRMData_v2';
         const STAGES = ['Новий', 'Кваліфікація', 'Пропозиція', 'Переговори', 'Угода', 'Втрачено'];
+        const PROJECT_STAGES = ['Ініціація', 'Discovery', 'Планування', 'Розробка', 'Тестування', 'Запуск', 'Підтримка'];
         const TASK_COLUMNS = [
             { id: 'todo', title: 'До виконання' },
             { id: 'inProgress', title: 'В роботі' },
@@ -2232,6 +2512,9 @@
         let activeLeadId = null;
         let pipelineFilterOwner = 'all';
         let contactStatusFilter = 'all';
+        let projectStageFilter = 'all';
+        let projectMinProbability = 0;
+        let projectSearchTerm = '';
         let searchTimer = null;
         let pendingLeadFiles = [];
         let activeFileSnapshotId = null;
@@ -2459,6 +2742,53 @@
                     attachments: []
                 }
             ],
+            projects: [
+                {
+                    id: 'project-1',
+                    name: 'CRM NovaPay 2.0',
+                    company: 'NovaPay',
+                    stage: 'Розробка',
+                    budget: 92000,
+                    probability: 62,
+                    owner: 'Марина',
+                    team: ['Марина', 'Вікторія'],
+                    contact: 'Андрій Коваленко',
+                    tags: ['CRM', 'Фінтех'],
+                    description: 'Розширення можливостей для партнерів і омніканальних продажів.',
+                    createdAt: '2024-04-25T09:10:00.000Z',
+                    updatedAt: '2024-06-04T13:20:00.000Z'
+                },
+                {
+                    id: 'project-2',
+                    name: 'Автоматизація логістики Rozetka',
+                    company: 'Rozetka',
+                    stage: 'Тестування',
+                    budget: 78000,
+                    probability: 68,
+                    owner: 'Олександр',
+                    team: ['Олександр', 'Дмитро'],
+                    contact: 'Ірина Мельник',
+                    tags: ['Supply chain', 'Інтеграція'],
+                    description: 'Впровадження планувальника маршрутів та мобільного додатку кур’єра.',
+                    createdAt: '2024-04-12T08:35:00.000Z',
+                    updatedAt: '2024-06-01T11:40:00.000Z'
+                },
+                {
+                    id: 'project-3',
+                    name: 'Digital-кампанія для OKKO',
+                    company: 'OKKO',
+                    stage: 'Discovery',
+                    budget: 54000,
+                    probability: 45,
+                    owner: 'Дмитро',
+                    team: ['Дмитро', 'Марина'],
+                    contact: 'Світлана Романюк',
+                    tags: ['Маркетинг', 'Discovery'],
+                    description: 'Аналітика клієнтських сегментів і підготовка контент-стратегії.',
+                    createdAt: '2024-05-02T10:20:00.000Z',
+                    updatedAt: '2024-06-05T09:15:00.000Z'
+                }
+            ],
             contacts: [
                 {
                     id: 'contact-1',
@@ -2644,6 +2974,14 @@
                 }
             });
 
+            if (!Array.isArray(data.projects)) {
+                data.projects = [];
+            } else {
+                data.projects = data.projects
+                    .map(normalizeProject)
+                    .filter(Boolean);
+            }
+
             if (!Array.isArray(data.fileLibrary)) {
                 data.fileLibrary = [];
             } else {
@@ -2653,6 +2991,51 @@
             }
 
             return data;
+        }
+
+        function normalizeProject(project) {
+            if (!project || typeof project !== 'object') {
+                return null;
+            }
+
+            const team = Array.isArray(project.team)
+                ? project.team.map(member => typeof member === 'string' ? member.trim() : String(member || '').trim()).filter(Boolean)
+                : typeof project.team === 'string' && project.team.trim().length
+                    ? project.team.split(',').map(member => member.trim()).filter(Boolean)
+                    : [];
+
+            const tags = Array.isArray(project.tags)
+                ? project.tags.map(tag => typeof tag === 'string' ? tag.trim() : String(tag || '').trim()).filter(Boolean)
+                : typeof project.tags === 'string' && project.tags.trim().length
+                    ? project.tags.split(',').map(tag => tag.trim()).filter(Boolean)
+                    : [];
+
+            const stage = typeof project.stage === 'string' && project.stage.trim()
+                ? project.stage.trim()
+                : PROJECT_STAGES[0];
+
+            const createdAt = typeof project.createdAt === 'string' && project.createdAt
+                ? project.createdAt
+                : new Date().toISOString();
+            const updatedAt = typeof project.updatedAt === 'string' && project.updatedAt
+                ? project.updatedAt
+                : createdAt;
+
+            return {
+                id: typeof project.id === 'string' && project.id ? project.id : generateId('project'),
+                name: typeof project.name === 'string' && project.name.trim() ? project.name.trim() : 'Новий проект',
+                company: typeof project.company === 'string' ? project.company.trim() : '',
+                stage,
+                budget: Number(project.budget) || 0,
+                probability: Math.max(0, Math.min(100, Number(project.probability) || 0)),
+                owner: typeof project.owner === 'string' ? project.owner.trim() : '',
+                contact: typeof project.contact === 'string' ? project.contact.trim() : '',
+                team,
+                tags,
+                description: typeof project.description === 'string' ? project.description.trim() : '',
+                createdAt,
+                updatedAt
+            };
         }
 
         function loadData() {
@@ -2720,24 +3103,55 @@
             document.getElementById('addPipelineLeadBtn').addEventListener('click', () => openModal('addLeadModal'));
             document.getElementById('openContactModalBtn').addEventListener('click', () => openModal('addContactModal'));
             document.getElementById('openTaskModalBtn').addEventListener('click', () => openTaskModal());
+            const projectModalBtn = document.getElementById('openProjectModalBtn');
+            if (projectModalBtn) {
+                projectModalBtn.addEventListener('click', () => openModal('addProjectModal'));
+            }
         }
 
         function populateDropdowns() {
             const stageSelect = document.getElementById('leadStage');
             stageSelect.innerHTML = STAGES.filter(stage => stage !== 'Втрачено').map(stage => `<option value="${stage}">${stage}</option>`).join('');
 
-            const ownerSelects = [document.getElementById('leadOwner'), document.getElementById('contactOwner'), document.getElementById('taskOwner')];
+            const ownerSelects = [
+                document.getElementById('leadOwner'),
+                document.getElementById('contactOwner'),
+                document.getElementById('taskOwner'),
+                document.getElementById('projectOwner')
+            ].filter(Boolean);
+
             ownerSelects.forEach(select => {
                 select.innerHTML = TEAM_MEMBERS.map(member => `<option value="${member}">${member}</option>`).join('');
             });
 
+            const projectStageSelect = document.getElementById('projectStage');
+            if (projectStageSelect) {
+                projectStageSelect.innerHTML = PROJECT_STAGES.map(stage => `<option value="${stage}">${stage}</option>`).join('');
+            }
+
+            const projectTeamSelect = document.getElementById('projectTeam');
+            if (projectTeamSelect) {
+                projectTeamSelect.innerHTML = TEAM_MEMBERS.map(member => `<option value="${member}">${member}</option>`).join('');
+            }
+
+            const projectStageFilterSelect = document.getElementById('projectStageFilter');
+            if (projectStageFilterSelect) {
+                const options = ['<option value="all">Всі етапи</option>', ...PROJECT_STAGES.map(stage => `<option value="${stage}">${stage}</option>`)];
+                projectStageFilterSelect.innerHTML = options.join('');
+                projectStageFilterSelect.value = PROJECT_STAGES.includes(projectStageFilter) ? projectStageFilter : 'all';
+            }
+
             const pipelineFilter = document.getElementById('pipelineOwnerFilter');
-            TEAM_MEMBERS.forEach(member => {
-                const option = document.createElement('option');
-                option.value = member;
-                option.textContent = member;
-                pipelineFilter.appendChild(option);
-            });
+            if (pipelineFilter) {
+                pipelineFilter.innerHTML = '<option value="all">Всі менеджери</option>';
+                TEAM_MEMBERS.forEach(member => {
+                    const option = document.createElement('option');
+                    option.value = member;
+                    option.textContent = member;
+                    pipelineFilter.appendChild(option);
+                });
+                pipelineFilter.value = pipelineFilterOwner;
+            }
 
             updateTaskLeadOptions();
         }
@@ -2785,6 +3199,10 @@
             document.getElementById('leadForm').addEventListener('submit', handleLeadSubmit);
             document.getElementById('contactForm').addEventListener('submit', handleContactSubmit);
             document.getElementById('taskForm').addEventListener('submit', handleTaskSubmit);
+            const projectForm = document.getElementById('projectForm');
+            if (projectForm) {
+                projectForm.addEventListener('submit', handleProjectSubmit);
+            }
         }
 
         function setupLeadFileUpload() {
@@ -3176,6 +3594,37 @@
                 contactStatusFilter = event.target.value;
                 renderContacts(document.getElementById('contactSearch').value);
             });
+
+            const projectStageSelect = document.getElementById('projectStageFilter');
+            if (projectStageSelect) {
+                projectStageSelect.addEventListener('change', event => {
+                    projectStageFilter = event.target.value;
+                    renderProjects(projectSearchTerm);
+                });
+            }
+
+            const projectSearchInput = document.getElementById('projectSearch');
+            if (projectSearchInput) {
+                projectSearchInput.addEventListener('input', event => {
+                    renderProjects(event.target.value);
+                });
+            }
+
+            const projectProbabilityRange = document.getElementById('projectProbabilityRange');
+            const probabilityLabel = document.getElementById('projectProbabilityValue');
+            if (projectProbabilityRange) {
+                projectProbabilityRange.addEventListener('input', event => {
+                    projectMinProbability = Number(event.target.value) || 0;
+                    if (probabilityLabel) {
+                        probabilityLabel.textContent = `${projectMinProbability}%+`;
+                    }
+                    renderProjects(projectSearchTerm);
+                });
+            }
+
+            if (probabilityLabel) {
+                probabilityLabel.textContent = `${projectMinProbability}%+`;
+            }
         }
         function setupFileLibrary() {
             const connectBtn = document.getElementById('connectFolderBtn');
@@ -3850,6 +4299,7 @@
         function renderAll() {
             renderDashboard();
             renderPipeline();
+            renderProjects(projectSearchTerm);
             renderContacts(document.getElementById('contactSearch').value || '');
             renderTasks();
             renderFileExplorer(fileSearchTerm);
@@ -4078,6 +4528,183 @@
             }).join('');
 
             setupPipelineInteractions();
+        }
+
+        function renderProjects(searchTerm = '') {
+            const container = document.getElementById('projectsTable');
+            if (!container) {
+                return;
+            }
+
+            projectSearchTerm = typeof searchTerm === 'string' ? searchTerm : '';
+            const normalizedSearch = projectSearchTerm.trim().toLowerCase();
+
+            const searchInput = document.getElementById('projectSearch');
+            if (searchInput && searchInput.value !== projectSearchTerm) {
+                searchInput.value = projectSearchTerm;
+            }
+
+            const stageSelect = document.getElementById('projectStageFilter');
+            if (stageSelect && stageSelect.value !== projectStageFilter) {
+                stageSelect.value = projectStageFilter;
+            }
+
+            const probabilityRange = document.getElementById('projectProbabilityRange');
+            if (probabilityRange && Number(probabilityRange.value) !== projectMinProbability) {
+                probabilityRange.value = projectMinProbability;
+            }
+
+            const probabilityLabel = document.getElementById('projectProbabilityValue');
+            if (probabilityLabel) {
+                probabilityLabel.textContent = `${projectMinProbability}%+`;
+            }
+
+            let projects = Array.isArray(crmData.projects) ? [...crmData.projects] : [];
+
+            if (projectStageFilter !== 'all') {
+                projects = projects.filter(project => project.stage === projectStageFilter);
+            }
+
+            projects = projects.filter(project => {
+                const probability = Math.max(0, Math.min(100, Number(project.probability) || 0));
+                return probability >= projectMinProbability;
+            });
+
+            if (normalizedSearch) {
+                projects = projects.filter(project => {
+                    const haystack = [
+                        project.name,
+                        project.company,
+                        project.owner,
+                        project.contact,
+                        project.stage,
+                        Array.isArray(project.tags) ? project.tags.join(' ') : '',
+                        Array.isArray(project.team) ? project.team.join(' ') : '',
+                        project.description
+                    ];
+                    return haystack
+                        .filter(Boolean)
+                        .some(value => value.toLowerCase().includes(normalizedSearch));
+                });
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Проекти за вказаними фільтрами не знайдені.</div>';
+                return;
+            }
+
+            projects.sort((a, b) => {
+                const dateA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+                const dateB = new Date(b.updatedAt || b.createdAt || 0).getTime();
+                return dateB - dateA;
+            });
+
+            container.innerHTML = projects.map(project => {
+                const probability = Math.max(0, Math.min(100, Math.round(Number(project.probability) || 0)));
+                const probabilityClass = getProbabilityClass(probability);
+                const stageBadgeClass = getProjectStageBadgeClass(project.stage);
+                const updatedLabel = project.updatedAt
+                    ? `Оновлено ${formatRelativeTime(project.updatedAt)}`
+                    : 'Оновлено щойно';
+                const tags = project.tags && project.tags.length
+                    ? `<div class="project-tags">${project.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}</div>`
+                    : '';
+                const description = project.description
+                    ? `<div class="metric-sub">${escapeHtml(project.description)}</div>`
+                    : '';
+                const teamContent = project.team && project.team.length
+                    ? `<div class="project-team">${project.team.map(member => `<span class="project-member-chip">${escapeHtml(member)}</span>`).join('')}</div>`
+                    : '<span class="metric-sub">Не призначено</span>';
+                const ownerName = project.owner && project.owner.trim().length ? project.owner.trim() : 'Не призначено';
+                const ownerInitial = ownerName === 'Не призначено' ? '—' : ownerName.charAt(0);
+                const contactName = project.contact && project.contact.trim().length ? project.contact.trim() : 'Без контакту';
+
+                return `
+                    <div class="table-row" data-project-id="${project.id}">
+                        <div class="project-main">
+                            <strong>${escapeHtml(project.name)}</strong>
+                            ${project.company ? `<div class="project-sub">${escapeHtml(project.company)}</div>` : ''}
+                            ${description}
+                            <div class="project-updated">${escapeHtml(updatedLabel)}</div>
+                            ${tags}
+                        </div>
+                        <div>${teamContent}</div>
+                        <div><strong>${formatCurrency(project.budget)}</strong></div>
+                        <div><span class="badge ${stageBadgeClass}">${escapeHtml(project.stage)}</span></div>
+                        <div>
+                            <div class="probability-pill ${probabilityClass}" style="--fill:${probability}%" data-value="${probability}">
+                                <span>${probability}%</span>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="project-owner">
+                                <div class="avatar avatar-sm">${escapeHtml(ownerInitial)}</div>
+                                <div>
+                                    <strong>${escapeHtml(ownerName)}</strong>
+                                    <span>${escapeHtml(contactName)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getProjectStageBadgeClass(stage) {
+            const normalized = (stage || '').toLowerCase();
+            if (normalized.includes('запуск') || normalized.includes('підтрим')) {
+                return 'badge-success';
+            }
+            if (normalized.includes('тест')) {
+                return 'badge-info';
+            }
+            if (normalized.includes('розроб') || normalized.includes('в роботі')) {
+                return 'badge-primary';
+            }
+            if (normalized.includes('план')) {
+                return 'badge-neutral';
+            }
+            if (normalized.includes('discovery') || normalized.includes('ініціа')) {
+                return 'badge-warning';
+            }
+            return 'badge-neutral';
+        }
+
+        function getProbabilityClass(probability) {
+            if (probability >= 70) {
+                return 'is-high';
+            }
+            if (probability < 40) {
+                return 'is-low';
+            }
+            return '';
+        }
+
+        function focusProject(projectId) {
+            if (!projectId) {
+                return;
+            }
+
+            const navButton = document.querySelector(`.nav-item[data-section-target="projectsSection"]`);
+            if (navButton) {
+                navButton.click();
+            } else {
+                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
+                const targetSection = document.getElementById('projectsSection');
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+            }
+
+            requestAnimationFrame(() => {
+                const row = document.querySelector(`[data-project-id="${projectId}"]`);
+                if (!row) {
+                    return;
+                }
+                document.querySelectorAll('[data-project-id]').forEach(item => item.classList.remove('row-highlight'));
+                row.classList.add('row-highlight');
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
         }
 
         function createDealCard(lead) {
@@ -4384,6 +5011,18 @@
                 return;
             }
 
+            const projectMatches = crmData.projects.filter(project => {
+                return [
+                    project.name,
+                    project.company,
+                    project.owner,
+                    project.contact,
+                    ...(Array.isArray(project.tags) ? project.tags : [])
+                ]
+                    .filter(Boolean)
+                    .some(field => field.toLowerCase().includes(query));
+            }).slice(0, 4);
+
             const leadMatches = crmData.leads.filter(lead => {
                 return [lead.name, lead.company, lead.contact?.person]
                     .filter(Boolean)
@@ -4398,13 +5037,18 @@
 
             const taskMatches = crmData.tasks.filter(task => task.title.toLowerCase().includes(query)).slice(0, 3);
 
-            if (!leadMatches.length && !contactMatches.length && !taskMatches.length) {
+            if (!projectMatches.length && !leadMatches.length && !contactMatches.length && !taskMatches.length) {
                 results.innerHTML = '<div class="search-empty">Нічого не знайдено</div>';
                 results.classList.add('active');
                 return;
             }
 
             results.innerHTML = `
+                ${projectMatches.length ? `
+                    <div class="search-group">
+                        <div class="search-group-title">Проекти</div>
+                        ${projectMatches.map(project => `<div class="search-result" data-result-project="${project.id}"><span>${project.name}</span><span class="metric-sub">${project.company || ''}</span></div>`).join('')}
+                    </div>` : ''}
                 ${leadMatches.length ? `
                     <div class="search-group">
                         <div class="search-group-title">Угоди</div>
@@ -4423,6 +5067,13 @@
             `;
 
             results.classList.add('active');
+
+            results.querySelectorAll('[data-result-project]').forEach(item => {
+                item.addEventListener('click', () => {
+                    focusProject(item.dataset.resultProject);
+                    hideSearchResults();
+                });
+            });
 
             results.querySelectorAll('[data-result-lead]').forEach(item => {
                 item.addEventListener('click', () => {
@@ -4519,10 +5170,29 @@
                     ? crmData.fileLibrary[0].id
                     : null;
                 fileSearchTerm = '';
+                projectStageFilter = 'all';
+                projectMinProbability = 0;
+                projectSearchTerm = '';
                 saveData();
                 populateDropdowns();
                 renderAll();
                 updateFileSnapshotsSelect();
+                const projectSearchInput = document.getElementById('projectSearch');
+                if (projectSearchInput) {
+                    projectSearchInput.value = '';
+                }
+                const projectStageSelect = document.getElementById('projectStageFilter');
+                if (projectStageSelect) {
+                    projectStageSelect.value = 'all';
+                }
+                const projectProbabilityRange = document.getElementById('projectProbabilityRange');
+                if (projectProbabilityRange) {
+                    projectProbabilityRange.value = 0;
+                }
+                const projectProbabilityValue = document.getElementById('projectProbabilityValue');
+                if (projectProbabilityValue) {
+                    projectProbabilityValue.textContent = '0%+';
+                }
             }
         }
 
@@ -4617,6 +5287,77 @@
             } catch (error) {
                 console.error('Не вдалося створити лід', error);
                 alert('Не вдалося зберегти лід. Будь ласка, спробуйте ще раз.');
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                }
+            }
+        }
+
+        async function handleProjectSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const originalText = submitButton ? submitButton.textContent : '';
+
+            try {
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Збереження...';
+                }
+
+                const now = new Date().toISOString();
+                const teamSelect = document.getElementById('projectTeam');
+                const selectedTeam = teamSelect
+                    ? Array.from(teamSelect.selectedOptions).map(option => option.value).filter(Boolean)
+                    : [];
+                const tags = document.getElementById('projectTags').value
+                    .split(',')
+                    .map(tag => tag.trim())
+                    .filter(Boolean);
+
+                const project = {
+                    id: generateId('project'),
+                    name: document.getElementById('projectName').value.trim(),
+                    company: document.getElementById('projectCompany').value.trim(),
+                    stage: document.getElementById('projectStage').value,
+                    budget: Number(document.getElementById('projectBudget').value) || 0,
+                    probability: Math.max(0, Math.min(100, Number(document.getElementById('projectProbability').value) || 0)),
+                    owner: document.getElementById('projectOwner').value,
+                    contact: document.getElementById('projectContact').value.trim(),
+                    team: selectedTeam,
+                    tags,
+                    description: document.getElementById('projectSummary').value.trim(),
+                    createdAt: now,
+                    updatedAt: now
+                };
+
+                crmData.projects.unshift(project);
+                saveData();
+
+                if (projectStageFilter !== 'all' && project.stage !== projectStageFilter) {
+                    projectStageFilter = 'all';
+                }
+
+                if (projectMinProbability > project.probability) {
+                    projectMinProbability = 0;
+                }
+
+                if (projectSearchTerm) {
+                    projectSearchTerm = '';
+                }
+
+                renderProjects(projectSearchTerm);
+                closeModal('addProjectModal');
+                form.reset();
+                if (teamSelect) {
+                    Array.from(teamSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                }
+
+                focusProject(project.id);
             } finally {
                 if (submitButton) {
                     submitButton.disabled = false;
