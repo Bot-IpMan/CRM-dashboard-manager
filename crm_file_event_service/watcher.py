@@ -5,8 +5,10 @@ import fnmatch
 import hashlib
 import logging
 import os
+import threading
+from queue import Empty, Queue
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Any, Dict, Iterable, List, Optional
 
 from .config import DirectoryConfig
 from .models import FileEvent, FileState
@@ -42,6 +44,9 @@ class DirectoryWatcher:
         self._snapshot = new_snapshot
         return events
 
+    def close(self) -> None:  # pragma: no cover - default implementation
+        """Release any resources held by the watcher."""
+
     def _build_snapshot(self) -> Dict[str, FileState]:
         snapshot: Dict[str, FileState] = {}
         root = self.config.path
@@ -64,6 +69,9 @@ class DirectoryWatcher:
                     stat = path.stat()
                 except OSError as exc:  # pragma: no cover - platform specific
                     LOGGER.debug("Skipping %s due to stat error: %s", path, exc)
+                    continue
+
+                if not self._passes_size_filter(stat.st_size):
                     continue
 
                 checksum = self._compute_checksum(path) if self.config.compute_checksum else None
@@ -170,6 +178,156 @@ class DirectoryWatcher:
             return None
 
         return hasher.hexdigest()
+
+    def _passes_size_filter(self, size: int) -> bool:
+        minimum = self.config.min_file_size
+        if minimum is not None and size < minimum:
+            return False
+        maximum = self.config.max_file_size
+        if maximum is not None and size > maximum:
+            return False
+        return True
+
+
+class WatchfilesDirectoryWatcher(DirectoryWatcher):
+    """Directory watcher backed by the ``watchfiles`` library."""
+
+    def __init__(self, config: DirectoryConfig, checksum_algorithm: str = "md5") -> None:
+        super().__init__(config, checksum_algorithm=checksum_algorithm)
+        self._event_queue: "Queue[FileEvent]" = Queue()
+        self._stop_event = threading.Event()
+        self._thread: Optional[threading.Thread] = None
+        self._initialised_once = False
+        self._closed = False
+        self._watch_callable: Any = None
+        self._change_map: Dict[Any, str] = {}
+        self._load_watchfiles()
+
+    def poll(self) -> List[FileEvent]:
+        if not self._initialised_once:
+            initial_events = super().poll()
+            self._initialised_once = True
+            self._ensure_thread()
+            initial_events.extend(self._drain_queue())
+            return initial_events
+
+        self._ensure_thread()
+        return self._drain_queue()
+
+    def close(self) -> None:
+        self._closed = True
+        self._stop_event.set()
+        thread = self._thread
+        if thread and thread.is_alive():
+            thread.join(timeout=5.0)
+        self._thread = None
+
+    def _load_watchfiles(self) -> None:
+        try:
+            from watchfiles import Change, watch  # type: ignore import-not-found
+        except ImportError as exc:  # pragma: no cover - optional dependency
+            raise RuntimeError(
+                "The 'watchfiles' backend requires the optional 'watchfiles' package"
+            ) from exc
+
+        self._watch_callable = watch
+        self._change_map = {
+            Change.added: "created",
+            Change.modified: "modified",
+            Change.deleted: "deleted",
+        }
+
+    def _ensure_thread(self) -> None:
+        if self._closed:
+            return
+        thread = self._thread
+        if thread and thread.is_alive():
+            return
+        if thread and not thread.is_alive():
+            LOGGER.warning(
+                "Watchfiles thread for %s stopped unexpectedly; restarting",
+                self.config.path,
+            )
+            new_snapshot = self._build_snapshot()
+            lost_events = self._diff(self._snapshot, new_snapshot)
+            self._snapshot = new_snapshot
+            for event in lost_events:
+                self._event_queue.put(event)
+        self._stop_event.clear()
+        self._thread = threading.Thread(
+            target=self._watch_loop,
+            name=f"watchfiles:{self.config.path}",
+            daemon=True,
+        )
+        self._thread.start()
+
+    def _watch_loop(self) -> None:
+        assert self._watch_callable is not None
+        try:
+            for changes in self._watch_callable(
+                self.config.path,
+                recursive=True,
+                stop_event=self._stop_event,
+            ):
+                if self._stop_event.is_set():
+                    break
+                events = self._process_changes(changes)
+                for event in events:
+                    self._event_queue.put(event)
+        except Exception as exc:  # pragma: no cover - runtime safeguard
+            LOGGER.exception(
+                "Watchfiles watcher for %s stopped due to error: %s",
+                self.config.path,
+                exc,
+            )
+
+    def _process_changes(self, changes: Iterable[Any]) -> List[FileEvent]:
+        events: List[FileEvent] = []
+        for change, raw_path in changes:
+            event_type = self._change_map.get(change)
+            if event_type is None:
+                continue
+
+            path = Path(raw_path)
+            if event_type == "deleted":
+                state = self._snapshot.pop(str(path), None)
+                if state is not None:
+                    events.append(self._build_event("deleted", state))
+                continue
+
+            if not path.exists() or not path.is_file():
+                continue
+            if not self._should_consider(path):
+                continue
+
+            try:
+                stat = path.stat()
+            except OSError as exc:
+                LOGGER.debug("Skipping %s due to stat error: %s", path, exc)
+                continue
+
+            if not self._passes_size_filter(stat.st_size):
+                continue
+
+            checksum = self._compute_checksum(path) if self.config.compute_checksum else None
+            state = FileState.from_stat(
+                path=str(path),
+                modified_at=stat.st_mtime,
+                size=stat.st_size,
+                checksum=checksum,
+            )
+            self._snapshot[str(path)] = state
+            events.append(self._build_event(event_type, state))
+        return events
+
+    def _drain_queue(self) -> List[FileEvent]:
+        events: List[FileEvent] = []
+        while True:
+            try:
+                events.append(self._event_queue.get_nowait())
+            except Empty:
+                break
+        return events
 
 
 def poll_all(watchers: Iterable[DirectoryWatcher]) -> List[FileEvent]:
