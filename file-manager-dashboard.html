@@ -2383,7 +2383,7 @@
 
         function updateTaskLeadOptions() {
             const taskLeadSelect = document.getElementById('taskLead');
-            const options = ['<option value="">Без прив'язки</option>'];
+            const options = [`<option value="">Без прив'язки</option>`];
             crmData.leads.forEach(lead => {
                 options.push(`<option value="${lead.id}">${lead.name} (${lead.company})</option>`);
             });
@@ -2459,8 +2459,12 @@
             });
 
             fileInput.addEventListener('change', event => {
-                if (event.target.files && event.target.files.length) {
-                    addPendingLeadFiles(Array.from(event.target.files));
+                const { files } = event.target;
+                if (files && files.length) {
+                    const normalizedFiles = Array.from(files).map(file =>
+                        setFileRelativePath(file, file.webkitRelativePath || file.name)
+                    );
+                    addPendingLeadFiles(normalizedFiles);
                     event.target.value = '';
                 }
             });
@@ -2482,20 +2486,160 @@
                 });
             });
 
-            dropzone.addEventListener('drop', event => {
+            dropzone.addEventListener('drop', async event => {
                 event.preventDefault();
                 dropzone.classList.remove('dragover');
-                if (event.dataTransfer?.files?.length) {
-                    addPendingLeadFiles(Array.from(event.dataTransfer.files));
+
+                const dataTransfer = event.dataTransfer;
+                if (!dataTransfer) {
+                    return;
+                }
+
+                try {
+                    let files = [];
+                    if (dataTransfer.items && dataTransfer.items.length) {
+                        files = await extractFilesFromDataTransferItems(dataTransfer.items);
+                    }
+
+                    if ((!files || !files.length) && dataTransfer.files?.length) {
+                        files = Array.from(dataTransfer.files).map(file =>
+                            setFileRelativePath(file, file.webkitRelativePath || file.name)
+                        );
+                    }
+
+                    if (files.length) {
+                        addPendingLeadFiles(files);
+                    }
+                } catch (error) {
+                    console.warn('Не вдалося обробити файли з папки', error);
                 }
             });
 
             renderLeadFileList();
         }
 
+        function setFileRelativePath(file, path) {
+            if (!file || typeof path !== 'string') {
+                return file;
+            }
+
+            const trimmed = path.replace(/^[\\/]+/, '');
+            const sanitized = trimmed.replace(/\\/g, '/');
+
+            if (!sanitized) {
+                return file;
+            }
+
+            try {
+                file._relativePath = sanitized;
+            } catch (error) {
+                // ignore inability to attach metadata to the File object
+            }
+
+            if (!file.webkitRelativePath) {
+                try {
+                    Object.defineProperty(file, 'webkitRelativePath', {
+                        configurable: true,
+                        enumerable: false,
+                        value: sanitized
+                    });
+                } catch (error) {
+                    // Some environments expose a read-only property; ignore failures
+                }
+            }
+
+            return file;
+        }
+
+        function getFileRelativePath(file) {
+            if (!file || typeof file !== 'object') {
+                return '';
+            }
+
+            const candidate = typeof file._relativePath === 'string' && file._relativePath.length
+                ? file._relativePath
+                : typeof file.webkitRelativePath === 'string' && file.webkitRelativePath.length
+                    ? file.webkitRelativePath
+                    : '';
+
+            if (candidate) {
+                return candidate.replace(/\\/g, '/');
+            }
+
+            return typeof file.name === 'string' ? file.name : '';
+        }
+
+        async function extractFilesFromDataTransferItems(items) {
+            if (!items || typeof items.length !== 'number' || items.length === 0) {
+                return [];
+            }
+
+            const collected = [];
+
+            const processEntry = async entry => {
+                if (!entry) {
+                    return;
+                }
+
+                if (entry.isFile) {
+                    try {
+                        const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+                        const relativePath = typeof entry.fullPath === 'string' && entry.fullPath.length
+                            ? entry.fullPath
+                            : file.webkitRelativePath || file.name;
+                        collected.push(setFileRelativePath(file, relativePath));
+                    } catch (error) {
+                        console.warn('Не вдалося прочитати файл з папки', error);
+                    }
+                    return;
+                }
+
+                if (entry.isDirectory) {
+                    const reader = entry.createReader();
+                    while (true) {
+                        const batch = await new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+                        if (!batch.length) {
+                            break;
+                        }
+                        for (const subEntry of batch) {
+                            await processEntry(subEntry);
+                        }
+                    }
+                }
+            };
+
+            for (const item of Array.from(items)) {
+                if (!item || item.kind !== 'file') {
+                    continue;
+                }
+
+                try {
+                    const entry = item.webkitGetAsEntry ? item.webkitGetAsEntry() : null;
+                    if (entry) {
+                        await processEntry(entry);
+                    } else {
+                        const file = item.getAsFile();
+                        if (file) {
+                            collected.push(setFileRelativePath(file, file.webkitRelativePath || file.name));
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Не вдалося обробити елемент передачі файлів', error);
+                }
+            }
+
+            return collected;
+        }
+
         function getFileKey(file) {
-            const relativePath = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
-            return `${relativePath}__${file.lastModified || 0}__${file.size || 0}`;
+            if (!file) {
+                return '';
+            }
+
+            const relativePath = getFileRelativePath(file) || file.name || '';
+            const lastModified = typeof file.lastModified === 'number' ? file.lastModified : 0;
+            const size = typeof file.size === 'number' ? file.size : 0;
+            return `${relativePath}__${lastModified}__${size}`;
         }
 
         function addPendingLeadFiles(files) {
@@ -2527,9 +2671,10 @@
                 list.innerHTML = '<div class="file-empty">Файли ще не обрано.</div>';
             } else {
                 list.innerHTML = pendingLeadFiles.map((file, index) => {
-                    const relativePathRaw = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
-                    const safeName = escapeHtml(file.name || 'Файл');
-                    const safePath = relativePathRaw !== file.name ? escapeHtml(relativePathRaw) : '';
+                    const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
+                    const relativePathRaw = getFileRelativePath(file);
+                    const safeName = escapeHtml(displayName);
+                    const safePath = relativePathRaw && relativePathRaw !== displayName ? escapeHtml(relativePathRaw) : '';
                     const sizeLabel = formatBytes(Number(file.size) || 0);
                     const metaText = safePath ? `${safePath} • ${sizeLabel}` : sizeLabel;
                     const icon = getAttachmentIcon(file.type);
@@ -2600,15 +2745,16 @@
 
             for (const file of pendingLeadFiles) {
                 const fileSize = Number(file.size) || 0;
-                const relativePath = file.webkitRelativePath && file.webkitRelativePath.length ? file.webkitRelativePath : file.name;
+                const displayName = typeof file?.name === 'string' && file.name.length ? file.name : 'Файл';
+                const relativePath = getFileRelativePath(file);
 
                 if (fileSize > MAX_ATTACHMENT_SIZE) {
-                    skipped.push(`«${file.name}» перевищує обмеження ${formatBytes(MAX_ATTACHMENT_SIZE)}.`);
+                    skipped.push(`«${displayName}» перевищує обмеження ${formatBytes(MAX_ATTACHMENT_SIZE)}.`);
                     continue;
                 }
 
                 if (totalSize + fileSize > MAX_TOTAL_ATTACHMENTS_SIZE) {
-                    skipped.push(`«${file.name}» не додано: перевищено загальний ліміт ${formatBytes(MAX_TOTAL_ATTACHMENTS_SIZE)}.`);
+                    skipped.push(`«${displayName}» не додано: перевищено загальний ліміт ${formatBytes(MAX_TOTAL_ATTACHMENTS_SIZE)}.`);
                     continue;
                 }
 
@@ -2616,8 +2762,8 @@
                     const dataUrl = await readFileAsDataURL(file);
                     attachments.push({
                         id: generateId('file'),
-                        name: file.name,
-                        path: relativePath,
+                        name: displayName,
+                        path: relativePath || displayName,
                         size: fileSize,
                         type: file.type || 'application/octet-stream',
                         lastModified: Number(file.lastModified) || Date.now(),
@@ -2626,7 +2772,7 @@
                     totalSize += fileSize;
                 } catch (error) {
                     console.error('Не вдалося прочитати файл', error);
-                    skipped.push(`Сталася помилка під час читання «${file.name}».`);
+                    skipped.push(`Сталася помилка під час читання «${displayName}».`);
                 }
             }
 
