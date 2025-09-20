@@ -2153,6 +2153,23 @@
         let fileSearchTerm = '';
         let isScanningFolder = false;
 
+        const persistentStorage = (() => {
+            try {
+                if (typeof window === 'undefined' || !('localStorage' in window)) {
+                    return null;
+                }
+                const storage = window.localStorage;
+                const testKey = '__homecrm_test__';
+                storage.setItem(testKey, '1');
+                storage.removeItem(testKey);
+                return storage;
+            } catch (error) {
+                console.warn('Локальне сховище недоступне. Дані CRM зберігатимуться лише поточної сесії.', error);
+                return null;
+            }
+        })();
+        let canPersistData = !!persistentStorage;
+
         const defaultData = {
             leads: [
                 {
@@ -2554,7 +2571,17 @@
         }
 
         function loadData() {
-            const saved = localStorage.getItem(STORAGE_KEY);
+            let saved = null;
+
+            if (persistentStorage && canPersistData) {
+                try {
+                    saved = persistentStorage.getItem(STORAGE_KEY);
+                } catch (error) {
+                    canPersistData = false;
+                    console.warn('Локальне сховище недоступне. Дані CRM будуть збережені лише в межах поточної сесії.', error);
+                }
+            }
+
             if (saved) {
                 try {
                     const parsed = JSON.parse(saved);
@@ -2569,7 +2596,16 @@
         }
 
         function saveData() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(crmData));
+            if (!persistentStorage || !canPersistData) {
+                return;
+            }
+
+            try {
+                persistentStorage.setItem(STORAGE_KEY, JSON.stringify(crmData));
+            } catch (error) {
+                canPersistData = false;
+                console.warn('Не вдалося зберегти дані CRM. Інформація буде доступна лише до перезавантаження сторінки.', error);
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
