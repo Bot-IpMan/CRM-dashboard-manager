@@ -2451,6 +2451,268 @@
             color: var(--text-muted);
         }
 
+        .file-process-dashboard {
+            display: grid;
+            gap: 18px;
+        }
+
+        .file-process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
+        }
+
+        .file-process-card {
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.94);
+            padding: 16px 18px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .file-process-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+            font-size: 18px;
+        }
+
+        .file-process-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .file-process-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .file-process-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .file-usage-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .file-usage-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 18px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .file-usage-header h3 {
+            margin-bottom: 4px;
+            font-size: 16px;
+        }
+
+        .file-status-list,
+        .file-feature-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .file-status-item {
+            display: grid;
+            gap: 8px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 12px 14px;
+        }
+
+        .file-status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .file-status-header strong {
+            font-size: 18px;
+        }
+
+        .file-status-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .file-status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .file-status-badge.status-online {
+            background: rgba(34, 197, 94, 0.16);
+            color: #15803d;
+        }
+
+        .file-status-badge.status-syncing {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0c4a6e;
+        }
+
+        .file-status-badge.status-offline {
+            background: rgba(148, 163, 184, 0.22);
+            color: #475569;
+        }
+
+        .file-feature-item {
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 14px 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .file-feature-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .file-feature-info {
+            display: grid;
+            gap: 6px;
+            flex: 1 1 auto;
+        }
+
+        .file-feature-info strong {
+            font-size: 15px;
+        }
+
+        .file-feature-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .file-feature-value {
+            font-weight: 700;
+            font-size: 20px;
+            align-self: center;
+            white-space: nowrap;
+        }
+
+        .file-feature-icon,
+        .file-activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+            flex-shrink: 0;
+        }
+
+        .file-activity-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 18px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .file-activity-timeline {
+            display: grid;
+            gap: 12px;
+        }
+
+        .file-activity-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .file-activity-info {
+            display: grid;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .file-activity-info strong {
+            font-size: 14px;
+        }
+
+        .file-activity-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-activity-time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .tone-primary {
+            background: rgba(99, 102, 241, 0.16) !important;
+            color: var(--primary-dark) !important;
+        }
+
+        .tone-success {
+            background: rgba(34, 197, 94, 0.18) !important;
+            color: #15803d !important;
+        }
+
+        .tone-info {
+            background: rgba(14, 165, 233, 0.18) !important;
+            color: #0c4a6e !important;
+        }
+
+        .tone-warning {
+            background: rgba(245, 158, 11, 0.18) !important;
+            color: #b45309 !important;
+        }
+
+        .tone-muted {
+            background: rgba(148, 163, 184, 0.22) !important;
+            color: #475569 !important;
+        }
+
+        @media (max-width: 768px) {
+            .file-process-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+            .file-usage-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
         .file-monitor-guide {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -3961,6 +4223,32 @@
                         <div class="file-sources-grid" id="fileSourceGrid"></div>
                     </div>
                     <div class="file-summary" id="fileSummary"></div>
+                    <div class="file-process-dashboard">
+                        <div class="file-process-grid" id="fileProcessGrid" aria-live="polite"></div>
+                        <div class="file-usage-layout">
+                            <section class="file-usage-card">
+                                <div class="file-usage-header">
+                                    <h3>Моніторинг процесів</h3>
+                                    <p class="metric-sub">Контролюйте стан синхронізації та підключень</p>
+                                </div>
+                                <div class="file-status-list" id="fileProcessStatusList"></div>
+                            </section>
+                            <section class="file-usage-card">
+                                <div class="file-usage-header">
+                                    <h3>Використання функціоналу</h3>
+                                    <p class="metric-sub">Відстежуйте ключові можливості файлового модуля</p>
+                                </div>
+                                <div class="file-feature-list" id="fileFeatureUsage"></div>
+                            </section>
+                        </div>
+                        <section class="file-activity-card">
+                            <div class="file-usage-header">
+                                <h3>Журнал активності</h3>
+                                <p class="metric-sub">Останні сканування та синхронізації каталогів</p>
+                            </div>
+                            <div class="file-activity-timeline" id="fileActivityTimeline"></div>
+                        </section>
+                    </div>
                     <div class="file-monitor-guide" aria-labelledby="fileMonitorTitle">
                         <div class="file-monitor-header">
                             <div>
@@ -7410,6 +7698,7 @@
                     select.innerHTML = '<option value="">Папки ще не підключені</option>';
                     select.disabled = true;
                 }
+                renderFileProcesses(null);
                 return;
             }
 
@@ -7430,6 +7719,7 @@
             const linkedSource = getFileSourceBySnapshotId(snapshot?.id);
             activeFileSourceId = linkedSource ? linkedSource.id : null;
             updateFileSummary(snapshot);
+            renderFileProcesses(snapshot || null);
 
             if (!snapshot) {
                 treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">Не вдалося завантажити вибране сканування.</div>';
@@ -7585,6 +7875,7 @@
                 activeFileSourceId = source.id;
                 saveData();
                 renderFileSources();
+                renderFileExplorer(fileSearchTerm);
                 return;
             }
 
@@ -7632,6 +7923,7 @@
 
             source.status = 'syncing';
             renderFileSources();
+            renderFileExplorer(fileSearchTerm);
 
             setTimeout(() => {
                 source.status = 'online';
@@ -7639,6 +7931,7 @@
                 source.lastSynced = new Date().toISOString();
                 saveData();
                 renderFileSources();
+                renderFileExplorer(fileSearchTerm);
             }, 700);
         }
 
@@ -7760,6 +8053,51 @@
             return entries.filter(entry => visiblePaths.has(entry.path));
         }
 
+        function getFileExtension(name = '') {
+            if (typeof name !== 'string') {
+                return '';
+            }
+
+            const lastDot = name.lastIndexOf('.');
+            if (lastDot === -1) {
+                return '';
+            }
+
+            return name.slice(lastDot + 1).toLowerCase();
+        }
+
+        function categorizeFileEntry(entry) {
+            if (!entry || entry.type !== 'file') {
+                return 'other';
+            }
+
+            const extension = getFileExtension(entry.name || entry.path || '');
+            if (!extension) {
+                return 'other';
+            }
+
+            if (['doc', 'docx', 'pdf', 'txt', 'rtf'].includes(extension)) {
+                return 'documents';
+            }
+            if (['xls', 'xlsx', 'csv', 'ods'].includes(extension)) {
+                return 'spreadsheets';
+            }
+            if (['ppt', 'pptx', 'key'].includes(extension)) {
+                return 'presentations';
+            }
+            if (['ai', 'psd', 'fig', 'sketch', 'xd'].includes(extension)) {
+                return 'design';
+            }
+            if (['zip', 'rar', '7z', 'tar', 'gz'].includes(extension)) {
+                return 'archives';
+            }
+            if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'mp4', 'mov', 'avi', 'mkv', 'mp3', 'wav', 'heic'].includes(extension)) {
+                return 'media';
+            }
+
+            return 'other';
+        }
+
         function highlightMatch(text, query) {
             const safe = escapeHtml(text || '');
             if (!query) {
@@ -7812,6 +8150,301 @@
                     <small>Дані зберігаються локально</small>
                 </div>
             `;
+        }
+
+        function renderFileProcesses(snapshot) {
+            const processGrid = document.getElementById('fileProcessGrid');
+            const statusList = document.getElementById('fileProcessStatusList');
+            const featureList = document.getElementById('fileFeatureUsage');
+            const activityTimeline = document.getElementById('fileActivityTimeline');
+
+            if (!processGrid && !statusList && !featureList && !activityTimeline) {
+                return;
+            }
+
+            const sources = Array.isArray(crmData.fileSources) ? crmData.fileSources.filter(Boolean) : [];
+            const totalSources = sources.length;
+            const statusCounts = { online: 0, syncing: 0, offline: 0 };
+
+            sources.forEach(source => {
+                const status = getFileSourceStatus(source);
+                if (statusCounts[status] !== undefined) {
+                    statusCounts[status] += 1;
+                } else {
+                    statusCounts.offline += 1;
+                }
+            });
+
+            const connectedCount = sources.filter(source => source.connected || getFileSourceStatus(source) !== 'offline').length;
+            const autoSyncCount = sources.filter(source => source.autoSync).length;
+            const favoriteCount = sources.filter(source => source.favorite).length;
+            const cloudCount = sources.filter(source => source.type === 'cloud').length;
+            const snapshotsCount = Array.isArray(crmData.fileLibrary) ? crmData.fileLibrary.length : 0;
+            const cloudPercent = totalSources ? Math.round((cloudCount / totalSources) * 100) : 0;
+            const favoritePercent = totalSources ? Math.round((favoriteCount / totalSources) * 100) : 0;
+
+            if (processGrid) {
+                const metrics = [
+                    {
+                        icon: 'fa-satellite-dish',
+                        tone: 'success',
+                        label: 'Активні підключення',
+                        value: connectedCount,
+                        note: totalSources
+                            ? `${Math.round((connectedCount / totalSources) * 100)}% від ${totalSources} джерел`
+                            : 'Джерела ще не підключено'
+                    },
+                    {
+                        icon: 'fa-arrows-rotate',
+                        tone: 'info',
+                        label: 'Процеси синхронізації',
+                        value: statusCounts.syncing,
+                        note: statusCounts.syncing
+                            ? 'Синхронізація триває'
+                            : 'Немає активних процесів'
+                    },
+                    {
+                        icon: 'fa-bolt',
+                        tone: 'primary',
+                        label: 'Автосинхронізація',
+                        value: autoSyncCount,
+                        note: totalSources
+                            ? `${autoSyncCount} увімкнено`
+                            : 'Підключіть джерела для автосинхронізації'
+                    },
+                    {
+                        icon: 'fa-folder-tree',
+                        tone: 'muted',
+                        label: 'Збережені знімки',
+                        value: snapshotsCount,
+                        note: snapshot
+                            ? `Поточна папка: ${snapshot.rootName || '—'}`
+                            : 'Додайте знімок каталогу'
+                    }
+                ];
+
+                processGrid.innerHTML = metrics.map(metric => {
+                    const valueLabel = formatIntegerDisplay(metric.value);
+                    const note = typeof metric.note === 'string' ? metric.note : '';
+                    const toneClass = metric.tone ? ` tone-${metric.tone}` : '';
+                    return `
+                        <div class="file-process-card">
+                            <div class="file-process-icon${toneClass}">
+                                <i class="fa-solid ${metric.icon}" aria-hidden="true"></i>
+                            </div>
+                            <div class="file-process-value">${valueLabel}</div>
+                            <div class="file-process-label">${escapeHtml(metric.label)}</div>
+                            <div class="file-process-note">${escapeHtml(note)}</div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            if (statusList) {
+                if (!totalSources) {
+                    statusList.innerHTML = '<div class="empty-state">Підключіть хоча б одне джерело, щоб бачити статуси процесів.</div>';
+                } else {
+                    const statusItems = [
+                        { key: 'online', label: 'Онлайн', icon: 'fa-circle-check', count: statusCounts.online },
+                        { key: 'syncing', label: 'Синхронізація', icon: 'fa-arrows-rotate', count: statusCounts.syncing },
+                        { key: 'offline', label: 'Не підключено', icon: 'fa-circle-xmark', count: statusCounts.offline }
+                    ];
+
+                    statusList.innerHTML = statusItems.map(item => {
+                        const percentage = totalSources ? Math.round((item.count / totalSources) * 100) : 0;
+                        const metaLabel = totalSources ? `${percentage}% від джерел` : '';
+                        return `
+                            <div class="file-status-item">
+                                <div class="file-status-header">
+                                    <span class="file-status-badge status-${item.key}">
+                                        <i class="fa-solid ${item.icon}" aria-hidden="true"></i>
+                                        ${escapeHtml(item.label)}
+                                    </span>
+                                    <strong>${formatIntegerDisplay(item.count)}</strong>
+                                </div>
+                                <div class="file-status-meta">${escapeHtml(metaLabel)}</div>
+                                <div class="progress-track"><div class="progress-value" style="width:${percentage}%;"></div></div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            const fileEntries = snapshot && snapshot.tree
+                ? flattenFileTree(snapshot.tree).filter(entry => entry.type === 'file')
+                : [];
+            const totalFiles = fileEntries.length;
+            const fourteenDaysAgo = Date.now() - (14 * 24 * 60 * 60 * 1000);
+            const recentUpdates = fileEntries.filter(entry => Number(entry.lastModified) >= fourteenDaysAgo && Number(entry.lastModified) > 0).length;
+            const categoryCounts = fileEntries.reduce((acc, entry) => {
+                const category = categorizeFileEntry(entry);
+                acc[category] = (acc[category] || 0) + 1;
+                return acc;
+            }, {});
+            const docAndPresentation = (categoryCounts.documents || 0) + (categoryCounts.presentations || 0);
+            const recentPercent = totalFiles ? Math.round((recentUpdates / totalFiles) * 100) : 0;
+            const documentsPercent = totalFiles ? Math.round((docAndPresentation / totalFiles) * 100) : 0;
+
+            if (featureList) {
+                if (!totalSources && !snapshot) {
+                    featureList.innerHTML = '<div class="empty-state">Функціональні метрики з\'являться після підключення джерел або сканування папки.</div>';
+                } else {
+                    const features = [
+                        {
+                            key: 'cloud',
+                            icon: 'fa-cloud',
+                            tone: 'info',
+                            label: 'Хмарні інтеграції',
+                            value: cloudCount,
+                            description: cloudCount
+                                ? `${cloudCount} підключень до зовнішніх сервісів.`
+                                : 'Додайте хмарні каталоги для команди.',
+                            progress: cloudPercent
+                        },
+                        {
+                            key: 'favorites',
+                            icon: 'fa-star',
+                            tone: 'warning',
+                            label: 'Обрані каталоги',
+                            value: favoriteCount,
+                            description: favoriteCount
+                                ? `${favoriteCount} джерел позначено як пріоритетні.`
+                                : 'Позначте критичні каталоги зіркою.',
+                            progress: favoritePercent
+                        },
+                        {
+                            key: 'recent',
+                            icon: 'fa-clock-rotate-left',
+                            tone: 'primary',
+                            label: 'Оновлено за 14 днів',
+                            value: recentUpdates,
+                            description: totalFiles
+                                ? `${recentPercent}% бібліотеки змінено останнім часом.`
+                                : 'Запустіть сканування, щоб відстежувати зміни.',
+                            progress: recentPercent
+                        },
+                        {
+                            key: 'documents',
+                            icon: 'fa-file-lines',
+                            tone: 'success',
+                            label: 'Документи для продажів',
+                            value: docAndPresentation,
+                            description: docAndPresentation
+                                ? 'Готові презентації та договори доступні в каталозі.'
+                                : 'Додайте презентації та договори до бібліотеки.',
+                            progress: documentsPercent
+                        }
+                    ];
+
+                    featureList.innerHTML = features.map(feature => {
+                        const valueLabel = formatIntegerDisplay(feature.value);
+                        const toneClass = feature.tone ? ` tone-${feature.tone}` : '';
+                        const progressWidth = Math.max(0, Math.min(feature.progress || 0, 100));
+                        return `
+                            <div class="file-feature-item">
+                                <div class="file-feature-top">
+                                    <div class="file-feature-icon${toneClass}">
+                                        <i class="fa-solid ${feature.icon}" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="file-feature-info">
+                                        <strong>${escapeHtml(feature.label)}</strong>
+                                        <p class="file-feature-meta">${escapeHtml(feature.description)}</p>
+                                    </div>
+                                    <span class="file-feature-value">${valueLabel}</span>
+                                </div>
+                                <div class="progress-track"><div class="progress-value" style="width:${progressWidth}%;"></div></div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            if (activityTimeline) {
+                const timelineEntries = [];
+
+                if (snapshot && snapshot.scannedAt) {
+                    const filesLabel = formatIntegerDisplay(snapshot.totals?.files ?? 0);
+                    const sizeLabel = formatBytes(snapshot.totals?.size || 0);
+                    timelineEntries.push({
+                        icon: 'fa-folder-open',
+                        tone: 'primary',
+                        title: `Сканування • ${snapshot.rootName || 'Каталог'}`,
+                        timestamp: snapshot.scannedAt,
+                        description: `${filesLabel} файлів • ${sizeLabel}`
+                    });
+                }
+
+                sources.forEach(source => {
+                    const status = getFileSourceStatus(source);
+                    if (status === 'syncing') {
+                        timelineEntries.push({
+                            icon: 'fa-arrows-rotate',
+                            tone: 'info',
+                            title: `Синхронізація • ${source.name || 'Джерело'}`,
+                            timestamp: new Date().toISOString(),
+                            description: 'Процес синхронізації виконується.'
+                        });
+                        return;
+                    }
+
+                    if (source.lastSynced) {
+                        const filesLabel = formatIntegerDisplay(source.totalFiles || 0);
+                        const sizeLabel = formatBytes(source.totalSize || 0);
+                        timelineEntries.push({
+                            icon: 'fa-rotate',
+                            tone: 'success',
+                            title: `Оновлено • ${source.name || 'Джерело'}`,
+                            timestamp: source.lastSynced,
+                            description: `${filesLabel} файлів • ${sizeLabel}`
+                        });
+                    } else if (!source.connected) {
+                        timelineEntries.push({
+                            icon: 'fa-plug-circle-xmark',
+                            tone: 'muted',
+                            title: `Очікує підключення • ${source.name || 'Джерело'}`,
+                            timestamp: null,
+                            description: 'Підключіть джерело, щоб активувати моніторинг.'
+                        });
+                    }
+                });
+
+                if (!timelineEntries.length) {
+                    activityTimeline.innerHTML = '<div class="empty-state">Активність з\'явиться після підключення джерел або запуску сканування.</div>';
+                } else {
+                    timelineEntries.sort((a, b) => {
+                        const aTime = a.timestamp ? new Date(a.timestamp).getTime() : 0;
+                        const bTime = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+                        return bTime - aTime;
+                    });
+
+                    const timelineMarkup = timelineEntries.slice(0, 6).map(entry => {
+                        const toneClass = entry.tone ? ` tone-${entry.tone}` : '';
+                        const parts = [];
+                        if (entry.timestamp) {
+                            parts.push(`${formatDate(entry.timestamp, { day: '2-digit', month: 'short', year: 'numeric' })} ${formatTime(entry.timestamp)}`);
+                            const relative = formatRelativeTime(entry.timestamp);
+                            if (relative) {
+                                parts.push(relative);
+                            }
+                        }
+                        const timeLabel = parts.length ? parts.join(' • ') : 'Очікує запуску';
+                        return `
+                            <div class="file-activity-item">
+                                <div class="file-activity-icon${toneClass}">
+                                    <i class="fa-solid ${entry.icon}" aria-hidden="true"></i>
+                                </div>
+                                <div class="file-activity-info">
+                                    <strong>${escapeHtml(entry.title)}</strong>
+                                    <p>${escapeHtml(entry.description)}</p>
+                                    <span class="file-activity-time">${escapeHtml(timeLabel)}</span>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    activityTimeline.innerHTML = timelineMarkup;
+                }
+            }
         }
 
         function sanitizeFileNode(node, parentPath = '') {
