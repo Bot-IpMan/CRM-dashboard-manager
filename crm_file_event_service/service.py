@@ -8,10 +8,10 @@ import time
 from dataclasses import dataclass
 from typing import List, Optional
 
-from .config import ServiceConfig
+from .config import DirectoryConfig, ServiceConfig
 from .database import EventDatabase
 from .models import FileEvent
-from .watcher import DirectoryWatcher
+from .watcher import DirectoryWatcher, WatchfilesDirectoryWatcher
 
 LOGGER = logging.getLogger(__name__)
 
@@ -33,7 +33,7 @@ class FileEventService:
         self.database = EventDatabase(config.database_path)
         self.watchers: List[ManagedWatcher] = [
             ManagedWatcher(
-                watcher=DirectoryWatcher(directory, checksum_algorithm=config.checksum_algorithm),
+                watcher=self._create_watcher(directory),
                 interval=directory.poll_interval or config.poll_interval,
             )
             for directory in config.directories
@@ -55,6 +55,7 @@ class FileEventService:
                 LOGGER.debug("Sleeping for %.2fs", sleep_for)
                 self._stop_event.wait(timeout=max(sleep_for, 0.1))
         finally:
+            self._shutdown_watchers()
             self.database.close()
             LOGGER.info("FileEventService stopped")
 
@@ -67,6 +68,7 @@ class FileEventService:
         try:
             self._run_iteration()
         finally:
+            self._shutdown_watchers()
             self.database.close()
 
     def stop(self, *_args: object) -> None:
@@ -96,6 +98,25 @@ class FileEventService:
             return
         LOGGER.info("Persisting %s events", len(events))
         self.database.insert_events(events)
+
+    def _create_watcher(self, directory: DirectoryConfig) -> DirectoryWatcher:
+        if directory.backend == "watchfiles":
+            return WatchfilesDirectoryWatcher(
+                directory, checksum_algorithm=self.config.checksum_algorithm
+            )
+        return DirectoryWatcher(directory, checksum_algorithm=self.config.checksum_algorithm)
+
+    def _shutdown_watchers(self) -> None:
+        for managed in self.watchers:
+            watcher = managed.watcher
+            try:
+                watcher.close()
+            except Exception as exc:  # pragma: no cover - defensive logging
+                LOGGER.debug(
+                    "Error while closing watcher for %s: %s",
+                    watcher.config.path,
+                    exc,
+                )
 
     def _install_signal_handlers(self) -> None:
         try:

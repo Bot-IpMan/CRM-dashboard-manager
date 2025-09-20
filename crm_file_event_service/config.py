@@ -19,12 +19,28 @@ class DirectoryConfig:
     poll_interval: Optional[float] = None
     compute_checksum: bool = False
     emit_on_start: bool = False
+    backend: str = "polling"
+    min_file_size: Optional[int] = None
+    max_file_size: Optional[int] = None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "DirectoryConfig":
         path = Path(data["path"]).expanduser().resolve()
         include = _ensure_list(data.get("include", []))
         exclude = _ensure_list(data.get("exclude", []))
+        backend = str(data.get("backend", "polling")).lower()
+        if backend not in {"polling", "watchfiles"}:
+            raise ValueError(
+                "Directory configuration 'backend' must be either 'polling' or 'watchfiles'"
+            )
+        min_file_size = _to_int_or_none(data.get("min_file_size"))
+        max_file_size = _to_int_or_none(data.get("max_file_size"))
+        if (
+            min_file_size is not None
+            and max_file_size is not None
+            and min_file_size > max_file_size
+        ):
+            raise ValueError("'min_file_size' cannot be greater than 'max_file_size'")
         return cls(
             path=path,
             project=data.get("project"),
@@ -34,6 +50,9 @@ class DirectoryConfig:
             poll_interval=_to_float_or_none(data.get("poll_interval")),
             compute_checksum=bool(data.get("compute_checksum", False)),
             emit_on_start=bool(data.get("emit_on_start", False)),
+            backend=backend,
+            min_file_size=min_file_size,
+            max_file_size=max_file_size,
         )
 
 
@@ -95,5 +114,15 @@ def _to_float_or_none(value: Any) -> Optional[float]:
     try:
         result = float(value)
         return result if result > 0 else None
+    except (TypeError, ValueError):
+        return None
+
+
+def _to_int_or_none(value: Any) -> Optional[int]:
+    if value is None:
+        return None
+    try:
+        result = int(value)
+        return result if result >= 0 else None
     except (TypeError, ValueError):
         return None

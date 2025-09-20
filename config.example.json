@@ -12,7 +12,10 @@
       "username": "operator",
       "include": ["*"],
       "exclude": ["~$*"],
+      "backend": "watchfiles",
       "poll_interval": 5,
+      "min_file_size": 1024,
+      "max_file_size": 52428800,
       "compute_checksum": false,
       "emit_on_start": false
     }
