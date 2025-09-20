@@ -511,6 +511,185 @@
             color: var(--primary-dark);
         }
 
+        .process-overview {
+            display: grid;
+            gap: 16px;
+        }
+
+        .process-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            background: rgba(99, 102, 241, 0.08);
+        }
+
+        .process-summary-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: inline-flex;
+            align-items: baseline;
+            gap: 6px;
+        }
+
+        .process-summary-value span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .process-summary-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .process-summary-target {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: rgba(99, 102, 241, 0.16);
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .process-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(99, 102, 241, 0.06);
+            padding: 14px 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .process-item-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .process-item-label {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .process-item-value {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .process-item-note {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .process-hotlist {
+            margin-top: 4px;
+            padding-top: 12px;
+            border-top: 1px dashed rgba(99, 102, 241, 0.2);
+            display: grid;
+            gap: 10px;
+        }
+
+        .process-hotlist-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .process-hotlist-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(255, 255, 255, 0.85);
+            padding: 14px 16px;
+            display: grid;
+            gap: 8px;
+        }
+
+        .process-hotlist-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .process-hotlist-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .process-hotlist-actions {
+            margin-top: 4px;
+        }
+
+        .feature-usage {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(99, 102, 241, 0.06);
+            padding: 14px 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .feature-item-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .feature-label {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .feature-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .feature-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-progress .progress-track {
+            flex: 1;
+            height: 8px;
+        }
+
+        .feature-progress span {
+            font-size: 12px;
+            color: var(--text-muted);
+            min-width: 48px;
+            text-align: right;
+        }
+
         .dashboard-grid {
             display: grid;
             grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
@@ -2516,6 +2695,19 @@
             .file-source-stats {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .process-summary {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .process-summary-target {
+                align-self: flex-start;
+            }
+
+            .feature-progress span {
+                min-width: 40px;
+            }
         }
     </style>
 </head>
@@ -2671,6 +2863,14 @@
                     <div class="card">
                         <h3>Прогноз доходу</h3>
                         <div id="forecastCard"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Контроль процесів</h3>
+                        <div class="process-overview" id="processOverview"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Залученість функціоналу</h3>
+                        <div class="feature-usage" id="featureUsage"></div>
                     </div>
                     <div class="card card-feature-overview">
                         <h3>Основні блоки майбутньої CRM</h3>
@@ -6785,6 +6985,8 @@
             renderStageDistribution();
             renderUpcomingActivities();
             renderActivityTimeline();
+            renderProcessOverview();
+            renderFeatureUsage();
             renderForecastCard(pipelineValue, expectedRevenue);
         }
 
@@ -6889,6 +7091,290 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function renderProcessOverview() {
+            const container = document.getElementById('processOverview');
+            if (!container) {
+                return;
+            }
+
+            const now = new Date();
+            const staleThreshold = 7;
+            const openLeads = crmData.leads.filter(lead => !['Угода', 'Втрачено'].includes(lead.stage));
+            const openTasks = crmData.tasks.filter(task => task.status !== 'done');
+            const tasksByLead = openTasks.reduce((map, task) => {
+                if (!task.relatedLeadId) {
+                    return map;
+                }
+                if (!map.has(task.relatedLeadId)) {
+                    map.set(task.relatedLeadId, []);
+                }
+                map.get(task.relatedLeadId).push(task);
+                return map;
+            }, new Map());
+
+            const leadsWithoutTasks = openLeads.filter(lead => !(tasksByLead.get(lead.id)?.length));
+            const staleLeads = openLeads.filter(lead => {
+                const referenceDate = lead.updatedAt || lead.createdAt;
+                if (!referenceDate) {
+                    return false;
+                }
+                return daysBetween(referenceDate, now) >= staleThreshold;
+            });
+            const overdueTasks = openTasks.filter(task => {
+                if (!task.dueDate) {
+                    return false;
+                }
+                const due = new Date(task.dueDate);
+                if (Number.isNaN(due.getTime())) {
+                    return false;
+                }
+                return due < now && !isSameDay(due, now);
+            });
+            const closingSoonLeads = openLeads.filter(lead => {
+                if (!lead.expectedClose) {
+                    return false;
+                }
+                const due = new Date(lead.expectedClose);
+                if (Number.isNaN(due.getTime())) {
+                    return false;
+                }
+                const diffDays = Math.round((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+                return diffDays <= 14;
+            });
+
+            const avgStageAge = openLeads.length
+                ? Math.round(openLeads.reduce((sum, lead) => {
+                    const referenceDate = lead.updatedAt || lead.createdAt;
+                    return sum + daysBetween(referenceDate, now);
+                }, 0) / openLeads.length)
+                : null;
+            const summaryValue = avgStageAge !== null
+                ? `${avgStageAge}<span>дн.</span>`
+                : '&mdash;';
+
+            const formatList = (items, getLabel) => {
+                if (!items.length) {
+                    return '';
+                }
+                const labels = items.slice(0, 2).map(getLabel);
+                if (items.length > 2) {
+                    labels.push(`+${items.length - 2}`);
+                }
+                return labels.join(', ');
+            };
+
+            const processStats = [
+                {
+                    label: 'Без активних задач',
+                    value: leadsWithoutTasks.length,
+                    note: leadsWithoutTasks.length
+                        ? `Потрібно призначити: ${formatList(leadsWithoutTasks, lead => lead.name)}`
+                        : 'Кожна угода має наступний крок.',
+                    badge: leadsWithoutTasks.length ? 'badge-warning' : 'badge-success',
+                    badgeLabel: leadsWithoutTasks.length ? 'потрібна дія' : 'готово'
+                },
+                {
+                    label: 'Без руху 7+ днів',
+                    value: staleLeads.length,
+                    note: staleLeads.length
+                        ? `Оновіть статус: ${formatList(staleLeads, lead => lead.name)}`
+                        : 'Стадії оновлюються регулярно.',
+                    badge: staleLeads.length ? 'badge-danger' : 'badge-success',
+                    badgeLabel: staleLeads.length ? 'ризик' : 'стабільно'
+                },
+                {
+                    label: 'Прострочені задачі',
+                    value: overdueTasks.length,
+                    note: overdueTasks.length
+                        ? `Закрийте: ${formatList(overdueTasks, task => task.title)}`
+                        : 'Немає прострочених активностей.',
+                    badge: overdueTasks.length ? 'badge-danger' : 'badge-success',
+                    badgeLabel: overdueTasks.length ? 'терміново' : 'в нормі'
+                },
+                {
+                    label: 'Закриття ≤ 14 днів',
+                    value: closingSoonLeads.length,
+                    note: closingSoonLeads.length
+                        ? `Готуйте фіналізацію: ${formatList(closingSoonLeads, lead => lead.name)}`
+                        : 'Плануйте нові презентації.',
+                    badge: closingSoonLeads.length ? 'badge-primary' : 'badge-neutral',
+                    badgeLabel: closingSoonLeads.length ? 'фокус' : 'план'
+                }
+            ];
+
+            const statsMarkup = processStats.map(stat => `
+                <div class="process-item">
+                    <div class="process-item-top">
+                        <div>
+                            <div class="process-item-label">${stat.label}</div>
+                            <div class="process-item-value">${stat.value}</div>
+                        </div>
+                        <span class="badge ${stat.badge}">${stat.badgeLabel}</span>
+                    </div>
+                    <div class="process-item-note">${stat.note}</div>
+                </div>
+            `).join('');
+
+            const attentionLeads = openLeads
+                .map(lead => {
+                    const tasks = tasksByLead.get(lead.id) || [];
+                    const daysIdle = daysBetween(lead.updatedAt || lead.createdAt, now);
+                    const overdueTaskCount = tasks.filter(task => {
+                        if (!task.dueDate) {
+                            return false;
+                        }
+                        const due = new Date(task.dueDate);
+                        if (Number.isNaN(due.getTime())) {
+                            return false;
+                        }
+                        return due < now && !isSameDay(due, now);
+                    }).length;
+                    const expectedClose = lead.expectedClose ? new Date(lead.expectedClose) : null;
+                    const diffDays = expectedClose && !Number.isNaN(expectedClose.getTime())
+                        ? Math.round((expectedClose.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+                        : null;
+                    const closingSoon = diffDays !== null && diffDays <= 14;
+                    const closingOverdue = diffDays !== null && diffDays < 0;
+                    const needsAttention = tasks.length === 0 || daysIdle >= staleThreshold || overdueTaskCount > 0 || closingOverdue;
+                    const score = (closingOverdue ? 3 : 0)
+                        + (overdueTaskCount ? 2 : 0)
+                        + (tasks.length === 0 ? 2 : 0)
+                        + (daysIdle >= staleThreshold ? 1 : 0)
+                        + (closingSoon ? 1 : 0);
+                    return { lead, tasks, daysIdle, overdueTaskCount, closingSoon, closingOverdue, diffDays, needsAttention, score };
+                })
+                .filter(item => item.needsAttention)
+                .sort((a, b) => b.score - a.score || b.daysIdle - a.daysIdle)
+                .slice(0, 3);
+
+            const hotlistMarkup = attentionLeads.length
+                ? attentionLeads.map(item => `
+                    <div class="process-hotlist-item">
+                        <div class="process-hotlist-head">
+                            <strong>${item.lead.name}</strong>
+                            <span class="badge ${item.overdueTaskCount || item.closingOverdue ? 'badge-danger' : item.closingSoon ? 'badge-warning' : 'badge-primary'}">${item.lead.stage}</span>
+                        </div>
+                        <div class="process-hotlist-meta">
+                            <span>Без оновлень: ${item.daysIdle} дн.</span>
+                            <span>Активних задач: ${item.tasks.length}</span>
+                            ${item.diffDays !== null ? `<span>${item.diffDays < 0 ? 'Дедлайн минув' : 'Закриття через ' + item.diffDays + ' дн.'}</span>` : ''}
+                            <span>Менеджер: ${item.lead.owner}</span>
+                        </div>
+                        <div class="process-hotlist-actions">
+                            <button class="btn btn-small-muted" data-open-lead="${item.lead.id}">Деталі</button>
+                        </div>
+                    </div>
+                `).join('')
+                : '<div class="empty-state">Усі процеси у графіку — команда працює стабільно.</div>';
+
+            container.innerHTML = `
+                <div class="process-summary">
+                    <div>
+                        <div class="process-summary-value">${summaryValue}</div>
+                        <div class="process-summary-label">Середній час у поточній стадії</div>
+                    </div>
+                    <span class="process-summary-target">Ціль ≤ 10 дн.</span>
+                </div>
+                <div class="process-grid">
+                    ${statsMarkup}
+                </div>
+                <div class="process-hotlist">
+                    <div class="process-hotlist-title">Угоди, що потребують уваги</div>
+                    ${hotlistMarkup}
+                </div>
+            `;
+
+            container.querySelectorAll('[data-open-lead]').forEach(btn => {
+                btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+        }
+
+        function renderFeatureUsage() {
+            const container = document.getElementById('featureUsage');
+            if (!container) {
+                return;
+            }
+
+            const totalLeads = crmData.leads.length;
+            const leadsWithNotes = crmData.leads.filter(lead => Array.isArray(lead.notes) && lead.notes.length > 0).length;
+            const leadsWithAttachments = crmData.leads.filter(lead => Array.isArray(lead.attachments) && lead.attachments.length > 0).length;
+            const totalTasks = crmData.tasks.length;
+            const tasksWithAttachments = crmData.tasks.filter(task => Array.isArray(task.attachments) && task.attachments.length > 0).length;
+            const completedTasks = crmData.tasks.filter(task => task.status === 'done').length;
+            const totalContacts = crmData.contacts.length;
+            const contactsWithNotes = crmData.contacts.filter(contact => Array.isArray(contact.notes) && contact.notes.length > 0).length;
+
+            const featureMetrics = [
+                {
+                    label: 'Нотатки по лідах',
+                    value: leadsWithNotes,
+                    total: totalLeads,
+                    description: 'Зберігайте ключові домовленості по кожній можливості.',
+                    target: '80%'
+                },
+                {
+                    label: 'Документи в угодах',
+                    value: leadsWithAttachments,
+                    total: totalLeads,
+                    description: 'Прикріплюйте брифи, договори та презентації до лідів.',
+                    target: '60%'
+                },
+                {
+                    label: 'Виконані задачі',
+                    value: completedTasks,
+                    total: totalTasks,
+                    description: 'Контролюйте доведення задач до кінця.',
+                    target: '70%'
+                },
+                {
+                    label: 'Контакти з нотатками',
+                    value: contactsWithNotes,
+                    total: totalContacts,
+                    description: 'Контекст по зустрічах та домовленостях завжди під рукою.',
+                    target: '70%'
+                },
+                {
+                    label: 'Файли в задачах',
+                    value: tasksWithAttachments,
+                    total: totalTasks,
+                    description: 'Додавайте матеріали до задач для швидкого старту роботи.',
+                    target: '50%'
+                }
+            ];
+
+            const metricsMarkup = featureMetrics.map(metric => {
+                const hasTotal = metric.total && metric.total > 0;
+                const percent = hasTotal ? Math.round((metric.value / metric.total) * 100) : 0;
+                const badgeClass = hasTotal
+                    ? (percent >= 75 ? 'badge-success' : percent >= 45 ? 'badge-warning' : 'badge-danger')
+                    : 'badge-neutral';
+                const badgeLabel = hasTotal ? `${percent}%` : '—';
+                const progressWidth = hasTotal
+                    ? (metric.value === 0 ? 0 : Math.min(100, Math.max(percent, 6)))
+                    : 0;
+                const countLabel = hasTotal ? `${metric.value}/${metric.total}` : `${metric.value}`;
+                const description = `${hasTotal ? `${metric.value} з ${metric.total} • ` : ''}${metric.description}${metric.target ? ` Ціль: ${metric.target}.` : ''}`;
+
+                return `
+                    <div class="feature-item">
+                        <div class="feature-item-header">
+                            <div>
+                                <div class="feature-label">${metric.label}</div>
+                                <div class="feature-meta">${description}</div>
+                            </div>
+                            <span class="badge ${badgeClass}">${badgeLabel}</span>
+                        </div>
+                        <div class="feature-progress">
+                            <div class="progress-track"><div class="progress-value" style="width:${progressWidth}%"></div></div>
+                            <span>${countLabel}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = metricsMarkup;
         }
 
         function renderRoles() {
