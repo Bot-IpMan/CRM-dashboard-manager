@@ -1,0 +1,20 @@
+{
+  "database": {
+    "path": "./file_events.db"
+  },
+  "poll_interval": 5,
+  "checksum_algorithm": "md5",
+  "log_level": "INFO",
+  "directories": [
+    {
+      "path": "./watched",
+      "project": "Internal",
+      "username": "operator",
+      "include": ["*"],
+      "exclude": ["~$*"],
+      "poll_interval": 5,
+      "compute_checksum": false,
+      "emit_on_start": false
+    }
+  ]
+}
