@@ -1390,6 +1390,129 @@
             color: var(--text-muted);
         }
 
+        .file-monitor-guide {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .file-monitor-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .file-monitor-header h3 {
+            font-size: 16px;
+            margin: 0 0 6px;
+        }
+
+        .file-monitor-header p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .file-monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .file-monitor-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+        }
+
+        .file-monitor-item i {
+            color: var(--primary-dark);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .file-monitor-item strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .file-monitor-item p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-monitor-guide code {
+            background: rgba(99, 102, 241, 0.12);
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 12px;
+        }
+
+        .file-monitor-list {
+            margin: 0;
+            padding-left: 20px;
+            display: grid;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .file-monitor-list li {
+            line-height: 1.5;
+        }
+
+        .file-monitor-list strong {
+            color: var(--text);
+        }
+
+        .file-monitor-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(34, 197, 94, 0.12);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+        }
+
+        .file-monitor-note i {
+            color: var(--success);
+            font-size: 18px;
+            margin-top: 2px;
+        }
+
+        .file-monitor-note p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .file-monitor-footer {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .file-monitor-footer a {
+            color: var(--primary-dark);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .file-monitor-footer a:hover {
+            text-decoration: underline;
+        }
+
         .file-tree {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -2365,6 +2488,46 @@
                         <div class="file-sources-grid" id="fileSourceGrid"></div>
                     </div>
                     <div class="file-summary" id="fileSummary"></div>
+                    <div class="file-monitor-guide" aria-labelledby="fileMonitorTitle">
+                        <div class="file-monitor-header">
+                            <div>
+                                <h3 id="fileMonitorTitle">Моніторинг змін у файловій системі</h3>
+                                <p>Python-бібліотека <strong>watchdog</strong> фіксує створення, модифікацію, переміщення та видалення файлів у реальному часі. Рішення працює на Windows, macOS і Linux, тому команда всюди отримує однаковий контроль.</p>
+                            </div>
+                            <span class="badge badge-info">
+                                <i class="fa-brands fa-python" aria-hidden="true"></i>
+                                Watchdog
+                            </span>
+                        </div>
+                        <div class="file-monitor-grid">
+                            <div class="file-monitor-item">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                                <div>
+                                    <strong>Observer</strong>
+                                    <p>Слухає вибрані каталоги та миттєво сповіщає про створення, переміщення чи видалення файлів.</p>
+                                </div>
+                            </div>
+                            <div class="file-monitor-item">
+                                <i class="fa-solid fa-code-branch" aria-hidden="true"></i>
+                                <div>
+                                    <strong>FileSystemEventHandler</strong>
+                                    <p>Перевизначайте методи <code>on_created</code>, <code>on_modified</code>, <code>on_deleted</code> і <code>on_moved</code>, щоб автоматично логувати активність у CRM.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="file-monitor-list">
+                            <li><strong>Кілька каталогів.</strong> Додавайте будь-яку кількість шляхів до одного Observer, щоб синхронно відстежувати робочі папки команди.</li>
+                            <li><strong>Фільтри за розширеннями.</strong> Реагуйте лише на важливі формати (наприклад, <code>.docx</code> або <code>.pdf</code>), щоб уникати шуму.</li>
+                            <li><strong>Власні сценарії.</strong> Обробники подій легко доповнити записом у базу CRM, відправкою сповіщень чи запуском інтеграцій.</li>
+                        </ul>
+                        <div class="file-monitor-note">
+                            <i class="fa-solid fa-database" aria-hidden="true"></i>
+                            <p>Зберігайте журнал подій безпосередньо у CRM, щоб менеджери миттєво бачили нові документи, оновлення договірних файлів та видалення матеріалів.</p>
+                        </div>
+                        <div class="file-monitor-footer">
+                            <a href="https://pythonsnacks.com" target="_blank" rel="noopener">Докладніше про watchdog на pythonsnacks.com</a>
+                        </div>
+                    </div>
                     <div class="file-tree">
                         <div class="file-tree-head">
                             <div>Елемент</div>
