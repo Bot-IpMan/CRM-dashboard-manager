@@ -64,6 +64,39 @@ python -m crm_file_event_service --config config.json
 python -m crm_file_event_service --config config.json --once
 ```
 
+## FastAPI API та live-оновлення
+
+Для швидкого прототипування REST/WebSocket-шару додано застосунок на FastAPI
+(`crm_file_event_service/api.py`). Він запускає `FileEventService` у фоновому
+потоці, надає REST-ендпоїнт `GET /events` та WebSocket `ws://.../ws/events` для
+оновлень у режимі реального часу. Це дозволяє напряму зчитувати події із
+SQLite та транслювати їх клієнту без додаткових бібліотек.
+
+### Встановлення залежностей
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### Запуск у Windows (PowerShell)
+
+```powershell
+cd C:\path\to\CRM-dashboard-manager
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item config.example.json config.windows.json
+# Відредагуйте config.windows.json, використовуючи Windows-шляхи, наприклад
+# \\server\share або C:\\Data\\Documents
+$env:CRM_SERVICE_CONFIG = "C:\\path\\to\\CRM-dashboard-manager\\config.windows.json"
+uvicorn crm_file_event_service.api:app --host 0.0.0.0 --port 8000
+```
+
+Після старту API-ендпоїнт `http://127.0.0.1:8000/events` повертає останні
+події, а WebSocket за адресою `ws://127.0.0.1:8000/ws/events` надсилатиме нові
+записи. Фронтенд із `file-manager-dashboard.html` може під'єднуватись до цих
+ендпоїнтів для live-оновлень.
+
 ## Інтеграція з CRM
 
 - Таблиця `file_events` може бути підключена до CRM (наприклад, через ORM або API) для побудови модулю «Історія змін».
