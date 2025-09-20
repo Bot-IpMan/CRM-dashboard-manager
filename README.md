@@ -61,14 +61,23 @@
 
 ## Запуск
 
+Створіть конфігураційний файл (`config.json` за замовчуванням) і запустіть сервіс:
+
 ```bash
-python -m crm_file_event_service --config config.json
+python -m crm_file_event_service
+```
+
+За потреби можна вказати інший шлях через прапорець `--config` або змінну
+середовища `CRM_SERVICE_CONFIG`:
+
+```bash
+python -m crm_file_event_service --config path/to/config.json
 ```
 
 Для одноразового циклу (корисно для діагностики) використайте прапорець `--once`:
 
 ```bash
-python -m crm_file_event_service --config config.json --once
+python -m crm_file_event_service --once
 ```
 
 ## FastAPI API та live-оновлення
@@ -86,6 +95,21 @@ python -m pip install -r requirements.txt
 ```
 
 ### Запуск у Windows (PowerShell)
+
+#### Швидкий старт служби моніторингу
+
+```powershell
+# Виконайте в корені репозиторію
+.\scripts\windows\run-service.ps1
+```
+
+Скрипт створить віртуальне середовище `.venv`, встановить залежності та
+запустить `python -m crm_file_event_service`. Під час першого запуску він
+згенерує `config.windows.json` на основі прикладу й попросить відредагувати
+шляхи. За потреби використайте параметри `-ConfigPath`, `-Once` або
+`-SkipInstall`.
+
+#### Запуск FastAPI API вручну
 
 ```powershell
 cd C:\path\to\CRM-dashboard-manager
