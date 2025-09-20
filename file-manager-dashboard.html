@@ -438,6 +438,63 @@
             margin-bottom: 14px;
         }
 
+        .card-feature-overview p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .feature-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            background: rgba(14, 165, 233, 0.12);
+            color: #0c4a6e;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .feature-note i {
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        .feature-groups {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature-group {
+            background: rgba(99, 102, 241, 0.06);
+            border-radius: var(--radius-md);
+            padding: 14px 16px;
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            display: grid;
+            gap: 8px;
+        }
+
+        .feature-group-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text);
+        }
+
+        .feature-list {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 6px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
         .stage-distribution {
             display: grid;
             gap: 14px;
@@ -1791,6 +1848,34 @@
                     <div class="card">
                         <h3>Прогноз доходу</h3>
                         <div id="forecastCard"></div>
+                    </div>
+                    <div class="card card-feature-overview">
+                        <h3>Основні блоки майбутньої CRM</h3>
+                        <p>Облік контактів та лідів — серце системи. Базові модулі поєднують клієнтську базу, календар та нагадування з таск-менеджером і конструктором звітів, а також інтерактивною панеллю моніторингу.</p>
+                        <div class="feature-note">
+                            <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                            <span>Розподіл ролей гарантує, що кожен користувач бачить лише власні завдання та контрагентів, зберігаючи фокус команди та безпеку даних.</span>
+                        </div>
+                        <div class="feature-groups">
+                            <div class="feature-group">
+                                <div class="feature-group-title">Базова функціональність</div>
+                                <ul class="feature-list">
+                                    <li>Contact management — структурований каталог клієнтів, партнерів та лідів.</li>
+                                    <li>Reminders — персональні нагадування для запланованих активностей.</li>
+                                    <li>Calendar — синхронізований календар зустрічей та ключових подій.</li>
+                                    <li>Task manager — таск-менеджер для відстеження прогресу по кожній можливості.</li>
+                                    <li>Report generator — генератор звітів із потрібними аналітичними зрізами.</li>
+                                    <li>Dashboard — дашборд для моментального огляду статусу продажів.</li>
+                                </ul>
+                            </div>
+                            <div class="feature-group">
+                                <div class="feature-group-title">Основна функціональність</div>
+                                <ul class="feature-list">
+                                    <li>Система обміну файлами для безпечної співпраці над документами.</li>
+                                    <li>Відстеження процесів, що показує вузькі місця у воронці та проектних потоках.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
