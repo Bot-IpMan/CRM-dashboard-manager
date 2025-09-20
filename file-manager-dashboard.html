@@ -1434,6 +1434,234 @@
             color: var(--primary-dark);
         }
 
+        .project-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 18px;
+            margin-bottom: 24px;
+        }
+
+        .project-stage-list,
+        .project-risk-list,
+        .project-team-load,
+        .project-updates-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .project-stage-row,
+        .project-team-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(248, 250, 255, 0.78);
+        }
+
+        .project-stage-row {
+            justify-content: space-between;
+        }
+
+        .project-stage-info,
+        .project-team-info {
+            display: grid;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .project-stage-progress,
+        .project-team-progress {
+            display: grid;
+            gap: 6px;
+            min-width: 160px;
+        }
+
+        .project-stage-progress {
+            grid-template-columns: 1fr auto;
+            align-items: center;
+        }
+
+        .project-stage-track,
+        .project-team-progress-track {
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            overflow: hidden;
+        }
+
+        .project-stage-fill,
+        .project-team-progress-fill {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+        }
+
+        .project-stage-chip {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            background: rgba(99, 102, 241, 0.18);
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+
+        .project-risk-item {
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(248, 250, 255, 0.78);
+            padding: 14px 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .project-risk-item.warning {
+            border-color: rgba(245, 158, 11, 0.32);
+            background: rgba(254, 243, 199, 0.55);
+        }
+
+        .project-risk-item.critical {
+            border-color: rgba(239, 68, 68, 0.35);
+            background: rgba(254, 226, 226, 0.6);
+        }
+
+        .project-risk-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .project-risk-flags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .project-risk-flag {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+        }
+
+        .project-risk-flag.is-warning {
+            background: rgba(245, 158, 11, 0.18);
+            color: #92400e;
+        }
+
+        .project-risk-flag.is-critical {
+            background: rgba(239, 68, 68, 0.18);
+            color: #b91c1c;
+        }
+
+        .project-risk-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .project-risk-meta i {
+            margin-right: 6px;
+            color: rgba(239, 68, 68, 0.7);
+        }
+
+        .project-risk-score {
+            font-weight: 600;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(239, 68, 68, 0.16);
+            color: #b91c1c;
+        }
+
+        .project-risk-item.warning .project-risk-score {
+            background: rgba(245, 158, 11, 0.16);
+            color: #b45309;
+        }
+
+        .project-team-row .metric-sub {
+            margin-top: 0;
+        }
+
+        .project-updates-card {
+            margin-bottom: 24px;
+        }
+
+        .project-updates-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .project-updates-header .metric-sub {
+            margin-top: 4px;
+        }
+
+        .project-updates-counter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+        }
+
+        .project-update-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            background: rgba(248, 250, 255, 0.9);
+        }
+
+        .project-update-bullet {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-top: 6px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+        }
+
+        .project-update-body {
+            display: grid;
+            gap: 6px;
+        }
+
+        .project-update-body p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .project-update-footer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .project-update-footer i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+
         .input-hint {
             font-size: 12px;
             color: var(--text-muted);
@@ -3207,6 +3435,31 @@
                             Новий проект
                         </button>
                     </div>
+                </div>
+                <div class="metrics-grid" id="projectMetrics"></div>
+                <div class="project-insights-grid">
+                    <div class="card">
+                        <h3>Картина за етапами</h3>
+                        <div class="project-stage-list" id="projectStageBreakdown"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Фокус ризиків</h3>
+                        <div class="project-risk-list" id="projectRiskList"></div>
+                    </div>
+                    <div class="card">
+                        <h3>Навантаження команди</h3>
+                        <div class="project-team-load" id="projectTeamLoad"></div>
+                    </div>
+                </div>
+                <div class="card project-updates-card">
+                    <div class="project-updates-header">
+                        <div>
+                            <h3>Останні оновлення</h3>
+                            <p class="metric-sub">Слідкуйте за нотатками та активністю, щоб не втратити контекст</p>
+                        </div>
+                        <span class="project-updates-counter" id="projectUpdatesCount">0 записів</span>
+                    </div>
+                    <div class="project-updates-list" id="projectUpdates"></div>
                 </div>
                 <div class="projects-table">
                     <div class="table-head">
@@ -8374,16 +8627,22 @@
                 });
             }
 
-            if (!projects.length) {
-                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Проекти за вказаними фільтрами не знайдені.</div>';
-                return;
-            }
-
             projects.sort((a, b) => {
                 const dateA = new Date(a.updatedAt || a.createdAt || 0).getTime();
                 const dateB = new Date(b.updatedAt || b.createdAt || 0).getTime();
                 return dateB - dateA;
             });
+
+            renderProjectMetrics(projects);
+            renderProjectStageBreakdown(projects);
+            renderProjectRiskList(projects);
+            renderProjectTeamLoad(projects);
+            renderProjectUpdates(projects);
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Проекти за вказаними фільтрами не знайдені.</div>';
+                return;
+            }
 
             container.innerHTML = projects.map(project => {
                 const probability = Math.max(0, Math.min(100, Math.round(Number(project.probability) || 0)));
@@ -8445,6 +8704,453 @@
                     </div>
                 `;
             }).join('');
+        }
+
+        function renderProjectMetrics(projects) {
+            const container = document.getElementById('projectMetrics');
+            if (!container) {
+                return;
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Немає проектів для аналітики.</div>';
+                return;
+            }
+
+            let totalBudget = 0;
+            let probabilitySum = 0;
+            let activeProjects = 0;
+            let recentUpdates = 0;
+            let highProbability = 0;
+            let totalTeamMembers = 0;
+            const uniqueContributors = new Set();
+            const now = new Date();
+
+            projects.forEach(project => {
+                const budget = Number(project.budget) || 0;
+                const probability = Math.max(0, Math.min(100, Number(project.probability) || 0));
+                totalBudget += budget;
+                probabilitySum += probability;
+
+                if (probability >= 70) {
+                    highProbability += 1;
+                }
+
+                const stageNormalized = (project.stage || '').toLowerCase();
+                if (!stageNormalized.includes('архів') && !stageNormalized.includes('заверш') && !stageNormalized.includes('підтрим')) {
+                    activeProjects += 1;
+                }
+
+                const updatedAt = project.updatedAt ? new Date(project.updatedAt) : null;
+                if (updatedAt && !Number.isNaN(updatedAt.getTime())) {
+                    const diffDays = Math.round((now.getTime() - updatedAt.getTime()) / (1000 * 60 * 60 * 24));
+                    if (diffDays <= 7) {
+                        recentUpdates += 1;
+                    }
+                }
+
+                const memberSet = new Set();
+                const owner = typeof project.owner === 'string' ? project.owner.trim() : '';
+                if (owner) {
+                    memberSet.add(owner);
+                    uniqueContributors.add(owner);
+                }
+                if (Array.isArray(project.team)) {
+                    project.team.forEach(member => {
+                        const normalized = typeof member === 'string' ? member.trim() : String(member || '').trim();
+                        if (normalized) {
+                            memberSet.add(normalized);
+                            uniqueContributors.add(normalized);
+                        }
+                    });
+                }
+                totalTeamMembers += memberSet.size;
+            });
+
+            const averageProbability = projects.length ? Math.round(probabilitySum / projects.length) : 0;
+            const averageBudget = projects.length ? totalBudget / projects.length : 0;
+            const avgTeamSize = projects.length ? totalTeamMembers / projects.length : 0;
+            const avgTeamFormatted = avgTeamSize
+                ? new Intl.NumberFormat('uk-UA', { maximumFractionDigits: 1, minimumFractionDigits: 1 }).format(avgTeamSize)
+                : '0,0';
+
+            container.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-briefcase"></i></div>
+                    <div>
+                        <div class="metric-label">Проекти в роботі</div>
+                        <div class="metric-value">${formatIntegerDisplay(activeProjects)}</div>
+                        <div class="metric-sub">Оновлено за 7 днів: ${formatIntegerDisplay(recentUpdates)}</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-sack-dollar"></i></div>
+                    <div>
+                        <div class="metric-label">Портфель, ₴</div>
+                        <div class="metric-value">${formatCurrency(totalBudget)}</div>
+                        <div class="metric-sub">Середній бюджет: ${formatCurrency(averageBudget)}</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-bullseye"></i></div>
+                    <div>
+                        <div class="metric-label">Середня ймовірність</div>
+                        <div class="metric-value">${averageProbability}%</div>
+                        <div class="metric-sub">≥70% шансів: ${formatIntegerDisplay(highProbability)}</div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon"><i class="fa-solid fa-users"></i></div>
+                    <div>
+                        <div class="metric-label">Учасники команд</div>
+                        <div class="metric-value">${formatIntegerDisplay(uniqueContributors.size)}</div>
+                        <div class="metric-sub">Середній склад: ${avgTeamFormatted} ос.</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProjectStageBreakdown(projects) {
+            const container = document.getElementById('projectStageBreakdown');
+            if (!container) {
+                return;
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state">Немає проектів для відображення.</div>';
+                return;
+            }
+
+            const stageMap = new Map();
+            projects.forEach(project => {
+                const stageLabel = project.stage && project.stage.trim().length ? project.stage.trim() : 'Без етапу';
+                if (!stageMap.has(stageLabel)) {
+                    stageMap.set(stageLabel, { count: 0, budget: 0, probabilitySum: 0 });
+                }
+                const stats = stageMap.get(stageLabel);
+                stats.count += 1;
+                stats.budget += Number(project.budget) || 0;
+                stats.probabilitySum += Number(project.probability) || 0;
+            });
+
+            const total = projects.length;
+            const stageEntries = Array.from(stageMap.entries()).sort((a, b) => b[1].count - a[1].count);
+
+            container.innerHTML = stageEntries.map(([stageLabel, stats]) => {
+                const share = Math.round((stats.count / total) * 100);
+                const avgProbability = stats.count ? Math.round(stats.probabilitySum / stats.count) : 0;
+                const progressWidth = share <= 0 ? 0 : Math.max(8, Math.min(share, 100));
+                return `
+                    <div class="project-stage-row">
+                        <div class="project-stage-info">
+                            <strong>${escapeHtml(stageLabel)}</strong>
+                            <span class="metric-sub">${formatIntegerDisplay(stats.count)} проєктів • ${formatCurrency(stats.budget, true)}</span>
+                        </div>
+                        <div class="project-stage-progress">
+                            <div class="project-stage-track"><span class="project-stage-fill" style="width:${progressWidth}%"></span></div>
+                            <span class="metric-sub">${share}%</span>
+                        </div>
+                        <span class="project-stage-chip">Сер. ймовірність ${avgProbability}%</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderProjectRiskList(projects) {
+            const container = document.getElementById('projectRiskList');
+            if (!container) {
+                return;
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state">Немає ризикових проектів за поточними фільтрами.</div>';
+                return;
+            }
+
+            const risks = projects.map(project => {
+                const probability = Math.max(0, Math.min(100, Number(project.probability) || 0));
+                const updatedAt = project.updatedAt ? new Date(project.updatedAt) : null;
+                const daysWithoutUpdate = updatedAt && !Number.isNaN(updatedAt.getTime())
+                    ? Math.max(0, Math.round((Date.now() - updatedAt.getTime()) / (1000 * 60 * 60 * 24)))
+                    : null;
+
+                const memberSet = new Set();
+                const owner = typeof project.owner === 'string' ? project.owner.trim() : '';
+                if (owner) {
+                    memberSet.add(owner);
+                }
+                if (Array.isArray(project.team)) {
+                    project.team.forEach(member => {
+                        const normalized = typeof member === 'string' ? member.trim() : String(member || '').trim();
+                        if (normalized) {
+                            memberSet.add(normalized);
+                        }
+                    });
+                }
+
+                const flags = [];
+                if (probability < 40) {
+                    flags.push({ label: 'Низька ймовірність', level: 'critical' });
+                }
+                if (daysWithoutUpdate !== null && daysWithoutUpdate > 10) {
+                    flags.push({
+                        label: `Без оновлень ${daysWithoutUpdate} дн.`,
+                        level: daysWithoutUpdate > 20 ? 'critical' : 'warning'
+                    });
+                }
+                if (memberSet.size <= 1) {
+                    flags.push({ label: 'Немає команди', level: 'warning' });
+                }
+
+                const severity = flags.reduce((score, flag) => score + (flag.level === 'critical' ? 2 : 1), 0);
+
+                return {
+                    project,
+                    probability,
+                    flags,
+                    severity,
+                    updatedAt
+                };
+            }).filter(item => item.flags.length > 0);
+
+            if (!risks.length) {
+                container.innerHTML = '<div class="empty-state">Активні проекти виглядають стабільно.</div>';
+                return;
+            }
+
+            risks.sort((a, b) => {
+                if (b.severity !== a.severity) {
+                    return b.severity - a.severity;
+                }
+                if (a.probability !== b.probability) {
+                    return a.probability - b.probability;
+                }
+                const timeA = a.updatedAt ? a.updatedAt.getTime() : 0;
+                const timeB = b.updatedAt ? b.updatedAt.getTime() : 0;
+                return timeA - timeB;
+            });
+
+            const topRisks = risks.slice(0, 4);
+
+            container.innerHTML = topRisks.map(item => {
+                const { project, probability, flags, severity } = item;
+                const ownerName = project.owner && project.owner.trim().length ? project.owner.trim() : 'Без менеджера';
+                const company = project.company && project.company.trim().length ? project.company.trim() : 'Без компанії';
+                const updateLabel = project.updatedAt
+                    ? (formatRelativeTime(project.updatedAt) || formatDate(project.updatedAt))
+                    : 'Немає даних';
+                const itemClass = severity >= 4 ? 'critical' : 'warning';
+
+                const flagsMarkup = flags.map(flag => {
+                    const classes = ['project-risk-flag'];
+                    if (flag.level === 'critical') {
+                        classes.push('is-critical');
+                    }
+                    if (flag.level === 'warning') {
+                        classes.push('is-warning');
+                    }
+                    return `<span class="${classes.join(' ')}">${escapeHtml(flag.label)}</span>`;
+                }).join('');
+
+                return `
+                    <div class="project-risk-item ${itemClass}">
+                        <div class="project-risk-head">
+                            <div>
+                                <strong>${escapeHtml(project.name)}</strong>
+                                <div class="metric-sub">${escapeHtml(company)}</div>
+                            </div>
+                            <span class="project-risk-score">${probability}%</span>
+                        </div>
+                        <div class="project-risk-flags">${flagsMarkup}</div>
+                        <div class="project-risk-meta">
+                            <span><i class="fa-regular fa-user"></i>${escapeHtml(ownerName)}</span>
+                            <span><i class="fa-regular fa-clock"></i>${escapeHtml(updateLabel)}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderProjectTeamLoad(projects) {
+            const container = document.getElementById('projectTeamLoad');
+            if (!container) {
+                return;
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state">Немає призначень за поточними умовами.</div>';
+                return;
+            }
+
+            const memberMap = new Map();
+
+            projects.forEach(project => {
+                const members = new Set();
+                const owner = typeof project.owner === 'string' ? project.owner.trim() : '';
+                if (owner) {
+                    members.add(owner);
+                }
+                if (Array.isArray(project.team)) {
+                    project.team.forEach(member => {
+                        const normalized = typeof member === 'string' ? member.trim() : String(member || '').trim();
+                        if (normalized) {
+                            members.add(normalized);
+                        }
+                    });
+                }
+
+                members.forEach(member => {
+                    if (!memberMap.has(member)) {
+                        memberMap.set(member, {
+                            name: member,
+                            projects: 0,
+                            budget: 0,
+                            probabilitySum: 0
+                        });
+                    }
+                    const entry = memberMap.get(member);
+                    entry.projects += 1;
+                    entry.budget += Number(project.budget) || 0;
+                    entry.probabilitySum += Number(project.probability) || 0;
+                });
+            });
+
+            const entries = Array.from(memberMap.values());
+            if (!entries.length) {
+                container.innerHTML = '<div class="empty-state">Немає учасників для відображення.</div>';
+                return;
+            }
+
+            const maxProjects = entries.reduce((max, entry) => Math.max(max, entry.projects), 0) || 1;
+
+            entries.forEach(entry => {
+                entry.avgProbability = entry.projects ? Math.round(entry.probabilitySum / entry.projects) : 0;
+            });
+
+            entries.sort((a, b) => {
+                if (b.projects !== a.projects) {
+                    return b.projects - a.projects;
+                }
+                return b.budget - a.budget;
+            });
+
+            const rows = entries.slice(0, 5).map(entry => {
+                const workloadPercent = Math.round((entry.projects / maxProjects) * 100);
+                const fillWidth = entry.projects ? Math.max(12, Math.min(100, workloadPercent)) : 0;
+                const initials = entry.name ? entry.name.charAt(0).toUpperCase() : '?';
+                return `
+                    <div class="project-team-row">
+                        <div class="avatar avatar-sm">${escapeHtml(initials)}</div>
+                        <div class="project-team-info">
+                            <strong>${escapeHtml(entry.name)}</strong>
+                            <span class="metric-sub">${formatIntegerDisplay(entry.projects)} проєктів • ${formatCurrency(entry.budget, true)}</span>
+                        </div>
+                        <div class="project-team-progress">
+                            <div class="project-team-progress-track"><span class="project-team-progress-fill" style="width:${fillWidth}%"></span></div>
+                            <span class="metric-sub">Сер. ймовірність ${entry.avgProbability}%</span>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = rows;
+        }
+
+        function renderProjectUpdates(projects) {
+            const container = document.getElementById('projectUpdates');
+            const counter = document.getElementById('projectUpdatesCount');
+            if (!container) {
+                if (counter) {
+                    counter.textContent = '0 записів';
+                }
+                return;
+            }
+
+            if (!projects.length) {
+                container.innerHTML = '<div class="empty-state">Додайте проект або зніміть фільтри, щоб бачити оновлення.</div>';
+                if (counter) {
+                    counter.textContent = '0 записів';
+                }
+                return;
+            }
+
+            const updates = [];
+
+            projects.forEach(project => {
+                const notes = Array.isArray(project.notes) ? project.notes : [];
+                if (notes.length) {
+                    notes.forEach(note => {
+                        const author = typeof note.author === 'string' && note.author.trim().length
+                            ? note.author.trim()
+                            : (project.owner || 'CRM');
+                        updates.push({
+                            projectName: project.name,
+                            company: project.company,
+                            text: note.text,
+                            author,
+                            date: note.date || project.updatedAt || project.createdAt
+                        });
+                    });
+                } else if (project.updatedAt) {
+                    updates.push({
+                        projectName: project.name,
+                        company: project.company,
+                        text: 'Статус проекту оновлено.',
+                        author: project.owner || 'CRM',
+                        date: project.updatedAt
+                    });
+                }
+            });
+
+            updates.sort((a, b) => {
+                const timeA = new Date(a.date || 0).getTime();
+                const timeB = new Date(b.date || 0).getTime();
+                return timeB - timeA;
+            });
+
+            const topUpdates = updates.slice(0, 6);
+
+            if (!topUpdates.length) {
+                container.innerHTML = '<div class="empty-state">Немає активності по проектах.</div>';
+                if (counter) {
+                    counter.textContent = '0 записів';
+                }
+                return;
+            }
+
+            container.innerHTML = topUpdates.map(update => {
+                const projectName = typeof update.projectName === 'string' ? update.projectName : 'Проект';
+                const company = typeof update.company === 'string' && update.company.trim().length ? update.company.trim() : '';
+                const companyMarkup = company ? `<div class="metric-sub">${escapeHtml(company)}</div>` : '';
+                const description = typeof update.text === 'string' && update.text.trim().length
+                    ? escapeHtml(update.text.trim())
+                    : 'Без опису';
+                const author = typeof update.author === 'string' && update.author.trim().length ? update.author.trim() : 'CRM';
+                const relative = update.date ? formatRelativeTime(update.date) : '';
+                const absolute = update.date ? formatDate(update.date) : '';
+                const timeLabel = relative || absolute || '—';
+
+                return `
+                    <div class="project-update-item">
+                        <div class="project-update-bullet" aria-hidden="true"></div>
+                        <div class="project-update-body">
+                            <div>
+                                <strong>${escapeHtml(projectName)}</strong>
+                                ${companyMarkup}
+                            </div>
+                            <p>${description}</p>
+                            <div class="project-update-footer">
+                                <span><i class="fa-regular fa-user"></i>${escapeHtml(author)}</span>
+                                <span><i class="fa-regular fa-clock"></i>${escapeHtml(timeLabel)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            if (counter) {
+                counter.textContent = `${formatIntegerDisplay(updates.length)} записів`;
+            }
         }
 
         function getProjectStageBadgeClass(stage) {
