@@ -6919,6 +6919,31 @@
             qualityStream: '/ws/quality'
         };
 
+        const CALL_CENTER_CONFIG = (() => {
+            const explicitMode = typeof window.CRM_CALL_CENTER_MODE === 'string'
+                ? window.CRM_CALL_CENTER_MODE.trim().toLowerCase()
+                : 'auto';
+            const customBase = typeof window.CRM_API_BASE === 'string'
+                ? window.CRM_API_BASE.trim()
+                : '';
+            const normalizedBase = customBase ? customBase.replace(/\/+$/, '') : '';
+            const resolvedMode = explicitMode === 'demo'
+                ? 'demo'
+                : explicitMode === 'live'
+                    ? 'live'
+                    : (normalizedBase ? 'live' : 'demo');
+            const fallbackBase = !normalizedBase && resolvedMode === 'live'
+                && window.location && typeof window.location.origin === 'string'
+                && window.location.origin !== 'null'
+                ? window.location.origin.replace(/\/+$/, '')
+                : '';
+            return {
+                mode: resolvedMode,
+                base: normalizedBase || fallbackBase,
+                explicitMode
+            };
+        })();
+
         const CALL_CENTER_SENTIMENT_LABELS = {
             positive: 'Позитивно',
             negative: 'Негативно',
@@ -7035,7 +7060,7 @@
 
         const callCenterState = {
             initialized: false,
-            demoMode: false,
+            demoMode: CALL_CENTER_CONFIG.mode !== 'live',
             metricsContainer: null,
             queuesContainer: null,
             qualityContainer: null,
@@ -19313,26 +19338,43 @@
         }
 
         function getCallCenterBaseUrl() {
-            const base = window.CRM_API_BASE || window.location.origin;
-            return base.endsWith('/') ? base.slice(0, -1) : base;
+            return CALL_CENTER_CONFIG.base || '';
         }
 
         function buildCallCenterUrl(path, params = {}) {
+            const base = getCallCenterBaseUrl();
+            if (!base) {
+                return null;
+            }
             const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-            const url = new URL(normalizedPath, `${getCallCenterBaseUrl()}/`);
-            Object.entries(params).forEach(([key, value]) => {
-                if (value !== undefined && value !== null && value !== '') {
-                    url.searchParams.set(key, value);
-                }
-            });
-            return url.toString();
+            try {
+                const url = new URL(normalizedPath, `${base}/`);
+                Object.entries(params).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && value !== '') {
+                        url.searchParams.set(key, value);
+                    }
+                });
+                return url.toString();
+            } catch (error) {
+                console.warn('Не вдалося сформувати URL для контакт-центру.', error);
+                return null;
+            }
         }
 
         function buildCallCenterWebSocket(path) {
+            const base = getCallCenterBaseUrl();
+            if (!base) {
+                return null;
+            }
             const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-            const url = new URL(normalizedPath, `${getCallCenterBaseUrl()}/`);
-            url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
-            return url.toString();
+            try {
+                const url = new URL(normalizedPath, `${base}/`);
+                url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+                return url.toString();
+            } catch (error) {
+                console.warn('Не вдалося сформувати WebSocket для контакт-центру.', error);
+                return null;
+            }
         }
 
         function enableCallCenterDemoMode() {
@@ -19394,6 +19436,7 @@
 
         async function refreshCallCenterData() {
             if (callCenterState.demoMode) {
+                setCallCenterStatus(false);
                 renderCallCenterDemoData();
                 return;
             }
@@ -19411,7 +19454,12 @@
 
         async function loadCallCenterSummary() {
             try {
-                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.summary));
+                const url = buildCallCenterUrl(CALL_CENTER_ENDPOINTS.summary);
+                if (!url) {
+                    enableCallCenterDemoMode();
+                    return;
+                }
+                const response = await fetch(url, { cache: 'no-store' });
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
@@ -19528,7 +19576,12 @@
 
         async function loadCallCenterHistory(limit = 24) {
             try {
-                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.history, { limit: String(limit) }));
+                const url = buildCallCenterUrl(CALL_CENTER_ENDPOINTS.history, { limit: String(limit) });
+                if (!url) {
+                    enableCallCenterDemoMode();
+                    return;
+                }
+                const response = await fetch(url, { cache: 'no-store' });
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
@@ -19656,7 +19709,12 @@
 
         async function loadCallCenterQuality(limit = 5) {
             try {
-                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.quality, { limit: String(limit) }));
+                const url = buildCallCenterUrl(CALL_CENTER_ENDPOINTS.quality, { limit: String(limit) });
+                if (!url) {
+                    enableCallCenterDemoMode();
+                    return;
+                }
+                const response = await fetch(url, { cache: 'no-store' });
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
@@ -19755,7 +19813,7 @@
         }
 
         function connectCallCenterStreams() {
-            if (callCenterState.demoMode) {
+            if (callCenterState.demoMode || !getCallCenterBaseUrl()) {
                 return;
             }
             disposeCallCenterSockets();
@@ -19780,7 +19838,12 @@
 
         function connectKpiStream() {
             try {
-                const socket = new WebSocket(buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.kpiStream));
+                const socketUrl = buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.kpiStream);
+                if (!socketUrl) {
+                    enableCallCenterDemoMode();
+                    return;
+                }
+                const socket = new WebSocket(socketUrl);
                 callCenterState.kpiSocket = socket;
                 socket.addEventListener('open', () => setCallCenterStatus(true));
                 socket.addEventListener('message', event => {
@@ -19801,7 +19864,12 @@
 
         function connectQualityStream() {
             try {
-                const socket = new WebSocket(buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.qualityStream));
+                const socketUrl = buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.qualityStream);
+                if (!socketUrl) {
+                    enableCallCenterDemoMode();
+                    return;
+                }
+                const socket = new WebSocket(socketUrl);
                 callCenterState.qualitySocket = socket;
                 socket.addEventListener('message', event => {
                     try {
@@ -19820,7 +19888,7 @@
         }
 
         function scheduleCallCenterReconnect() {
-            if (callCenterState.demoMode) {
+            if (callCenterState.demoMode || !getCallCenterBaseUrl()) {
                 return;
             }
             if (callCenterState.reconnectHandle) {
