@@ -1281,6 +1281,415 @@
             height: 16px;
         }
 
+        .settings-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .settings-blueprint-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .settings-blueprint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .settings-blueprint-header h3 {
+            margin-bottom: 8px;
+        }
+
+        .settings-blueprint-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .settings-blueprint-search {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.16);
+        }
+
+        .settings-blueprint-search input {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--text);
+            min-width: 180px;
+        }
+
+        .settings-blueprint-search input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .settings-blueprint-search input:focus {
+            outline: none;
+        }
+
+        .settings-blueprint-select select {
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            padding: 6px 12px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+        }
+
+        .settings-blueprint-meta {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .settings-status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .settings-status-legend span,
+        .settings-feature-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .settings-status-legend span[data-status="planned"],
+        .settings-feature-status-pill[data-status="planned"] {
+            background: rgba(245, 158, 11, 0.14);
+            color: #92400e;
+        }
+
+        .settings-status-legend span[data-status="inProgress"],
+        .settings-feature-status-pill[data-status="inProgress"] {
+            background: rgba(99, 102, 241, 0.16);
+            color: var(--primary-dark);
+        }
+
+        .settings-status-legend span[data-status="done"],
+        .settings-feature-status-pill[data-status="done"] {
+            background: rgba(34, 197, 94, 0.16);
+            color: #166534;
+        }
+
+        .settings-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .settings-category-card {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+        }
+
+        .settings-category-header h4 {
+            font-size: 16px;
+            margin: 0 0 6px;
+        }
+
+        .settings-category-summary {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .settings-feature-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        .settings-feature {
+            display: flex;
+            gap: 16px;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-top: 12px;
+            border-top: 1px solid rgba(99, 102, 241, 0.12);
+        }
+
+        .settings-feature:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .settings-feature-info {
+            display: grid;
+            gap: 8px;
+        }
+
+        .settings-feature-title {
+            font-weight: 600;
+        }
+
+        .settings-feature-description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .settings-feature-details {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            list-style: disc;
+        }
+
+        .settings-feature-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .settings-feature-badge,
+        .usecase-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+
+        .settings-feature-actions {
+            display: grid;
+            gap: 8px;
+            justify-items: end;
+        }
+
+        .settings-feature-actions select {
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            padding: 6px 10px;
+            font-size: 13px;
+            background: rgba(248, 250, 255, 0.92);
+            color: var(--text);
+        }
+
+        .settings-empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            padding: 24px;
+            border-radius: var(--radius-md);
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .settings-empty-state[hidden] {
+            display: none;
+        }
+
+        .settings-quickstart-card {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .settings-quickstart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .settings-quickstart-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .settings-quickstart-summary {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .settings-toggle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .settings-toggle-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.92);
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .settings-toggle-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .settings-toggle-card.is-active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
+        }
+
+        .settings-toggle-card input {
+            margin-top: 4px;
+        }
+
+        .settings-toggle-content {
+            display: grid;
+            gap: 6px;
+        }
+
+        .settings-toggle-content strong {
+            font-size: 14px;
+        }
+
+        .settings-toggle-content p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .settings-usecase-card {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .usecase-process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .usecase-step {
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            background: rgba(14, 165, 233, 0.14);
+            color: #0c4a6e;
+            font-size: 13px;
+        }
+
+        .usecase-arrow {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .usecase-entities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .usecase-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .usecase-section {
+            display: grid;
+            gap: 12px;
+        }
+
+        .usecase-section h4 {
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .usecase-automation-list,
+        .usecase-devops-list {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .usecase-automation-list strong {
+            color: var(--text);
+        }
+
+        @media (max-width: 1024px) {
+            .settings-category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+
+            .settings-toggle-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            .settings-blueprint-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .settings-feature {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .settings-feature-actions {
+                width: 100%;
+                justify-items: flex-start;
+            }
+
+            .settings-feature-actions select {
+                width: 100%;
+            }
+        }
+
         .card h3 {
             font-size: 18px;
             font-weight: 600;
@@ -6218,82 +6627,153 @@
                         <p>Керуйте розміщенням блоків та зовнішнім виглядом головної панелі</p>
                     </div>
                 </div>
-                <div class="settings-grid">
-                    <div class="card settings-card">
-                        <h3>Макет дашборду</h3>
-                        <p class="metric-sub">Перетягуйте картки прямо на дашборді або зафіксуйте бажану кількість колонок.</p>
-                        <div class="setting-control">
-                            <span class="setting-label">Колонки дашборду</span>
-                            <div class="setting-options" role="radiogroup" aria-label="Кількість колонок дашборду">
-                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="auto"><span>Авто</span></label>
-                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="1"><span>1</span></label>
-                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="2"><span>2</span></label>
-                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="3"><span>3</span></label>
-                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="4"><span>4</span></label>
+                <div class="settings-stack">
+                    <div class="settings-grid">
+                        <div class="card settings-card">
+                            <h3>Макет дашборду</h3>
+                            <p class="metric-sub">Перетягуйте картки прямо на дашборді або зафіксуйте бажану кількість колонок.</p>
+                            <div class="setting-control">
+                                <span class="setting-label">Колонки дашборду</span>
+                                <div class="setting-options" role="radiogroup" aria-label="Кількість колонок дашборду">
+                                    <label class="option-pill"><input type="radio" name="dashboardColumns" value="auto"><span>Авто</span></label>
+                                    <label class="option-pill"><input type="radio" name="dashboardColumns" value="1"><span>1</span></label>
+                                    <label class="option-pill"><input type="radio" name="dashboardColumns" value="2"><span>2</span></label>
+                                    <label class="option-pill"><input type="radio" name="dashboardColumns" value="3"><span>3</span></label>
+                                    <label class="option-pill"><input type="radio" name="dashboardColumns" value="4"><span>4</span></label>
+                                </div>
+                            </div>
+                            <div class="setting-control">
+                                <span class="setting-label">Колонки швидких метрик</span>
+                                <div class="setting-options" role="radiogroup" aria-label="Кількість колонок швидких метрик">
+                                    <label class="option-pill"><input type="radio" name="metricsColumns" value="auto"><span>Авто</span></label>
+                                    <label class="option-pill"><input type="radio" name="metricsColumns" value="1"><span>1</span></label>
+                                    <label class="option-pill"><input type="radio" name="metricsColumns" value="2"><span>2</span></label>
+                                    <label class="option-pill"><input type="radio" name="metricsColumns" value="3"><span>3</span></label>
+                                    <label class="option-pill"><input type="radio" name="metricsColumns" value="4"><span>4</span></label>
+                                </div>
+                            </div>
+                            <div class="setting-control">
+                                <span class="setting-label">Мінімальна ширина карток дашборду</span>
+                                <div class="setting-slider">
+                                    <input type="range" id="dashboardMinWidthSlider" min="260" max="420" step="10" aria-label="Мінімальна ширина карток дашборду">
+                                    <span class="setting-slider-value" id="dashboardMinWidthValue"></span>
+                                </div>
+                            </div>
+                            <div class="setting-control">
+                                <span class="setting-label">Мінімальна ширина швидких метрик</span>
+                                <div class="setting-slider">
+                                    <input type="range" id="metricsMinWidthSlider" min="180" max="320" step="10" aria-label="Мінімальна ширина метрик">
+                                    <span class="setting-slider-value" id="metricsMinWidthValue"></span>
+                                </div>
+                            </div>
+                            <label class="setting-toggle">
+                                <input type="checkbox" id="compactLayoutToggle">
+                                <span class="setting-toggle-indicator" aria-hidden="true"></span>
+                                <span class="setting-toggle-label">Компактний режим карток</span>
+                            </label>
+                            <p class="metric-sub">Компактний режим зменшує відступи та дозволяє вмістити більше інформації на екран.</p>
+                        </div>
+                        <div class="card settings-card">
+                            <h3>Видимість блоків</h3>
+                            <p class="metric-sub">Увімкніть лише найважливіші для вас картки. Приховані елементи можна повернути будь-коли.</p>
+                            <div class="settings-order-columns">
+                                <div>
+                                    <h4>Дашборд</h4>
+                                    <div class="setting-checkbox-list" id="dashboardVisibilityControls"></div>
+                                </div>
+                                <div>
+                                    <h4>Швидкі метрики</h4>
+                                    <div class="setting-checkbox-list" id="metricsVisibilityControls"></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="setting-control">
-                            <span class="setting-label">Колонки швидких метрик</span>
-                            <div class="setting-options" role="radiogroup" aria-label="Кількість колонок швидких метрик">
-                                <label class="option-pill"><input type="radio" name="metricsColumns" value="auto"><span>Авто</span></label>
-                                <label class="option-pill"><input type="radio" name="metricsColumns" value="1"><span>1</span></label>
-                                <label class="option-pill"><input type="radio" name="metricsColumns" value="2"><span>2</span></label>
-                                <label class="option-pill"><input type="radio" name="metricsColumns" value="3"><span>3</span></label>
-                                <label class="option-pill"><input type="radio" name="metricsColumns" value="4"><span>4</span></label>
+                        <div class="card settings-card">
+                            <h3>Поточний порядок</h3>
+                            <p class="metric-sub">Перетягніть блоки на сторінці або скористайтесь кнопкою нижче, щоб повернути стандартний вигляд.</p>
+                            <div class="settings-order-columns">
+                                <div>
+                                    <h4>Дашборд</h4>
+                                    <ol class="settings-order-list" id="dashboardOrderPreview"></ol>
+                                </div>
+                                <div>
+                                    <h4>Швидкі метрики</h4>
+                                    <ol class="settings-order-list" id="metricsOrderPreview"></ol>
+                                </div>
                             </div>
+                            <button type="button" class="btn btn-small-muted" id="resetLayoutBtn">
+                                <i class="fa-solid fa-arrows-rotate"></i>
+                                Скинути макет
+                            </button>
                         </div>
-                        <div class="setting-control">
-                            <span class="setting-label">Мінімальна ширина карток дашборду</span>
-                            <div class="setting-slider">
-                                <input type="range" id="dashboardMinWidthSlider" min="260" max="420" step="10" aria-label="Мінімальна ширина карток дашборду">
-                                <span class="setting-slider-value" id="dashboardMinWidthValue"></span>
-                            </div>
-                        </div>
-                        <div class="setting-control">
-                            <span class="setting-label">Мінімальна ширина швидких метрик</span>
-                            <div class="setting-slider">
-                                <input type="range" id="metricsMinWidthSlider" min="180" max="320" step="10" aria-label="Мінімальна ширина метрик">
-                                <span class="setting-slider-value" id="metricsMinWidthValue"></span>
-                            </div>
-                        </div>
-                        <label class="setting-toggle">
-                            <input type="checkbox" id="compactLayoutToggle">
-                            <span class="setting-toggle-indicator" aria-hidden="true"></span>
-                            <span class="setting-toggle-label">Компактний режим карток</span>
-                        </label>
-                        <p class="metric-sub">Компактний режим зменшує відступи та дозволяє вмістити більше інформації на екран.</p>
                     </div>
-                    <div class="card settings-card">
-                        <h3>Видимість блоків</h3>
-                        <p class="metric-sub">Увімкніть лише найважливіші для вас картки. Приховані елементи можна повернути будь-коли.</p>
-                        <div class="settings-order-columns">
+                    <div class="card settings-blueprint-panel" id="settingsBlueprintPanel">
+                        <div class="settings-blueprint-header">
                             <div>
-                                <h4>Дашборд</h4>
-                                <div class="setting-checkbox-list" id="dashboardVisibilityControls"></div>
+                                <h3>Архітектура CRM</h3>
+                                <p class="metric-sub">Керований чекліст по ключових модулях, який охоплює дані, процеси та інтеграції.</p>
                             </div>
-                            <div>
-                                <h4>Швидкі метрики</h4>
-                                <div class="setting-checkbox-list" id="metricsVisibilityControls"></div>
+                            <div class="settings-blueprint-controls">
+                                <label class="settings-blueprint-search">
+                                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                                    <span class="visually-hidden" id="settingsBlueprintSearchLabel">Пошук налаштувань</span>
+                                    <input type="search" id="settingsBlueprintSearch" placeholder="Шукати налаштування..." aria-labelledby="settingsBlueprintSearchLabel">
+                                </label>
+                                <label class="settings-blueprint-select">
+                                    <span class="visually-hidden" id="settingsBlueprintFilterLabel">Фільтр за статусом</span>
+                                    <select id="settingsBlueprintFilter" aria-labelledby="settingsBlueprintFilterLabel">
+                                        <option value="all">Усі статуси</option>
+                                        <option value="planned">У беклозі</option>
+                                        <option value="inProgress">У роботі</option>
+                                        <option value="done">Готово</option>
+                                    </select>
+                                </label>
+                                <button type="button" class="btn btn-small-muted" id="resetBlueprintStatusesBtn">
+                                    <i class="fa-solid fa-rotate"></i>
+                                    Скинути статуси
+                                </button>
                             </div>
+                        </div>
+                        <div class="settings-blueprint-meta">
+                            <div id="settingsBlueprintSummary"></div>
+                            <div id="settingsBlueprintCounter"></div>
+                        </div>
+                        <div class="settings-status-legend">
+                            <span data-status="planned">У беклозі</span>
+                            <span data-status="inProgress">У роботі</span>
+                            <span data-status="done">Готово</span>
+                        </div>
+                        <div class="settings-category-grid" id="settingsBlueprintGrid"></div>
+                        <div class="settings-empty-state" id="settingsBlueprintEmpty" hidden>
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            <p>Немає налаштувань за вашим запитом. Змініть пошук або фільтр.</p>
                         </div>
                     </div>
-                    <div class="card settings-card">
-                        <h3>Поточний порядок</h3>
-                        <p class="metric-sub">Перетягніть блоки на сторінці або скористайтесь кнопкою нижче, щоб повернути стандартний вигляд.</p>
-                        <div class="settings-order-columns">
+                    <div class="card settings-card settings-quickstart-card" id="quickStartCard">
+                        <div class="settings-quickstart-header">
                             <div>
-                                <h4>Дашборд</h4>
-                                <ol class="settings-order-list" id="dashboardOrderPreview"></ol>
+                                <h3>“Швидкий старт”</h3>
+                                <p class="metric-sub">20 тумблерів, які дають 80% гнучкості для невеликих команд.</p>
                             </div>
-                            <div>
-                                <h4>Швидкі метрики</h4>
-                                <ol class="settings-order-list" id="metricsOrderPreview"></ol>
+                            <div class="settings-quickstart-actions">
+                                <div class="settings-quickstart-summary" id="quickStartSummary"></div>
+                                <button type="button" class="btn btn-small-muted" id="quickStartClearBtn">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Вимкнути все
+                                </button>
+                                <button type="button" class="btn btn-small-primary" id="quickStartSelectAllBtn">
+                                    <i class="fa-solid fa-sparkles"></i>
+                                    Рекомендовані
+                                </button>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-small-muted" id="resetLayoutBtn">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                            Скинути макет
-                        </button>
+                        <div class="settings-toggle-grid" id="quickStartToggleList"></div>
+                    </div>
+                    <div class="card settings-card settings-usecase-card" id="useCaseCard">
+                        <div>
+                            <h3>Типові кейси для маркетингу, DevOps та e-commerce</h3>
+                            <p class="metric-sub">Єдиний план, що покриває процеси, сутності, автоматизації та DevOps-практики.</p>
+                        </div>
+                        <div class="usecase-sections" id="casePlaybookContainer"></div>
                     </div>
                 </div>
             </section>
@@ -7257,6 +7737,7 @@
         };
         const navigationState = { search: '', filter: 'all' };
         let applyNavigationFilters = () => {};
+        const settingsState = { blueprintSearch: '', blueprintStatus: 'all' };
 
         const PREFERENCES_KEY = 'homeCRMPreferences_v1';
         const DASHBOARD_BLOCK_IDS = [
@@ -7333,6 +7814,476 @@
                 </div>
             `
         };
+        const BLUEPRINT_STATUS_OPTIONS = [
+            { value: 'planned', label: 'У беклозі' },
+            { value: 'inProgress', label: 'У роботі' },
+            { value: 'done', label: 'Готово' }
+        ];
+        const BLUEPRINT_STATUS_LABELS = BLUEPRINT_STATUS_OPTIONS.reduce((map, option) => {
+            map[option.value] = option.label;
+            return map;
+        }, {});
+        const BLUEPRINT_STATUS_SET = new Set(BLUEPRINT_STATUS_OPTIONS.map(option => option.value));
+        const SETTINGS_BLUEPRINT = [
+            {
+                id: 'data-core',
+                title: '1) Дані й структура (ядро)',
+                summary: 'Моделювання даних, глобальні довідники та контроль цілісності.',
+                features: [
+                    {
+                        id: 'data-custom-entities',
+                        label: 'Кастомні сутності/об’єкти',
+                        description: 'Поля: текст, money, мульти-select, formula, rollup, JSON; контроль обов’язковості, маски й regex.',
+                        badges: ['Формули', 'Rollup', 'JSON', 'Regex']
+                    },
+                    {
+                        id: 'data-relations',
+                        label: 'Зв’язки та ієрархії',
+                        description: 'Моделюйте зв’язки 1:1, 1:M, M:N, підтримуйте ієрархії та поліморфні посилання між сутностями.',
+                        badges: ['1:1', '1:M', 'M:N', 'Поліморфні']
+                    },
+                    {
+                        id: 'data-dictionaries',
+                        label: 'Глобальні довідники',
+                        description: 'Єдині довідники статусів, етапів, причин втрати й типів активностей для всіх модулів.',
+                        badges: ['Єдині словники']
+                    },
+                    {
+                        id: 'data-conditional-visibility',
+                        label: 'Умовна логіка полів',
+                        description: 'Умовна видимість, залежності if/then та перевірки під час зміни стадії.',
+                        badges: ['If/Then', 'Перевірки стадії']
+                    },
+                    {
+                        id: 'data-numbering-tags',
+                        label: 'Нумератори й категорії',
+                        description: 'Нумератори та префікси документів, автослаги, теги й категорії для швидкої сегментації.',
+                        badges: ['Нумератори', 'Автослаги', 'Теги']
+                    }
+                ]
+            },
+            {
+                id: 'ui-ux',
+                title: '2) Інтерфейс і UX',
+                summary: 'Рольові макети, різні подання та продуктивна робота в CRM.',
+                features: [
+                    {
+                        id: 'ui-role-layouts',
+                        label: 'Окремі макети за ролями',
+                        description: 'Персоналізовані сторінки для ролей, inline-edit та швидке створення записів.',
+                        badges: ['Role-based', 'Inline-edit']
+                    },
+                    {
+                        id: 'ui-views',
+                        label: 'Гнучкі подання',
+                        description: 'Канбан, список, календар, таймлайн і ґант із збереженими фільтрами та улюбленими поданнями.',
+                        badges: ['Канбан', 'Календар', 'Ґант']
+                    },
+                    {
+                        id: 'ui-dashboards',
+                        label: 'Дашборди з віджетами',
+                        description: 'KPI, воронка, лід-тайм і конверсії з можливістю drill-down.',
+                        badges: ['Drill-down', 'KPI']
+                    },
+                    {
+                        id: 'ui-mobile-offline',
+                        label: 'Мобільні макети й шорткати',
+                        description: 'Мобільні макети, офлайн-режим, гарячі клавіші та командна панель (⌘/Ctrl+K).',
+                        badges: ['Офлайн', 'Командна панель']
+                    }
+                ]
+            },
+            {
+                id: 'processes',
+                title: '3) Процеси, воронки, SLA',
+                summary: 'Регламенти воронок та контроль дотримання SLA.',
+                features: [
+                    {
+                        id: 'process-multiple-pipelines',
+                        label: 'Необмежені воронки',
+                        description: 'Будуйте кілька воронок на сутність з етапними правилами та обов’язковими полями.',
+                        badges: ['Етапні правила']
+                    },
+                    {
+                        id: 'process-bpmn',
+                        label: 'Конструктор процесів',
+                        description: 'State machine/BPMN з узгодженнями, відхиленнями та ескалаціями.',
+                        badges: ['BPMN', 'Ескалації']
+                    },
+                    {
+                        id: 'process-sla',
+                        label: 'SLA та playbooks',
+                        description: 'SLA/OLA таймери, авто-ескалації за чергами й пріоритетами, playbooks із чеклістами.',
+                        badges: ['SLA', 'Playbooks']
+                    }
+                ]
+            },
+            {
+                id: 'automation',
+                title: '4) Автоматизація й логіка',
+                summary: 'Тригери, дії та скрипти для гнучкого налаштування бізнес-логіки.',
+                features: [
+                    {
+                        id: 'automation-triggers',
+                        label: 'Повний набір тригерів',
+                        description: 'Before/after create-update-delete, розклади та вхідні події (webhook/inbox).',
+                        badges: ['Before/After', 'Webhook']
+                    },
+                    {
+                        id: 'automation-actions',
+                        label: 'Системні дії',
+                        description: 'Призначення, оновлення полів, створення зв’язаних записів, нотифікації та webhooks out.',
+                        badges: ['Webhooks out', 'Нотифікації']
+                    },
+                    {
+                        id: 'automation-scripts',
+                        label: 'Скрипти й low-code',
+                        description: 'JS/Python у sandbox, версіонування та low-code конструктор правил.',
+                        badges: ['Sandbox', 'Low-code']
+                    }
+                ]
+            },
+            {
+                id: 'security',
+                title: '5) Права та безпека',
+                summary: 'Моделі доступу, захист PII та автентифікація.',
+                features: [
+                    {
+                        id: 'security-rbac',
+                        label: 'RBAC/ABAC моделі',
+                        description: 'Ролі, профілі доступу та правила шарингу за власником, командою чи територіями.',
+                        badges: ['RBAC', 'Правила шарингу']
+                    },
+                    {
+                        id: 'security-field-level',
+                        label: 'Контроль на рівні поля',
+                        description: 'Права на рівні поля й рядка, маскування PII та аудит-лог.',
+                        badges: ['PII', 'Аудит']
+                    },
+                    {
+                        id: 'security-auth',
+                        label: 'Розширена автентифікація',
+                        description: 'SSO (SAML/OIDC), 2FA, IP-allowlist та керування API-токенами з ротацією.',
+                        badges: ['SSO', '2FA', 'API-токени']
+                    }
+                ]
+            },
+            {
+                id: 'data-lifecycle',
+                title: '6) Дані: імпорт/якість/життєвий цикл',
+                summary: 'Якість даних, дедуплікація та архівація.',
+                features: [
+                    {
+                        id: 'data-import',
+                        label: 'Майстер імпорту',
+                        description: 'Мапінг шаблонів, обмеження та прев’ю даних перед завантаженням.',
+                        badges: ['Мапінг', 'Прев’ю']
+                    },
+                    {
+                        id: 'data-dedup',
+                        label: 'Дедуплікація й нормалізація',
+                        description: 'Фузі-правила, пороги схожості, злиття, нормалізація телефонів та адрес.',
+                        badges: ['Фузі', 'Нормалізація']
+                    },
+                    {
+                        id: 'data-archival',
+                        label: 'Політики життєвого циклу',
+                        description: 'Архівація, утримання даних, м’яке видалення та відновлення.',
+                        badges: ['М’яке видалення', 'Архівація']
+                    }
+                ]
+            },
+            {
+                id: 'integrations',
+                title: '7) Інтеграції та шини подій',
+                summary: 'Комунікації, API та асинхронні інтеграції.',
+                features: [
+                    {
+                        id: 'integrations-communications',
+                        label: 'Комунікації та e-commerce',
+                        description: 'Email, календар, телефонія, месенджери, e-commerce, платіжні шлюзи та BI.',
+                        badges: ['Email', 'Телефонія', 'BI']
+                    },
+                    {
+                        id: 'integrations-api',
+                        label: 'Публічні API',
+                        description: 'REST/GraphQL API, вебхуки та вхідні поштові бокси з правилами парсингу.',
+                        badges: ['GraphQL', 'Webhook', 'Inbox']
+                    },
+                    {
+                        id: 'integrations-event-bus',
+                        label: 'Подійна шина',
+                        description: 'Єдина event bus-інфраструктура для асинхронних інтеграцій.',
+                        badges: ['Event bus']
+                    }
+                ]
+            },
+            {
+                id: 'sales-cpq',
+                title: '8) Продажі/CPQ/фінанси',
+                summary: 'Комерційні пропозиції та білінг.',
+                features: [
+                    {
+                        id: 'sales-catalog',
+                        label: 'Каталог і прайс-буки',
+                        description: 'Каталог товарів, прайс-буки, правила ціноутворення/знижок та бандли.',
+                        badges: ['CPQ', 'Знижки', 'Бандли']
+                    },
+                    {
+                        id: 'sales-billing',
+                        label: 'Фінансові документи',
+                        description: 'Котирування, рахунки, підписки/recurring, мультивалютність з курсами та датами FX.',
+                        badges: ['Recurring', 'FX']
+                    },
+                    {
+                        id: 'sales-tax',
+                        label: 'Податкові правила',
+                        description: 'ПДВ/VAT, шаблони документів та нумерації.',
+                        badges: ['VAT', 'Нумерація']
+                    }
+                ]
+            },
+            {
+                id: 'marketing',
+                title: '9) Маркетинг та комунікації',
+                summary: 'Сегментація, секвенси та форми лідогенерації.',
+                features: [
+                    {
+                        id: 'marketing-templates',
+                        label: 'Шаблони комунікацій',
+                        description: 'Шаблони листів, SMS і месенджерів зі змінними та A/B тестуванням тем і відправника.',
+                        badges: ['A/B', 'Шаблони']
+                    },
+                    {
+                        id: 'marketing-sequences',
+                        label: 'Секвенси та lead routing',
+                        description: 'Серії повідомлень, lead routing, UTM-мапінг, згода (GDPR) та подвійний opt-in.',
+                        badges: ['Lead routing', 'UTM', 'GDPR']
+                    },
+                    {
+                        id: 'marketing-forms',
+                        label: 'Форми та віджети',
+                        description: 'Форми з антиспам-фільтрами, віджети та мапінг у сутності CRM.',
+                        badges: ['Антиспам', 'Мапінг']
+                    }
+                ]
+            },
+            {
+                id: 'analytics',
+                title: '10) Пошук, аналітика, звітність',
+                summary: 'Пошук із синонімами та глибока аналітика.',
+                features: [
+                    {
+                        id: 'analytics-search',
+                        label: 'Повнотекстовий пошук',
+                        description: 'Пошук із синонімами, вагами полів та швидкими фільтрами.',
+                        badges: ['Синоніми', 'Ваги полів']
+                    },
+                    {
+                        id: 'analytics-reports',
+                        label: 'Звіти та розсилки',
+                        description: 'Табличні звіти, піводи, когорти та заплановані розсилки email/Slack.',
+                        badges: ['Піводи', 'Slack']
+                    },
+                    {
+                        id: 'analytics-models',
+                        label: 'Аналітичні моделі',
+                        description: 'Конверсії етапів, тривалість у станах, LTV/CAC та ROMI.',
+                        badges: ['LTV', 'CAC', 'ROMI']
+                    }
+                ]
+            },
+            {
+                id: 'internationalization',
+                title: '11) Інтернаціоналізація',
+                summary: 'Локалізація та мультивалютність.',
+                features: [
+                    {
+                        id: 'intl-localization',
+                        label: 'Мультимова підтримка',
+                        description: 'Лейбли та темплейти кількома мовами, локальні формати дат і чисел.',
+                        badges: ['Мультимова']
+                    },
+                    {
+                        id: 'intl-multicurrency',
+                        label: 'Мультивалютність',
+                        description: 'Мультивалютність з історією курсів та альтернативними фіскальними календарями.',
+                        badges: ['FX історія', 'Фіскальні календарі']
+                    }
+                ]
+            },
+            {
+                id: 'devops',
+                title: '12) DevOps і життєвий цикл змін',
+                summary: 'Контроль середовищ, конфігів та стабільності.',
+                features: [
+                    {
+                        id: 'devops-environments',
+                        label: 'Окремі середовища',
+                        description: 'Середовища dev/test/stage/prod для безпечних релізів.',
+                        badges: ['Dev/Test/Stage/Prod']
+                    },
+                    {
+                        id: 'devops-config',
+                        label: 'Config-as-Code',
+                        description: 'Експорт схем, воронок і прав у YAML/JSON, міграції та seed-дані.',
+                        badges: ['Config-as-Code', 'Міграції']
+                    },
+                    {
+                        id: 'devops-resilience',
+                        label: 'Фічефлаги й бекапи',
+                        description: 'Фічефлаги, журнал змін, регулярні бекапи та тести відновлення.',
+                        badges: ['Фічефлаги', 'Бекапи']
+                    },
+                    {
+                        id: 'devops-observability',
+                        label: 'Моніторинг і екосистема',
+                        description: 'Логи, метрики, індекси/кеш-TTL, rate limiting, профілювання та маркетплейс плагінів.',
+                        badges: ['Моніторинг', 'Rate limiting', 'Маркетплейс']
+                    }
+                ]
+            }
+        ];
+        const BLUEPRINT_FEATURE_MAP = SETTINGS_BLUEPRINT.reduce((map, category) => {
+            category.features.forEach(feature => {
+                map[feature.id] = feature;
+            });
+            return map;
+        }, {});
+        const BLUEPRINT_DEFAULT_STATUSES = (() => {
+            const defaults = {};
+            SETTINGS_BLUEPRINT.forEach(category => {
+                category.features.forEach(feature => {
+                    defaults[feature.id] = feature.defaultStatus || 'planned';
+                });
+            });
+            return defaults;
+        })();
+        const BLUEPRINT_TOTAL_FEATURES = Object.keys(BLUEPRINT_DEFAULT_STATUSES).length;
+        const QUICK_START_TOGGLES = [
+            {
+                id: 'custom-objects',
+                label: 'Custom objects + поля formula/rollup',
+                hint: 'Увімкніть гнучкі обчислювані поля для будь-якої сутності.'
+            },
+            {
+                id: 'global-statuses',
+                label: 'Глобальні довідники статусів і причин втрат',
+                hint: 'Єдина термінологія для усіх команд і модулів.'
+            },
+            {
+                id: 'stage-required-fields',
+                label: 'Обов’язкові поля по етапах воронки',
+                hint: 'Переконайтесь, що ключові дані заповнені перед переходом між стадіями.'
+            },
+            {
+                id: 'conditional-visibility',
+                label: 'Умовна видимість полів (role/stage)',
+                hint: 'Показуйте поля лише відповідним ролям та на потрібних стадіях.'
+            },
+            {
+                id: 'assignment-rules',
+                label: 'Assignment rules + round-robin',
+                hint: 'Автоматичний розподіл лідів між менеджерами.'
+            },
+            {
+                id: 'sla-timers',
+                label: 'SLA таймери + авто-ескалації',
+                hint: 'Контроль дедлайнів та автоматичні ескалації за чергою чи пріоритетом.'
+            },
+            {
+                id: 'deduplication',
+                label: 'Дедуплікація з порогами схожості',
+                hint: 'Фузі-правила для виявлення та злиття дубльованих записів.'
+            },
+            {
+                id: 'webhooks-email-parsers',
+                label: 'Webhooks out + вхідні email-парсери',
+                hint: 'Синхронізуйте CRM із зовнішніми сервісами та вхідною поштою.'
+            },
+            {
+                id: 'field-level-security',
+                label: 'Права на рівні поля/запису',
+                hint: 'Обмежте доступ до чутливих даних на рівні полів та записів.'
+            },
+            {
+                id: 'saved-views-kanban',
+                label: 'Saved views/фільтри + канбан',
+                hint: 'Зберігайте улюблені фільтри та працюйте у вигляді канбан.'
+            },
+            {
+                id: 'search-synonyms',
+                label: 'Повнотекстовий пошук із синонімами',
+                hint: 'Пошук у всіх сутностях з урахуванням синонімів і ваг полів.'
+            },
+            {
+                id: 'process-builder',
+                label: 'Конструктор процесів (затвердження/відхилення)',
+                hint: 'Візуально проектуйте процеси узгодження без коду.'
+            },
+            {
+                id: 'messaging-templates',
+                label: 'Email/SMS шаблони з плейсхолдерами',
+                hint: 'Стандартизовані шаблони з персоналізацією змінних.'
+            },
+            {
+                id: 'multicurrency-rates',
+                label: 'Мультивалютність і курси (НБУ/ЄЦБ)',
+                hint: 'Автоматичне оновлення курсів валют із національних банків.'
+            },
+            {
+                id: 'executive-dashboards',
+                label: 'Дашборди керівника з drill-down',
+                hint: 'Швидкий доступ до KPI з можливістю деталізації.'
+            },
+            {
+                id: 'import-templates',
+                label: 'Імпорт-шаблони + автоперевірки',
+                hint: 'Стандартизований імпорт із перевіркою якості даних.'
+            },
+            {
+                id: 'validation-masks',
+                label: 'Маски/валидації телефонів/IBAN/ЄДРПОУ',
+                hint: 'Гарантуйте коректність реквізитів під час введення.'
+            },
+            {
+                id: 'secrets-manager',
+                label: 'Менеджер секретів/API-ключів',
+                hint: 'Централізоване зберігання та ротація секретів.'
+            },
+            {
+                id: 'twofa-sso',
+                label: '2FA + SSO',
+                hint: 'Посилена автентифікація та єдиний вхід для всієї команди.'
+            },
+            {
+                id: 'config-export',
+                label: 'Експорт конфігів у Git + міграції',
+                hint: 'Зберігайте конфігурацію у репозиторії та застосовуйте міграції.'
+            }
+        ];
+        const QUICK_START_DEFAULTS = QUICK_START_TOGGLES.reduce((acc, toggle) => {
+            acc[toggle.id] = true;
+            return acc;
+        }, {});
+        const QUICK_START_DISABLED_STATE = Object.keys(QUICK_START_DEFAULTS).reduce((acc, key) => {
+            acc[key] = false;
+            return acc;
+        }, {});
+        const USE_CASE_BLUEPRINT = {
+            process: ['Ліди', 'Кваліфікація', 'Пропозиція', 'Угода', 'Пост-угода (NPS/апсел/повтор)'],
+            entities: ['Лід', 'Компанія', 'Контакт', 'Угода', 'Продукт', 'Замовлення', 'Кампанія', 'Активність', 'Кейс/Тікет'],
+            automations: [
+                { title: 'UTM-мапінг', description: 'UTM-мапінг → авто-створення ліда → роутинг за джерелом.' },
+                { title: 'Валідація стадій', description: 'Без бюджету/ТЗ — не пускає далі.' },
+                { title: 'Post-won', description: 'Створити “Onboarding Checklist” та нагадування.' }
+            ],
+            devops: [
+                'Конфіги в репозиторії',
+                'Pull-request на зміну схем/воронок',
+                'Nightly бекап та квартальний тест відновлення'
+            ]
+        };
         const DEFAULT_PREFERENCES = {
             layout: {
                 dashboardOrder: [...DASHBOARD_BLOCK_IDS],
@@ -7345,7 +8296,11 @@
                 hiddenDashboardBlocks: [],
                 hiddenMetricBlocks: []
             },
-            customCharts: []
+            customCharts: [],
+            settings: {
+                blueprintStatuses: { ...BLUEPRINT_DEFAULT_STATUSES },
+                quickStart: { ...QUICK_START_DEFAULTS }
+            }
         };
         const CHART_TYPE_LABELS = {
             bar: 'Стовпчаста діаграма',
@@ -7721,6 +8676,31 @@
             return fallback;
         }
 
+        function normalizeBlueprintStatuses(value) {
+            const normalized = { ...BLUEPRINT_DEFAULT_STATUSES };
+            if (value && typeof value === 'object') {
+                Object.keys(BLUEPRINT_DEFAULT_STATUSES).forEach(featureId => {
+                    const stored = value[featureId];
+                    normalized[featureId] = BLUEPRINT_STATUS_SET.has(stored)
+                        ? stored
+                        : BLUEPRINT_DEFAULT_STATUSES[featureId];
+                });
+            }
+            return normalized;
+        }
+
+        function normalizeQuickStart(value) {
+            const normalized = { ...QUICK_START_DEFAULTS };
+            if (value && typeof value === 'object') {
+                Object.keys(QUICK_START_DEFAULTS).forEach(toggleId => {
+                    if (Object.prototype.hasOwnProperty.call(value, toggleId)) {
+                        normalized[toggleId] = Boolean(value[toggleId]);
+                    }
+                });
+            }
+            return normalized;
+        }
+
         function loadPreferences() {
             let preferences = cloneDefaultPreferences();
             let stored = null;
@@ -7756,6 +8736,12 @@
                         preferences.layout.compactMode = Boolean(layout.compactMode);
                         preferences.layout.hiddenDashboardBlocks = normalizeHidden(layout.hiddenDashboardBlocks, DASHBOARD_BLOCK_IDS);
                         preferences.layout.hiddenMetricBlocks = normalizeHidden(layout.hiddenMetricBlocks, METRIC_BLOCK_IDS);
+                        const settings = parsed.settings || {};
+                        if (!preferences.settings) {
+                            preferences.settings = cloneDefaultPreferences().settings;
+                        }
+                        preferences.settings.blueprintStatuses = normalizeBlueprintStatuses(settings.blueprintStatuses);
+                        preferences.settings.quickStart = normalizeQuickStart(settings.quickStart);
                     }
                 } catch (error) {
                     console.warn('Не вдалося розпарсити налаштування інтерфейсу, використовую стандартні значення.', error);
@@ -7903,7 +8889,16 @@
         }
 
         function resetLayoutPreferences() {
-            uiPreferences = cloneDefaultPreferences();
+            const defaults = cloneDefaultPreferences();
+            if (!uiPreferences) {
+                uiPreferences = defaults;
+            } else {
+                uiPreferences.layout = defaults.layout;
+                uiPreferences.customCharts = defaults.customCharts;
+                if (!uiPreferences.settings) {
+                    uiPreferences.settings = defaults.settings;
+                }
+            }
             savePreferences();
             updateLayoutVariables();
             renderDashboard();
@@ -10778,6 +11773,52 @@
                     }
                 });
             }
+
+            renderSettingsBlueprint();
+            renderQuickStartToggles();
+            renderUseCasePlaybook();
+
+            const blueprintSearchInput = document.getElementById('settingsBlueprintSearch');
+            if (blueprintSearchInput) {
+                blueprintSearchInput.value = settingsState.blueprintSearch;
+                blueprintSearchInput.addEventListener('input', event => {
+                    settingsState.blueprintSearch = event.target.value || '';
+                    renderSettingsBlueprint();
+                });
+            }
+
+            const blueprintFilterSelect = document.getElementById('settingsBlueprintFilter');
+            if (blueprintFilterSelect) {
+                blueprintFilterSelect.value = settingsState.blueprintStatus;
+                blueprintFilterSelect.addEventListener('change', event => {
+                    settingsState.blueprintStatus = event.target.value || 'all';
+                    renderSettingsBlueprint();
+                });
+            }
+
+            const blueprintResetButton = document.getElementById('resetBlueprintStatusesBtn');
+            if (blueprintResetButton) {
+                blueprintResetButton.addEventListener('click', () => {
+                    resetBlueprintStatuses();
+                    renderSettingsBlueprint();
+                });
+            }
+
+            const quickStartSelectAllBtn = document.getElementById('quickStartSelectAllBtn');
+            if (quickStartSelectAllBtn) {
+                quickStartSelectAllBtn.addEventListener('click', () => {
+                    applyQuickStartDefaults();
+                    renderQuickStartToggles();
+                });
+            }
+
+            const quickStartClearBtn = document.getElementById('quickStartClearBtn');
+            if (quickStartClearBtn) {
+                quickStartClearBtn.addEventListener('click', () => {
+                    clearQuickStartToggles();
+                    renderQuickStartToggles();
+                });
+            }
         }
 
         function renderVisibilityControls() {
@@ -10884,6 +11925,304 @@
             if (toggle) {
                 toggle.checked = Boolean(uiPreferences?.layout?.compactMode);
             }
+        }
+
+        function ensureSettingsPreferences() {
+            if (!uiPreferences) {
+                uiPreferences = cloneDefaultPreferences();
+            }
+            if (!uiPreferences.settings) {
+                uiPreferences.settings = cloneDefaultPreferences().settings;
+            }
+            if (!uiPreferences.settings.blueprintStatuses) {
+                uiPreferences.settings.blueprintStatuses = { ...BLUEPRINT_DEFAULT_STATUSES };
+            }
+            if (!uiPreferences.settings.quickStart) {
+                uiPreferences.settings.quickStart = { ...QUICK_START_DEFAULTS };
+            }
+            return uiPreferences.settings;
+        }
+
+        function getBlueprintStatusLabel(status) {
+            return BLUEPRINT_STATUS_LABELS[status] || BLUEPRINT_STATUS_LABELS.planned;
+        }
+
+        function getBlueprintStatus(featureId) {
+            if (!featureId || !BLUEPRINT_FEATURE_MAP[featureId]) {
+                return 'planned';
+            }
+            const stored = uiPreferences?.settings?.blueprintStatuses;
+            if (stored && BLUEPRINT_STATUS_SET.has(stored[featureId])) {
+                return stored[featureId];
+            }
+            return BLUEPRINT_DEFAULT_STATUSES[featureId] || 'planned';
+        }
+
+        function setBlueprintStatus(featureId, status) {
+            if (!featureId || !BLUEPRINT_FEATURE_MAP[featureId]) {
+                return;
+            }
+            const normalized = BLUEPRINT_STATUS_SET.has(status)
+                ? status
+                : BLUEPRINT_DEFAULT_STATUSES[featureId] || 'planned';
+            const settings = ensureSettingsPreferences();
+            if (settings.blueprintStatuses[featureId] === normalized) {
+                return;
+            }
+            settings.blueprintStatuses[featureId] = normalized;
+            savePreferences();
+        }
+
+        function resetBlueprintStatuses() {
+            const settings = ensureSettingsPreferences();
+            settings.blueprintStatuses = { ...BLUEPRINT_DEFAULT_STATUSES };
+            savePreferences();
+        }
+
+        function renderSettingsBlueprint() {
+            const container = document.getElementById('settingsBlueprintGrid');
+            if (!container) {
+                return;
+            }
+
+            const searchTerm = (settingsState.blueprintSearch || '').trim().toLowerCase();
+            const rawStatusFilter = settingsState.blueprintStatus;
+            const statusFilter = (rawStatusFilter === 'all' || BLUEPRINT_STATUS_SET.has(rawStatusFilter))
+                ? rawStatusFilter
+                : 'all';
+            settingsState.blueprintStatus = statusFilter;
+            let visibleCount = 0;
+
+            const categoryHtml = SETTINGS_BLUEPRINT.map(category => {
+                const featuresHtml = category.features.map(feature => {
+                    const status = getBlueprintStatus(feature.id);
+                    if (statusFilter !== 'all' && status !== statusFilter) {
+                        return '';
+                    }
+
+                    if (searchTerm) {
+                        const haystack = [
+                            category.title,
+                            feature.label,
+                            feature.description || '',
+                            ...(feature.badges || [])
+                        ].join(' ').toLowerCase();
+                        if (!haystack.includes(searchTerm)) {
+                            return '';
+                        }
+                    }
+
+                    visibleCount += 1;
+                    const badgesHtml = (feature.badges || [])
+                        .map(badge => `<span class="settings-feature-badge">${escapeHtml(badge)}</span>`)
+                        .join('');
+                    const detailsHtml = Array.isArray(feature.details) && feature.details.length
+                        ? `<ul class="settings-feature-details">${feature.details.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`
+                        : '';
+
+                    return `
+                        <li class="settings-feature" data-feature-id="${escapeHtml(feature.id)}" data-status="${status}">
+                            <div class="settings-feature-info">
+                                <div class="settings-feature-title">${escapeHtml(feature.label)}</div>
+                                ${feature.description ? `<p class="settings-feature-description">${escapeHtml(feature.description)}</p>` : ''}
+                                ${detailsHtml}
+                                ${badgesHtml ? `<div class="settings-feature-badges">${badgesHtml}</div>` : ''}
+                            </div>
+                            <div class="settings-feature-actions">
+                                <span class="settings-feature-status-pill" data-status="${status}" data-feature-status-pill="${escapeHtml(feature.id)}">${escapeHtml(getBlueprintStatusLabel(status))}</span>
+                                <label class="visually-hidden" for="featureStatus-${escapeHtml(feature.id)}">Статус для ${escapeHtml(feature.label)}</label>
+                                <select id="featureStatus-${escapeHtml(feature.id)}" data-feature-id="${escapeHtml(feature.id)}">
+                                    ${BLUEPRINT_STATUS_OPTIONS.map(option => `<option value="${option.value}" ${option.value === status ? 'selected' : ''}>${escapeHtml(option.label)}</option>`).join('')}
+                                </select>
+                            </div>
+                        </li>
+                    `;
+                }).filter(Boolean).join('');
+
+                if (!featuresHtml) {
+                    return '';
+                }
+
+                return `
+                    <section class="settings-category-card" data-category-id="${escapeHtml(category.id)}">
+                        <header class="settings-category-header">
+                            <h4>${escapeHtml(category.title)}</h4>
+                            ${category.summary ? `<p class="settings-category-summary">${escapeHtml(category.summary)}</p>` : ''}
+                        </header>
+                        <ul class="settings-feature-list">
+                            ${featuresHtml}
+                        </ul>
+                    </section>
+                `;
+            }).filter(Boolean).join('');
+
+            container.innerHTML = categoryHtml;
+
+            const emptyState = document.getElementById('settingsBlueprintEmpty');
+            if (emptyState) {
+                emptyState.hidden = visibleCount > 0;
+            }
+
+            container.querySelectorAll('select[data-feature-id]').forEach(select => {
+                select.addEventListener('change', event => {
+                    const featureId = event.target.dataset.featureId;
+                    setBlueprintStatus(featureId, event.target.value);
+                    renderSettingsBlueprint();
+                });
+            });
+
+            updateBlueprintSummary(visibleCount);
+        }
+
+        function updateBlueprintSummary(visibleCount = null) {
+            const summaryEl = document.getElementById('settingsBlueprintSummary');
+            if (summaryEl) {
+                const totals = { planned: 0, inProgress: 0, done: 0 };
+                SETTINGS_BLUEPRINT.forEach(category => {
+                    category.features.forEach(feature => {
+                        const status = getBlueprintStatus(feature.id);
+                        totals[status] = (totals[status] || 0) + 1;
+                    });
+                });
+                summaryEl.innerHTML = `Готово: <strong>${totals.done || 0}</strong> • У роботі: <strong>${totals.inProgress || 0}</strong> • У беклозі: <strong>${totals.planned || 0}</strong>`;
+            }
+
+            const counterEl = document.getElementById('settingsBlueprintCounter');
+            if (counterEl) {
+                const value = Number.isFinite(visibleCount) ? visibleCount : BLUEPRINT_TOTAL_FEATURES;
+                counterEl.textContent = `Відображено ${value} з ${BLUEPRINT_TOTAL_FEATURES}`;
+            }
+        }
+
+        function renderQuickStartToggles() {
+            const container = document.getElementById('quickStartToggleList');
+            if (!container) {
+                return;
+            }
+
+            container.innerHTML = QUICK_START_TOGGLES.map(toggle => {
+                const checked = getQuickStartValue(toggle.id);
+                const inputId = `quick-toggle-${toggle.id}`;
+                const hintId = `${inputId}-hint`;
+                return `
+                    <label class="settings-toggle-card ${checked ? 'is-active' : ''}" data-toggle-id="${escapeHtml(toggle.id)}">
+                        <input type="checkbox" id="${escapeHtml(inputId)}" ${checked ? 'checked' : ''} aria-describedby="${escapeHtml(hintId)}">
+                        <div class="settings-toggle-content">
+                            <strong>${escapeHtml(toggle.label)}</strong>
+                            <p id="${escapeHtml(hintId)}">${escapeHtml(toggle.hint)}</p>
+                        </div>
+                    </label>
+                `;
+            }).join('');
+
+            container.querySelectorAll('.settings-toggle-card').forEach(card => {
+                const toggleId = card.dataset.toggleId;
+                const input = card.querySelector('input[type="checkbox"]');
+                if (!input) {
+                    return;
+                }
+                input.addEventListener('change', event => {
+                    const enabled = Boolean(event.target.checked);
+                    setQuickStartToggle(toggleId, enabled);
+                    card.classList.toggle('is-active', enabled);
+                    updateQuickStartSummary();
+                });
+            });
+
+            updateQuickStartSummary();
+        }
+
+        function getQuickStartValue(toggleId) {
+            if (!toggleId || !Object.prototype.hasOwnProperty.call(QUICK_START_DEFAULTS, toggleId)) {
+                return false;
+            }
+            const stored = uiPreferences?.settings?.quickStart;
+            if (stored && Object.prototype.hasOwnProperty.call(stored, toggleId)) {
+                return Boolean(stored[toggleId]);
+            }
+            return Boolean(QUICK_START_DEFAULTS[toggleId]);
+        }
+
+        function setQuickStartToggle(toggleId, value) {
+            if (!toggleId || !Object.prototype.hasOwnProperty.call(QUICK_START_DEFAULTS, toggleId)) {
+                return;
+            }
+            const settings = ensureSettingsPreferences();
+            settings.quickStart[toggleId] = Boolean(value);
+            savePreferences();
+        }
+
+        function applyQuickStartDefaults() {
+            const settings = ensureSettingsPreferences();
+            settings.quickStart = { ...QUICK_START_DEFAULTS };
+            savePreferences();
+        }
+
+        function clearQuickStartToggles() {
+            const settings = ensureSettingsPreferences();
+            settings.quickStart = { ...QUICK_START_DISABLED_STATE };
+            savePreferences();
+        }
+
+        function updateQuickStartSummary() {
+            const summaryEl = document.getElementById('quickStartSummary');
+            if (!summaryEl) {
+                return;
+            }
+            const total = QUICK_START_TOGGLES.length;
+            let enabled = 0;
+            QUICK_START_TOGGLES.forEach(toggle => {
+                if (getQuickStartValue(toggle.id)) {
+                    enabled += 1;
+                }
+            });
+            summaryEl.textContent = `Активовано ${enabled} з ${total}`;
+        }
+
+        function renderUseCasePlaybook() {
+            const container = document.getElementById('casePlaybookContainer');
+            if (!container) {
+                return;
+            }
+
+            const processFlow = USE_CASE_BLUEPRINT.process.map((step, index, array) => {
+                const stepHtml = `<span class="usecase-step">${escapeHtml(step)}</span>`;
+                if (index === array.length - 1) {
+                    return stepHtml;
+                }
+                return `${stepHtml}<span class="usecase-arrow" aria-hidden="true">→</span>`;
+            }).join('');
+
+            const entitiesHtml = USE_CASE_BLUEPRINT.entities
+                .map(entity => `<span class="usecase-chip">${escapeHtml(entity)}</span>`)
+                .join('');
+
+            const automationHtml = USE_CASE_BLUEPRINT.automations
+                .map(item => `<li><strong>${escapeHtml(item.title)}</strong>: ${escapeHtml(item.description)}</li>`)
+                .join('');
+
+            const devopsHtml = USE_CASE_BLUEPRINT.devops
+                .map(item => `<li>${escapeHtml(item)}</li>`)
+                .join('');
+
+            container.innerHTML = `
+                <div class="usecase-section">
+                    <h4>Процес</h4>
+                    <div class="usecase-process-flow">${processFlow}</div>
+                </div>
+                <div class="usecase-section">
+                    <h4>Сутності</h4>
+                    <div class="usecase-entities">${entitiesHtml}</div>
+                </div>
+                <div class="usecase-section">
+                    <h4>Автоматизації</h4>
+                    <ul class="usecase-automation-list">${automationHtml}</ul>
+                </div>
+                <div class="usecase-section">
+                    <h4>DevOps</h4>
+                    <ul class="usecase-devops-list">${devopsHtml}</ul>
+                </div>
+            `;
         }
 
         function setupUI() {
