@@ -1876,6 +1876,12 @@
             color: var(--primary-dark);
         }
 
+        .avatar-lg {
+            width: 54px;
+            height: 54px;
+            font-size: 20px;
+        }
+
         .empty-state {
             padding: 18px;
             border: 1px dashed rgba(99, 102, 241, 0.2);
@@ -1994,6 +2000,170 @@
             font-size: 13px;
             line-height: 1.6;
             color: var(--text-muted);
+        }
+
+        .chip-accent {
+            background: rgba(59, 130, 246, 0.18);
+            color: #1d4ed8;
+        }
+
+        .chip-ghost {
+            background: rgba(148, 163, 184, 0.16);
+            color: var(--text-muted);
+        }
+
+        .table-row.is-active {
+            background: rgba(99, 102, 241, 0.12);
+            border-left: 3px solid rgba(99, 102, 241, 0.6);
+        }
+
+        .contact-detail-layout {
+            margin-top: 22px;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+            align-items: start;
+        }
+
+        .contact-profile-card,
+        .contact-timeline-card {
+            display: grid;
+            gap: 18px;
+        }
+
+        .contact-profile-header {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .contact-profile-header h3 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .contact-profile-header .metric-sub {
+            margin: 4px 0 0;
+        }
+
+        .contact-meta-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .contact-meta-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: start;
+            font-size: 14px;
+        }
+
+        .contact-meta-item i {
+            color: var(--primary-dark);
+            margin-top: 4px;
+        }
+
+        .contact-profile-section {
+            border-top: 1px solid var(--border);
+            padding-top: 14px;
+        }
+
+        .contact-profile-section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .contact-profile-section h4 {
+            margin: 0 0 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .contact-profile-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .contact-timeline-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .contact-timeline-header h3 {
+            margin: 0;
+        }
+
+        .contact-timeline-header p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .contact-timeline-list {
+            display: grid;
+            gap: 14px;
+        }
+
+        .contact-timeline-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+            align-items: start;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.16);
+        }
+
+        .contact-timeline-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.18), rgba(34, 211, 238, 0.22));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-dark);
+            font-size: 16px;
+        }
+
+        .contact-timeline-body {
+            display: grid;
+            gap: 8px;
+        }
+
+        .contact-timeline-body strong {
+            font-size: 15px;
+        }
+
+        .contact-timeline-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+        }
+
+        .contact-timeline-empty {
+            padding: 18px;
+            text-align: center;
+            background: rgba(148, 163, 184, 0.12);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 1024px) {
+            .contact-detail-layout {
+                grid-template-columns: 1fr;
+            }
         }
 
         .projects-table {
@@ -2405,9 +2575,9 @@
             letter-spacing: 0.03em;
         }
 
-        .status-active {
-            background: rgba(34, 197, 94, 0.15);
-            color: #15803d;
+        .status-lead {
+            background: rgba(99, 102, 241, 0.18);
+            color: #4338ca;
         }
 
         .status-potential {
@@ -2415,9 +2585,24 @@
             color: #0c4a6e;
         }
 
+        .status-customer {
+            background: rgba(34, 197, 94, 0.18);
+            color: #166534;
+        }
+
+        .status-vip {
+            background: rgba(234, 179, 8, 0.2);
+            color: #92400e;
+        }
+
         .status-partner {
             background: rgba(249, 115, 22, 0.15);
             color: #9a3412;
+        }
+
+        .status-active {
+            background: rgba(34, 197, 94, 0.15);
+            color: #15803d;
         }
 
         .status-cold {
@@ -5101,12 +5286,15 @@
                     </div>
                     <div class="section-actions">
                         <input type="text" id="contactSearch" placeholder="Швидкий пошук...">
+                        <input type="text" id="contactTagFilter" placeholder="Мітки (через кому)" list="contactTagOptions">
+                        <datalist id="contactTagOptions"></datalist>
                         <select id="contactStatusFilter">
-                            <option value="all">Всі статуси</option>
-                            <option value="active">Активні</option>
-                            <option value="potential">Потенційні</option>
+                            <option value="all">Всі категорії</option>
+                            <option value="lead">Ліди</option>
+                            <option value="potential">Потенційні клієнти</option>
+                            <option value="customer">Клієнти</option>
+                            <option value="vip">VIP‑клієнти</option>
                             <option value="partner">Партнери</option>
-                            <option value="cold">Холодні</option>
                         </select>
                         <button class="btn btn-primary" id="openContactModalBtn">
                             <i class="fa-solid fa-user-plus"></i>
@@ -5120,10 +5308,19 @@
                         <div>Компанія</div>
                         <div>Електронна пошта</div>
                         <div>Телефон</div>
-                        <div>Статус</div>
+                        <div>Категорія</div>
                         <div>Відповідальний</div>
                     </div>
                     <div id="contactsTable"></div>
+                </div>
+
+                <div class="contact-detail-layout" aria-live="polite">
+                    <div class="card contact-profile-card" id="contactProfileCard">
+                        <div class="contact-timeline-empty">Оберіть контакт, щоб побачити профіль клієнта.</div>
+                    </div>
+                    <div class="card contact-timeline-card" id="contactTimelineCard">
+                        <div class="contact-timeline-empty">Історія взаємодій з'явиться після вибору контакту.</div>
+                    </div>
                 </div>
 
                 <div class="card contact-insights-card" aria-labelledby="contactManagementTitle">
@@ -5823,21 +6020,81 @@
                     <input type="tel" id="contactPhone">
                 </div>
                 <div class="form-group">
-                    <label for="contactStatus">Статус</label>
-                    <select id="contactStatus">
-                        <option value="active">Активний</option>
-                        <option value="potential">Потенційний</option>
-                        <option value="partner">Партнер</option>
-                        <option value="cold">Холодний</option>
+                    <label for="contactStatus">Категорія</label>
+                    <select id="contactStatus"></select>
+                </div>
+                <div class="form-group">
+                    <label for="contactLifecycle">Життєвий цикл</label>
+                    <select id="contactLifecycle">
+                        <option value="prospect">Потенційний клієнт</option>
+                        <option value="customer">Чинний клієнт</option>
+                        <option value="expansion">Розвиток співпраці</option>
+                        <option value="advocate">Лояльний клієнт</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="contactOwner">Менеджер</label>
                     <select id="contactOwner"></select>
                 </div>
+                <div class="form-group">
+                    <label for="contactChannel">Бажаний канал</label>
+                    <select id="contactChannel">
+                        <option value="email">Email</option>
+                        <option value="phone">Телефон</option>
+                        <option value="video">Відеозв'язок</option>
+                        <option value="chat">Чат/месенджер</option>
+                        <option value="portal">Портал підтримки</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contactWebsite">Вебсайт</label>
+                    <input type="url" id="contactWebsite" placeholder="https://">
+                </div>
+                <div class="form-group">
+                    <label for="contactLinkedin">LinkedIn</label>
+                    <input type="url" id="contactLinkedin" placeholder="https://linkedin.com/...">
+                </div>
+                <div class="form-group">
+                    <label for="contactTimezone">Часовий пояс</label>
+                    <input type="text" id="contactTimezone" placeholder="Europe/Kyiv">
+                </div>
+                <div class="form-group full">
+                    <label for="contactStreet">Адреса</label>
+                    <input type="text" id="contactStreet" placeholder="Вулиця, будинок, офіс">
+                </div>
+                <div class="form-group">
+                    <label for="contactCity">Місто</label>
+                    <input type="text" id="contactCity" placeholder="Місто">
+                </div>
+                <div class="form-group">
+                    <label for="contactCountry">Країна</label>
+                    <input type="text" id="contactCountry" placeholder="Країна">
+                </div>
+                <div class="form-group">
+                    <label for="contactPostal">Поштовий код</label>
+                    <input type="text" id="contactPostal" placeholder="01001">
+                </div>
+                <div class="form-group">
+                    <label for="contactIndustry">Індустрія</label>
+                    <input type="text" id="contactIndustry" placeholder="Сфера діяльності">
+                </div>
+                <div class="form-group">
+                    <label for="contactEmployees">К-сть працівників</label>
+                    <input type="number" id="contactEmployees" min="0" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="contactRevenue">Річний оборот, ₴</label>
+                    <input type="number" id="contactRevenue" min="0" step="1000">
+                </div>
+                <div class="form-group full">
+                    <label for="contactSegments">Додаткові категорії</label>
+                    <select id="contactSegments" multiple></select>
+                    <p class="form-hint">Утримуйте <strong>Ctrl/Cmd</strong>, щоб обрати декілька сегментів.</p>
+                </div>
                 <div class="form-group full">
                     <label for="contactTags">Мітки</label>
                     <input type="text" id="contactTags" placeholder="VIP, Рекомендація">
+                    <p class="form-hint">Використовуйте мітки для швидкого пошуку та динамічних добірок.</p>
                 </div>
                 <div class="form-group full">
                     <label for="contactFiles">Вкладення</label>
@@ -6076,11 +6333,62 @@
                 limitations: ['Без права змінювати бюджети та етапи угод']
             }
         ];
-        const STATUS_LABELS = {
-            active: 'Активний',
-            potential: 'Потенційний',
-            partner: 'Партнер',
-            cold: 'Холодний'
+        const CONTACT_SEGMENT_OPTIONS = [
+            { id: 'lead', label: 'Лід' },
+            { id: 'potential', label: 'Потенційний клієнт' },
+            { id: 'customer', label: 'Чинний клієнт' },
+            { id: 'vip', label: 'VIP-клієнт' },
+            { id: 'partner', label: 'Партнер' }
+        ];
+
+        const CONTACT_SEGMENT_SET = new Set(CONTACT_SEGMENT_OPTIONS.map(option => option.id));
+
+        const STATUS_LABELS = CONTACT_SEGMENT_OPTIONS.reduce((map, option) => {
+            map[option.id] = option.label;
+            return map;
+        }, {
+            active: 'Активний клієнт',
+            cold: 'Холодний контакт',
+            inactive: 'Неактивний контакт'
+        });
+
+        const CONTACT_LIFECYCLE_LABELS = {
+            prospect: 'Потенційний клієнт',
+            customer: 'Чинний клієнт',
+            expansion: 'Розвиток співпраці',
+            advocate: 'Лояльний клієнт',
+            churned: 'Втрачений клієнт'
+        };
+
+        const CONTACT_CHANNEL_LABELS = {
+            email: 'Email',
+            phone: 'Телефон',
+            video: 'Відеозв\'язок',
+            chat: 'Чат/месенджер',
+            portal: 'Портал підтримки',
+            system: 'CRM'
+        };
+
+        const CONTACT_INTERACTION_TYPE_LABELS = {
+            call: 'Дзвінок',
+            email: 'Лист',
+            meeting: 'Зустріч',
+            note: 'Нотатка',
+            chat: 'Чат',
+            task: 'Завдання',
+            ticket: 'Запит',
+            success: 'Успіх'
+        };
+
+        const CONTACT_INTERACTION_ICONS = {
+            call: 'fa-solid fa-phone',
+            email: 'fa-solid fa-envelope',
+            meeting: 'fa-solid fa-handshake-simple',
+            note: 'fa-solid fa-note-sticky',
+            chat: 'fa-solid fa-comments',
+            task: 'fa-solid fa-circle-check',
+            ticket: 'fa-solid fa-life-ring',
+            success: 'fa-solid fa-star'
         };
 
         const SUPPORT_STATUS_LABELS = {
@@ -6625,6 +6933,8 @@
         let activeLeadId = null;
         let pipelineFilterOwner = 'all';
         let contactStatusFilter = 'all';
+        let contactTagFilter = [];
+        let activeContactId = null;
         let projectStageFilter = 'all';
         let projectMinProbability = 0;
         let projectSearchTerm = '';
@@ -7267,9 +7577,26 @@
                     role: 'COO',
                     email: 'a.kovalenko@novapay.ua',
                     phone: '+380 67 123 45 67',
-                    status: 'active',
+                    status: 'vip',
+                    segments: ['vip', 'customer'],
+                    lifecycleStage: 'customer',
                     owner: 'Марина',
-                    tags: ['VIP'],
+                    preferredChannel: 'email',
+                    timezone: 'Europe/Kyiv',
+                    website: 'https://novapay.ua',
+                    linkedin: 'https://www.linkedin.com/in/andrii-kovalenko',
+                    address: {
+                        street: 'вул. Січових Стрільців, 21',
+                        city: 'Київ',
+                        country: 'Україна',
+                        postalCode: '04053'
+                    },
+                    demographics: {
+                        industry: 'Фінтех',
+                        employees: 520,
+                        annualRevenue: 120000000
+                    },
+                    tags: ['VIP', 'Digital'],
                     lastActivity: '2024-06-02T12:15:00.000Z',
                     notes: [
                         { id: 'cnote-1', text: 'Очікує фінальне узгодження roadmap.', author: 'Марина', date: '2024-06-02T12:15:00.000Z' }
@@ -7284,6 +7611,38 @@
                             lastModified: Date.parse('2024-05-30T07:20:00.000Z'),
                             dataUrl: 'data:text/plain;base64,Q29udHJhY3Qgc3VtbWFyeSBmb3IgTm92YVBheQ=='
                         }
+                    ],
+                    interactions: [
+                        {
+                            id: 'cact-1',
+                            type: 'meeting',
+                            channel: 'video',
+                            subject: 'Стратегічний воркшоп із командою клієнта',
+                            summary: 'Обговорили дорожню карту та інтеграцію з контакт-центром Zoom для підтримки.',
+                            timestamp: '2024-06-02T12:15:00.000Z',
+                            author: 'Марина',
+                            tags: ['Discovery']
+                        },
+                        {
+                            id: 'cact-2',
+                            type: 'email',
+                            channel: 'email',
+                            subject: 'Надіслано оновлений roadmap',
+                            summary: 'Передано узгоджену версію документу з KPI та етапами.',
+                            timestamp: '2024-05-28T09:30:00.000Z',
+                            author: 'Марина',
+                            tags: ['Документи']
+                        },
+                        {
+                            id: 'cact-3',
+                            type: 'call',
+                            channel: 'phone',
+                            subject: 'Початковий дзвінок та визначення цілей',
+                            summary: 'Уточнили критичні KPI та очікування від запуску.',
+                            timestamp: '2024-05-18T09:24:00.000Z',
+                            author: 'Марина',
+                            tags: ['Kick-off']
+                        }
                     ]
                 },
                 {
@@ -7293,14 +7652,63 @@
                     role: 'Head of Logistics',
                     email: 'i.melnyk@rozetka.ua',
                     phone: '+380 50 777 23 11',
-                    status: 'potential',
+                    status: 'lead',
+                    segments: ['lead', 'potential'],
+                    lifecycleStage: 'prospect',
                     owner: 'Олександр',
-                    tags: ['Priority'],
+                    preferredChannel: 'email',
+                    timezone: 'Europe/Kyiv',
+                    website: 'https://rozetka.ua',
+                    linkedin: 'https://www.linkedin.com/in/irynamelnyk',
+                    address: {
+                        street: 'просп. Степана Бандери, 6',
+                        city: 'Київ',
+                        country: 'Україна',
+                        postalCode: '04073'
+                    },
+                    demographics: {
+                        industry: 'E-commerce',
+                        employees: 9000,
+                        annualRevenue: 1500000000
+                    },
+                    tags: ['Priority', 'Retail'],
                     lastActivity: '2024-06-01T11:00:00.000Z',
                     notes: [
                         { id: 'cnote-2', text: 'Надіслати оновлений KPI-лист до 14 червня.', author: 'Олександр', date: '2024-06-01T11:00:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    interactions: [
+                        {
+                            id: 'cact-4',
+                            type: 'meeting',
+                            channel: 'video',
+                            subject: 'Демонстрація модуля оптимізації логістики',
+                            summary: 'Показали сценарії маршрутизації та синхронізацію складів.',
+                            timestamp: '2024-06-01T11:00:00.000Z',
+                            author: 'Олександр',
+                            tags: ['Demo']
+                        },
+                        {
+                            id: 'cact-5',
+                            type: 'email',
+                            channel: 'email',
+                            subject: 'Надіслано оновлений KPI-лист',
+                            summary: 'Уточнені показники SLA та плани з росту продуктивності.',
+                            timestamp: '2024-05-26T15:20:00.000Z',
+                            author: 'Олександр',
+                            tags: ['Документи']
+                        },
+                        {
+                            id: 'cact-6',
+                            type: 'call',
+                            channel: 'phone',
+                            subject: 'Початковий дзвінок відділу логістики',
+                            summary: 'Зібрані основні вимоги по інтеграції з WMS.',
+                            timestamp: '2024-05-10T08:42:00.000Z',
+                            author: 'Олександр',
+                            tags: ['Kick-off']
+                        }
+                    ]
                 },
                 {
                     id: 'contact-3',
@@ -7309,8 +7717,25 @@
                     role: 'Digital Transformation Lead',
                     email: 'o.danyliuk@greenbank.ua',
                     phone: '+380 63 555 14 78',
-                    status: 'active',
+                    status: 'customer',
+                    segments: ['customer', 'partner'],
+                    lifecycleStage: 'customer',
                     owner: 'Вікторія',
+                    preferredChannel: 'video',
+                    timezone: 'Europe/Kyiv',
+                    website: 'https://greenbank.ua',
+                    linkedin: 'https://www.linkedin.com/in/oleh-danyliuk',
+                    address: {
+                        street: 'вул. Хрещатик, 7',
+                        city: 'Київ',
+                        country: 'Україна',
+                        postalCode: '01001'
+                    },
+                    demographics: {
+                        industry: 'Банківська справа',
+                        employees: 2800,
+                        annualRevenue: 860000000
+                    },
                     tags: ['Фінанси'],
                     lastActivity: '2024-06-03T15:45:00.000Z',
                     notes: [
@@ -7324,7 +7749,39 @@
                             size: 188,
                             type: 'text/plain',
                             lastModified: Date.parse('2024-05-18T09:40:00.000Z'),
-                            dataUrl: 'data:text/plain;base64,TkRBIGZvciBHcmVlbkJhbms=' 
+                            dataUrl: 'data:text/plain;base64,TkRBIGZvciBHcmVlbkJhbms='
+                        }
+                    ],
+                    interactions: [
+                        {
+                            id: 'cact-7',
+                            type: 'meeting',
+                            channel: 'video',
+                            subject: 'Демо інтеграції з KYC-системою',
+                            summary: 'Погодили наступні кроки та вимоги до безпеки.',
+                            timestamp: '2024-06-03T15:45:00.000Z',
+                            author: 'Вікторія',
+                            tags: ['Demo']
+                        },
+                        {
+                            id: 'cact-8',
+                            type: 'email',
+                            channel: 'email',
+                            subject: 'Надсилання технічного аудиту',
+                            summary: 'Відправили деталізований опис інтеграційних точок.',
+                            timestamp: '2024-05-24T10:10:00.000Z',
+                            author: 'Вікторія',
+                            tags: ['Документи']
+                        },
+                        {
+                            id: 'cact-9',
+                            type: 'call',
+                            channel: 'phone',
+                            subject: 'Початковий дзвінок по проєкту',
+                            summary: 'Узгодили бізнес-цілі та ключових учасників команди.',
+                            timestamp: '2024-04-28T10:00:00.000Z',
+                            author: 'Вікторія',
+                            tags: ['Kick-off']
                         }
                     ]
                 },
@@ -7336,11 +7793,50 @@
                     email: 's.romaniuk@okko.ua',
                     phone: '+380 44 123 90 12',
                     status: 'potential',
+                    segments: ['potential'],
+                    lifecycleStage: 'prospect',
                     owner: 'Дмитро',
+                    preferredChannel: 'email',
+                    timezone: 'Europe/Kyiv',
+                    website: 'https://www.okko.ua',
+                    linkedin: 'https://www.linkedin.com/in/svitlana-romaniuk',
+                    address: {
+                        street: 'вул. Галицька, 201',
+                        city: 'Львів',
+                        country: 'Україна',
+                        postalCode: '79000'
+                    },
+                    demographics: {
+                        industry: 'Retail & Fuel',
+                        employees: 4500,
+                        annualRevenue: 920000000
+                    },
                     tags: ['Marketing'],
                     lastActivity: '2024-06-05T09:15:00.000Z',
                     notes: [],
-                    attachments: []
+                    attachments: [],
+                    interactions: [
+                        {
+                            id: 'cact-10',
+                            type: 'email',
+                            channel: 'email',
+                            subject: 'Запит на контент-стратегію для програми лояльності',
+                            summary: 'Отримали вихідні дані для підготовки пропозиції.',
+                            timestamp: '2024-06-05T09:15:00.000Z',
+                            author: 'Дмитро',
+                            tags: ['Brief']
+                        },
+                        {
+                            id: 'cact-11',
+                            type: 'call',
+                            channel: 'phone',
+                            subject: 'Обговорення аудиторії та KPI',
+                            summary: 'Уточнили ключові сегменти та бюджет на перший місяць.',
+                            timestamp: '2024-05-29T16:40:00.000Z',
+                            author: 'Дмитро',
+                            tags: ['Discovery']
+                        }
+                    ]
                 },
                 {
                     id: 'contact-5',
@@ -7350,9 +7846,26 @@
                     email: 'r.leshchenko@uklon.com',
                     phone: '+380 50 120 34 56',
                     status: 'partner',
+                    segments: ['partner', 'customer'],
+                    lifecycleStage: 'expansion',
                     owner: 'Марина',
+                    preferredChannel: 'chat',
+                    timezone: 'Europe/Kyiv',
+                    website: 'https://www.uklon.com.ua',
+                    linkedin: 'https://www.linkedin.com/in/roman-leshchenko',
+                    address: {
+                        street: 'вул. Антоновича, 109',
+                        city: 'Київ',
+                        country: 'Україна',
+                        postalCode: '03150'
+                    },
+                    demographics: {
+                        industry: 'Mobility',
+                        employees: 600,
+                        annualRevenue: 480000000
+                    },
                     tags: ['Strategic'],
-                    lastActivity: '2024-05-30T16:10:00.000Z',
+                    lastActivity: '2024-05-31T09:00:00.000Z',
                     notes: [
                         { id: 'cnote-4', text: 'Заплановано ретроспективу запуску на 12 червня.', author: 'Марина', date: '2024-05-31T09:00:00.000Z' }
                     ],
@@ -7365,6 +7878,38 @@
                             type: 'text/plain',
                             lastModified: Date.parse('2024-05-29T12:25:00.000Z'),
                             dataUrl: 'data:text/plain;base64,U3VtbWFyeSBmb3IgVWxrb24gc3VjY2VzcyBtb2R1bGU='
+                        }
+                    ],
+                    interactions: [
+                        {
+                            id: 'cact-12',
+                            type: 'meeting',
+                            channel: 'video',
+                            subject: 'Ретроспектива запуску мобільного додатку',
+                            summary: 'Зафіксували ключові висновки та roadmap наступних покращень.',
+                            timestamp: '2024-05-31T09:00:00.000Z',
+                            author: 'Марина',
+                            tags: ['Retro']
+                        },
+                        {
+                            id: 'cact-13',
+                            type: 'chat',
+                            channel: 'chat',
+                            subject: 'Синхронізація щодо API-покриття',
+                            summary: 'Уточнили перелік методів, які потрібно винести в публічний SDK.',
+                            timestamp: '2024-05-22T14:45:00.000Z',
+                            author: 'Марина',
+                            tags: ['Інтеграція']
+                        },
+                        {
+                            id: 'cact-14',
+                            type: 'email',
+                            channel: 'email',
+                            subject: 'Передані фінальні артефакти запуску',
+                            summary: 'Поділилися документацією та навчальними матеріалами для команди Uklon.',
+                            timestamp: '2024-05-12T08:30:00.000Z',
+                            author: 'Марина',
+                            tags: ['Документи']
                         }
                     ]
                 }
@@ -7922,6 +8467,46 @@
             return null;
         }
 
+        function normalizeContactInteraction(interaction, fallbackAuthor = CURRENT_USER.name) {
+            if (!interaction || typeof interaction !== 'object') {
+                return null;
+            }
+
+            const id = typeof interaction.id === 'string' && interaction.id.trim().length
+                ? interaction.id.trim()
+                : generateId('cact');
+            const typeValue = typeof interaction.type === 'string'
+                ? interaction.type.trim().toLowerCase()
+                : '';
+            const type = CONTACT_INTERACTION_TYPE_LABELS[typeValue] ? typeValue : 'note';
+            const channelValue = typeof interaction.channel === 'string'
+                ? interaction.channel.trim().toLowerCase()
+                : type;
+            const channel = CONTACT_CHANNEL_LABELS[channelValue] ? channelValue : type;
+            const subject = typeof interaction.subject === 'string' && interaction.subject.trim().length
+                ? interaction.subject.trim()
+                : CONTACT_INTERACTION_TYPE_LABELS[type] || 'Активність';
+            const summary = typeof interaction.summary === 'string'
+                ? interaction.summary.trim()
+                : '';
+            const timestamp = typeof interaction.timestamp === 'string' && interaction.timestamp
+                ? interaction.timestamp
+                : new Date().toISOString();
+            const author = typeof interaction.author === 'string' && interaction.author.trim().length
+                ? interaction.author.trim()
+                : (fallbackAuthor || CURRENT_USER.name);
+            const tags = Array.isArray(interaction.tags)
+                ? interaction.tags
+                    .map(tag => (typeof tag === 'string' ? tag.trim() : String(tag || '').trim()))
+                    .filter(Boolean)
+                : [];
+            const attachments = Array.isArray(interaction.attachments)
+                ? interaction.attachments.map(file => normalizeAttachment(file, 'contactactivity')).filter(Boolean)
+                : [];
+
+            return { id, type, channel, subject, summary, timestamp, author, tags, attachments };
+        }
+
         function upgradeDataStructure(data) {
             if (!data || typeof data !== 'object') {
                 return deepClone(defaultData);
@@ -8228,13 +8813,61 @@
             const role = typeof contact.role === 'string' ? contact.role.trim() : '';
             const email = typeof contact.email === 'string' ? contact.email.trim() : '';
             const phone = typeof contact.phone === 'string' ? contact.phone.trim() : '';
-            const status = typeof contact.status === 'string' && STATUS_LABELS[contact.status] ? contact.status : 'potential';
+
+            const rawStatus = typeof contact.status === 'string' ? contact.status.trim().toLowerCase() : '';
+            let status = CONTACT_SEGMENT_SET.has(rawStatus) ? rawStatus : '';
+            if (!status && rawStatus && STATUS_LABELS[rawStatus]) {
+                status = rawStatus;
+            }
+            if (!status && rawStatus === 'active') {
+                status = 'customer';
+            }
+            if (!status && rawStatus === 'cold') {
+                status = 'lead';
+            }
+            if (!status && rawStatus === 'vip') {
+                status = 'vip';
+            }
+            if (!status) {
+                status = 'lead';
+            }
+
             const owner = typeof contact.owner === 'string' && contact.owner.trim().length ? contact.owner.trim() : CURRENT_USER.name;
+
             const tags = Array.isArray(contact.tags)
-                ? contact.tags.map(tag => typeof tag === 'string' ? tag.trim() : String(tag || '').trim()).filter(Boolean)
+                ? contact.tags.map(tag => (typeof tag === 'string' ? tag.trim() : String(tag || '').trim())).filter(Boolean)
                 : typeof contact.tags === 'string' && contact.tags.trim().length
                     ? contact.tags.split(',').map(tag => tag.trim()).filter(Boolean)
                     : [];
+
+            const segments = Array.isArray(contact.segments)
+                ? contact.segments
+                    .map(segment => (typeof segment === 'string' ? segment.trim().toLowerCase() : ''))
+                    .filter(segment => CONTACT_SEGMENT_SET.has(segment))
+                : [];
+            if (status && CONTACT_SEGMENT_SET.has(status) && !segments.includes(status)) {
+                segments.unshift(status);
+            }
+            const uniqueSegments = Array.from(new Set(segments));
+
+            const lifecycleRaw = typeof contact.lifecycleStage === 'string'
+                ? contact.lifecycleStage.trim().toLowerCase()
+                : '';
+            const lifecycleStage = CONTACT_LIFECYCLE_LABELS[lifecycleRaw]
+                ? lifecycleRaw
+                : (status === 'customer' || status === 'vip' || status === 'partner' ? 'customer' : 'prospect');
+
+            const preferredChannelRaw = typeof contact.preferredChannel === 'string'
+                ? contact.preferredChannel.trim().toLowerCase()
+                : '';
+            const preferredChannel = CONTACT_CHANNEL_LABELS[preferredChannelRaw]
+                ? preferredChannelRaw
+                : (email ? 'email' : 'phone');
+
+            const timezone = typeof contact.timezone === 'string' && contact.timezone.trim().length
+                ? contact.timezone.trim()
+                : 'Europe/Kyiv';
+
             const attachments = Array.isArray(contact.attachments)
                 ? contact.attachments.map(file => normalizeAttachment(file, 'contactfile')).filter(Boolean)
                 : [];
@@ -8243,9 +8876,59 @@
                 : typeof contact.notes === 'string'
                     ? [normalizeNote(contact.notes, 'cnote', owner)].filter(Boolean)
                     : [];
-            const lastActivity = typeof contact.lastActivity === 'string' && contact.lastActivity
+
+            const addressSource = typeof contact.address === 'object' && contact.address
+                ? contact.address
+                : contact;
+            const address = {
+                street: typeof addressSource.street === 'string' ? addressSource.street.trim() : '',
+                city: typeof addressSource.city === 'string' ? addressSource.city.trim() : '',
+                country: typeof addressSource.country === 'string' ? addressSource.country.trim() : '',
+                postalCode: typeof addressSource.postalCode === 'string'
+                    ? addressSource.postalCode.trim()
+                    : (typeof addressSource.postal === 'string' ? addressSource.postal.trim() : '')
+            };
+
+            const demographicsSource = typeof contact.demographics === 'object' && contact.demographics
+                ? contact.demographics
+                : contact;
+            let employees = Number.isFinite(Number(demographicsSource.employees))
+                ? Number(demographicsSource.employees)
+                : Number.isFinite(Number(demographicsSource.employeeCount))
+                    ? Number(demographicsSource.employeeCount)
+                    : Number.isFinite(Number(demographicsSource.headcount))
+                        ? Number(demographicsSource.headcount)
+                        : null;
+            employees = Number.isFinite(employees) ? Math.max(0, Math.round(employees)) : null;
+            let annualRevenue = Number.isFinite(Number(demographicsSource.annualRevenue))
+                ? Number(demographicsSource.annualRevenue)
+                : Number.isFinite(Number(demographicsSource.revenue))
+                    ? Number(demographicsSource.revenue)
+                    : null;
+            annualRevenue = Number.isFinite(annualRevenue) ? Math.max(0, Math.round(annualRevenue)) : null;
+            const demographics = {
+                industry: typeof demographicsSource.industry === 'string' ? demographicsSource.industry.trim() : '',
+                employees,
+                annualRevenue
+            };
+
+            const website = typeof contact.website === 'string' ? contact.website.trim() : '';
+            const linkedin = typeof contact.linkedin === 'string' ? contact.linkedin.trim() : '';
+
+            const interactions = Array.isArray(contact.interactions)
+                ? contact.interactions.map(item => normalizeContactInteraction(item, owner)).filter(Boolean)
+                : [];
+            interactions.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+            let lastActivity = typeof contact.lastActivity === 'string' && contact.lastActivity
                 ? contact.lastActivity
-                : new Date().toISOString();
+                : null;
+            if (interactions.length && interactions[0].timestamp) {
+                lastActivity = interactions[0].timestamp;
+            }
+            if (!lastActivity) {
+                lastActivity = new Date().toISOString();
+            }
 
             return {
                 id,
@@ -8255,10 +8938,19 @@
                 email,
                 phone,
                 status,
+                segments: uniqueSegments,
+                lifecycleStage,
+                preferredChannel,
+                timezone,
                 owner,
                 tags,
+                website,
+                linkedin,
+                address,
+                demographics,
                 attachments,
                 notes,
+                interactions,
                 lastActivity
             };
         }
@@ -9032,6 +9724,38 @@
             ownerSelects.forEach(select => {
                 select.innerHTML = TEAM_MEMBERS.map(member => `<option value="${member}">${member}</option>`).join('');
             });
+
+            const contactStatusSelect = document.getElementById('contactStatus');
+            if (contactStatusSelect) {
+                contactStatusSelect.innerHTML = CONTACT_SEGMENT_OPTIONS
+                    .map(option => `<option value="${option.id}">${option.label}</option>`)
+                    .join('');
+                if (!CONTACT_SEGMENT_SET.has(contactStatusSelect.value)) {
+                    contactStatusSelect.value = CONTACT_SEGMENT_OPTIONS[0]?.id || '';
+                }
+            }
+
+            const contactSegmentsSelect = document.getElementById('contactSegments');
+            if (contactSegmentsSelect) {
+                contactSegmentsSelect.innerHTML = CONTACT_SEGMENT_OPTIONS
+                    .map(option => `<option value="${option.id}">${option.label}</option>`)
+                    .join('');
+            }
+
+            const contactLifecycleSelect = document.getElementById('contactLifecycle');
+            if (contactLifecycleSelect && !CONTACT_LIFECYCLE_LABELS[contactLifecycleSelect.value]) {
+                contactLifecycleSelect.value = 'prospect';
+            }
+
+            const contactChannelSelect = document.getElementById('contactChannel');
+            if (contactChannelSelect && !CONTACT_CHANNEL_LABELS[contactChannelSelect.value]) {
+                contactChannelSelect.value = 'email';
+            }
+
+            const contactTimezoneInput = document.getElementById('contactTimezone');
+            if (contactTimezoneInput && !contactTimezoneInput.value) {
+                contactTimezoneInput.value = 'Europe/Kyiv';
+            }
 
             const sourceSelect = document.getElementById('leadSource');
             if (sourceSelect) {
@@ -9878,6 +10602,17 @@
                 contactStatusFilter = event.target.value;
                 renderContacts(document.getElementById('contactSearch').value);
             });
+
+            const contactTagInput = document.getElementById('contactTagFilter');
+            if (contactTagInput) {
+                contactTagInput.addEventListener('input', event => {
+                    contactTagFilter = event.target.value
+                        .split(',')
+                        .map(tag => tag.trim().toLowerCase())
+                        .filter(Boolean);
+                    renderContacts(document.getElementById('contactSearch').value);
+                });
+            }
 
             const projectStageSelect = document.getElementById('projectStageFilter');
             if (projectStageSelect) {
@@ -15411,74 +16146,384 @@
             }
             draggedLeadId = null;
         }
+        function updateContactTagOptions() {
+            const datalist = document.getElementById('contactTagOptions');
+            if (!datalist) {
+                return;
+            }
+
+            const tags = new Set();
+            if (Array.isArray(crmData?.contacts)) {
+                crmData.contacts.forEach(contact => {
+                    if (Array.isArray(contact.tags)) {
+                        contact.tags.forEach(tag => {
+                            if (typeof tag === 'string') {
+                                const normalized = tag.trim();
+                                if (normalized.length) {
+                                    tags.add(normalized);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+
+            const options = Array.from(tags)
+                .sort((a, b) => a.localeCompare(b, 'uk', { sensitivity: 'base' }))
+                .map(tag => `<option value="${escapeHtml(tag)}">`)
+                .join('');
+            datalist.innerHTML = options;
+        }
+
         function renderContacts(searchTerm = '') {
             const container = document.getElementById('contactsTable');
+            if (!container) {
+                return;
+            }
+
+            updateContactTagOptions();
+
             const query = searchTerm.trim().toLowerCase();
-            let contacts = crmData.contacts;
+            let contacts = Array.isArray(crmData?.contacts) ? crmData.contacts.slice() : [];
 
             if (contactStatusFilter !== 'all') {
-                contacts = contacts.filter(contact => contact.status === contactStatusFilter);
+                contacts = contacts.filter(contact => contact.status === contactStatusFilter
+                    || (Array.isArray(contact.segments) && contact.segments.includes(contactStatusFilter)));
+            }
+
+            if (contactTagFilter.length) {
+                contacts = contacts.filter(contact => {
+                    const tagSet = new Set((Array.isArray(contact.tags) ? contact.tags : []).map(tag => tag.toLowerCase()));
+                    return contactTagFilter.every(tag => tagSet.has(tag));
+                });
             }
 
             if (query) {
                 contacts = contacts.filter(contact => {
-                    return [contact.name, contact.company, contact.email, contact.phone, contact.role]
+                    const haystack = [
+                        contact.name,
+                        contact.company,
+                        contact.email,
+                        contact.phone,
+                        contact.role,
+                        CONTACT_LIFECYCLE_LABELS[contact.lifecycleStage] || contact.lifecycleStage,
+                        CONTACT_CHANNEL_LABELS[contact.preferredChannel] || contact.preferredChannel,
+                        contact.owner,
+                        contact.address?.street,
+                        contact.address?.city,
+                        contact.address?.country,
+                        ...(Array.isArray(contact.tags) ? contact.tags : []),
+                        ...(Array.isArray(contact.segments)
+                            ? contact.segments.map(segment => STATUS_LABELS[segment] || segment)
+                            : [])
+                    ]
                         .filter(Boolean)
-                        .some(value => value.toLowerCase().includes(query));
+                        .join(' ')
+                        .toLowerCase();
+                    return haystack.includes(query);
                 });
             }
 
-            if (contacts.length === 0) {
+            contacts.sort((a, b) => new Date(b.lastActivity || 0) - new Date(a.lastActivity || 0));
+
+            if (!contacts.length) {
                 container.innerHTML = '<div class="empty-state" style="padding: 32px;">Немає контактів за обраними фільтрами.</div>';
+                renderContactDetails(null);
                 return;
+            }
+
+            if (!contacts.some(contact => contact.id === activeContactId)) {
+                activeContactId = contacts[0].id;
             }
 
             container.innerHTML = contacts.map(contact => {
                 const statusClass = `status-${contact.status}`;
-                const tags = contact.tags && contact.tags.length ? contact.tags.map(tag => `<span class="chip">${tag}</span>`).join('') : '';
+                const tags = Array.isArray(contact.tags) && contact.tags.length
+                    ? contact.tags.map(tag => `<span class="chip">${escapeHtml(tag)}</span>`).join('')
+                    : '';
                 const attachmentsCount = Array.isArray(contact.attachments) ? contact.attachments.length : 0;
                 const notesCount = Array.isArray(contact.notes) ? contact.notes.length : 0;
+                const interactionsCount = Array.isArray(contact.interactions) ? contact.interactions.length : 0;
                 const extras = [];
+                const lastActivityLabel = contact.lastActivity ? formatRelativeTime(contact.lastActivity) : '';
+                if (lastActivityLabel) {
+                    extras.push(`<span class="chip chip-ghost"><i class="fa-regular fa-clock"></i> ${escapeHtml(lastActivityLabel)}</span>`);
+                }
                 if (attachmentsCount) {
                     extras.push(`<span class="chip"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</span>`);
                 }
                 if (notesCount) {
                     extras.push(`<span class="chip"><i class="fa-solid fa-note-sticky"></i> ${notesCount}</span>`);
                 }
+                if (interactionsCount) {
+                    extras.push(`<span class="chip chip-ghost"><i class="fa-solid fa-comments"></i> ${interactionsCount}</span>`);
+                }
                 const extrasMarkup = extras.length ? `<div class="chips" style="margin-top:6px;">${extras.join('')}</div>` : '';
+                const segmentChips = Array.isArray(contact.segments)
+                    ? contact.segments
+                        .filter(segment => segment !== contact.status)
+                        .map(segment => `<span class="chip chip-accent">${escapeHtml(STATUS_LABELS[segment] || segment)}</span>`)
+                        .join('')
+                    : '';
+                const segmentsMarkup = segmentChips ? `<div class="chips" style="margin-top:6px;">${segmentChips}</div>` : '';
+                const infoParts = [];
+                if (contact.role) {
+                    infoParts.push(contact.role);
+                }
+                const lifecycleLabel = CONTACT_LIFECYCLE_LABELS[contact.lifecycleStage] || '';
+                if (lifecycleLabel) {
+                    infoParts.push(lifecycleLabel);
+                }
+                const infoMarkup = infoParts.length ? `<span class="contact-sub">${infoParts.map(part => escapeHtml(part)).join(' • ')}</span>` : '';
+                const locationParts = [contact.address?.city, contact.address?.country].filter(Boolean);
+                const locationMarkup = locationParts.length ? `<span class="contact-sub">${escapeHtml(locationParts.join(', '))}</span>` : '';
+                const ownerDisplay = contact.owner ? escapeHtml(contact.owner) : 'Не призначено';
+                const ownerActivity = lastActivityLabel ? `<div class="metric-sub">Останній контакт: ${escapeHtml(lastActivityLabel)}</div>` : '';
+                const emailDisplay = contact.email ? escapeHtml(contact.email) : '';
+                const phoneDisplay = contact.phone ? escapeHtml(contact.phone) : '';
+
                 return `
-                    <div class="table-row" data-contact-id="${contact.id}">
+                    <div class="table-row${contact.id === activeContactId ? ' is-active' : ''}" data-contact-id="${contact.id}">
                         <div class="contact-main">
-                            <div class="avatar">${contact.name.charAt(0)}</div>
+                            <div class="avatar">${getInitials(contact.name)}</div>
                             <div class="contact-info">
-                                <strong>${contact.name}</strong>
-                                <span class="contact-sub">${contact.role || ''}</span>
+                                <strong>${escapeHtml(contact.name)}</strong>
+                                ${infoMarkup}
+                                ${locationMarkup}
                             </div>
                         </div>
-                        <div>${contact.company || ''}</div>
-                        <div>${contact.email || ''}</div>
-                        <div>${contact.phone || ''}</div>
+                        <div>${escapeHtml(contact.company || '')}</div>
+                        <div>${emailDisplay}</div>
+                        <div>${phoneDisplay}</div>
                         <div>
                             <span class="status-badge ${statusClass}">${STATUS_LABELS[contact.status] || contact.status}</span>
+                            ${segmentsMarkup}
                             ${tags ? `<div class="chips" style="margin-top:6px;">${tags}</div>` : ''}
                             ${extrasMarkup}
                         </div>
-                        <div>${contact.owner || ''}</div>
+                        <div>${ownerDisplay}${ownerActivity}</div>
                     </div>
                 `;
             }).join('');
 
             container.querySelectorAll('.table-row').forEach(row => {
                 row.addEventListener('click', () => {
-                    const contactId = row.dataset.contactId;
-                    const contact = crmData.contacts.find(item => item.id === contactId);
-                    if (contact && contact.company) {
-                        const lead = crmData.leads.find(l => l.company === contact.company);
-                        if (lead) {
-                            openLeadDetails(lead.id);
-                        }
-                    }
+                    activeContactId = row.dataset.contactId;
+                    container.querySelectorAll('.table-row').forEach(item => item.classList.remove('is-active'));
+                    row.classList.add('is-active');
+                    renderContactDetails(activeContactId);
                 });
+            });
+
+            renderContactDetails(activeContactId);
+        }
+
+        function renderContactDetails(contactId) {
+            const profileContainer = document.getElementById('contactProfileCard');
+            const timelineContainer = document.getElementById('contactTimelineCard');
+            if (!profileContainer || !timelineContainer) {
+                return;
+            }
+
+            const contact = Array.isArray(crmData?.contacts)
+                ? crmData.contacts.find(item => item.id === contactId)
+                : null;
+
+            if (!contact) {
+                profileContainer.innerHTML = '<div class="contact-timeline-empty">Оберіть контакт, щоб побачити профіль клієнта.</div>';
+                timelineContainer.innerHTML = '<div class="contact-timeline-empty">Історія взаємодій з\'явиться після вибору контакту.</div>';
+                return;
+            }
+
+            const lifecycleLabel = CONTACT_LIFECYCLE_LABELS[contact.lifecycleStage] || '—';
+            const channelLabel = CONTACT_CHANNEL_LABELS[contact.preferredChannel] || '—';
+            const lastActivityLabel = contact.lastActivity ? formatRelativeTime(contact.lastActivity) : '—';
+            const segmentBadges = Array.isArray(contact.segments) && contact.segments.length
+                ? `<div class="chips">${contact.segments.map(segment => `<span class="chip chip-accent">${escapeHtml(STATUS_LABELS[segment] || segment)}</span>`).join('')}</div>`
+                : '';
+            const tagsMarkup = Array.isArray(contact.tags) && contact.tags.length
+                ? `<div class="chips">${contact.tags.map(tag => `<span class="chip">${escapeHtml(tag)}</span>`).join('')}</div>`
+                : '';
+            const addressLines = [
+                contact.address?.street,
+                [contact.address?.city, contact.address?.country].filter(Boolean).join(', '),
+                contact.address?.postalCode
+            ].filter(value => value && value.trim().length).map(value => escapeHtml(value));
+            const addressMarkup = addressLines.length ? addressLines.join('<br>') : '—';
+            const industry = contact.demographics?.industry ? escapeHtml(contact.demographics.industry) : '—';
+            const employees = Number.isFinite(contact.demographics?.employees) ? formatIntegerDisplay(contact.demographics.employees) : '—';
+            const revenue = Number.isFinite(contact.demographics?.annualRevenue) ? formatCurrency(contact.demographics.annualRevenue, true) : '—';
+            const emailMarkup = contact.email
+                ? `<a href="mailto:${encodeURIComponent(contact.email)}">${escapeHtml(contact.email)}</a>`
+                : '—';
+            const phoneMarkup = contact.phone
+                ? `<a href="tel:${encodeURIComponent(contact.phone)}">${escapeHtml(contact.phone)}</a>`
+                : '—';
+            const websiteRaw = typeof contact.website === 'string' ? contact.website.trim() : '';
+            const websiteUrl = websiteRaw
+                ? (websiteRaw.startsWith('http://') || websiteRaw.startsWith('https://') ? websiteRaw : `https://${websiteRaw}`)
+                : '';
+            const websiteMarkup = websiteUrl
+                ? `<a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener">${escapeHtml(websiteUrl)}</a>`
+                : '—';
+            const linkedinRaw = typeof contact.linkedin === 'string' ? contact.linkedin.trim() : '';
+            const linkedinUrl = linkedinRaw
+                ? (linkedinRaw.startsWith('http://') || linkedinRaw.startsWith('https://') ? linkedinRaw : `https://${linkedinRaw}`)
+                : '';
+            const linkedinMarkup = linkedinUrl
+                ? `<a href="${escapeHtml(linkedinUrl)}" target="_blank" rel="noopener">${escapeHtml(linkedinUrl)}</a>`
+                : '—';
+
+            const relatedLead = crmData && Array.isArray(crmData.leads)
+                ? crmData.leads.find(lead => {
+                    const sameId = lead.contact && lead.contact.id && lead.contact.id === contact.id;
+                    const sameEmail = lead.contact && lead.contact.email && contact.email && lead.contact.email === contact.email;
+                    const sameCompany = lead.company && contact.company && lead.company === contact.company;
+                    return sameId || sameEmail || sameCompany;
+                })
+                : null;
+
+            const actionsMarkup = relatedLead
+                ? `<div class="contact-profile-actions"><button class="btn btn-small-primary" data-open-lead="${relatedLead.id}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Відкрити угоду</button></div>`
+                : '';
+
+            profileContainer.innerHTML = `
+                <div class="contact-profile-header">
+                    <div class="avatar avatar-lg">${getInitials(contact.name)}</div>
+                    <div>
+                        <h3>${escapeHtml(contact.name)}</h3>
+                        <p class="metric-sub">${escapeHtml(contact.company || 'Без компанії')}</p>
+                        ${segmentBadges}
+                    </div>
+                </div>
+                <div class="contact-profile-section">
+                    <h4>Контактні дані</h4>
+                    <div class="contact-meta-list">
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-envelope"></i>
+                            <div>${emailMarkup}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>${phoneMarkup}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-user"></i>
+                            <div>${escapeHtml(contact.role || '—')}<br><span class="metric-sub">Менеджер: ${escapeHtml(contact.owner || 'Не призначено')}</span></div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <div>Канал: ${escapeHtml(channelLabel)}<br><span class="metric-sub">Останній контакт: ${escapeHtml(lastActivityLabel)}</span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-profile-section">
+                    <h4>Локація</h4>
+                    <div class="contact-meta-list">
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>${addressMarkup}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-regular fa-clock"></i>
+                            <div>Часовий пояс: ${escapeHtml(contact.timezone || '—')}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-profile-section">
+                    <h4>Профіль компанії</h4>
+                    <div class="contact-meta-list">
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <div>Індустрія: ${industry}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-users"></i>
+                            <div>Співробітників: ${employees}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <div>Оборот: ${revenue}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-profile-section">
+                    <h4>Посилання</h4>
+                    <div class="contact-meta-list">
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-globe"></i>
+                            <div>${websiteMarkup}</div>
+                        </div>
+                        <div class="contact-meta-item">
+                            <i class="fa-solid fa-link"></i>
+                            <div>${linkedinMarkup}</div>
+                        </div>
+                    </div>
+                </div>
+                ${tagsMarkup ? `<div class="contact-profile-section"><h4>Мітки</h4>${tagsMarkup}</div>` : ''}
+                ${actionsMarkup}
+            `;
+
+            const interactions = Array.isArray(contact.interactions) ? contact.interactions.slice() : [];
+            if (!interactions.length) {
+                timelineContainer.innerHTML = '<div class="contact-timeline-empty">Ще немає зафіксованих взаємодій. Заплануйте перший контакт.</div>';
+            } else {
+                const timelineItems = interactions.map(interaction => {
+                    const typeLabel = CONTACT_INTERACTION_TYPE_LABELS[interaction.type] || 'Активність';
+                    const channel = CONTACT_CHANNEL_LABELS[interaction.channel] || interaction.channel;
+                    const icon = CONTACT_INTERACTION_ICONS[interaction.type] || 'fa-solid fa-circle-info';
+                    const whenRelative = interaction.timestamp ? formatRelativeTime(interaction.timestamp) : '';
+                    const whenAbsolute = interaction.timestamp
+                        ? formatDate(interaction.timestamp, { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })
+                        : '';
+                    const metaParts = [typeLabel];
+                    if (channel && channel !== typeLabel) {
+                        metaParts.push(channel);
+                    }
+                    if (interaction.author) {
+                        metaParts.push(`Автор: ${interaction.author}`);
+                    }
+                    if (whenAbsolute) {
+                        metaParts.push(whenAbsolute);
+                    }
+                    const metaMarkup = metaParts.map(part => `<span>${escapeHtml(part)}</span>`).join('');
+                    const summary = interaction.summary ? `<p>${escapeHtml(interaction.summary)}</p>` : '';
+                    const tagMarkup = Array.isArray(interaction.tags) && interaction.tags.length
+                        ? `<div class="chips">${interaction.tags.map(tag => `<span class="chip chip-ghost">${escapeHtml(tag)}</span>`).join('')}</div>`
+                        : '';
+                    const attachmentsCount = Array.isArray(interaction.attachments) ? interaction.attachments.length : 0;
+                    const attachmentsMarkup = attachmentsCount
+                        ? `<div class="chips"><span class="chip chip-ghost"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</span></div>`
+                        : '';
+
+                    return `
+                        <div class="contact-timeline-item">
+                            <div class="contact-timeline-icon"><i class="${icon}"></i></div>
+                            <div class="contact-timeline-body">
+                                <strong>${escapeHtml(interaction.subject || typeLabel)}</strong>
+                                <div class="contact-timeline-meta">
+                                    ${metaMarkup}
+                                    ${whenRelative ? `<span>${escapeHtml(whenRelative)}</span>` : ''}
+                                </div>
+                                ${summary}
+                                ${tagMarkup}
+                                ${attachmentsMarkup}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                timelineContainer.innerHTML = `
+                    <div class="contact-timeline-header">
+                        <h3>Історія взаємодій</h3>
+                        <p>Повний контекст дзвінків, листів і зустрічей команди.</p>
+                    </div>
+                    <div class="contact-timeline-list">${timelineItems}</div>
+                `;
+            }
+
+            profileContainer.querySelectorAll('[data-open-lead]').forEach(btn => {
+                btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
             });
         }
 
@@ -16965,6 +18010,8 @@
                 fileSearchTerm = '';
                 pipelineFilterOwner = 'all';
                 contactStatusFilter = 'all';
+                contactTagFilter = [];
+                activeContactId = null;
                 projectStageFilter = 'all';
                 projectMinProbability = 0;
                 projectSearchTerm = '';
@@ -16985,6 +18032,11 @@
                 const contactStatusSelect = document.getElementById('contactStatusFilter');
                 if (contactStatusSelect) {
                     contactStatusSelect.value = contactStatusFilter;
+                }
+
+                const contactTagInput = document.getElementById('contactTagFilter');
+                if (contactTagInput) {
+                    contactTagInput.value = '';
                 }
 
                 const globalSearchInput = document.getElementById('globalSearch');
@@ -17126,9 +18178,31 @@
                             role: '',
                             email: lead.contact.email,
                             phone: lead.contact.phone,
-                            status: 'potential',
+                            status: 'lead',
+                            segments: ['lead', 'potential'],
+                            lifecycleStage: 'prospect',
                             owner: lead.owner,
-                            tags: lead.tags,
+                            preferredChannel: lead.contact.email ? 'email' : 'phone',
+                            timezone: 'Europe/Kyiv',
+                            website: '',
+                            linkedin: '',
+                            address: { street: '', city: '', country: '', postalCode: '' },
+                            demographics: { industry: '', employees: null, annualRevenue: null },
+                            tags: Array.isArray(lead.tags) ? lead.tags.filter(Boolean) : [],
+                            attachments: [],
+                            notes: [],
+                            interactions: [
+                                {
+                                    id: generateId('cact'),
+                                    type: 'note',
+                                    channel: 'system',
+                                    subject: 'Контакт створено з ліда',
+                                    summary: `Контакт додано разом з угодою ${lead.name}.`,
+                                    timestamp: now,
+                                    author: CURRENT_USER.name,
+                                    tags: ['Лід']
+                                }
+                            ],
                             lastActivity: now
                         });
                     }
@@ -17243,6 +18317,41 @@
             const now = new Date().toISOString();
             const attachments = await prepareAttachmentsForArea('contact');
             const noteText = document.getElementById('contactNotes').value.trim();
+            const statusValue = document.getElementById('contactStatus').value;
+            const normalizedStatus = CONTACT_SEGMENT_SET.has(statusValue) ? statusValue : 'lead';
+            const segmentsSelect = document.getElementById('contactSegments');
+            const selectedSegments = segmentsSelect
+                ? Array.from(segmentsSelect.selectedOptions)
+                    .map(option => option.value)
+                    .filter(value => CONTACT_SEGMENT_SET.has(value))
+                : [];
+            if (!selectedSegments.includes(normalizedStatus)) {
+                selectedSegments.unshift(normalizedStatus);
+            }
+
+            const lifecycleValue = document.getElementById('contactLifecycle').value;
+            const lifecycleStage = CONTACT_LIFECYCLE_LABELS[lifecycleValue]
+                ? lifecycleValue
+                : (['customer', 'vip', 'partner'].includes(normalizedStatus) ? 'customer' : 'prospect');
+
+            const preferredChannelValue = document.getElementById('contactChannel').value;
+            const preferredChannel = CONTACT_CHANNEL_LABELS[preferredChannelValue]
+                ? preferredChannelValue
+                : (document.getElementById('contactEmail').value.trim() ? 'email' : 'phone');
+
+            const employeesValue = Number(document.getElementById('contactEmployees').value);
+            const revenueValue = Number(document.getElementById('contactRevenue').value);
+            const demographics = {
+                industry: document.getElementById('contactIndustry').value.trim(),
+                employees: Number.isFinite(employeesValue) && employeesValue >= 0 ? Math.round(employeesValue) : null,
+                annualRevenue: Number.isFinite(revenueValue) && revenueValue >= 0 ? Math.round(revenueValue) : null
+            };
+
+            const tags = document.getElementById('contactTags').value
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(Boolean);
+
             const contact = {
                 id: generateId('contact'),
                 name: document.getElementById('contactName').value.trim(),
@@ -17250,21 +18359,83 @@
                 role: document.getElementById('contactRole').value.trim(),
                 email: document.getElementById('contactEmail').value.trim(),
                 phone: document.getElementById('contactPhone').value.trim(),
-                status: document.getElementById('contactStatus').value,
+                status: normalizedStatus,
+                segments: selectedSegments,
+                lifecycleStage,
                 owner: document.getElementById('contactOwner').value,
-                tags: document.getElementById('contactTags').value.split(',').map(tag => tag.trim()).filter(Boolean),
+                preferredChannel,
+                timezone: document.getElementById('contactTimezone').value.trim() || 'Europe/Kyiv',
+                website: document.getElementById('contactWebsite').value.trim(),
+                linkedin: document.getElementById('contactLinkedin').value.trim(),
+                address: {
+                    street: document.getElementById('contactStreet').value.trim(),
+                    city: document.getElementById('contactCity').value.trim(),
+                    country: document.getElementById('contactCountry').value.trim(),
+                    postalCode: document.getElementById('contactPostal').value.trim()
+                },
+                demographics,
+                tags,
                 attachments,
                 notes: noteText ? [{ id: generateId('cnote'), text: noteText, author: CURRENT_USER.name, date: now }] : [],
+                interactions: [
+                    {
+                        id: generateId('cact'),
+                        type: 'note',
+                        channel: 'system',
+                        subject: 'Контакт створено',
+                        summary: `Контакт додано ${CURRENT_USER.name}.`,
+                        timestamp: now,
+                        author: CURRENT_USER.name,
+                        tags: ['Створення']
+                    }
+                ],
                 lastActivity: now
             };
 
+            if (noteText) {
+                contact.interactions.unshift({
+                    id: generateId('cact'),
+                    type: 'note',
+                    channel: 'note',
+                    subject: 'Нотатка менеджера',
+                    summary: noteText,
+                    timestamp: now,
+                    author: CURRENT_USER.name,
+                    tags: ['Нотатка']
+                });
+            }
+
             crmData.contacts.unshift(contact);
+            activeContactId = contact.id;
             logActivity(`Додано новий контакт ${contact.name}.`, 'note', contact.id);
             saveData();
             renderContacts(document.getElementById('contactSearch').value || '');
             closeModal('addContactModal');
             event.target.reset();
             resetAttachmentArea('contact');
+
+            const statusSelect = document.getElementById('contactStatus');
+            if (statusSelect) {
+                statusSelect.value = CONTACT_SEGMENT_OPTIONS[0]?.id || 'lead';
+            }
+            const lifecycleSelect = document.getElementById('contactLifecycle');
+            if (lifecycleSelect) {
+                lifecycleSelect.value = 'prospect';
+            }
+            const channelSelect = document.getElementById('contactChannel');
+            if (channelSelect) {
+                channelSelect.value = 'email';
+            }
+            const timezoneInput = document.getElementById('contactTimezone');
+            if (timezoneInput) {
+                timezoneInput.value = 'Europe/Kyiv';
+            }
+            const segmentsSelectReset = document.getElementById('contactSegments');
+            if (segmentsSelectReset) {
+                Array.from(segmentsSelectReset.options).forEach(option => {
+                    option.selected = false;
+                });
+            }
         }
 
         function openTaskModal(leadId = '') {
