@@ -2002,6 +2002,140 @@
             color: var(--text-muted);
         }
 
+        .integration-automation-card {
+            margin-top: 22px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .integration-automation-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .integration-automation-header h3 {
+            margin-bottom: 6px;
+        }
+
+        .integration-automation-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(14, 165, 233, 0.22));
+            color: #312e81;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .integration-automation-summary {
+            font-size: 13px;
+            color: var(--text-muted);
+            background: rgba(99, 102, 241, 0.08);
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+        }
+
+        .integration-automation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .integration-automation-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 14px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .integration-automation-content {
+            display: grid;
+            gap: 6px;
+        }
+
+        .integration-automation-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.18), rgba(99, 102, 241, 0.26));
+            color: var(--primary-dark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .integration-automation-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .integration-automation-title span {
+            flex: 1;
+        }
+
+        .integration-automation-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: rgba(59, 130, 246, 0.18);
+            color: #1d4ed8;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: lowercase;
+        }
+
+        .integration-automation-value {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 6px 0 4px;
+        }
+
+        .integration-automation-progress {
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.16);
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .integration-automation-progress-bar {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            transition: width 0.3s ease;
+        }
+
+        .integration-automation-detail {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .integration-automation-caption,
+        .integration-automation-footnote {
+            font-size: 12px;
+            color: rgba(15, 23, 42, 0.6);
+            margin-top: 6px;
+        }
+
+        .integration-automation-footnote {
+            font-style: italic;
+        }
+
         .chip-accent {
             background: rgba(59, 130, 246, 0.18);
             color: #1d4ed8;
@@ -5373,6 +5507,23 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card integration-automation-card" aria-labelledby="integrationAutomationTitle">
+                    <div class="integration-automation-header">
+                        <div>
+                            <h3 id="integrationAutomationTitle">Автоматичне оновлення інформації</h3>
+                            <p class="metric-sub">Імпорт пошти та веб-форм, збагачення DiscoverCRM і логування Zoom без ручної роботи.</p>
+                        </div>
+                        <span class="integration-automation-badge">
+                            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                            DiscoverCRM &amp; Zoom
+                        </span>
+                    </div>
+                    <div class="integration-automation-summary" id="integrationAutomationSummary">
+                        Інтеграції discovercrm.com та zoom.com автоматично синхронізують профілі без ручного введення.
+                    </div>
+                    <div class="integration-automation-grid" id="integrationAutomationGrid"></div>
+                </div>
             </section>
 
             <section id="tasksSection" class="section">
@@ -6389,6 +6540,101 @@
             task: 'fa-solid fa-circle-check',
             ticket: 'fa-solid fa-life-ring',
             success: 'fa-solid fa-star'
+        };
+
+        const AUTOMATION_AUTHOR = 'Автооновлення CRM';
+
+        const ENRICHMENT_DIRECTORY = {
+            'o.koval@marketpro.ua': {
+                company: 'MarketPro',
+                industry: 'Маркетинг та реклама',
+                employees: 125,
+                annualRevenue: 42000000,
+                website: 'https://marketpro.ua',
+                linkedin: 'https://www.linkedin.com/company/marketproua',
+                city: 'Київ',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['customer'],
+                tags: ['discovercrm.com', 'Marketing Automation'],
+                note: 'Дані отримано з DiscoverCRM Data Cloud.',
+                estimatedValue: 32000
+            },
+            'roman.bilyk@autoline.ua': {
+                company: 'Autoline',
+                industry: 'Логістика та транспорт',
+                employees: 180,
+                annualRevenue: 56000000,
+                website: 'https://autoline.ua',
+                linkedin: 'https://www.linkedin.com/company/autoline-ua',
+                city: 'Дніпро',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['potential'],
+                tags: ['discovercrm.com', 'Logistics'],
+                note: 'Заявка з веб-форми для автоматичного оновлення даних.',
+                estimatedValue: 28000
+            },
+            'i.melnyk@rozetka.ua': {
+                company: 'Rozetka',
+                industry: 'E-commerce',
+                employees: 9000,
+                annualRevenue: 1500000000,
+                website: 'https://rozetka.ua',
+                linkedin: 'https://www.linkedin.com/company/rozetka',
+                city: 'Київ',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['customer'],
+                tags: ['discovercrm.com', 'zoom.com'],
+                note: 'Автоматичне збагачення для контакт-центру та логування дзвінків.',
+                estimatedValue: 45000
+            },
+            's.romaniuk@okko.ua': {
+                company: 'OKKO',
+                industry: 'Retail & Fuel',
+                employees: 4500,
+                annualRevenue: 920000000,
+                website: 'https://www.okko.ua',
+                linkedin: 'https://www.linkedin.com/company/okko',
+                city: 'Львів',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['potential'],
+                tags: ['zoom.com', 'Маркетинг'],
+                note: 'Zoom-інтеграція передає листи та дзвінки для CRM.',
+                estimatedValue: 26000
+            },
+            'a.kovalenko@novapay.ua': {
+                company: 'NovaPay',
+                industry: 'Фінтех та платежі',
+                employees: 600,
+                annualRevenue: 180000000,
+                website: 'https://novapay.ua',
+                linkedin: 'https://www.linkedin.com/company/novapay',
+                city: 'Київ',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['customer'],
+                tags: ['discovercrm.com', 'Zoom Meetings'],
+                note: 'Збагачення профілю для планування фолоу-апів.',
+                estimatedValue: 52000
+            },
+            'o.danyliuk@greenbank.ua': {
+                company: 'GreenBank',
+                industry: 'Банківська справа',
+                employees: 2800,
+                annualRevenue: 860000000,
+                website: 'https://greenbank.ua',
+                linkedin: 'https://www.linkedin.com/company/greenbank',
+                city: 'Київ',
+                country: 'Україна',
+                timezone: 'Europe/Kyiv',
+                segments: ['customer'],
+                tags: ['zoom.com', 'Enterprise'],
+                note: 'Zoom Contact Center автоматично зберігає дзвінки та нотатки.',
+                estimatedValue: 91000
+            }
         };
 
         const SUPPORT_STATUS_LABELS = {
@@ -8113,6 +8359,153 @@
                     timestamp: '2024-05-16T10:45:00.000Z'
                 }
             ],
+            integrations: {
+                mailboxes: [
+                    {
+                        id: 'mail-sales',
+                        name: 'Sales Inbox',
+                        provider: 'Microsoft 365',
+                        address: 'sales@demo-crm.ua',
+                        owner: 'Марина',
+                        lastSync: '2024-06-05T08:30:00.000Z',
+                        autoTag: ['discovercrm.com', 'Email'],
+                        messages: [
+                            {
+                                id: 'mail-req-marketpro',
+                                subject: 'Запит демо: автоматичні оновлення DiscoverCRM',
+                                receivedAt: '2024-06-05T09:42:00.000Z',
+                                summary: 'MarketPro попросили підключити автоматичний імпорт контактів із пошти та форм.',
+                                bodyPreview: 'Доброго дня! Ми прочитали на discovercrm.com про автоматичне оновлення і хочемо спробувати інтеграцію.',
+                                from: { name: 'Оксана Коваль', email: 'o.koval@marketpro.ua' },
+                                owner: 'Марина',
+                                lead: {
+                                    company: 'MarketPro',
+                                    interest: 'Імпорт пошти та веб-форм',
+                                    value: 32000,
+                                    source: 'email'
+                                },
+                                tags: ['discovercrm.com', 'Email-кампанія'],
+                                status: 'new'
+                            },
+                            {
+                                id: 'mail-zoom-okko',
+                                subject: 'Підсумок дзвінка Zoom щодо CRM',
+                                receivedAt: '2024-06-05T10:05:00.000Z',
+                                summary: 'Світлана з OKKO надіслала нотатки та запис Zoom для синхронізації в CRM.',
+                                bodyPreview: 'Дякую за дзвінок! Надсилаю посилання на запис та очікувані кроки.',
+                                from: { name: 'Світлана Романюк', email: 's.romaniuk@okko.ua' },
+                                owner: 'Дмитро',
+                                lead: {
+                                    company: 'OKKO',
+                                    interest: 'Маркетингова автоматизація',
+                                    value: 28000,
+                                    source: 'email'
+                                },
+                                tags: ['zoom.com', 'Follow-up'],
+                                status: 'new'
+                            }
+                        ]
+                    }
+                ],
+                forms: [
+                    {
+                        id: 'form-discovercrm',
+                        source: 'Вебформа: discovercrm.com/demo-request',
+                        campaign: 'Discover CRM рекомендації',
+                        submittedAt: '2024-06-05T08:30:00.000Z',
+                        data: {
+                            name: 'Роман Білик',
+                            email: 'roman.bilyk@autoline.ua',
+                            phone: '+380 67 456 78 90',
+                            company: 'Autoline',
+                            employees: '180',
+                            industry: 'Логістика',
+                            website: 'https://autoline.ua',
+                            message: 'Хочемо автоматичне оновлення контактів та інтеграції з бізнес-довідниками.'
+                        },
+                        tags: ['discovercrm.com', 'Web-форма'],
+                        status: 'new'
+                    },
+                    {
+                        id: 'form-support-log',
+                        source: 'Вебформа: crm.demo.ua/contact',
+                        campaign: 'Follow-up після дзвінка',
+                        submittedAt: '2024-06-04T18:10:00.000Z',
+                        data: {
+                            name: 'Ірина Мельник',
+                            email: 'i.melnyk@rozetka.ua',
+                            phone: '+380 50 777 23 11',
+                            company: 'Rozetka',
+                            message: 'Потрібне автоматичне логування дзвінків із Zoom Phone.'
+                        },
+                        tags: ['customer-request'],
+                        status: 'new'
+                    }
+                ],
+                enrichment: {
+                    providers: [
+                        { id: 'discovercrm', name: 'DiscoverCRM Data Cloud', enabled: true, lastSync: '2024-06-04T12:40:00.000Z' },
+                        { id: 'zoom', name: 'Zoom Contact Center', enabled: true, lastSync: '2024-06-04T15:20:00.000Z' }
+                    ],
+                    queue: [
+                        { id: 'enrich-marketpro', providerId: 'discovercrm', contactEmail: 'o.koval@marketpro.ua', requestedAt: '2024-06-05T09:50:00.000Z', status: 'pending' },
+                        { id: 'enrich-autoline', providerId: 'discovercrm', contactEmail: 'roman.bilyk@autoline.ua', requestedAt: '2024-06-05T08:35:00.000Z', status: 'pending' },
+                        { id: 'enrich-rozetka', providerId: 'discovercrm', contactEmail: 'i.melnyk@rozetka.ua', requestedAt: '2024-06-04T18:12:00.000Z', status: 'pending' }
+                    ]
+                },
+                communicationLogs: {
+                    calls: [
+                        {
+                            id: 'call-rozetka-20240605',
+                            contactEmail: 'i.melnyk@rozetka.ua',
+                            contactPhone: '+380 50 777 23 11',
+                            direction: 'inbound',
+                            duration: 420,
+                            occurredAt: '2024-06-05T09:55:00.000Z',
+                            agent: 'Олександр',
+                            subject: 'Zoom Phone: узгодження інтеграції',
+                            summary: 'Zoom автоматично зберіг дзвінок та тегував його для CRM.',
+                            tags: ['zoom.com', 'Авто-лог'],
+                            status: 'new'
+                        },
+                        {
+                            id: 'call-greenbank-20240604',
+                            contactEmail: 'o.danyliuk@greenbank.ua',
+                            contactPhone: '+380 63 555 14 78',
+                            direction: 'outbound',
+                            duration: 360,
+                            occurredAt: '2024-06-04T17:10:00.000Z',
+                            agent: 'Вікторія',
+                            subject: 'Zoom дзвінок: узгодження workshop',
+                            summary: 'Синхронізовано через zoom.com для автоматичного фолоу-апу.',
+                            tags: ['zoom.com', 'Follow-up'],
+                            status: 'new'
+                        }
+                    ],
+                    emails: [
+                        {
+                            id: 'emaillog-novapay-20240605',
+                            contactEmail: 'a.kovalenko@novapay.ua',
+                            subject: 'Re: План впровадження DiscoverCRM',
+                            occurredAt: '2024-06-05T11:10:00.000Z',
+                            agent: 'Марина',
+                            summary: 'Відповідь клієнта автоматично синхронізовано із поштою.',
+                            tags: ['discovercrm.com', 'Авто-лог'],
+                            status: 'new'
+                        },
+                        {
+                            id: 'emaillog-okko-20240605',
+                            contactEmail: 's.romaniuk@okko.ua',
+                            subject: 'Re: Маркетинговий модуль',
+                            occurredAt: '2024-06-05T10:12:00.000Z',
+                            agent: 'Дмитро',
+                            summary: 'Follow-up лист після дзвінка Zoom імпортовано автоматично.',
+                            tags: ['zoom.com', 'Авто-лог'],
+                            status: 'new'
+                        }
+                    ]
+                }
+            },
             roles: {
                 customRoles: [
                     {
@@ -8409,6 +8802,66 @@
             return `${prefix}-${Math.random().toString(36).slice(2, 9)}`;
         }
 
+        function normalizeEmailAddress(value) {
+            if (typeof value !== 'string') {
+                return '';
+            }
+            const trimmed = value.trim();
+            return trimmed ? trimmed.toLowerCase() : '';
+        }
+
+        function ensureUniqueStrings(values) {
+            const result = [];
+            const seen = new Set();
+            if (!Array.isArray(values)) {
+                return result;
+            }
+            values.forEach(value => {
+                if (value === null || value === undefined) {
+                    return;
+                }
+                const stringValue = typeof value === 'string' ? value.trim() : String(value).trim();
+                if (!stringValue.length || seen.has(stringValue)) {
+                    return;
+                }
+                seen.add(stringValue);
+                result.push(stringValue);
+            });
+            return result;
+        }
+
+        function deriveNameFromEmail(email) {
+            const normalized = normalizeEmailAddress(email);
+            if (!normalized) {
+                return '';
+            }
+            const localPart = normalized.split('@')[0] || '';
+            if (!localPart.length) {
+                return '';
+            }
+            return localPart
+                .split(/[._-]+/g)
+                .filter(Boolean)
+                .map(chunk => chunk.charAt(0).toUpperCase() + chunk.slice(1))
+                .join(' ');
+        }
+
+        function deriveCompanyFromEmail(email) {
+            const normalized = normalizeEmailAddress(email);
+            if (!normalized) {
+                return '';
+            }
+            const domain = normalized.split('@')[1] || '';
+            if (!domain.length) {
+                return '';
+            }
+            const companyPart = domain.split('.')[0];
+            if (!companyPart) {
+                return '';
+            }
+            return companyPart.charAt(0).toUpperCase() + companyPart.slice(1);
+        }
+
         function normalizeAttachment(file, prefix = 'file') {
             if (!file || typeof file !== 'object') {
                 return null;
@@ -8507,6 +8960,287 @@
             return { id, type, channel, subject, summary, timestamp, author, tags, attachments };
         }
 
+        function normalizeIntegrationState(state) {
+            const result = {
+                mailboxes: [],
+                forms: [],
+                enrichment: { providers: [], queue: [] },
+                communicationLogs: { calls: [], emails: [] }
+            };
+
+            if (!state || typeof state !== 'object') {
+                return result;
+            }
+
+            if (Array.isArray(state.mailboxes)) {
+                result.mailboxes = state.mailboxes
+                    .map(normalizeIntegrationMailbox)
+                    .filter(Boolean);
+            }
+
+            if (Array.isArray(state.forms)) {
+                result.forms = state.forms.map(normalizeFormSubmission).filter(Boolean);
+            }
+
+            result.enrichment = normalizeEnrichmentState(state.enrichment);
+            result.communicationLogs = normalizeCommunicationLogs(state.communicationLogs);
+
+            return result;
+        }
+
+        function normalizeIntegrationMailbox(mailbox) {
+            if (!mailbox || typeof mailbox !== 'object') {
+                return null;
+            }
+
+            const autoTagSource = mailbox.autoTag;
+            const autoTagList = Array.isArray(autoTagSource)
+                ? autoTagSource
+                : typeof autoTagSource === 'string'
+                    ? autoTagSource.split(',')
+                    : [];
+
+            const messages = Array.isArray(mailbox.messages)
+                ? mailbox.messages.map(normalizeInboundMessage).filter(Boolean)
+                : [];
+
+            return {
+                id: typeof mailbox.id === 'string' && mailbox.id.trim().length ? mailbox.id.trim() : generateId('mailbox'),
+                name: typeof mailbox.name === 'string' && mailbox.name.trim().length ? mailbox.name.trim() : 'Поштова скринька',
+                provider: typeof mailbox.provider === 'string' ? mailbox.provider.trim() : '',
+                address: typeof mailbox.address === 'string' ? mailbox.address.trim() : '',
+                owner: typeof mailbox.owner === 'string' ? mailbox.owner.trim() : '',
+                lastSync: typeof mailbox.lastSync === 'string' && mailbox.lastSync ? mailbox.lastSync : null,
+                autoTag: ensureUniqueStrings(autoTagList),
+                messages
+            };
+        }
+
+        function normalizeInboundMessage(message) {
+            if (!message || typeof message !== 'object') {
+                return null;
+            }
+
+            const id = typeof message.id === 'string' && message.id.trim().length ? message.id.trim() : generateId('mailmsg');
+            const receivedAt = typeof message.receivedAt === 'string' && message.receivedAt
+                ? message.receivedAt
+                : new Date().toISOString();
+            const fromSource = message.from && typeof message.from === 'object' ? message.from : {};
+            const leadSource = message.lead && typeof message.lead === 'object' ? message.lead : {};
+            const tags = Array.isArray(message.tags)
+                ? message.tags
+                : typeof message.tags === 'string'
+                    ? message.tags.split(',')
+                    : [];
+
+            return {
+                id,
+                subject: typeof message.subject === 'string' && message.subject.trim().length
+                    ? message.subject.trim()
+                    : 'Лист без теми',
+                receivedAt,
+                summary: typeof message.summary === 'string' ? message.summary.trim() : '',
+                bodyPreview: typeof message.bodyPreview === 'string' ? message.bodyPreview.trim() : '',
+                from: {
+                    name: typeof fromSource.name === 'string' ? fromSource.name.trim() : '',
+                    email: normalizeEmailAddress(fromSource.email)
+                },
+                owner: typeof message.owner === 'string' ? message.owner.trim() : '',
+                lead: {
+                    company: typeof leadSource.company === 'string' ? leadSource.company.trim() : '',
+                    interest: typeof leadSource.interest === 'string' ? leadSource.interest.trim() : '',
+                    value: Math.max(0, Number(leadSource.value) || 0),
+                    source: typeof leadSource.source === 'string' ? leadSource.source.trim() : 'email'
+                },
+                tags: ensureUniqueStrings(tags),
+                status: typeof message.status === 'string' && message.status.trim().length
+                    ? message.status.trim().toLowerCase()
+                    : 'new',
+                processedAt: typeof message.processedAt === 'string' && message.processedAt ? message.processedAt : null,
+                contactId: typeof message.contactId === 'string' ? message.contactId.trim() : null,
+                leadId: typeof message.leadId === 'string' ? message.leadId.trim() : null
+            };
+        }
+
+        function normalizeFormSubmission(submission) {
+            if (!submission || typeof submission !== 'object') {
+                return null;
+            }
+
+            const dataSource = submission.data && typeof submission.data === 'object' ? submission.data : {};
+            const normalizedData = {};
+            Object.keys(dataSource).forEach(key => {
+                const value = dataSource[key];
+                normalizedData[key] = typeof value === 'string' ? value.trim() : value;
+            });
+
+            const tagSource = submission.tags;
+            const tagList = Array.isArray(tagSource)
+                ? tagSource
+                : typeof tagSource === 'string'
+                    ? tagSource.split(',')
+                    : [];
+
+            return {
+                id: typeof submission.id === 'string' && submission.id.trim().length ? submission.id.trim() : generateId('form'),
+                source: typeof submission.source === 'string' ? submission.source.trim() : 'Форма',
+                campaign: typeof submission.campaign === 'string' ? submission.campaign.trim() : '',
+                submittedAt: typeof submission.submittedAt === 'string' && submission.submittedAt
+                    ? submission.submittedAt
+                    : new Date().toISOString(),
+                data: normalizedData,
+                tags: ensureUniqueStrings(tagList),
+                status: typeof submission.status === 'string' && submission.status.trim().length
+                    ? submission.status.trim().toLowerCase()
+                    : 'new',
+                processedAt: typeof submission.processedAt === 'string' && submission.processedAt ? submission.processedAt : null,
+                contactId: typeof submission.contactId === 'string' ? submission.contactId.trim() : null,
+                leadId: typeof submission.leadId === 'string' ? submission.leadId.trim() : null
+            };
+        }
+
+        function normalizeEnrichmentState(enrichment) {
+            const result = { providers: [], queue: [] };
+            if (!enrichment || typeof enrichment !== 'object') {
+                return result;
+            }
+
+            if (Array.isArray(enrichment.providers)) {
+                result.providers = enrichment.providers
+                    .map(normalizeEnrichmentProvider)
+                    .filter(Boolean);
+            }
+
+            if (Array.isArray(enrichment.queue)) {
+                result.queue = enrichment.queue.map(normalizeEnrichmentRequest).filter(Boolean);
+            }
+
+            return result;
+        }
+
+        function normalizeEnrichmentProvider(provider) {
+            if (!provider || typeof provider !== 'object') {
+                return null;
+            }
+
+            return {
+                id: typeof provider.id === 'string' && provider.id.trim().length ? provider.id.trim() : generateId('enrich-provider'),
+                name: typeof provider.name === 'string' && provider.name.trim().length ? provider.name.trim() : 'Провайдер даних',
+                enabled: provider.enabled !== false,
+                lastSync: typeof provider.lastSync === 'string' && provider.lastSync ? provider.lastSync : null,
+                type: typeof provider.type === 'string' ? provider.type.trim() : ''
+            };
+        }
+
+        function normalizeEnrichmentRequest(request) {
+            if (!request || typeof request !== 'object') {
+                return null;
+            }
+
+            return {
+                id: typeof request.id === 'string' && request.id.trim().length ? request.id.trim() : generateId('enrich'),
+                providerId: typeof request.providerId === 'string' ? request.providerId.trim() : '',
+                contactEmail: normalizeEmailAddress(request.contactEmail),
+                company: typeof request.company === 'string' ? request.company.trim() : '',
+                status: typeof request.status === 'string' && request.status.trim().length
+                    ? request.status.trim().toLowerCase()
+                    : 'pending',
+                requestedAt: typeof request.requestedAt === 'string' && request.requestedAt
+                    ? request.requestedAt
+                    : new Date().toISOString(),
+                completedAt: typeof request.completedAt === 'string' && request.completedAt ? request.completedAt : null,
+                payload: request.payload && typeof request.payload === 'object' ? request.payload : null
+            };
+        }
+
+        function normalizeCommunicationLogs(logs) {
+            const result = { calls: [], emails: [] };
+            if (!logs || typeof logs !== 'object') {
+                return result;
+            }
+
+            if (Array.isArray(logs.calls)) {
+                result.calls = logs.calls.map(normalizeCallLog).filter(Boolean);
+            }
+
+            if (Array.isArray(logs.emails)) {
+                result.emails = logs.emails.map(normalizeEmailLog).filter(Boolean);
+            }
+
+            return result;
+        }
+
+        function normalizeCallLog(log) {
+            if (!log || typeof log !== 'object') {
+                return null;
+            }
+
+            const directionRaw = typeof log.direction === 'string' ? log.direction.trim().toLowerCase() : 'inbound';
+            const allowedDirections = new Set(['inbound', 'outbound']);
+
+            const tagSource = log.tags;
+            const tagList = Array.isArray(tagSource)
+                ? tagSource
+                : typeof tagSource === 'string'
+                    ? tagSource.split(',')
+                    : [];
+
+            return {
+                id: typeof log.id === 'string' && log.id.trim().length ? log.id.trim() : generateId('call'),
+                contactEmail: normalizeEmailAddress(log.contactEmail),
+                contactPhone: typeof log.contactPhone === 'string' ? log.contactPhone.trim() : '',
+                contactName: typeof log.contactName === 'string' ? log.contactName.trim() : '',
+                direction: allowedDirections.has(directionRaw) ? directionRaw : 'inbound',
+                duration: Math.max(0, Number(log.duration) || 0),
+                occurredAt: typeof log.occurredAt === 'string' && log.occurredAt
+                    ? log.occurredAt
+                    : new Date().toISOString(),
+                agent: typeof log.agent === 'string' ? log.agent.trim() : '',
+                subject: typeof log.subject === 'string' ? log.subject.trim() : '',
+                summary: typeof log.summary === 'string' ? log.summary.trim() : '',
+                tags: ensureUniqueStrings(tagList),
+                recordingUrl: typeof log.recordingUrl === 'string' ? log.recordingUrl.trim() : '',
+                status: typeof log.status === 'string' && log.status.trim().length
+                    ? log.status.trim().toLowerCase()
+                    : 'new',
+                loggedAt: typeof log.loggedAt === 'string' && log.loggedAt ? log.loggedAt : null,
+                leadId: typeof log.leadId === 'string' ? log.leadId.trim() : null,
+                contactId: typeof log.contactId === 'string' ? log.contactId.trim() : null
+            };
+        }
+
+        function normalizeEmailLog(entry) {
+            if (!entry || typeof entry !== 'object') {
+                return null;
+            }
+
+            const tagSource = entry.tags;
+            const tagList = Array.isArray(tagSource)
+                ? tagSource
+                : typeof tagSource === 'string'
+                    ? tagSource.split(',')
+                    : [];
+
+            return {
+                id: typeof entry.id === 'string' && entry.id.trim().length ? entry.id.trim() : generateId('emaillog'),
+                contactEmail: normalizeEmailAddress(entry.contactEmail),
+                subject: typeof entry.subject === 'string' && entry.subject.trim().length ? entry.subject.trim() : 'Лист',
+                occurredAt: typeof entry.occurredAt === 'string' && entry.occurredAt
+                    ? entry.occurredAt
+                    : new Date().toISOString(),
+                agent: typeof entry.agent === 'string' ? entry.agent.trim() : '',
+                summary: typeof entry.summary === 'string' ? entry.summary.trim() : '',
+                tags: ensureUniqueStrings(tagList),
+                threadId: typeof entry.threadId === 'string' ? entry.threadId.trim() : '',
+                status: typeof entry.status === 'string' && entry.status.trim().length
+                    ? entry.status.trim().toLowerCase()
+                    : 'new',
+                loggedAt: typeof entry.loggedAt === 'string' && entry.loggedAt ? entry.loggedAt : null,
+                leadId: typeof entry.leadId === 'string' ? entry.leadId.trim() : null,
+                contactId: typeof entry.contactId === 'string' ? entry.contactId.trim() : null
+            };
+        }
+
         function upgradeDataStructure(data) {
             if (!data || typeof data !== 'object') {
                 return deepClone(defaultData);
@@ -8563,6 +9297,16 @@
             data.supportTickets = Array.isArray(data.supportTickets)
                 ? data.supportTickets.map(normalizeSupportTicket).filter(Boolean)
                 : deepClone(defaultData.supportTickets || []);
+
+            const normalizedIntegrations = normalizeIntegrationState(data.integrations);
+            const defaultIntegrations = normalizeIntegrationState(defaultData.integrations || {});
+            const hasIntegrationData =
+                normalizedIntegrations.mailboxes.length
+                || normalizedIntegrations.forms.length
+                || normalizedIntegrations.enrichment.queue.length
+                || normalizedIntegrations.communicationLogs.calls.length
+                || normalizedIntegrations.communicationLogs.emails.length;
+            data.integrations = hasIntegrationData ? normalizedIntegrations : defaultIntegrations;
 
             data.fileLibrary = Array.isArray(data.fileLibrary)
                 ? data.fileLibrary.map(normalizeFileSnapshot).filter(Boolean)
@@ -8953,6 +9697,250 @@
                 interactions,
                 lastActivity
             };
+        }
+
+        function findContactByEmail(email) {
+            if (!crmData || !Array.isArray(crmData.contacts)) {
+                return null;
+            }
+            const target = normalizeEmailAddress(email);
+            if (!target) {
+                return null;
+            }
+            return crmData.contacts.find(contact => normalizeEmailAddress(contact.email) === target) || null;
+        }
+
+        function addContactTags(contact, tags) {
+            if (!contact) {
+                return;
+            }
+            const current = Array.isArray(contact.tags) ? contact.tags : [];
+            const additions = Array.isArray(tags) ? tags : [];
+            contact.tags = ensureUniqueStrings([...current, ...additions]);
+        }
+
+        function ensureContactSegment(contact, segment) {
+            if (!contact || !segment) {
+                return;
+            }
+            if (!Array.isArray(contact.segments)) {
+                contact.segments = [];
+            }
+            if (CONTACT_SEGMENT_SET.has(segment) && !contact.segments.includes(segment)) {
+                contact.segments.unshift(segment);
+            }
+        }
+
+        function ensureLeadForContact(contact, payload = {}) {
+            if (!crmData) {
+                return null;
+            }
+            if (!Array.isArray(crmData.leads)) {
+                crmData.leads = [];
+            }
+
+            const email = contact ? normalizeEmailAddress(contact.email) : '';
+            let lead = null;
+            if (email) {
+                lead = crmData.leads.find(item => normalizeEmailAddress(item?.contact?.email) === email) || null;
+            }
+            if (!lead && contact && contact.id) {
+                lead = crmData.leads.find(item => item?.contact?.id === contact.id) || null;
+            }
+
+            const companyNameRaw = (payload.company || (contact && contact.company) || '').trim();
+            if (!lead && companyNameRaw) {
+                const normalizedCompany = companyNameRaw.toLowerCase();
+                lead = crmData.leads.find(item => (item.company || '').trim().toLowerCase() === normalizedCompany) || null;
+            }
+
+            const nowIso = payload.timestamp || new Date().toISOString();
+            const owner = payload.owner || (contact && contact.owner) || suggestLeadOwner(payload.source || 'web');
+            const contactName = contact?.name || deriveNameFromEmail(email) || 'Контакт';
+            const companyName = companyNameRaw || contactName;
+            const baseTags = Array.isArray(payload.tags) ? payload.tags : [];
+            const automaticTags = [];
+            if (payload.source === 'email') {
+                automaticTags.push('Email-імпорт');
+            }
+            if (payload.source === 'web') {
+                automaticTags.push('Web-форма');
+            }
+            const combinedTags = ensureUniqueStrings(['Автоімпорт', ...baseTags, ...automaticTags]);
+
+            if (!lead) {
+                const baseDate = startOfDay(new Date(nowIso));
+                let expectedClose = '';
+                if (baseDate) {
+                    baseDate.setDate(baseDate.getDate() + 21);
+                    expectedClose = formatDateForInput(baseDate);
+                }
+                const rawValue = Number(payload.value);
+                const value = Number.isFinite(rawValue) && rawValue > 0 ? Math.round(rawValue) : 20000;
+                const probability = Number.isFinite(Number(payload.probability))
+                    ? Math.max(5, Math.min(100, Number(payload.probability)))
+                    : 20;
+                const score = Number.isFinite(Number(payload.score))
+                    ? Math.max(0, Math.min(100, Number(payload.score)))
+                    : Math.min(90, LEAD_SCORE_DEFAULT + 10);
+                const leadName = payload.leadName
+                    || (payload.subject && companyName ? `${payload.subject} (${companyName})` : companyName);
+                const timelineEntry = payload.timeline || 'Лід створено автоматично на основі інтеграції.';
+                const notes = [];
+                if (payload.note) {
+                    notes.push({ id: generateId('note'), text: payload.note, author: AUTOMATION_AUTHOR, date: nowIso });
+                }
+                const leadContact = {
+                    id: contact?.id || generateId('contact'),
+                    person: contactName,
+                    email: contact?.email || email,
+                    phone: contact?.phone || ''
+                };
+
+                lead = {
+                    id: generateId('lead'),
+                    name: leadName,
+                    company: companyName,
+                    stage: 'Новий',
+                    value,
+                    probability,
+                    source: payload.source || 'web',
+                    qualification: payload.qualification || 'mql',
+                    score,
+                    owner,
+                    status: 'active',
+                    expectedClose,
+                    contact: leadContact,
+                    tags: combinedTags,
+                    createdAt: nowIso,
+                    updatedAt: nowIso,
+                    notes,
+                    timeline: [{ id: generateId('tl'), text: timelineEntry, date: nowIso }],
+                    attachments: [],
+                    automation: normalizeLeadAutomation({})
+                };
+                crmData.leads.unshift(lead);
+            } else {
+                if (payload.timeline) {
+                    lead.timeline.unshift({ id: generateId('tl'), text: payload.timeline, date: nowIso });
+                }
+                lead.updatedAt = nowIso;
+                if (!lead.owner && owner) {
+                    lead.owner = owner;
+                }
+                const newValue = Number(payload.value);
+                if (Number.isFinite(newValue) && newValue > (Number(lead.value) || 0)) {
+                    lead.value = Math.round(newValue);
+                }
+                if (companyNameRaw && (!lead.company || lead.company.length < companyNameRaw.length)) {
+                    lead.company = companyNameRaw;
+                }
+                lead.tags = ensureUniqueStrings([...(Array.isArray(lead.tags) ? lead.tags : []), ...combinedTags]);
+                if (!lead.stage) {
+                    lead.stage = 'Новий';
+                }
+                if (!lead.status || lead.status === 'inactive') {
+                    lead.status = 'active';
+                }
+                if (!lead.expectedClose || !lead.expectedClose.length) {
+                    const baseDate = startOfDay(new Date(nowIso));
+                    if (baseDate) {
+                        baseDate.setDate(baseDate.getDate() + 21);
+                        lead.expectedClose = formatDateForInput(baseDate);
+                    }
+                }
+                lead.contact = {
+                    id: contact?.id || lead.contact?.id || generateId('contact'),
+                    person: contactName,
+                    email: contact?.email || lead.contact?.email || email,
+                    phone: contact?.phone || lead.contact?.phone || ''
+                };
+            }
+
+            return lead;
+        }
+
+        function applyEnrichmentToContact(contact, dataset) {
+            if (!contact || !dataset) {
+                return;
+            }
+
+            if (dataset.company && (!contact.company || contact.company.length < dataset.company.length)) {
+                contact.company = dataset.company;
+            }
+
+            if (!contact.demographics || typeof contact.demographics !== 'object') {
+                contact.demographics = { industry: '', employees: null, annualRevenue: null };
+            }
+
+            if (dataset.industry && !contact.demographics.industry) {
+                contact.demographics.industry = dataset.industry;
+            }
+
+            if (dataset.employees !== undefined) {
+                const employees = Number(dataset.employees);
+                if (Number.isFinite(employees)) {
+                    const normalizedEmployees = Math.max(0, Math.round(employees));
+                    if (!contact.demographics.employees || normalizedEmployees > contact.demographics.employees) {
+                        contact.demographics.employees = normalizedEmployees;
+                    }
+                }
+            }
+
+            if (dataset.annualRevenue !== undefined) {
+                const revenue = Number(dataset.annualRevenue);
+                if (Number.isFinite(revenue)) {
+                    const normalizedRevenue = Math.max(0, Math.round(revenue));
+                    if (!contact.demographics.annualRevenue || normalizedRevenue > contact.demographics.annualRevenue) {
+                        contact.demographics.annualRevenue = normalizedRevenue;
+                    }
+                }
+            }
+
+            if (dataset.website && !contact.website) {
+                contact.website = dataset.website;
+            }
+
+            if (dataset.linkedin && !contact.linkedin) {
+                contact.linkedin = dataset.linkedin;
+            }
+
+            if (dataset.timezone && (!contact.timezone || contact.timezone === 'Europe/Kyiv')) {
+                contact.timezone = dataset.timezone;
+            }
+
+            if (!contact.address || typeof contact.address !== 'object') {
+                contact.address = { street: '', city: '', country: '', postalCode: '' };
+            }
+
+            if (dataset.city && !contact.address.city) {
+                contact.address.city = dataset.city;
+            }
+
+            if (dataset.country && !contact.address.country) {
+                contact.address.country = dataset.country;
+            }
+
+            if (Array.isArray(dataset.segments)) {
+                dataset.segments.forEach(segment => ensureContactSegment(contact, segment));
+            }
+
+            if (Array.isArray(dataset.tags)) {
+                addContactTags(contact, dataset.tags);
+            }
+        }
+
+        function formatDuration(value) {
+            const totalSeconds = Math.max(0, Number(value) || 0);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = Math.round(totalSeconds % 60);
+            if (minutes && seconds) {
+                return `${minutes} хв ${seconds} с`;
+            }
+            if (minutes) {
+                return `${minutes} хв`;
+            }
+            return `${seconds} с`;
         }
 
         function normalizeTask(task) {
@@ -12130,6 +13118,628 @@
             return `${year}-${month}-${day}`;
         }
 
+        function runAutomaticUpdates() {
+            if (!crmData || !crmData.integrations) {
+                return false;
+            }
+
+            const integrations = crmData.integrations;
+            const mailboxes = Array.isArray(integrations.mailboxes) ? integrations.mailboxes : [];
+            const forms = Array.isArray(integrations.forms) ? integrations.forms : [];
+            const enrichment = integrations.enrichment || {};
+            const communicationLogs = integrations.communicationLogs || {};
+
+            let changed = false;
+
+            if (processMailboxImports(mailboxes)) {
+                changed = true;
+            }
+
+            if (processFormSubmissions(forms)) {
+                changed = true;
+            }
+
+            if (processEnrichmentQueue(enrichment)) {
+                changed = true;
+            }
+
+            if (processCommunicationLogs(communicationLogs)) {
+                changed = true;
+            }
+
+            if (changed) {
+                saveData();
+            }
+
+            return changed;
+        }
+
+        function processMailboxImports(mailboxes) {
+            if (!Array.isArray(mailboxes) || !mailboxes.length) {
+                return false;
+            }
+
+            let changed = false;
+            const now = new Date().toISOString();
+
+            mailboxes.forEach(mailbox => {
+                if (!mailbox || !Array.isArray(mailbox.messages)) {
+                    return;
+                }
+
+                let mailboxUpdated = false;
+
+                mailbox.messages.forEach(message => {
+                    if (!message || message.status !== 'new') {
+                        return;
+                    }
+
+                    const result = importMailboxMessage(mailbox, message);
+                    if (result) {
+                        message.status = 'processed';
+                        message.processedAt = result.processedAt;
+                        message.contactId = result.contactId;
+                        message.leadId = result.leadId;
+                        mailboxUpdated = true;
+                        changed = true;
+                    }
+                });
+
+                if (mailboxUpdated) {
+                    mailbox.lastSync = now;
+                }
+            });
+
+            return changed;
+        }
+
+        function importMailboxMessage(mailbox, message) {
+            const email = message && message.from ? normalizeEmailAddress(message.from.email) : '';
+            if (!email) {
+                return null;
+            }
+
+            if (!Array.isArray(crmData.contacts)) {
+                crmData.contacts = [];
+            }
+
+            const timestamp = message.receivedAt || new Date().toISOString();
+            const owner = message.owner || mailbox.owner || suggestLeadOwner(message.lead?.source || 'email');
+            const name = message.from && typeof message.from.name === 'string' && message.from.name.trim().length
+                ? message.from.name.trim()
+                : deriveNameFromEmail(email) || email;
+            const company = message.lead && typeof message.lead.company === 'string' && message.lead.company.trim().length
+                ? message.lead.company.trim()
+                : deriveCompanyFromEmail(email);
+
+            let contact = findContactByEmail(email);
+            const mailboxTags = Array.isArray(mailbox.autoTag) ? mailbox.autoTag : [];
+            const messageTags = Array.isArray(message.tags) ? message.tags : [];
+            const combinedTags = ensureUniqueStrings(['Автоімпорт', 'Email-імпорт', ...mailboxTags, ...messageTags]);
+
+            if (!contact) {
+                const contactPayload = normalizeContact({
+                    id: generateId('contact'),
+                    name,
+                    company,
+                    role: '',
+                    email,
+                    phone: message.lead?.phone || '',
+                    status: 'lead',
+                    segments: ['lead'],
+                    owner,
+                    preferredChannel: 'email',
+                    timezone: 'Europe/Kyiv',
+                    tags: combinedTags,
+                    notes: message.summary
+                        ? [{ text: message.summary, author: AUTOMATION_AUTHOR, date: timestamp }]
+                        : [],
+                    interactions: []
+                });
+                contact = contactPayload;
+                crmData.contacts.unshift(contact);
+                logActivity(`Створено контакт ${contact.name} з листа «${message.subject || 'Без теми'}».`, 'automation', contact.id);
+            } else {
+                addContactTags(contact, combinedTags);
+                if (!contact.owner && owner) {
+                    contact.owner = owner;
+                }
+                if (!contact.company && company) {
+                    contact.company = company;
+                }
+            }
+
+            ensureContactSegment(contact, 'lead');
+
+            const summary = message.summary || message.bodyPreview || 'Вхідний лист імпортовано автоматично.';
+            const interaction = normalizeContactInteraction({
+                id: message.id,
+                type: 'email',
+                channel: 'email',
+                subject: message.subject || 'Вхідний лист',
+                summary,
+                timestamp,
+                author: AUTOMATION_AUTHOR,
+                tags: combinedTags
+            }, contact.owner || owner);
+            contact.interactions.unshift(interaction);
+            contact.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            contact.lastActivity = interaction.timestamp;
+
+            const lead = ensureLeadForContact(contact, {
+                owner,
+                company,
+                source: message.lead?.source || 'email',
+                value: message.lead?.value,
+                tags: combinedTags,
+                timestamp,
+                timeline: `Імпортовано лист «${message.subject || 'Без теми'}» із ${mailbox.name || 'поштової інтеграції'}.`,
+                note: message.summary || '',
+                leadName: message.lead?.interest ? `${message.lead.interest} — ${company || contact.name}` : undefined,
+                probability: message.lead?.probability,
+                score: message.lead?.score,
+                subject: message.subject
+            });
+            if (lead) {
+                lead.updatedAt = timestamp;
+            }
+
+            logActivity(`Автоматично імпортовано лист від ${contact.name || contact.email}.`, 'email', lead ? lead.id : contact.id);
+
+            return {
+                contactId: contact.id,
+                leadId: lead ? lead.id : null,
+                processedAt: new Date().toISOString()
+            };
+        }
+
+        function processFormSubmissions(forms) {
+            if (!Array.isArray(forms) || !forms.length) {
+                return false;
+            }
+
+            if (!Array.isArray(crmData.contacts)) {
+                crmData.contacts = [];
+            }
+
+            let changed = false;
+            const now = new Date().toISOString();
+
+            forms.forEach(submission => {
+                if (!submission || submission.status !== 'new') {
+                    return;
+                }
+
+                const data = submission.data || {};
+                const email = normalizeEmailAddress(data.email);
+                if (!email) {
+                    submission.status = 'skipped';
+                    submission.processedAt = now;
+                    changed = true;
+                    return;
+                }
+
+                const timestamp = submission.submittedAt || now;
+                const owner = suggestLeadOwner('web');
+                const name = typeof data.name === 'string' && data.name.trim().length ? data.name.trim() : deriveNameFromEmail(email) || email;
+                const company = typeof data.company === 'string' && data.company.trim().length ? data.company.trim() : deriveCompanyFromEmail(email);
+                const formTags = Array.isArray(submission.tags) ? submission.tags : [];
+
+                let contact = findContactByEmail(email);
+                if (!contact) {
+                    const contactPayload = normalizeContact({
+                        id: generateId('contact'),
+                        name,
+                        company,
+                        role: data.role || '',
+                        email,
+                        phone: data.phone || '',
+                        status: 'lead',
+                        segments: ['lead'],
+                        owner,
+                        preferredChannel: 'email',
+                        timezone: 'Europe/Kyiv',
+                        website: data.website || '',
+                        demographics: {
+                            industry: data.industry || '',
+                            employees: data.employees || '',
+                            annualRevenue: data.annualRevenue || ''
+                        },
+                        tags: ensureUniqueStrings(['Web-форма', ...formTags]),
+                        notes: data.message
+                            ? [{ text: data.message, author: AUTOMATION_AUTHOR, date: timestamp }]
+                            : [],
+                        interactions: []
+                    });
+                    contact = contactPayload;
+                    crmData.contacts.unshift(contact);
+                    logActivity(`Створено контакт ${contact.name} з веб-форми.`, 'automation', contact.id);
+                } else {
+                    addContactTags(contact, ['Web-форма', ...formTags]);
+                    if (!contact.company && company) {
+                        contact.company = company;
+                    }
+                    if (data.website && !contact.website) {
+                        contact.website = data.website;
+                    }
+                    if (!contact.demographics || typeof contact.demographics !== 'object') {
+                        contact.demographics = { industry: '', employees: null, annualRevenue: null };
+                    }
+                    if (data.industry && !contact.demographics.industry) {
+                        contact.demographics.industry = data.industry;
+                    }
+                    if (data.employees && !contact.demographics.employees) {
+                        const employees = Number(data.employees);
+                        if (Number.isFinite(employees)) {
+                            contact.demographics.employees = Math.max(0, Math.round(employees));
+                        }
+                    }
+                }
+
+                ensureContactSegment(contact, 'lead');
+
+                const summaryParts = [];
+                if (data.message) {
+                    summaryParts.push(data.message);
+                }
+                if (submission.source) {
+                    summaryParts.push(`Джерело: ${submission.source}`);
+                }
+                if (submission.campaign) {
+                    summaryParts.push(`Кампанія: ${submission.campaign}`);
+                }
+                const summary = summaryParts.join('. ');
+
+                const interaction = normalizeContactInteraction({
+                    id: submission.id,
+                    type: 'note',
+                    channel: 'system',
+                    subject: `Форма: ${submission.source || 'Заявка'}`,
+                    summary: summary || 'Нову заявку імпортовано автоматично.',
+                    timestamp,
+                    author: AUTOMATION_AUTHOR,
+                    tags: ensureUniqueStrings(['Web-форма', ...formTags])
+                }, contact.owner || owner);
+                contact.interactions.unshift(interaction);
+                contact.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                contact.lastActivity = interaction.timestamp;
+
+                const estimatedValue = data.budget
+                    ? Number(data.budget)
+                    : data.employees
+                        ? Number(data.employees) * 250
+                        : 18000;
+                const lead = ensureLeadForContact(contact, {
+                    owner: contact.owner || owner,
+                    company,
+                    source: 'web',
+                    value: estimatedValue,
+                    tags: ensureUniqueStrings(['Web-форма', ...formTags]),
+                    timestamp,
+                    timeline: `Автоматично імпортовано заявку з форми ${submission.source || 'на сайті'}.`,
+                    note: data.message || '',
+                    leadName: data.project || `Запит від ${name}`
+                });
+                if (lead) {
+                    lead.updatedAt = timestamp;
+                }
+
+                submission.status = 'processed';
+                submission.processedAt = now;
+                submission.contactId = contact.id;
+                submission.leadId = lead ? lead.id : null;
+                changed = true;
+            });
+
+            return changed;
+        }
+
+        function processEnrichmentQueue(enrichment) {
+            if (!enrichment || typeof enrichment !== 'object') {
+                return false;
+            }
+
+            const queue = Array.isArray(enrichment.queue) ? enrichment.queue : [];
+            if (!queue.length) {
+                return false;
+            }
+
+            let changed = false;
+            const now = new Date().toISOString();
+            const providers = Array.isArray(enrichment.providers) ? enrichment.providers : [];
+
+            queue.forEach(request => {
+                if (!request || request.status !== 'pending') {
+                    return;
+                }
+
+                const email = normalizeEmailAddress(request.contactEmail);
+                const provider = providers.find(item => item && item.id === request.providerId) || null;
+                const dataset = email ? ENRICHMENT_DIRECTORY[email] : null;
+
+                if (!email || !dataset) {
+                    request.status = 'skipped';
+                    request.completedAt = now;
+                    request.payload = dataset || null;
+                    if (provider) {
+                        provider.lastSync = now;
+                    }
+                    changed = true;
+                    return;
+                }
+
+                const contact = findContactByEmail(email);
+                if (!contact) {
+                    request.status = 'skipped';
+                    request.completedAt = now;
+                    request.payload = dataset;
+                    if (provider) {
+                        provider.lastSync = now;
+                    }
+                    changed = true;
+                    return;
+                }
+
+                applyEnrichmentToContact(contact, dataset);
+                addContactTags(contact, ensureUniqueStrings(['Збагачення даних', ...(dataset.tags || [])]));
+
+                const enrichmentInteraction = normalizeContactInteraction({
+                    id: request.id,
+                    type: 'note',
+                    channel: 'system',
+                    subject: `Збагачення даних (${provider ? provider.name : 'інтеграція'})`,
+                    summary: dataset.note || 'Профіль контакту оновлено через API.',
+                    timestamp: now,
+                    author: AUTOMATION_AUTHOR,
+                    tags: ensureUniqueStrings(['Збагачення даних', ...(dataset.tags || [])])
+                }, contact.owner || AUTOMATION_AUTHOR);
+                contact.interactions.unshift(enrichmentInteraction);
+                contact.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                contact.lastActivity = enrichmentInteraction.timestamp;
+
+                const lead = ensureLeadForContact(contact, {
+                    owner: contact.owner,
+                    company: dataset.company || contact.company,
+                    source: 'partner',
+                    value: dataset.estimatedValue || null,
+                    tags: ensureUniqueStrings(['Збагачення даних', ...(dataset.tags || [])]),
+                    timestamp: now,
+                    timeline: `Дані з ${provider ? provider.name : 'інтеграції'} оновили профіль контакту.`,
+                    note: dataset.note || ''
+                });
+                if (lead) {
+                    lead.updatedAt = now;
+                }
+
+                request.status = 'completed';
+                request.completedAt = now;
+                request.payload = dataset;
+                if (provider) {
+                    provider.lastSync = now;
+                }
+
+                logActivity(`Збагачено контакт ${contact.name} через ${provider ? provider.name : 'інтеграцію'}.`, 'automation', contact.id);
+                changed = true;
+            });
+
+            return changed;
+        }
+
+        function processCommunicationLogs(logs) {
+            if (!logs || typeof logs !== 'object') {
+                return false;
+            }
+
+            let changed = false;
+
+            if (processCallLogs(Array.isArray(logs.calls) ? logs.calls : [])) {
+                changed = true;
+            }
+
+            if (processEmailLogs(Array.isArray(logs.emails) ? logs.emails : [])) {
+                changed = true;
+            }
+
+            return changed;
+        }
+
+        function processCallLogs(calls) {
+            if (!Array.isArray(calls) || !calls.length) {
+                return false;
+            }
+
+            if (!Array.isArray(crmData.contacts)) {
+                crmData.contacts = [];
+            }
+
+            let changed = false;
+            const now = new Date().toISOString();
+
+            calls.forEach(log => {
+                if (!log || log.status !== 'new') {
+                    return;
+                }
+
+                const email = normalizeEmailAddress(log.contactEmail);
+                const phone = typeof log.contactPhone === 'string' ? log.contactPhone.trim() : '';
+                let contact = email ? findContactByEmail(email) : null;
+
+                if (!contact && phone) {
+                    const digits = phone.replace(/\D+/g, '');
+                    contact = crmData.contacts.find(item => (item.phone || '').replace(/\D+/g, '') === digits) || null;
+                }
+
+                const timestamp = log.occurredAt || now;
+                const owner = log.agent || (contact && contact.owner) || suggestLeadOwner('inbound');
+                const callTags = ensureUniqueStrings(['Авто-лог дзвінків', ...(Array.isArray(log.tags) ? log.tags : [])]);
+
+                if (!contact) {
+                    const name = log.contactName || deriveNameFromEmail(email) || (phone || 'Новий контакт');
+                    const company = log.company || deriveCompanyFromEmail(email);
+                    const contactPayload = normalizeContact({
+                        id: generateId('contact'),
+                        name,
+                        company,
+                        role: '',
+                        email,
+                        phone,
+                        status: 'lead',
+                        segments: ['lead'],
+                        owner,
+                        preferredChannel: 'phone',
+                        timezone: 'Europe/Kyiv',
+                        tags: callTags,
+                        notes: [{ text: 'Контакт створено автоматично із дзвінка Zoom.', author: AUTOMATION_AUTHOR, date: timestamp }],
+                        interactions: []
+                    });
+                    contact = contactPayload;
+                    crmData.contacts.unshift(contact);
+                    logActivity(`Створено контакт ${contact.name} з дзвінка.`, 'call', contact.id);
+                } else {
+                    addContactTags(contact, callTags);
+                    if (!contact.owner && owner) {
+                        contact.owner = owner;
+                    }
+                }
+
+                ensureContactSegment(contact, 'lead');
+
+                const interaction = normalizeContactInteraction({
+                    id: log.id,
+                    type: 'call',
+                    channel: 'phone',
+                    subject: log.subject || `Лог дзвінка (${log.direction === 'outbound' ? 'вихідний' : 'вхідний'})`,
+                    summary: log.summary || 'Запис дзвінка синхронізовано з zoom.com.',
+                    timestamp,
+                    author: log.agent || AUTOMATION_AUTHOR,
+                    tags: callTags
+                }, contact.owner || owner);
+                contact.interactions.unshift(interaction);
+                contact.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                contact.lastActivity = interaction.timestamp;
+                if (!contact.preferredChannel || contact.preferredChannel === 'email') {
+                    contact.preferredChannel = 'phone';
+                }
+
+                const lead = ensureLeadForContact(contact, {
+                    owner: contact.owner || owner,
+                    company: contact.company,
+                    source: 'inbound',
+                    tags: callTags,
+                    timestamp,
+                    timeline: `Zoom зафіксував ${log.direction === 'outbound' ? 'вихідний' : 'вхідний'} дзвінок (${formatDuration(log.duration)}).`,
+                    note: log.summary || ''
+                });
+                if (lead) {
+                    lead.updatedAt = timestamp;
+                }
+
+                log.status = 'logged';
+                log.loggedAt = now;
+                log.contactId = contact.id;
+                log.leadId = lead ? lead.id : null;
+
+                logActivity(`Автоматично залоговано дзвінок з ${contact.name || contact.email || contact.phone}.`, 'call', log.leadId || contact.id);
+                changed = true;
+            });
+
+            return changed;
+        }
+
+        function processEmailLogs(entries) {
+            if (!Array.isArray(entries) || !entries.length) {
+                return false;
+            }
+
+            if (!Array.isArray(crmData.contacts)) {
+                crmData.contacts = [];
+            }
+
+            let changed = false;
+            const now = new Date().toISOString();
+
+            entries.forEach(entry => {
+                if (!entry || entry.status !== 'new') {
+                    return;
+                }
+
+                const email = normalizeEmailAddress(entry.contactEmail);
+                if (!email) {
+                    entry.status = 'skipped';
+                    entry.loggedAt = now;
+                    changed = true;
+                    return;
+                }
+
+                const emailTags = ensureUniqueStrings(['Авто-лог листів', ...(Array.isArray(entry.tags) ? entry.tags : [])]);
+                let contact = findContactByEmail(email);
+                const timestamp = entry.occurredAt || now;
+                const owner = entry.agent || (contact && contact.owner) || suggestLeadOwner('email');
+
+                if (!contact) {
+                    const contactPayload = normalizeContact({
+                        id: generateId('contact'),
+                        name: deriveNameFromEmail(email) || email,
+                        company: deriveCompanyFromEmail(email),
+                        role: '',
+                        email,
+                        status: 'lead',
+                        segments: ['lead'],
+                        owner,
+                        preferredChannel: 'email',
+                        timezone: 'Europe/Kyiv',
+                        tags: emailTags,
+                        notes: [{ text: 'Контакт створено автоматично з інтеграції електронної пошти.', author: AUTOMATION_AUTHOR, date: timestamp }],
+                        interactions: []
+                    });
+                    contact = contactPayload;
+                    crmData.contacts.unshift(contact);
+                    logActivity(`Створено контакт ${contact.name} з email-логу.`, 'email', contact.id);
+                } else {
+                    addContactTags(contact, emailTags);
+                }
+
+                ensureContactSegment(contact, 'lead');
+
+                const interaction = normalizeContactInteraction({
+                    id: entry.id,
+                    type: 'email',
+                    channel: 'email',
+                    subject: entry.subject || 'Лист',
+                    summary: entry.summary || 'Запис електронного листа отримано автоматично.',
+                    timestamp,
+                    author: entry.agent || AUTOMATION_AUTHOR,
+                    tags: emailTags
+                }, contact.owner || owner);
+                contact.interactions.unshift(interaction);
+                contact.interactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                contact.lastActivity = interaction.timestamp;
+
+                const lead = ensureLeadForContact(contact, {
+                    owner: contact.owner || owner,
+                    company: contact.company,
+                    source: 'email',
+                    tags: emailTags,
+                    timestamp,
+                    timeline: `Автооновлення зафіксувало лист «${entry.subject || 'Без теми'}».`,
+                    note: entry.summary || ''
+                });
+                if (lead) {
+                    lead.updatedAt = timestamp;
+                }
+
+                entry.status = 'logged';
+                entry.loggedAt = now;
+                entry.contactId = contact.id;
+                entry.leadId = lead ? lead.id : null;
+
+                logActivity(`Автоматично залоговано лист від ${contact.name || contact.email}.`, 'email', entry.leadId || contact.id);
+                changed = true;
+            });
+
+            return changed;
+        }
+
         function runLeadAutomations() {
             if (!crmData || !Array.isArray(crmData.leads) || !crmData.leads.length) {
                 return;
@@ -12313,6 +13923,7 @@
         }
 
         function renderAll() {
+            runAutomaticUpdates();
             runLeadAutomations();
             renderDashboard();
             renderPipeline();
@@ -16175,6 +17786,393 @@
             datalist.innerHTML = options;
         }
 
+        function renderIntegrationAutomation() {
+            const grid = document.getElementById('integrationAutomationGrid');
+            const summaryElement = document.getElementById('integrationAutomationSummary');
+            if (!grid) {
+                return;
+            }
+
+            const integrations = crmData && typeof crmData === 'object' ? crmData.integrations || {} : {};
+            const mailboxes = Array.isArray(integrations.mailboxes) ? integrations.mailboxes : [];
+            const forms = Array.isArray(integrations.forms) ? integrations.forms : [];
+            const enrichment = integrations.enrichment || {};
+            const enrichmentQueue = Array.isArray(enrichment.queue) ? enrichment.queue : [];
+            const enrichmentProviders = Array.isArray(enrichment.providers) ? enrichment.providers : [];
+            const communicationLogs = integrations.communicationLogs || {};
+            const callLogs = Array.isArray(communicationLogs.calls) ? communicationLogs.calls : [];
+            const emailLogs = Array.isArray(communicationLogs.emails) ? communicationLogs.emails : [];
+
+            const mailboxStats = {
+                total: 0,
+                processed: 0,
+                pending: 0,
+                contacts: new Set(),
+                providers: new Set(),
+                lastSync: null
+            };
+
+            mailboxes.forEach(mailbox => {
+                const messages = Array.isArray(mailbox.messages) ? mailbox.messages : [];
+                mailboxStats.total += messages.length;
+                messages.forEach(message => {
+                    const status = typeof message.status === 'string' ? message.status.toLowerCase() : '';
+                    if (status === 'processed') {
+                        mailboxStats.processed += 1;
+                        if (message.contactId) {
+                            mailboxStats.contacts.add(message.contactId);
+                        }
+                    } else if (status === 'new') {
+                        mailboxStats.pending += 1;
+                    }
+                });
+                if (typeof mailbox.provider === 'string' && mailbox.provider.trim().length) {
+                    mailboxStats.providers.add(mailbox.provider.trim());
+                }
+                if (typeof mailbox.lastSync === 'string' && mailbox.lastSync) {
+                    const syncDate = new Date(mailbox.lastSync);
+                    if (!Number.isNaN(syncDate.getTime())) {
+                        if (!mailboxStats.lastSync || syncDate > mailboxStats.lastSync) {
+                            mailboxStats.lastSync = syncDate;
+                        }
+                    }
+                }
+            });
+
+            const formStats = {
+                total: forms.length,
+                processed: 0,
+                pending: 0,
+                contacts: new Set(),
+                leads: new Set(),
+                sources: new Set(),
+                lastSubmission: null
+            };
+
+            forms.forEach(submission => {
+                const status = typeof submission.status === 'string' ? submission.status.toLowerCase() : '';
+                if (status === 'processed') {
+                    formStats.processed += 1;
+                    if (submission.contactId) {
+                        formStats.contacts.add(submission.contactId);
+                    }
+                    if (submission.leadId) {
+                        formStats.leads.add(submission.leadId);
+                    }
+                } else if (status === 'new') {
+                    formStats.pending += 1;
+                }
+                if (typeof submission.source === 'string' && submission.source.trim().length) {
+                    formStats.sources.add(submission.source.trim());
+                }
+                if (typeof submission.submittedAt === 'string' && submission.submittedAt) {
+                    const submittedDate = new Date(submission.submittedAt);
+                    if (!Number.isNaN(submittedDate.getTime())) {
+                        if (!formStats.lastSubmission || submittedDate > formStats.lastSubmission) {
+                            formStats.lastSubmission = submittedDate;
+                        }
+                    }
+                }
+            });
+
+            const enrichmentStats = {
+                total: enrichmentQueue.length,
+                completed: 0,
+                pending: 0,
+                skipped: 0,
+                contacts: new Set(),
+                providers: new Set(),
+                enabledProviders: 0,
+                lastSync: null
+            };
+
+            enrichmentProviders.forEach(provider => {
+                if (provider && typeof provider.name === 'string' && provider.name.trim().length) {
+                    enrichmentStats.providers.add(provider.name.trim());
+                }
+                if (provider && provider.enabled) {
+                    enrichmentStats.enabledProviders += 1;
+                }
+                if (provider && typeof provider.lastSync === 'string' && provider.lastSync) {
+                    const syncDate = new Date(provider.lastSync);
+                    if (!Number.isNaN(syncDate.getTime())) {
+                        if (!enrichmentStats.lastSync || syncDate > enrichmentStats.lastSync) {
+                            enrichmentStats.lastSync = syncDate;
+                        }
+                    }
+                }
+            });
+
+            enrichmentQueue.forEach(request => {
+                const status = typeof request.status === 'string' ? request.status.toLowerCase() : '';
+                if (status === 'completed') {
+                    enrichmentStats.completed += 1;
+                    const contact = findContactByEmail(request.contactEmail);
+                    if (contact && contact.id) {
+                        enrichmentStats.contacts.add(contact.id);
+                    }
+                } else if (status === 'pending') {
+                    enrichmentStats.pending += 1;
+                } else {
+                    enrichmentStats.skipped += 1;
+                }
+            });
+
+            const callStats = {
+                total: callLogs.length,
+                logged: 0,
+                pending: 0,
+                contacts: new Set(),
+                leads: new Set(),
+                duration: 0
+            };
+
+            callLogs.forEach(log => {
+                const status = typeof log.status === 'string' ? log.status.toLowerCase() : '';
+                if (status === 'logged') {
+                    callStats.logged += 1;
+                    if (log.contactId) {
+                        callStats.contacts.add(log.contactId);
+                    }
+                    if (log.leadId) {
+                        callStats.leads.add(log.leadId);
+                    }
+                    const duration = Number(log.duration);
+                    if (Number.isFinite(duration) && duration > 0) {
+                        callStats.duration += duration;
+                    }
+                } else if (status === 'new') {
+                    callStats.pending += 1;
+                }
+            });
+
+            const emailLogStats = {
+                total: emailLogs.length,
+                logged: 0,
+                pending: 0,
+                contacts: new Set(),
+                leads: new Set(),
+                lastSync: null
+            };
+
+            emailLogs.forEach(entry => {
+                const status = typeof entry.status === 'string' ? entry.status.toLowerCase() : '';
+                if (status === 'logged') {
+                    emailLogStats.logged += 1;
+                    if (entry.contactId) {
+                        emailLogStats.contacts.add(entry.contactId);
+                    }
+                    if (entry.leadId) {
+                        emailLogStats.leads.add(entry.leadId);
+                    }
+                    if (typeof entry.occurredAt === 'string' && entry.occurredAt) {
+                        const occurred = new Date(entry.occurredAt);
+                        if (!Number.isNaN(occurred.getTime())) {
+                            if (!emailLogStats.lastSync || occurred > emailLogStats.lastSync) {
+                                emailLogStats.lastSync = occurred;
+                            }
+                        }
+                    }
+                } else if (status === 'new') {
+                    emailLogStats.pending += 1;
+                }
+            });
+
+            const formatListLabel = (items, label) => {
+                if (!Array.isArray(items) || !items.length) {
+                    return '';
+                }
+                const limited = items.slice(0, 2);
+                const remainder = items.length > 2 ? `, +${items.length - 2}` : '';
+                return `${label}: ${limited.join(', ')}${remainder}`;
+            };
+
+            const mailboxProvidersLabel = formatListLabel(Array.from(mailboxStats.providers), 'Провайдери');
+            const formSourcesLabel = formatListLabel(Array.from(formStats.sources), 'Джерела форм');
+            const enrichmentProviderLabel = formatListLabel(Array.from(enrichmentStats.providers), 'Провайдери');
+
+            const callSummaryParts = [];
+            if (callStats.pending) {
+                callSummaryParts.push(`У черзі ${formatIntegerDisplay(callStats.pending)} дзвінк(и).`);
+            }
+            if (callStats.logged) {
+                callSummaryParts.push(`Сумарна тривалість ${formatDuration(callStats.duration)}.`);
+            }
+            if (callStats.leads.size) {
+                callSummaryParts.push(`Пов'язано з ${formatIntegerDisplay(callStats.leads.size)} лідами.`);
+            }
+
+            const emailSummaryParts = [];
+            if (emailLogStats.pending) {
+                emailSummaryParts.push(`У черзі ${formatIntegerDisplay(emailLogStats.pending)} лист(и).`);
+            }
+            if (emailLogStats.lastSync) {
+                emailSummaryParts.push(`Останній лист ${formatRelativeTime(emailLogStats.lastSync)}.`);
+            }
+            if (emailLogStats.leads.size) {
+                emailSummaryParts.push(`Пов'язано з ${formatIntegerDisplay(emailLogStats.leads.size)} лідами.`);
+            }
+
+            const summaryParts = [];
+            if (mailboxStats.processed) {
+                summaryParts.push(`${formatIntegerDisplay(mailboxStats.processed)} лист(и) з пошти`);
+            }
+            if (formStats.processed) {
+                summaryParts.push(`${formatIntegerDisplay(formStats.processed)} веб-форм(и)`);
+            }
+            if (enrichmentStats.completed) {
+                summaryParts.push(`${formatIntegerDisplay(enrichmentStats.completed)} збагачень`);
+            }
+            if (callStats.logged) {
+                summaryParts.push(`${formatIntegerDisplay(callStats.logged)} дзвінк(и) Zoom`);
+            }
+            if (emailLogStats.logged) {
+                summaryParts.push(`${formatIntegerDisplay(emailLogStats.logged)} лист(и) Zoom`);
+            }
+
+            if (summaryElement) {
+                const summaryText = summaryParts.length
+                    ? `Автооновлення завершило ${summaryParts.join(', ')}. Джерела: discovercrm.com та zoom.com.`
+                    : 'Інтеграції discovercrm.com та zoom.com очікують нові події.';
+                summaryElement.textContent = summaryText;
+            }
+
+            const metrics = [
+                {
+                    id: 'mailbox',
+                    icon: 'fa-solid fa-inbox',
+                    title: 'Імпорт з поштових скриньок',
+                    source: 'discovercrm.com',
+                    value: mailboxStats.total
+                        ? `${formatIntegerDisplay(mailboxStats.processed)} / ${formatIntegerDisplay(mailboxStats.total)} листів`
+                        : 'Немає листів',
+                    progress: mailboxStats.total ? mailboxStats.processed / mailboxStats.total : null,
+                    detail: mailboxStats.processed
+                        ? `Оновлено ${formatIntegerDisplay(mailboxStats.contacts.size)} контакт(и) без ручного введення.`
+                        : 'Очікує нові повідомлення з discovercrm.com.',
+                    caption: [mailboxStats.pending
+                        ? `У черзі: ${formatIntegerDisplay(mailboxStats.pending)} лист(и).`
+                        : '',
+                    mailboxProvidersLabel].filter(Boolean).join(' '),
+                    footnote: mailboxStats.lastSync
+                        ? `Остання синхронізація ${formatRelativeTime(mailboxStats.lastSync)}.`
+                        : ''
+                },
+                {
+                    id: 'forms',
+                    icon: 'fa-solid fa-clipboard-list',
+                    title: 'Веб-форми',
+                    source: 'discovercrm.com',
+                    value: formStats.total
+                        ? `${formatIntegerDisplay(formStats.processed)} / ${formatIntegerDisplay(formStats.total)} заявки`
+                        : 'Немає заявок',
+                    progress: formStats.total ? formStats.processed / formStats.total : null,
+                    detail: formStats.processed
+                        ? `Створено ${formatIntegerDisplay(formStats.leads.size)} угод і ${formatIntegerDisplay(formStats.contacts.size)} контакт(и).`
+                        : 'Готово приймати запити з веб-форм discovercrm.com.',
+                    caption: [formStats.pending
+                        ? `Очікує ${formatIntegerDisplay(formStats.pending)} заявк(и).`
+                        : '',
+                    formStats.lastSubmission
+                        ? `Остання заявка ${formatRelativeTime(formStats.lastSubmission)}.`
+                        : '',
+                    formSourcesLabel].filter(Boolean).join(' '),
+                    footnote: ''
+                },
+                {
+                    id: 'enrichment',
+                    icon: 'fa-solid fa-database',
+                    title: 'Збагачення даних',
+                    source: 'DiscoverCRM',
+                    value: enrichmentStats.total
+                        ? `${formatIntegerDisplay(enrichmentStats.completed)} / ${formatIntegerDisplay(enrichmentStats.total)} запитів`
+                        : 'Немає запитів',
+                    progress: enrichmentStats.total ? enrichmentStats.completed / enrichmentStats.total : null,
+                    detail: enrichmentStats.completed
+                        ? `Оновлено ${formatIntegerDisplay(enrichmentStats.contacts.size)} профілів через DiscoverCRM Data Cloud.`
+                        : 'Очікує підтвердження від DiscoverCRM Data Cloud.',
+                    caption: [`Активно: ${formatIntegerDisplay(enrichmentStats.enabledProviders)} з ${formatIntegerDisplay(enrichmentStats.providers.size)} провайдерів.`,
+                        enrichmentStats.pending
+                            ? `У черзі ${formatIntegerDisplay(enrichmentStats.pending)} запит(и).`
+                            : '',
+                        enrichmentStats.skipped
+                            ? `Пропущено ${formatIntegerDisplay(enrichmentStats.skipped)}.`
+                            : '',
+                        enrichmentProviderLabel].filter(Boolean).join(' '),
+                    footnote: enrichmentStats.lastSync
+                        ? `Остання синхронізація ${formatRelativeTime(enrichmentStats.lastSync)}.`
+                        : ''
+                },
+                {
+                    id: 'calls',
+                    icon: 'fa-solid fa-phone',
+                    title: 'Логування дзвінків',
+                    source: 'zoom.com',
+                    value: callStats.total
+                        ? `${formatIntegerDisplay(callStats.logged)} / ${formatIntegerDisplay(callStats.total)} дзвінків`
+                        : 'Немає дзвінків',
+                    progress: callStats.total ? callStats.logged / callStats.total : null,
+                    detail: callStats.logged
+                        ? `Zoom Contact Center синхронізував ${formatIntegerDisplay(callStats.contacts.size)} контакт(и).`
+                        : 'Очікує події з Zoom Contact Center.',
+                    caption: callSummaryParts.filter(Boolean).join(' '),
+                    footnote: ''
+                },
+                {
+                    id: 'emails',
+                    icon: 'fa-solid fa-envelope-open-text',
+                    title: 'Логування листів',
+                    source: 'zoom.com',
+                    value: emailLogStats.total
+                        ? `${formatIntegerDisplay(emailLogStats.logged)} / ${formatIntegerDisplay(emailLogStats.total)} листів`
+                        : 'Немає листів',
+                    progress: emailLogStats.total ? emailLogStats.logged / emailLogStats.total : null,
+                    detail: emailLogStats.logged
+                        ? `Zoom автоматично пов'язав ${formatIntegerDisplay(emailLogStats.contacts.size)} контакт(и).`
+                        : 'Очікує синхронізації пошти Zoom.',
+                    caption: emailSummaryParts.filter(Boolean).join(' '),
+                    footnote: ''
+                }
+            ];
+
+            const renderMetric = metric => {
+                const progressValue = typeof metric.progress === 'number'
+                    ? Math.max(0, Math.min(1, metric.progress))
+                    : null;
+                const progressMarkup = progressValue === null
+                    ? ''
+                    : `<div class="integration-automation-progress"><div class="integration-automation-progress-bar" style="width:${Math.round(progressValue * 100)}%;"></div></div>`;
+                const captionMarkup = metric.caption
+                    ? `<div class="integration-automation-caption">${escapeHtml(metric.caption)}</div>`
+                    : '';
+                const footnoteMarkup = metric.footnote
+                    ? `<div class="integration-automation-footnote">${escapeHtml(metric.footnote)}</div>`
+                    : '';
+                const sourceMarkup = metric.source
+                    ? `<span class="integration-automation-source">${escapeHtml(metric.source)}</span>`
+                    : '';
+
+                return `
+                    <div class="integration-automation-item">
+                        <div class="integration-automation-icon"><i class="${metric.icon}" aria-hidden="true"></i></div>
+                        <div class="integration-automation-content">
+                            <div class="integration-automation-title">
+                                <span>${escapeHtml(metric.title)}</span>
+                                ${sourceMarkup}
+                            </div>
+                            <div class="integration-automation-value">${escapeHtml(metric.value)}</div>
+                            ${progressMarkup}
+                            <div class="integration-automation-detail">${escapeHtml(metric.detail)}</div>
+                            ${captionMarkup}
+                            ${footnoteMarkup}
+                        </div>
+                    </div>
+                `;
+            };
+
+            grid.innerHTML = metrics.map(renderMetric).join('');
+        }
+
         function renderContacts(searchTerm = '') {
             const container = document.getElementById('contactsTable');
             if (!container) {
@@ -16229,6 +18227,7 @@
             if (!contacts.length) {
                 container.innerHTML = '<div class="empty-state" style="padding: 32px;">Немає контактів за обраними фільтрами.</div>';
                 renderContactDetails(null);
+                renderIntegrationAutomation();
                 return;
             }
 
@@ -16316,6 +18315,7 @@
             });
 
             renderContactDetails(activeContactId);
+            renderIntegrationAutomation();
         }
 
         function renderContactDetails(contactId) {
