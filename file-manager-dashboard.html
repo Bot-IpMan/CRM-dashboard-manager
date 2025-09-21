@@ -5425,9 +5425,9 @@
                             <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>
                             Воронка продажів
                         </button>
-                        <button type="button" class="nav-item" data-section-target="projectsSection" data-nav-category="sales operations" data-nav-keywords="проекти угоди бюджет" aria-controls="projectsSection">
+                        <button type="button" class="nav-item" data-section-target="projectsSection" data-nav-category="sales operations" data-nav-keywords="проєкти угоди бюджет" aria-controls="projectsSection">
                             <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
-                            Проекти
+                            Проєкти
                         </button>
                     </div>
 
@@ -5604,7 +5604,7 @@
                                 <div class="feature-group-title">Основна функціональність</div>
                                 <ul class="feature-list">
                                     <li>Система обміну файлами для безпечної співпраці над документами.</li>
-                                    <li>Відстеження процесів, що показує вузькі місця у воронці та проектних потоках.</li>
+                                    <li>Відстеження процесів, що показує вузькі місця у воронці та проєктних потоках.</li>
                                 </ul>
                             </div>
                         </div>
@@ -5654,13 +5654,13 @@
             <section id="projectsSection" class="section" role="region" aria-labelledby="projectsSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2 id="projectsSectionTitle">Портфель проектів</h2>
+                        <h2 id="projectsSectionTitle">Портфель проєктів</h2>
                         <p>Контролюйте статус угод, команду та ймовірність успіху</p>
                     </div>
                     <div class="section-actions">
-                        <label class="visually-hidden" for="projectSearch">Пошук проектів за назвою</label>
-                        <input type="search" id="projectSearch" placeholder="Пошук проектів...">
-                        <label class="visually-hidden" for="projectStageFilter">Фільтр за етапом проекту</label>
+                        <label class="visually-hidden" for="projectSearch">Пошук проєктів за назвою</label>
+                        <input type="search" id="projectSearch" placeholder="Пошук проєктів...">
+                        <label class="visually-hidden" for="projectStageFilter">Фільтр за етапом проєкту</label>
                         <select id="projectStageFilter">
                             <option value="all">Всі етапи</option>
                         </select>
@@ -5671,7 +5671,7 @@
                         </div>
                         <button class="btn btn-primary" id="openProjectModalBtn">
                             <i class="fa-solid fa-plus"></i>
-                            Новий проект
+                            Новий проєкт
                         </button>
                     </div>
                 </div>
@@ -5702,7 +5702,7 @@
                 </div>
                 <div class="projects-table">
                     <div class="table-head">
-                        <div>Проект</div>
+                        <div>Проєкт</div>
                         <div>Команда</div>
                         <div>Бюджет</div>
                         <div>Етап</div>
@@ -6109,7 +6109,7 @@
                                 <label for="reportDataset">Дані</label>
                                 <select id="reportDataset">
                                     <option value="leads">Угоди</option>
-                                    <option value="projects">Проекти</option>
+                                    <option value="projects">Проєкти</option>
                                     <option value="support">Підтримка</option>
                                 </select>
                             </div>
@@ -6404,12 +6404,12 @@
     <div class="modal" id="addProjectModal" role="dialog" aria-modal="true" aria-labelledby="addProjectModalTitle">
         <div class="modal-dialog">
             <div class="modal-header">
-                <h3 id="addProjectModalTitle">Новий проект</h3>
+                <h3 id="addProjectModalTitle">Новий проєкт</h3>
                 <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="projectForm" class="form-grid">
                 <div class="form-group">
-                    <label for="projectName">Назва проекту</label>
+                    <label for="projectName">Назва проєкту</label>
                     <input type="text" id="projectName" placeholder="Наприклад, CRM для NovaPay" required>
                 </div>
                 <div class="form-group">
@@ -6452,11 +6452,11 @@
                 <div class="form-group full">
                     <label for="projectFiles">Вкладення</label>
                     <div class="file-dropzone" id="projectFileDropzone" role="button" tabindex="0" aria-describedby="projectFileHint">
-                        <input type="file" id="projectFiles" class="file-input-hidden" multiple aria-label="Додати файли до проекту">
+                        <input type="file" id="projectFiles" class="file-input-hidden" multiple aria-label="Додати файли до проєкту">
                         <div class="file-dropzone-content">
                             <i class="fa-solid fa-cloud-arrow-up"></i>
                             <div class="file-dropzone-text">
-                                <strong>Перетягніть документи проекту</strong>
+                                <strong>Перетягніть документи проєкту</strong>
                                 <div class="file-dropzone-actions">або <button type="button" class="file-browse-btn" id="projectFileBrowseBtn">оберіть</button> вручну</div>
                                 <p class="upload-hint" id="projectFileHint">Підтримуються бриф, кошториси, медіаплани та інші документи.</p>
                             </div>
@@ -6477,7 +6477,7 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
-                    <button type="submit" class="btn btn-primary">Додати проект</button>
+                    <button type="submit" class="btn btn-primary">Додати проєкт</button>
                 </div>
             </form>
         </div>
@@ -6788,7 +6788,7 @@
                 permissions: [
                     'Керування ролями та правами доступу',
                     'Редагування бюджетів і фінансових звітів',
-                    'Перегляд усіх проектів та файлів'
+                    'Перегляд усіх проєктів та файлів'
                 ],
                 limitations: ['Тільки один користувач у компанії']
             },
@@ -6798,9 +6798,9 @@
                 badge: 'Manager',
                 description: 'Веде комунікацію з клієнтами, контролює воронку продажів і задачі.',
                 permissions: [
-                    'Створення та редагування лідів і проектів',
+                    'Створення та редагування лідів і проєктів',
                     'Планування та виконання задач команди',
-                    'Завантаження файлів у своїх проектах'
+                    'Завантаження файлів у своїх проєктах'
                 ],
                 limitations: ['Не може змінювати роль Owner', 'Без доступу до системних налаштувань']
             },
@@ -7174,18 +7174,18 @@
             projects: {
                 id: 'projects',
                 label: 'Маркетинг та delivery',
-                entity: 'Проекти',
+                entity: 'Проєкти',
                 defaultGrouping: 'stage',
                 defaultFilter: 'all',
                 timeField: 'updatedAt',
                 groupings: {
-                    stage: 'Етап проекту',
+                    stage: 'Етап проєкту',
                     owner: 'Відповідальний',
                     tag: 'Напрям/мітка',
                     month: 'Місяць оновлення'
                 },
                 filters: {
-                    all: 'Всі проекти',
+                    all: 'Всі проєкти',
                     marketing: 'Маркетингові кампанії',
                     delivery: 'Впровадження та підтримка',
                     highProbability: 'Ймовірність ≥70%'
@@ -9058,10 +9058,10 @@
                         id: 'role-project-coordinator',
                         name: 'Project Coordinator',
                         badge: 'Coordinator',
-                        description: 'Відповідає за запуск проектів і синхронізацію команд.',
+                        description: 'Відповідає за запуск проєктів і синхронізацію команд.',
                         permissions: [
                             'Координація стартових зустрічей',
-                            'Контроль таймлайну проектів',
+                            'Контроль таймлайну проєктів',
                             'Перевірка завантажених матеріалів'
                         ],
                         limitations: ['Без права змінювати фінансові показники'],
@@ -9128,12 +9128,12 @@
                         id: 'member-victoria',
                         name: 'Вікторія',
                         email: 'victoria@demo-crm.ua',
-                        department: 'Доставка проектів',
+                        department: 'Доставка проєктів',
                         title: 'Project Coordinator',
                         phone: '+380 63 555 14 78',
                         roleId: 'role-project-coordinator',
                         responsibilities: [
-                            'Онбординг нових проектів',
+                            'Онбординг нових проєктів',
                             'Комунікація з клієнтськими командами',
                             'Актуалізація статусів задач'
                         ],
@@ -9728,7 +9728,7 @@
 
             return {
                 id: typeof project.id === 'string' && project.id ? project.id : generateId('project'),
-                name: typeof project.name === 'string' && project.name.trim() ? project.name.trim() : 'Новий проект',
+                name: typeof project.name === 'string' && project.name.trim() ? project.name.trim() : 'Новий проєкт',
                 company: typeof project.company === 'string' ? project.company.trim() : '',
                 stage,
                 budget: Number(project.budget) || 0,
@@ -11259,7 +11259,7 @@
                     progressLabelId: 'projectUploadLabel',
                     progressTextId: 'projectUploadText',
                     allowDirectories: false,
-                    emptyText: 'Документи проекту ще не додано.'
+                    emptyText: 'Документи проєкту ще не додано.'
                 },
                 {
                     key: 'contact',
@@ -16727,7 +16727,7 @@
             renderProjectUpdates(projects);
 
             if (!projects.length) {
-                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Проекти за вказаними фільтрами не знайдені.</div>';
+                container.innerHTML = '<div class="empty-state" style="padding: 32px;">Проєкти за вказаними фільтрами не знайдені.</div>';
                 return;
             }
 
@@ -16800,7 +16800,7 @@
             }
 
             if (!projects.length) {
-                container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Немає проектів для аналітики.</div>';
+                container.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">Немає проєктів для аналітики.</div>';
                 return;
             }
 
@@ -16865,7 +16865,7 @@
                 <div class="metric-card">
                     <div class="metric-icon"><i class="fa-solid fa-briefcase"></i></div>
                     <div>
-                        <div class="metric-label">Проекти в роботі</div>
+                        <div class="metric-label">Проєкти в роботі</div>
                         <div class="metric-value">${formatIntegerDisplay(activeProjects)}</div>
                         <div class="metric-sub">Оновлено за 7 днів: ${formatIntegerDisplay(recentUpdates)}</div>
                     </div>
@@ -16904,7 +16904,7 @@
             }
 
             if (!projects.length) {
-                container.innerHTML = '<div class="empty-state">Немає проектів для відображення.</div>';
+                container.innerHTML = '<div class="empty-state">Немає проєктів для відображення.</div>';
                 return;
             }
 
@@ -16950,7 +16950,7 @@
             }
 
             if (!projects.length) {
-                container.innerHTML = '<div class="empty-state">Немає ризикових проектів за поточними фільтрами.</div>';
+                container.innerHTML = '<div class="empty-state">Немає ризикових проєктів за поточними фільтрами.</div>';
                 return;
             }
 
@@ -17001,7 +17001,7 @@
             }).filter(item => item.flags.length > 0);
 
             if (!risks.length) {
-                container.innerHTML = '<div class="empty-state">Активні проекти виглядають стабільно.</div>';
+                container.innerHTML = '<div class="empty-state">Активні проєкти виглядають стабільно.</div>';
                 return;
             }
 
@@ -17154,7 +17154,7 @@
             }
 
             if (!projects.length) {
-                container.innerHTML = '<div class="empty-state">Додайте проект або зніміть фільтри, щоб бачити оновлення.</div>';
+                container.innerHTML = '<div class="empty-state">Додайте проєкт або зніміть фільтри, щоб бачити оновлення.</div>';
                 if (counter) {
                     counter.textContent = '0 записів';
                 }
@@ -17182,7 +17182,7 @@
                     updates.push({
                         projectName: project.name,
                         company: project.company,
-                        text: 'Статус проекту оновлено.',
+                        text: 'Статус проєкту оновлено.',
                         author: project.owner || 'CRM',
                         date: project.updatedAt
                     });
@@ -17198,7 +17198,7 @@
             const topUpdates = updates.slice(0, 6);
 
             if (!topUpdates.length) {
-                container.innerHTML = '<div class="empty-state">Немає активності по проектах.</div>';
+                container.innerHTML = '<div class="empty-state">Немає активності по проєктах.</div>';
                 if (counter) {
                     counter.textContent = '0 записів';
                 }
@@ -17206,7 +17206,7 @@
             }
 
             container.innerHTML = topUpdates.map(update => {
-                const projectName = typeof update.projectName === 'string' ? update.projectName : 'Проект';
+                const projectName = typeof update.projectName === 'string' ? update.projectName : 'Проєкт';
                 const company = typeof update.company === 'string' && update.company.trim().length ? update.company.trim() : '';
                 const companyMarkup = company ? `<div class="metric-sub">${escapeHtml(company)}</div>` : '';
                 const description = typeof update.text === 'string' && update.text.trim().length
@@ -20024,7 +20024,7 @@
                     ],
                     insights: [
                         'Комбінуйте фільтри у «Гнучких звітах», щоб бачити ефективність за каналами.',
-                        'Контролюйте завантаження матеріалів через файлові віджети та нотатки проектів.'
+                        'Контролюйте завантаження матеріалів через файлові віджети та нотатки проєктів.'
                     ]
                 },
                 support: {
@@ -20332,7 +20332,7 @@
             return {
                 columns: [
                     { id: 'group', label: 'Група', align: 'left' },
-                    { id: 'count', label: 'Проектів', align: 'right', format: value => Number(value).toLocaleString('uk-UA') },
+                    { id: 'count', label: 'Проєктів', align: 'right', format: value => Number(value).toLocaleString('uk-UA') },
                     { id: 'budget', label: 'Бюджет, ₴', align: 'right', format: value => formatCurrency(Math.round(value), true) },
                     { id: 'probability', label: 'Ймовірність, %', align: 'right', format: value => `${Math.round(value)}%` }
                 ],
@@ -20344,8 +20344,8 @@
                 })),
                 summary: {
                     text: sorted.length
-                        ? `Активних проектів ${totalCount} на ${formatCurrency(Math.round(totalBudget), true)} • середня ймовірність ${avgProbability}%`
-                        : 'Немає проектів у вибірці.'
+                        ? `Активних проєктів ${totalCount} на ${formatCurrency(Math.round(totalBudget), true)} • середня ймовірність ${avgProbability}%`
+                        : 'Немає проєктів у вибірці.'
                 }
             };
         }
@@ -20617,7 +20617,7 @@
             results.innerHTML = `
                 ${projectMatches.length ? `
                     <div class="search-group">
-                        <div class="search-group-title">Проекти</div>
+                        <div class="search-group-title">Проєкти</div>
                         ${projectMatches.map(project => `<div class="search-result" data-result-project="${project.id}"><span>${project.name}</span><span class="metric-sub">${project.company || ''}</span></div>`).join('')}
                     </div>` : ''}
                 ${leadMatches.length ? `
