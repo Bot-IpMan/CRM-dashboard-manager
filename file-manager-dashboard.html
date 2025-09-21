@@ -2143,6 +2143,129 @@
             gap: 8px;
         }
 
+        .contact-actions-section {
+            display: grid;
+            gap: 12px;
+        }
+
+        .contact-quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .contact-action-button {
+            border: none;
+            background: rgba(99, 102, 241, 0.12);
+            color: var(--primary-dark);
+            border-radius: 12px;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .contact-action-button i {
+            font-size: 14px;
+        }
+
+        .contact-action-button:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.15);
+        }
+
+        .contact-action-button.is-active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 12px 26px rgba(99, 102, 241, 0.32);
+        }
+
+        .contact-action-button.is-active i {
+            color: white;
+        }
+
+        .contact-timeline-composer {
+            margin: 18px 0 22px;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid rgba(99, 102, 241, 0.18);
+            background: rgba(255, 255, 255, 0.72);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            display: grid;
+            gap: 14px;
+        }
+
+        .composer-hint {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .composer-action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .composer-form {
+            display: grid;
+            gap: 14px;
+        }
+
+        .composer-field-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .composer-field label {
+            display: grid;
+            gap: 8px;
+        }
+
+        .composer-label {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .composer-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .composer-footer .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            padding: 10px 18px;
+            border-radius: 12px;
+        }
+
+        .composer-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            min-height: 18px;
+        }
+
+        .composer-meta.is-success {
+            color: var(--success);
+        }
+
+        .composer-meta.is-error {
+            color: var(--danger);
+        }
+
         .contact-timeline-header {
             display: flex;
             align-items: baseline;
@@ -7035,6 +7158,7 @@
         let activeFileSnapshotId = null;
         let activeFileSourceId = null;
         let pendingFileSourceId = null;
+        const contactComposerState = new Map();
         let fileSearchTerm = '';
         let isScanningFolder = false;
         let taskFilters = { ...TASK_FILTER_DEFAULTS };
@@ -9521,6 +9645,7 @@
             const status = allowedStatuses.includes(task.status) ? task.status : 'todo';
             const priority = ['high', 'medium', 'low'].includes(task.priority) ? task.priority : 'medium';
             const relatedLeadId = typeof task.relatedLeadId === 'string' ? task.relatedLeadId : '';
+            const relatedContactId = typeof task.relatedContactId === 'string' ? task.relatedContactId : '';
             const description = typeof task.description === 'string' ? task.description.trim() : '';
             const tags = Array.isArray(task.tags)
                 ? task.tags.map(tag => typeof tag === 'string' ? tag.trim() : String(tag || '').trim()).filter(Boolean)
@@ -9540,6 +9665,7 @@
                 priority,
                 status,
                 relatedLeadId,
+                relatedContactId,
                 description,
                 tags,
                 attachments,
@@ -10464,6 +10590,34 @@
             }
 
             applyNavigationFilters();
+        }
+
+        function openContactsSection(contactId = null) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.classList.remove('active'));
+            const contactsSection = document.getElementById('contactsSection');
+            if (contactsSection) {
+                contactsSection.classList.add('active');
+            }
+
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => item.classList.remove('active'));
+            const contactsNav = document.querySelector('.nav-item[data-section-target="contactsSection"]');
+            if (contactsNav) {
+                contactsNav.classList.add('active');
+            }
+
+            if (contactId) {
+                activeContactId = contactId;
+            }
+
+            const searchInput = document.getElementById('contactSearch');
+            const currentQuery = searchInput ? searchInput.value || '' : '';
+            renderContacts(currentQuery);
+
+            if (contactsSection) {
+                contactsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         }
 
         function setupModals() {
@@ -12967,15 +13121,22 @@
             const container = document.getElementById('upcomingActivities');
             const upcoming = [];
             const today = new Date();
+            const contacts = crmData && Array.isArray(crmData.contacts) ? crmData.contacts : [];
 
             crmData.tasks.filter(task => task.status !== 'done' && task.dueDate).forEach(task => {
+                const relatedContact = task.relatedContactId
+                    ? contacts.find(contact => contact.id === task.relatedContactId)
+                    : null;
                 upcoming.push({
                     type: 'task',
                     title: task.title,
                     owner: task.owner,
                     dueDate: task.dueDate,
                     relatedLeadId: task.relatedLeadId,
-                    priority: task.priority
+                    relatedContactId: task.relatedContactId,
+                    priority: task.priority,
+                    contactName: relatedContact ? relatedContact.name : '',
+                    contactCompany: relatedContact ? relatedContact.company : ''
                 });
             });
 
@@ -13003,21 +13164,39 @@
             container.innerHTML = soon.map(item => {
                 const due = formatDate(item.dueDate);
                 const overdue = new Date(item.dueDate) < today && !isSameDay(new Date(item.dueDate), today);
-                const badge = item.type === 'task' ? (item.priority === 'high' ? 'badge-danger' : item.priority === 'medium' ? 'badge-warning' : 'badge-success') : 'badge-warning';
+                const badge = item.type === 'task'
+                    ? (item.priority === 'high' ? 'badge-danger' : item.priority === 'medium' ? 'badge-warning' : 'badge-success')
+                    : 'badge-warning';
+                const contactLabel = item.contactName
+                    ? `Контакт: ${escapeHtml(item.contactName)}${item.contactCompany ? ` (${escapeHtml(item.contactCompany)})` : ''}`
+                    : '';
+                const metaParts = [
+                    overdue ? `${due} • прострочено` : due,
+                    item.owner,
+                    contactLabel
+                ].filter(Boolean);
+                const actions = [
+                    item.relatedLeadId ? `<button class="btn btn-small-muted" data-open-lead="${item.relatedLeadId}">Угода</button>` : '',
+                    item.relatedContactId ? `<button class="btn btn-small-muted" data-open-contact="${item.relatedContactId}">Контакт</button>` : ''
+                ].filter(Boolean).join('');
                 return `
                     <div class="upcoming-item">
                         <div class="badge ${badge}">${item.type === 'task' ? 'Завдання' : 'Угода'}</div>
                         <div>
                             <strong>${item.title}</strong>
-                            <div class="metric-sub">${due}${overdue ? ' • прострочено' : ''}${item.owner ? ` • ${item.owner}` : ''}</div>
+                            <div class="metric-sub">${metaParts.join(' • ')}</div>
                         </div>
-                        ${item.relatedLeadId ? `<button class="btn btn-small-muted" data-open-lead="${item.relatedLeadId}">Деталі</button>` : ''}
+                        ${actions}
                     </div>
                 `;
             }).join('');
 
             container.querySelectorAll('[data-open-lead]').forEach(btn => {
                 btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+
+            container.querySelectorAll('[data-open-contact]').forEach(btn => {
+                btn.addEventListener('click', () => openContactsSection(btn.dataset.openContact));
             });
         }
 
@@ -16922,10 +17101,15 @@
 
             const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
             tasks.forEach(task => {
-                if (!task || typeof task !== 'object' || !task.relatedLeadId || !relatedLeadIds.has(task.relatedLeadId)) {
+                if (!task || typeof task !== 'object') {
                     return;
                 }
-                const lead = relatedLeads.find(item => item.id === task.relatedLeadId);
+                const matchesLead = task.relatedLeadId && relatedLeadIds.has(task.relatedLeadId);
+                const matchesContact = task.relatedContactId && task.relatedContactId === contact.id;
+                if (!matchesLead && !matchesContact) {
+                    return;
+                }
+                const lead = matchesLead ? relatedLeads.find(item => item.id === task.relatedLeadId) : null;
                 const leadLabel = lead ? (lead.name || lead.company || contact.company || 'Угода') : '';
                 const timestamp =
                     normalizeToISOString(task.completedAt) ||
@@ -16941,8 +17125,17 @@
                 if (task.dueDate) {
                     summaryParts.push(`Дедлайн: ${formatDate(task.dueDate)}`);
                 }
+                if (matchesContact && !matchesLead) {
+                    summaryParts.push(`Контакт: ${contact.name || 'контакт'}`);
+                }
+                if (leadLabel) {
+                    summaryParts.push(`Угода: ${leadLabel}`);
+                }
                 const summary = summaryParts.join('. ');
                 const extraTags = ['Завдання'];
+                if (matchesContact) {
+                    extraTags.push('Контакт');
+                }
                 if (leadLabel) {
                     extraTags.push(`Угода: ${leadLabel}`);
                 }
@@ -16952,7 +17145,7 @@
                         type: 'task',
                         channel: 'system',
                         subject: `Завдання: ${task.title}`,
-                        summary: leadLabel ? `${summary}. Угода: ${leadLabel}.` : summary,
+                        summary,
                         timestamp,
                         author: task.owner,
                         tags: ['Завдання']
@@ -17423,6 +17616,350 @@
             `;
         }
 
+        function createContactComposerMarkup(contact) {
+            if (!contact) {
+                return '';
+            }
+
+            const contactLabel = escapeHtml(contact.name || 'клієнта');
+            return `
+                <div class="contact-timeline-composer" data-contact-id="${contact.id}">
+                    <p class="composer-hint">Фіксуйте дзвінки, листи й нотатки по ${contactLabel} прямо в картці.</p>
+                    <div class="composer-action-bar" role="radiogroup" aria-label="Тип взаємодії">
+                        <button type="button" class="contact-action-button composer-action-btn" data-mode="note" aria-pressed="false">
+                            <i class="fa-solid fa-note-sticky"></i>
+                            <span>Нотатка</span>
+                        </button>
+                        <button type="button" class="contact-action-button composer-action-btn" data-mode="call" aria-pressed="false">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>Дзвінок</span>
+                        </button>
+                        <button type="button" class="contact-action-button composer-action-btn" data-mode="email" aria-pressed="false">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>Лист</span>
+                        </button>
+                        <button type="button" class="contact-action-button composer-action-btn" data-mode="reminder" aria-pressed="false">
+                            <i class="fa-solid fa-bell"></i>
+                            <span>Нагадування</span>
+                        </button>
+                    </div>
+                    <form class="composer-form" novalidate>
+                        <div class="composer-field-grid">
+                            <div class="composer-field">
+                                <label>
+                                    <span class="composer-label">Тема</span>
+                                    <input type="text" name="subject" placeholder="Наприклад, фолоу-ап" required>
+                                </label>
+                            </div>
+                            <div class="composer-field">
+                                <label>
+                                    <span class="composer-label">Деталі</span>
+                                    <textarea name="summary" rows="3" placeholder="Зафіксуйте результат взаємодії" required></textarea>
+                                </label>
+                            </div>
+                            <div class="composer-field composer-reminder-field" hidden>
+                                <label>
+                                    <span class="composer-label">Нагадати до</span>
+                                    <input type="datetime-local" name="reminder">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="composer-footer">
+                            <div class="composer-meta" aria-live="polite"></div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Зберегти</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+        }
+
+        function setupContactComposer(timelineContainer, contact) {
+            if (!timelineContainer || !contact) {
+                return;
+            }
+
+            const composer = timelineContainer.querySelector('.contact-timeline-composer');
+            if (!composer) {
+                return;
+            }
+
+            const form = composer.querySelector('form');
+            const actionButtons = composer.querySelectorAll('.composer-action-btn');
+            const subjectInput = form?.querySelector('input[name="subject"]');
+            const summaryInput = form?.querySelector('textarea[name="summary"]');
+            const reminderField = form?.querySelector('.composer-reminder-field');
+            const reminderInput = reminderField?.querySelector('input[name="reminder"]') || null;
+            const statusElement = composer.querySelector('.composer-meta');
+            const state = contactComposerState.get(contact.id) || { mode: 'note', status: null };
+            contactComposerState.set(contact.id, state);
+
+            const ensureDateValue = dateInput => {
+                const instance = dateInput instanceof Date ? new Date(dateInput.getTime()) : new Date(dateInput);
+                if (Number.isNaN(instance.getTime())) {
+                    return '';
+                }
+                const pad = value => String(value).padStart(2, '0');
+                return `${instance.getFullYear()}-${pad(instance.getMonth() + 1)}-${pad(instance.getDate())}T${pad(instance.getHours())}:${pad(instance.getMinutes())}`;
+            };
+
+            const clearStatus = () => {
+                if (!statusElement) {
+                    return;
+                }
+                statusElement.textContent = '';
+                statusElement.classList.remove('is-success', 'is-error');
+            };
+
+            const updateStatusDisplay = () => {
+                if (!statusElement) {
+                    return;
+                }
+                clearStatus();
+                if (state.status && state.status.message) {
+                    statusElement.textContent = state.status.message;
+                    if (state.status.type === 'success') {
+                        statusElement.classList.add('is-success');
+                    } else if (state.status.type === 'error') {
+                        statusElement.classList.add('is-error');
+                    }
+                }
+            };
+
+            const setStatus = (message, type = null) => {
+                if (message) {
+                    state.status = { message, type };
+                } else {
+                    state.status = null;
+                }
+                contactComposerState.set(contact.id, state);
+                updateStatusDisplay();
+            };
+
+            const contactName = typeof contact.name === 'string' && contact.name.trim().length
+                ? contact.name.trim()
+                : 'клієнта';
+
+            const subjectTemplates = {
+                note: `Нотатка: ${contactName}`,
+                call: `Дзвінок з ${contactName}`,
+                email: `Лист для ${contactName}`,
+                reminder: `Нагадування: ${contactName}`
+            };
+
+            const summaryPlaceholders = {
+                note: 'Запишіть нові домовленості або важливі деталі.',
+                call: 'Зафіксуйте підсумки дзвінка та наступні кроки.',
+                email: 'Коротко опишіть зміст листа чи відповідь клієнта.',
+                reminder: 'Опишіть дію, про яку необхідно нагадати.'
+            };
+
+            const setSuggestedSubject = suggestion => {
+                if (!subjectInput) {
+                    return;
+                }
+                const previousAuto = subjectInput.dataset.autoValue || '';
+                const currentValue = subjectInput.value.trim();
+                if (!currentValue || currentValue === previousAuto) {
+                    subjectInput.value = suggestion;
+                    subjectInput.dataset.autoValue = suggestion;
+                }
+                subjectInput.placeholder = suggestion;
+            };
+
+            if (subjectInput) {
+                subjectInput.addEventListener('input', () => {
+                    if (!subjectInput.dataset.autoValue) {
+                        return;
+                    }
+                    if (subjectInput.value.trim() !== subjectInput.dataset.autoValue) {
+                        subjectInput.dataset.autoValue = '';
+                    }
+                });
+            }
+
+            const allowedModes = new Set(['note', 'call', 'email', 'reminder']);
+            let mode = allowedModes.has(state.mode) ? state.mode : 'note';
+
+            const applyMode = newMode => {
+                const targetMode = allowedModes.has(newMode) ? newMode : 'note';
+                mode = targetMode;
+                state.mode = targetMode;
+                contactComposerState.set(contact.id, state);
+                actionButtons.forEach(button => {
+                    const isActive = button.dataset.mode === mode;
+                    button.classList.toggle('is-active', isActive);
+                    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+                if (reminderField) {
+                    if (mode === 'reminder') {
+                        reminderField.hidden = false;
+                        if (reminderInput) {
+                            reminderInput.required = true;
+                            if (!reminderInput.value) {
+                                const defaultDate = new Date();
+                                defaultDate.setDate(defaultDate.getDate() + 1);
+                                defaultDate.setHours(10, 0, 0, 0);
+                                reminderInput.value = ensureDateValue(defaultDate);
+                            }
+                        }
+                    } else {
+                        reminderField.hidden = true;
+                        if (reminderInput) {
+                            reminderInput.required = false;
+                            reminderInput.value = '';
+                        }
+                    }
+                }
+                setSuggestedSubject(subjectTemplates[mode]);
+                if (summaryInput) {
+                    summaryInput.placeholder = summaryPlaceholders[mode];
+                }
+                if (state.status && state.status.type === 'error') {
+                    setStatus('', null);
+                }
+            };
+
+            actionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    applyMode(button.dataset.mode);
+                    if (summaryInput) {
+                        summaryInput.focus({ preventScroll: true });
+                    }
+                });
+            });
+
+            updateStatusDisplay();
+            applyMode(mode);
+
+            if (state.status && state.status.type === 'success') {
+                const statusSnapshot = { ...state.status };
+                setTimeout(() => {
+                    const stored = contactComposerState.get(contact.id);
+                    if (stored && stored.status && stored.status.message === statusSnapshot.message && stored.status.type === statusSnapshot.type) {
+                        stored.status = null;
+                        contactComposerState.set(contact.id, stored);
+                        const currentComposer = document.querySelector(`#contactTimelineCard .contact-timeline-composer[data-contact-id="${contact.id}"]`);
+                        if (currentComposer) {
+                            const meta = currentComposer.querySelector('.composer-meta');
+                            if (meta) {
+                                meta.textContent = '';
+                                meta.classList.remove('is-success', 'is-error');
+                            }
+                        }
+                    }
+                }, 4000);
+            }
+
+            if (form) {
+                form.addEventListener('submit', event => {
+                    event.preventDefault();
+                    const subjectValue = subjectInput ? subjectInput.value.trim() : '';
+                    const summaryValue = summaryInput ? summaryInput.value.trim() : '';
+                    const reminderValue = reminderInput ? reminderInput.value : '';
+
+                    if (!subjectValue || !summaryValue) {
+                        setStatus('Заповніть тему та деталі взаємодії.', 'error');
+                        return;
+                    }
+
+                    const nowIso = new Date().toISOString();
+
+                    if (mode === 'reminder') {
+                        if (!reminderValue) {
+                            setStatus('Вкажіть дату та час нагадування.', 'error');
+                            return;
+                        }
+                        const dueDate = new Date(reminderValue);
+                        if (Number.isNaN(dueDate.getTime())) {
+                            setStatus('Дата нагадування має бути коректною.', 'error');
+                            return;
+                        }
+
+                        const task = {
+                            id: generateId('task'),
+                            title: subjectValue,
+                            owner: CURRENT_USER.name,
+                            dueDate: dueDate.toISOString(),
+                            priority: 'medium',
+                            status: 'todo',
+                            relatedContactId: contact.id,
+                            description: summaryValue,
+                            tags: ['Нагадування', contactName],
+                            attachments: [],
+                            createdAt: nowIso
+                        };
+
+                        if (!Array.isArray(crmData.tasks)) {
+                            crmData.tasks = [];
+                        }
+                        crmData.tasks.unshift(task);
+                        contact.lastActivity = nowIso;
+                        saveData();
+                        logActivity(`Нагадування для ${contactName} заплановано.`, 'reminder', contact.id);
+                        form.reset();
+                        setStatus('Нагадування збережено.', 'success');
+                        const searchValue = document.getElementById('contactSearch')?.value || '';
+                        renderContacts(searchValue);
+                        renderTasks();
+                        renderUpcomingActivities();
+                        return;
+                    }
+
+                    const interactionType = mode === 'note' ? 'note' : mode;
+                    const channel = mode === 'call' ? 'phone' : mode === 'email' ? 'email' : 'system';
+                    if (!Array.isArray(contact.interactions)) {
+                        contact.interactions = [];
+                    }
+
+                    contact.interactions.unshift({
+                        id: generateId('cact'),
+                        type: interactionType,
+                        channel,
+                        subject: subjectValue,
+                        summary: summaryValue,
+                        timestamp: nowIso,
+                        author: CURRENT_USER.name,
+                        tags: mode === 'note' ? ['CRM'] : ['Взаємодія']
+                    });
+
+                    contact.lastActivity = nowIso;
+                    saveData();
+                    const interactionLabel = CONTACT_INTERACTION_TYPE_LABELS[interactionType] || 'Активність';
+                    logActivity(`${interactionLabel} з ${contactName} зафіксовано.`, interactionType, contact.id);
+                    form.reset();
+                    setStatus(`${interactionLabel} додано до історії.`, 'success');
+                    const searchValue = document.getElementById('contactSearch')?.value || '';
+                    renderContacts(searchValue);
+                });
+            }
+        }
+
+        function focusContactComposer(contactId, mode = 'note') {
+            if (!contactId) {
+                return;
+            }
+            const composer = document.querySelector(`#contactTimelineCard .contact-timeline-composer[data-contact-id="${contactId}"]`);
+            if (!composer) {
+                return;
+            }
+            const button = composer.querySelector(`.composer-action-btn[data-mode="${mode}"]`);
+            if (button) {
+                button.click();
+            }
+            const summaryInput = composer.querySelector('textarea[name="summary"]');
+            if (summaryInput) {
+                try {
+                    summaryInput.focus({ preventScroll: true });
+                } catch (error) {
+                    summaryInput.focus();
+                }
+            }
+            composer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         function renderContactDetails(contactId, activityCache = null) {
             const profileContainer = document.getElementById('contactProfileCard');
             const timelineContainer = document.getElementById('contactTimelineCard');
@@ -17494,9 +18031,22 @@
                 })
                 : null;
 
-            const actionsMarkup = relatedLead
-                ? `<div class="contact-profile-actions"><button class="btn btn-small-primary" data-open-lead="${relatedLead.id}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Відкрити угоду</button></div>`
+            const leadActionMarkup = relatedLead
+                ? `<div class="contact-profile-actions"><button class="btn btn-small-primary" type="button" data-open-lead="${relatedLead.id}"><i class="fa-solid fa-arrow-up-right-from-square"></i> Відкрити угоду</button></div>`
                 : '';
+
+            const quickActionsMarkup = `
+                <div class="contact-profile-section contact-actions-section">
+                    <h4>Швидкі дії</h4>
+                    <div class="contact-quick-actions" data-contact-actions="${contact.id}">
+                        <button type="button" class="contact-action-button" data-composer-trigger="call"><i class="fa-solid fa-phone"></i><span>Дзвінок</span></button>
+                        <button type="button" class="contact-action-button" data-composer-trigger="email"><i class="fa-solid fa-envelope"></i><span>Лист</span></button>
+                        <button type="button" class="contact-action-button" data-composer-trigger="note"><i class="fa-solid fa-note-sticky"></i><span>Нотатка</span></button>
+                        <button type="button" class="contact-action-button" data-composer-trigger="reminder"><i class="fa-solid fa-bell"></i><span>Нагадування</span></button>
+                    </div>
+                    ${leadActionMarkup}
+                </div>
+            `;
 
             profileContainer.innerHTML = `
                 <div class="contact-profile-header">
@@ -17573,13 +18123,10 @@
                 </div>
                 ${automationMarkup}
                 ${tagsMarkup ? `<div class="contact-profile-section"><h4>Мітки</h4>${tagsMarkup}</div>` : ''}
-                ${actionsMarkup}
+                ${quickActionsMarkup}
             `;
 
-            if (!timeline.length) {
-                timelineContainer.innerHTML = '<div class="contact-timeline-empty">Ще немає зафіксованих взаємодій. Заплануйте перший контакт.</div>';
-            } else {
-                const timelineItems = timeline.map(interaction => {
+            const timelineItems = timeline.map(interaction => {
                     const typeLabel = CONTACT_INTERACTION_TYPE_LABELS[interaction.type] || 'Активність';
                     const channel = CONTACT_CHANNEL_LABELS[interaction.channel] || interaction.channel;
                     const icon = CONTACT_INTERACTION_ICONS[interaction.type] || 'fa-solid fa-circle-info';
@@ -17624,17 +18171,27 @@
                     `;
                 }).join('');
 
-                timelineContainer.innerHTML = `
-                    <div class="contact-timeline-header">
-                        <h3>Історія взаємодій</h3>
-                        <p>Повний контекст дзвінків, листів, задач і запитів підтримки.</p>
-                    </div>
-                    <div class="contact-timeline-list">${timelineItems}</div>
-                `;
-            }
+            const timelineContent = timelineItems.length
+                ? `<div class="contact-timeline-list">${timelineItems}</div>`
+                : '<div class="contact-timeline-empty">Ще немає зафіксованих взаємодій. Заплануйте перший контакт.</div>';
+
+            timelineContainer.innerHTML = `
+                <div class="contact-timeline-header">
+                    <h3>Історія взаємодій</h3>
+                    <p>Повний контекст дзвінків, листів, задач і запитів підтримки.</p>
+                </div>
+                ${createContactComposerMarkup(contact)}
+                ${timelineContent}
+            `;
+
+            setupContactComposer(timelineContainer, contact);
 
             profileContainer.querySelectorAll('[data-open-lead]').forEach(btn => {
                 btn.addEventListener('click', () => openLeadDetails(btn.dataset.openLead));
+            });
+
+            profileContainer.querySelectorAll('[data-composer-trigger]').forEach(btn => {
+                btn.addEventListener('click', () => focusContactComposer(contact.id, btn.dataset.composerTrigger));
             });
         }
 
@@ -17683,6 +18240,7 @@
         function getFilteredTasks() {
             const tasks = crmData && Array.isArray(crmData.tasks) ? crmData.tasks : [];
             const leads = crmData && Array.isArray(crmData.leads) ? crmData.leads : [];
+            const contacts = crmData && Array.isArray(crmData.contacts) ? crmData.contacts : [];
             const searchTerm = taskFilters.search.trim().toLowerCase();
             return tasks.filter(task => {
                 const ownerName = typeof task.owner === 'string' ? task.owner.trim() : '';
@@ -17697,13 +18255,18 @@
                 }
                 if (searchTerm) {
                     const lead = task.relatedLeadId ? leads.find(item => item.id === task.relatedLeadId) : null;
+                    const contact = task.relatedContactId ? contacts.find(item => item.id === task.relatedContactId) : null;
                     const haystackParts = [
                         task.title,
                         task.description,
                         ownerName,
                         ...(Array.isArray(task.tags) ? task.tags : []),
                         lead ? lead.name : '',
-                        lead ? lead.company : ''
+                        lead ? lead.company : '',
+                        contact ? contact.name : '',
+                        contact ? contact.company : '',
+                        contact ? contact.email : '',
+                        contact ? contact.phone : ''
                     ];
                     const haystack = haystackParts.filter(Boolean).join(' ').toLowerCase();
                     if (!haystack.includes(searchTerm)) {
@@ -18079,7 +18642,9 @@
 
         function createTaskCard(task) {
             const leads = crmData && Array.isArray(crmData.leads) ? crmData.leads : [];
+            const contacts = crmData && Array.isArray(crmData.contacts) ? crmData.contacts : [];
             const lead = task.relatedLeadId ? leads.find(item => item.id === task.relatedLeadId) : null;
+            const contact = task.relatedContactId ? contacts.find(item => item.id === task.relatedContactId) : null;
             const overdue = task.status !== 'done' && isOverdue(task.dueDate);
             const priorityLabel = TASK_PRIORITY_LABELS[task.priority] || 'Середній';
             const tags = Array.isArray(task.tags) ? task.tags.filter(Boolean) : [];
@@ -18103,7 +18668,8 @@
                         <span><i class="fa-regular fa-calendar"></i> ${formatDate(task.dueDate)}${overdue ? ' • прострочено' : ''}</span>
                         <span><i class="fa-regular fa-user"></i> ${task.owner}</span>
                     </div>
-                    ${lead ? `<div class="metric-sub" data-open-lead="${lead.id}"><i class="fa-solid fa-link"></i> ${lead.name}</div>` : ''}
+                    ${lead ? `<div class="metric-sub" data-open-lead="${lead.id}"><i class="fa-solid fa-link"></i> ${escapeHtml(lead.name)}</div>` : ''}
+                    ${contact ? `<div class="metric-sub" data-open-contact="${contact.id}"><i class="fa-solid fa-user"></i> ${escapeHtml(contact.name)}${contact.company ? ` • ${escapeHtml(contact.company)}` : ''}</div>` : ''}
                     ${task.description ? `<div class="metric-sub">${task.description}</div>` : ''}
                     ${extrasMarkup}
                     <div class="task-actions">
@@ -18131,6 +18697,10 @@
 
             document.querySelectorAll('#taskBoard [data-open-lead]').forEach(link => {
                 link.addEventListener('click', () => openLeadDetails(link.dataset.openLead));
+            });
+
+            document.querySelectorAll('#taskBoard [data-open-contact]').forEach(link => {
+                link.addEventListener('click', () => openContactsSection(link.dataset.openContact));
             });
         }
 
@@ -19015,10 +19585,7 @@
                 item.addEventListener('click', () => {
                     const contact = crmData.contacts.find(c => c.id === item.dataset.resultContact);
                     if (contact) {
-                        const relatedLead = crmData.leads.find(lead => lead.company === contact.company);
-                        if (relatedLead) {
-                            openLeadDetails(relatedLead.id);
-                        }
+                        openContactsSection(contact.id);
                     }
                     hideSearchResults();
                 });
@@ -19029,6 +19596,8 @@
                     const task = crmData.tasks.find(t => t.id === item.dataset.resultTask);
                     if (task?.relatedLeadId) {
                         openLeadDetails(task.relatedLeadId);
+                    } else if (task?.relatedContactId) {
+                        openContactsSection(task.relatedContactId);
                     }
                     hideSearchResults();
                 });
@@ -19108,6 +19677,8 @@
             if (confirm('Скинути дані та повернути демо-набір?')) {
                 crmData = upgradeDataStructure(deepClone(defaultData));
                 activeLeadId = null;
+                activeContactId = null;
+                contactComposerState.clear();
                 Object.values(MODAL_ATTACHMENT_AREAS).forEach(areaList => {
                     areaList.forEach(areaKey => resetAttachmentArea(areaKey));
                 });
