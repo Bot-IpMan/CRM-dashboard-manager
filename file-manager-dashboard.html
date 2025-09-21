@@ -3261,6 +3261,212 @@
             gap: 18px;
         }
 
+        .call-center-card {
+            display: grid;
+            gap: 18px;
+        }
+
+        .call-center-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .call-center-header h3 {
+            margin-bottom: 6px;
+        }
+
+        .call-center-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(148, 163, 184, 0.18);
+            color: #475569;
+        }
+
+        .call-center-status .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .call-center-status.online {
+            background: rgba(34, 197, 94, 0.2);
+            color: #166534;
+        }
+
+        .call-center-status.offline {
+            background: rgba(239, 68, 68, 0.2);
+            color: #b91c1c;
+        }
+
+        .call-center-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .call-center-metric {
+            display: grid;
+            gap: 8px;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .call-center-metric .metric-label {
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .call-center-metric .metric-value {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .call-center-metric .metric-sub {
+            font-size: 12px;
+        }
+
+        .call-center-queues {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .call-center-queue {
+            border: 1px solid rgba(148, 163, 184, 0.28);
+            border-radius: 14px;
+            padding: 12px 14px;
+            background: rgba(148, 163, 184, 0.12);
+            display: grid;
+            gap: 6px;
+        }
+
+        .call-center-chart {
+            display: grid;
+            gap: 12px;
+        }
+
+        .call-center-chart-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .call-center-chart-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .call-center-chart .chart-container {
+            height: 240px;
+        }
+
+        .call-center-quality {
+            display: grid;
+            gap: 12px;
+        }
+
+        .call-center-quality-head {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .call-quality-feed {
+            display: grid;
+            gap: 12px;
+        }
+
+        .call-quality-item {
+            border-radius: 16px;
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .call-quality-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .call-quality-sentiment {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .call-quality-sentiment.positive {
+            color: #166534;
+        }
+
+        .call-quality-sentiment.negative {
+            color: #b91c1c;
+        }
+
+        .call-quality-sentiment.neutral {
+            color: #1f2937;
+        }
+
+        .call-quality-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .call-quality-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(79, 70, 229, 0.16);
+            color: var(--primary-dark);
+        }
+
+        .call-quality-empty {
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px dashed rgba(148, 163, 184, 0.4);
+            background: rgba(148, 163, 184, 0.12);
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .call-center-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .call-center-chart .chart-container {
+                height: 220px;
+            }
+        }
+
         .role-dashboard-card {
             display: grid;
             gap: 16px;
@@ -5758,6 +5964,49 @@
                     </div>
                 </div>
                 <div class="analytics-grid">
+                    <div class="card call-center-card" id="callCenterAnalyticsCard">
+                        <div class="call-center-header">
+                            <div>
+                                <h3>Контакт-центр Zoom</h3>
+                                <p class="metric-sub">Live KPI, AI-транскрипції та контроль навантаження</p>
+                            </div>
+                            <div class="call-center-status offline" id="callCenterStatus">
+                                <span class="status-dot" aria-hidden="true"></span>
+                                <span id="callCenterStatusLabel">Очікуємо дані…</span>
+                            </div>
+                        </div>
+                        <div class="call-center-metrics" data-call-metrics>
+                            <div class="call-quality-empty">Ініціалізація даних контакт-центру…</div>
+                        </div>
+                        <div class="call-center-queues" data-call-queues></div>
+                        <div class="call-center-chart">
+                            <div class="call-center-chart-head">
+                                <div>
+                                    <h4>Навантаження та сервісний рівень</h4>
+                                    <p class="metric-sub">Дані надходять із Zoom Contact Center в режимі реального часу</p>
+                                </div>
+                                <div class="call-center-chart-actions">
+                                    <div class="chart-summary" id="callCenterChartSummary"></div>
+                                    <button type="button" class="btn btn-small-muted" id="callCenterRefreshBtn">
+                                        <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                                        Оновити
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="callCenterVolumeChart" aria-label="Динаміка дзвінків контакт-центру" role="img"></canvas>
+                            </div>
+                        </div>
+                        <div class="call-center-quality">
+                            <div class="call-center-quality-head">
+                                <h4>AI-інсайти по розмовах</h4>
+                                <p class="metric-sub">Розпізнавання мови, емоцій та ключових питань</p>
+                            </div>
+                            <div class="call-quality-feed" data-quality-feed>
+                                <div class="call-quality-empty">Очікуємо на перші розмови для аналізу…</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card role-dashboard-card">
                         <div class="role-dashboard-header">
                             <div>
@@ -6605,6 +6854,40 @@
             update: 'fa-solid fa-arrow-trend-up',
             success: 'fa-solid fa-star'
         };
+
+        const CALL_CENTER_ENDPOINTS = {
+            summary: '/kpi/summary',
+            history: '/kpi/history',
+            quality: '/quality/recent',
+            kpiStream: '/ws/kpi',
+            qualityStream: '/ws/quality'
+        };
+
+        const CALL_CENTER_SENTIMENT_LABELS = {
+            positive: 'Позитивно',
+            negative: 'Негативно',
+            neutral: 'Нейтрально'
+        };
+
+        const callCenterState = {
+            initialized: false,
+            metricsContainer: null,
+            queuesContainer: null,
+            qualityContainer: null,
+            statusBadge: null,
+            statusLabel: null,
+            chartCanvas: null,
+            chartInstance: null,
+            chartSummary: null,
+            refreshButton: null,
+            kpiSocket: null,
+            qualitySocket: null,
+            reconnectHandle: null
+        };
+
+        const callCenterHistoryCache = [];
+        let callCenterLastSummary = null;
+        let callCenterLastQuality = [];
 
         const SUPPORT_STATUS_LABELS = {
             open: 'В роботі',
@@ -10002,6 +10285,10 @@
             renderAll();
         });
 
+        window.addEventListener('beforeunload', () => {
+            disposeCallCenterSockets();
+        });
+
         const layoutManager = (() => {
             const areas = new Map();
             let draggingBlock = null;
@@ -10372,6 +10659,7 @@
             setupFileLibrary();
             setupRoleManagement();
             setupSettingsPanel();
+            initializeCallCenterAnalytics();
             initializeLayoutAreas();
             setupCustomCharts();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
@@ -18704,6 +18992,447 @@
             });
         }
 
+        function getCallCenterBaseUrl() {
+            const base = window.CRM_API_BASE || window.location.origin;
+            return base.endsWith('/') ? base.slice(0, -1) : base;
+        }
+
+        function buildCallCenterUrl(path, params = {}) {
+            const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+            const url = new URL(normalizedPath, `${getCallCenterBaseUrl()}/`);
+            Object.entries(params).forEach(([key, value]) => {
+                if (value !== undefined && value !== null && value !== '') {
+                    url.searchParams.set(key, value);
+                }
+            });
+            return url.toString();
+        }
+
+        function buildCallCenterWebSocket(path) {
+            const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+            const url = new URL(normalizedPath, `${getCallCenterBaseUrl()}/`);
+            url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
+            return url.toString();
+        }
+
+        async function refreshCallCenterData() {
+            await Promise.all([
+                loadCallCenterSummary(),
+                loadCallCenterHistory(),
+                loadCallCenterQuality()
+            ]);
+        }
+
+        async function loadCallCenterSummary() {
+            try {
+                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.summary));
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const summary = await response.json();
+                updateCallCenterSummary(summary);
+                setCallCenterStatus(true);
+            } catch (error) {
+                console.warn('Не вдалося отримати KPI контакт-центру', error);
+                setCallCenterStatus(false);
+            }
+        }
+
+        function updateCallCenterSummary(summary) {
+            if (!summary || typeof summary !== 'object') {
+                return;
+            }
+            callCenterLastSummary = summary;
+            updateCallCenterMetrics(summary);
+            updateCallCenterQueues(Array.isArray(summary.queues) ? summary.queues : []);
+            updateCallCenterChartSummary(summary);
+            appendCallCenterHistory(summary);
+            if (callCenterHistoryCache.length) {
+                renderCallCenterChart(callCenterHistoryCache);
+            }
+        }
+
+        function updateCallCenterMetrics(summary) {
+            const container = callCenterState.metricsContainer;
+            if (!container) {
+                return;
+            }
+            const updatedAt = summary.last_updated ? new Date(summary.last_updated) : new Date();
+            const metrics = [
+                {
+                    label: 'Дзвінки за годину',
+                    value: formatIntegerDisplay(summary.total_calls),
+                    hint: `Оновлено ${formatTime(updatedAt)}`
+                },
+                {
+                    label: 'Активні розмови',
+                    value: formatIntegerDisplay(summary.active_calls),
+                    hint: 'Live-статус із Zoom'
+                },
+                {
+                    label: 'Середній час обробки',
+                    value: formatDurationFromSeconds(Number(summary.avg_handle_time) || 0),
+                    hint: 'AHT (Average Handle Time)'
+                },
+                {
+                    label: 'CSAT',
+                    value: `${Math.round(Number(summary.customer_satisfaction) || 0)}%`,
+                    hint: 'Рівень задоволеності клієнтів'
+                },
+                {
+                    label: 'Service level',
+                    value: `${Math.round(Number(summary.service_level) || 0)}%`,
+                    hint: 'Відповідь у межах цілі'
+                },
+                {
+                    label: 'Втрачені дзвінки',
+                    value: `${Math.round(Number(summary.abandonment_rate) || 0)}%`,
+                    hint: 'Abandonment rate'
+                }
+            ];
+            container.innerHTML = metrics
+                .map(metric => `
+                    <div class="call-center-metric">
+                        <div class="metric-label">${metric.label}</div>
+                        <div class="metric-value">${metric.value}</div>
+                        <div class="metric-sub">${metric.hint}</div>
+                    </div>
+                `)
+                .join('');
+        }
+
+        function updateCallCenterQueues(queues) {
+            const container = callCenterState.queuesContainer;
+            if (!container) {
+                return;
+            }
+            if (!queues.length) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = queues
+                .map(queue => {
+                    const updatedAt = queue.captured_at ? new Date(queue.captured_at) : null;
+                    return `
+                        <div class="call-center-queue">
+                            <strong>${escapeHtml(queue.queue || 'Черга')}</strong>
+                            <div class="metric-sub">Оновлено ${updatedAt ? `${formatDate(updatedAt)} ${formatTime(updatedAt)}` : '—'}</div>
+                            <div class="metric-sub">Активні: ${formatIntegerDisplay(queue.active_calls)}</div>
+                            <div class="metric-sub">Service level: ${Math.round(Number(queue.service_level) || 0)}%</div>
+                        </div>
+                    `;
+                })
+                .join('');
+        }
+
+        function updateCallCenterChartSummary(summary) {
+            const container = callCenterState.chartSummary;
+            if (!container) {
+                return;
+            }
+            const serviceLevel = Math.round(Number(summary.service_level) || 0);
+            const csat = Math.round(Number(summary.customer_satisfaction) || 0);
+            const abandonment = Math.round(Number(summary.abandonment_rate) || 0);
+            container.innerHTML = `
+                <span class="positive"><i class="fa-solid fa-gauge"></i> SL ${serviceLevel}%</span>
+                <span class="info"><i class="fa-solid fa-face-smile"></i> CSAT ${csat}%</span>
+                <span class="negative"><i class="fa-solid fa-phone-slash"></i> Втрати ${abandonment}%</span>
+            `;
+        }
+
+        async function loadCallCenterHistory(limit = 24) {
+            try {
+                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.history, { limit: String(limit) }));
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const history = await response.json();
+                if (!Array.isArray(history)) {
+                    return;
+                }
+                callCenterHistoryCache.length = 0;
+                history.forEach(item => {
+                    callCenterHistoryCache.push({
+                        captured_at: item.captured_at,
+                        total_calls: Number(item.total_calls) || 0,
+                        active_calls: Number(item.active_calls) || 0,
+                        avg_handle_time: Number(item.avg_handle_time) || 0,
+                        service_level: Number(item.service_level) || 0,
+                        customer_satisfaction: Number(item.customer_satisfaction) || 0,
+                        abandonment_rate: Number(item.abandonment_rate) || 0
+                    });
+                });
+                renderCallCenterChart(callCenterHistoryCache);
+            } catch (error) {
+                console.warn('Не вдалося завантажити історію KPI контакт-центру', error);
+            }
+        }
+
+        function renderCallCenterChart(history) {
+            const canvas = callCenterState.chartCanvas;
+            if (!canvas) {
+                return;
+            }
+            const context = canvas.getContext('2d');
+            const labels = history.map(item => {
+                const date = item.captured_at ? new Date(item.captured_at) : new Date();
+                return formatTime(date);
+            });
+            const totalCalls = history.map(item => Number(item.total_calls) || 0);
+            const serviceLevel = history.map(item => Number(item.service_level) || 0);
+
+            if (callCenterState.chartInstance) {
+                callCenterState.chartInstance.data.labels = labels;
+                callCenterState.chartInstance.data.datasets[0].data = totalCalls;
+                callCenterState.chartInstance.data.datasets[1].data = serviceLevel;
+                callCenterState.chartInstance.update();
+                return;
+            }
+
+            callCenterState.chartInstance = new Chart(context, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Дзвінки',
+                            data: totalCalls,
+                            borderColor: 'rgba(99, 102, 241, 1)',
+                            backgroundColor: 'rgba(99, 102, 241, 0.15)',
+                            fill: true,
+                            tension: 0.35,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'Service level %',
+                            data: serviceLevel,
+                            borderColor: 'rgba(34, 197, 94, 1)',
+                            backgroundColor: 'rgba(34, 197, 94, 0.15)',
+                            fill: false,
+                            tension: 0.35,
+                            pointRadius: 0,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'Дзвінки' }
+                        },
+                        y1: {
+                            beginAtZero: true,
+                            position: 'right',
+                            grid: { drawOnChartArea: false },
+                            ticks: {
+                                callback: value => `${value}%`
+                            },
+                            title: { display: true, text: 'Service level %' }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { usePointStyle: true }
+                        }
+                    }
+                }
+            });
+        }
+
+        function appendCallCenterHistory(summary) {
+            if (!summary || !summary.last_updated) {
+                return;
+            }
+            const entry = {
+                captured_at: summary.last_updated,
+                total_calls: Number(summary.total_calls) || 0,
+                active_calls: Number(summary.active_calls) || 0,
+                avg_handle_time: Number(summary.avg_handle_time) || 0,
+                service_level: Number(summary.service_level) || 0,
+                customer_satisfaction: Number(summary.customer_satisfaction) || 0,
+                abandonment_rate: Number(summary.abandonment_rate) || 0
+            };
+            const existingIndex = callCenterHistoryCache.findIndex(item => item.captured_at === entry.captured_at);
+            if (existingIndex >= 0) {
+                callCenterHistoryCache[existingIndex] = entry;
+            } else {
+                callCenterHistoryCache.push(entry);
+                callCenterHistoryCache.sort((a, b) => new Date(a.captured_at) - new Date(b.captured_at));
+                if (callCenterHistoryCache.length > 48) {
+                    callCenterHistoryCache.splice(0, callCenterHistoryCache.length - 48);
+                }
+            }
+        }
+
+        async function loadCallCenterQuality(limit = 5) {
+            try {
+                const response = await fetch(buildCallCenterUrl(CALL_CENTER_ENDPOINTS.quality, { limit: String(limit) }));
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const insights = await response.json();
+                renderCallQualityFeed(Array.isArray(insights) ? insights : []);
+            } catch (error) {
+                console.warn('Не вдалося оновити AI-інсайти дзвінків', error);
+            }
+        }
+
+        function renderCallQualityFeed(items) {
+            const container = callCenterState.qualityContainer;
+            if (!container) {
+                return;
+            }
+            callCenterLastQuality = Array.isArray(items) ? items : [];
+            if (!callCenterLastQuality.length) {
+                container.innerHTML = '<div class="call-quality-empty">Очікуємо на перші розмови для аналізу…</div>';
+                return;
+            }
+            container.innerHTML = callCenterLastQuality
+                .map(item => {
+                    const capturedAt = item.captured_at ? new Date(item.captured_at) : null;
+                    const sentiment = (item.sentiment || 'neutral').toLowerCase();
+                    const sentimentLabel = CALL_CENTER_SENTIMENT_LABELS[sentiment] || CALL_CENTER_SENTIMENT_LABELS.neutral;
+                    const sentimentIcon = sentiment === 'positive'
+                        ? 'fa-face-smile'
+                        : sentiment === 'negative'
+                            ? 'fa-face-frown'
+                            : 'fa-face-meh';
+                    const keywords = (item.keywords || item.key_words || []).slice(0, 4);
+                    const questions = (item.key_phrases || item.keyPhrases || []).slice(0, 2);
+                    const meta = [
+                        item.agent ? `Агент: ${escapeHtml(item.agent)}` : '',
+                        item.customer ? `Клієнт: ${escapeHtml(item.customer)}` : '',
+                        item.duration_seconds ? `Тривалість: ${formatDurationFromSeconds(Number(item.duration_seconds))}` : ''
+                    ].filter(Boolean);
+
+                    return `
+                        <article class="call-quality-item">
+                            <div class="call-quality-meta">
+                                <span class="call-quality-sentiment ${sentiment}">
+                                    <i class="fa-solid ${sentimentIcon}" aria-hidden="true"></i>
+                                    ${sentimentLabel}
+                                </span>
+                                ${capturedAt ? `<span>${formatDate(capturedAt)} ${formatTime(capturedAt)}</span>` : ''}
+                                ${meta.map(part => `<span>${part}</span>`).join('')}
+                            </div>
+                            ${item.summary ? `<div>${escapeHtml(item.summary)}</div>` : ''}
+                            ${questions.length ? `<div class="metric-sub">Питання: ${questions.map(escapeHtml).join('; ')}</div>` : ''}
+                            ${keywords.length ? `<div class="call-quality-tags">${keywords.map(keyword => `<span class="call-quality-tag">${escapeHtml(keyword)}</span>`).join('')}</div>` : ''}
+                            ${item.transcript_excerpt ? `<div class="metric-sub">Фрагмент: “${escapeHtml(item.transcript_excerpt)}”</div>` : ''}
+                        </article>
+                    `;
+                })
+                .join('');
+        }
+
+        function setCallCenterStatus(isOnline) {
+            const badge = callCenterState.statusBadge;
+            const label = callCenterState.statusLabel;
+            if (!badge || !label) {
+                return;
+            }
+            badge.classList.toggle('online', Boolean(isOnline));
+            badge.classList.toggle('offline', !isOnline);
+            label.textContent = isOnline ? 'Live оновлення' : 'Немає зʼєднання';
+        }
+
+        function initializeCallCenterAnalytics() {
+            const card = document.getElementById('callCenterAnalyticsCard');
+            if (!card || callCenterState.initialized) {
+                return;
+            }
+            callCenterState.metricsContainer = card.querySelector('[data-call-metrics]');
+            callCenterState.queuesContainer = card.querySelector('[data-call-queues]');
+            callCenterState.qualityContainer = card.querySelector('[data-quality-feed]');
+            callCenterState.statusBadge = document.getElementById('callCenterStatus');
+            callCenterState.statusLabel = document.getElementById('callCenterStatusLabel');
+            callCenterState.chartCanvas = document.getElementById('callCenterVolumeChart');
+            callCenterState.chartSummary = document.getElementById('callCenterChartSummary');
+            callCenterState.refreshButton = document.getElementById('callCenterRefreshBtn');
+            if (callCenterState.refreshButton) {
+                callCenterState.refreshButton.addEventListener('click', () => refreshCallCenterData());
+            }
+            refreshCallCenterData();
+            connectCallCenterStreams();
+            callCenterState.initialized = true;
+        }
+
+        function connectCallCenterStreams() {
+            disposeCallCenterSockets();
+            connectKpiStream();
+            connectQualityStream();
+        }
+
+        function disposeCallCenterSockets() {
+            if (callCenterState.kpiSocket) {
+                callCenterState.kpiSocket.close();
+                callCenterState.kpiSocket = null;
+            }
+            if (callCenterState.qualitySocket) {
+                callCenterState.qualitySocket.close();
+                callCenterState.qualitySocket = null;
+            }
+            if (callCenterState.reconnectHandle) {
+                clearTimeout(callCenterState.reconnectHandle);
+                callCenterState.reconnectHandle = null;
+            }
+        }
+
+        function connectKpiStream() {
+            try {
+                const socket = new WebSocket(buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.kpiStream));
+                callCenterState.kpiSocket = socket;
+                socket.addEventListener('open', () => setCallCenterStatus(true));
+                socket.addEventListener('message', event => {
+                    try {
+                        const payload = JSON.parse(event.data);
+                        updateCallCenterSummary(payload);
+                    } catch (error) {
+                        console.warn('Не вдалося розпарсити KPI-повідомлення', error);
+                    }
+                });
+                socket.addEventListener('close', () => scheduleCallCenterReconnect());
+                socket.addEventListener('error', () => socket.close());
+            } catch (error) {
+                console.warn('Помилка підключення KPI WebSocket', error);
+                scheduleCallCenterReconnect();
+            }
+        }
+
+        function connectQualityStream() {
+            try {
+                const socket = new WebSocket(buildCallCenterWebSocket(CALL_CENTER_ENDPOINTS.qualityStream));
+                callCenterState.qualitySocket = socket;
+                socket.addEventListener('message', event => {
+                    try {
+                        const payload = JSON.parse(event.data);
+                        renderCallQualityFeed(Array.isArray(payload) ? payload : []);
+                    } catch (error) {
+                        console.warn('Не вдалося розпарсити AI-повідомлення', error);
+                    }
+                });
+                socket.addEventListener('close', () => scheduleCallCenterReconnect());
+                socket.addEventListener('error', () => socket.close());
+            } catch (error) {
+                console.warn('Помилка підключення AI WebSocket', error);
+                scheduleCallCenterReconnect();
+            }
+        }
+
+        function scheduleCallCenterReconnect() {
+            if (callCenterState.reconnectHandle) {
+                return;
+            }
+            callCenterState.reconnectHandle = setTimeout(() => {
+                callCenterState.reconnectHandle = null;
+                connectCallCenterStreams();
+            }, 7000);
+        }
+
         function renderAnalytics() {
             document.getElementById('insightUpdated').textContent = `Оновлено ${formatTime(new Date())}`;
             renderConversionInsights();
@@ -18715,6 +19444,17 @@
             setupReportBuilderControls();
             renderReportBuilder();
             renderForecastingAnalytics();
+            if (callCenterState.initialized) {
+                if (callCenterLastSummary) {
+                    updateCallCenterSummary(callCenterLastSummary);
+                }
+                if (callCenterHistoryCache.length) {
+                    renderCallCenterChart(callCenterHistoryCache);
+                }
+                if (callCenterLastQuality.length) {
+                    renderCallQualityFeed(callCenterLastQuality);
+                }
+            }
         }
 
         function renderConversionInsights() {
@@ -20536,6 +21276,24 @@
                 return `${hours.toFixed(1)} год`;
             }
             return `${Math.round(hours)} год`;
+        }
+
+        function formatDurationFromSeconds(seconds) {
+            const value = Number(seconds);
+            if (!Number.isFinite(value) || value <= 0) {
+                return '—';
+            }
+            if (value < 60) {
+                return `${Math.round(value)} с`;
+            }
+            const minutes = Math.floor(value / 60);
+            const remainingSeconds = Math.round(value % 60);
+            if (minutes < 60) {
+                return `${minutes} хв${remainingSeconds ? ` ${remainingSeconds} с` : ''}`.trim();
+            }
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+            return `${hours} год${mins ? ` ${mins} хв` : ''}`.trim();
         }
 
         function formatRelativeTime(dateInput) {
