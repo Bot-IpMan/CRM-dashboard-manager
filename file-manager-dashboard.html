@@ -15797,37 +15797,76 @@
                 return;
             }
 
-            const total = tasks.length;
-            const linked = tasks.filter(task => task.relatedLeadId).length;
-            const withAttachments = tasks.filter(task => Array.isArray(task.attachments) && task.attachments.length).length;
-            const withTags = tasks.filter(task => Array.isArray(task.tags) && task.tags.length).length;
-            const withoutContext = tasks.filter(task => task.status !== 'done' && (!task.description || task.description.trim().length < 10)).length;
-            const toPercent = count => (total ? Math.round((count / total) * 100) : 0);
+            const numberFormatter = new Intl.NumberFormat('uk-UA');
+            const formatValue = value => numberFormatter.format(Number.isFinite(value) ? value : 0);
+            const formatTasksLabel = count => {
+                if (!Number.isFinite(count) || count <= 0) {
+                    return 'жодної задачі';
+                }
+                const formatted = numberFormatter.format(count);
+                const mod100 = count % 100;
+                const mod10 = count % 10;
+                if (mod10 === 1 && mod100 !== 11) {
+                    return `${formatted} задача`;
+                }
+                if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+                    return `${formatted} задачі`;
+                }
+                return `${formatted} задач`;
+            };
+
+            const activeTasks = tasks.filter(task => task.status !== 'done');
+            const dueToday = activeTasks.filter(task => isDueToday(task.dueDate)).length;
+            const queueCount = tasks.filter(task => task.status === 'todo').length;
+            const completedRecent = tasks.filter(task => {
+                if (task.status !== 'done') {
+                    return false;
+                }
+                const completionSource = task.completedAt || task.dueDate;
+                if (!completionSource) {
+                    return false;
+                }
+                return daysBetween(completionSource, new Date()) <= 7;
+            }).length;
 
             const insights = [
                 {
-                    icon: 'fa-link',
-                    label: 'Пов&#39;язані з угодами',
-                    value: linked,
-                    sub: `${toPercent(linked)}% задач синхронізовані з воронкою`
+                    icon: 'fa-desktop',
+                    label: 'Особистий робочий стіл',
+                    value: formatValue(activeTasks.length),
+                    sub: activeTasks.length
+                        ? `${formatTasksLabel(activeTasks.length)} зібрано на персональній CRM-панелі поруч із зустрічами та контактами без перемикань між поштою, календарем і таблицями (hubspot.com).`
+                        : 'Персональна CRM-панель готова зібрати задачі, зустрічі та контакти без потреби перемикатися між поштою, календарем і таблицями (hubspot.com).'
                 },
                 {
-                    icon: 'fa-paperclip',
-                    label: 'Документи у задачах',
-                    value: withAttachments,
-                    sub: withAttachments ? `${withAttachments} задач із файлами` : 'Додайте файли для спільної роботи'
+                    icon: 'fa-calendar-check',
+                    label: 'Синхронізація з календарем',
+                    value: formatValue(dueToday),
+                    sub: dueToday
+                        ? `${formatTasksLabel(dueToday)} заплановано на сьогодні; синхронізований календар допомагає миттєво планувати й приєднуватись до зустрічей та відстежувати реакцію клієнтів на листи чи матеріали (hubspot.com).`
+                        : 'На сьогодні задач немає, але синхронізований календар допомагає миттєво планувати зустрічі та бачити реакцію клієнтів на листи чи матеріали (hubspot.com).'
                 },
                 {
-                    icon: 'fa-tags',
-                    label: 'Категорії та теги',
-                    value: withTags,
-                    sub: `${toPercent(withTags)}% задач мають тегування`
+                    icon: 'fa-bolt',
+                    label: 'Черга завдань і швидкі дії',
+                    value: formatValue(queueCount),
+                    sub: queueCount
+                        ? `${formatTasksLabel(queueCount)} у черзі можна створити з воркфлоу, електронної пошти чи списку справ і одразу запускати дзвінки, листи або соцмережі без виходу з CRM (hubspot.com).`
+                        : 'Черга задач готова приймати елементи з воркфлоу, електронної пошти чи списку справ і запускати дзвінки, листи або соцмережі без виходу з CRM (hubspot.com).'
                 },
                 {
-                    icon: 'fa-circle-exclamation',
-                    label: 'Потрібно деталізувати',
-                    value: withoutContext,
-                    sub: withoutContext ? `${withoutContext} активних задач без опису` : 'Усі активні задачі мають контекст'
+                    icon: 'fa-chart-line',
+                    label: 'Вбудована аналітика по завданнях',
+                    value: formatValue(completedRecent),
+                    sub: completedRecent
+                        ? `За останні 7 днів завершено ${formatTasksLabel(completedRecent)}, а вбудована аналітика показує створені угоди, дзвінки та активності, щоб команда зосереджувалась на результативних задачах (hubspot.com).`
+                        : 'Вбудована аналітика покаже створені угоди, дзвінки та активності, щоб команда зосереджувалась на результативних задачах, щойно з\'являться завершені задачі (hubspot.com).'
+                },
+                {
+                    icon: 'fa-layer-group',
+                    label: 'Ключові функції для завдань',
+                    value: '4×',
+                    sub: 'Відстеження прогресу, управління дедлайнами, черги завдань і автоматичне створення задач — типовий набір можливостей для ефективної роботи (hubspot.com).'
                 }
             ];
 
