@@ -6,8 +6,9 @@ import sqlite3
 import threading
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, Iterable, List, Optional, Union
 
+from .config import DatabaseConfig
 from .models import FileEvent
 
 LOGGER = logging.getLogger(__name__)
@@ -16,19 +17,33 @@ LOGGER = logging.getLogger(__name__)
 class EventDatabase:
     """SQLite backed event storage."""
 
-    def __init__(self, path: Path) -> None:
-        self.path = Path(path)
+    def __init__(self, config: Union[DatabaseConfig, Path]) -> None:
+        if isinstance(config, DatabaseConfig):
+            self._config = config
+        else:
+            self._config = DatabaseConfig(path=Path(config))
+
+        self.path = Path(self._config.path)
         if self.path.parent and not self.path.parent.exists():
             self.path.parent.mkdir(parents=True, exist_ok=True)
-        self._connection = sqlite3.connect(self.path, check_same_thread=False)
+        timeout_seconds = (
+            float(self._config.busy_timeout) / 1000.0
+            if self._config.busy_timeout
+            else 5.0
+        )
+        self._connection = sqlite3.connect(
+            self.path, check_same_thread=False, timeout=timeout_seconds
+        )
         self._connection.row_factory = sqlite3.Row
         self._lock = threading.Lock()
         self._prepare()
+        if self._config.vacuum_on_start:
+            self.vacuum()
 
     def _prepare(self) -> None:
         LOGGER.debug("Preparing database at %s", self.path)
+        self._apply_pragmas()
         with self._connection:
-            self._connection.execute("PRAGMA journal_mode=WAL;")
             self._connection.execute(
                 """
                 CREATE TABLE IF NOT EXISTS file_events (
@@ -50,6 +65,23 @@ class EventDatabase:
             self._connection.execute(
                 "CREATE INDEX IF NOT EXISTS idx_file_events_path ON file_events(path)"
             )
+
+    def _apply_pragmas(self) -> None:
+        pragmas: Dict[str, Any] = {}
+        default_journal = self._config.journal_mode or "WAL"
+        pragmas["journal_mode"] = default_journal
+        if self._config.synchronous:
+            pragmas["synchronous"] = self._config.synchronous
+        for key, value in self._config.pragmas.items():
+            pragmas[key] = value
+
+        for key, value in pragmas.items():
+            formatted = self._format_pragma_value(value)
+            self._connection.execute(f"PRAGMA {key} = {formatted}")
+
+        if self._config.busy_timeout is not None:
+            busy_timeout = max(0, int(self._config.busy_timeout))
+            self._connection.execute(f"PRAGMA busy_timeout = {busy_timeout}")
 
     def insert_event(self, event: FileEvent) -> None:
         """Insert a single event into the database."""
@@ -122,6 +154,46 @@ class EventDatabase:
             rows = cursor.fetchall()
         return [dict(row) for row in rows]
 
+    def purge_older_than(
+        self,
+        threshold: datetime,
+        *,
+        limit: Optional[int] = None,
+    ) -> int:
+        """Delete events older than ``threshold`` and return the number removed."""
+
+        LOGGER.debug(
+            "Purging events older than %s (limit=%s)", threshold.isoformat(), limit
+        )
+        cutoff = threshold.isoformat()
+        with self._lock:
+            if limit is not None and limit > 0:
+                query = (
+                    "DELETE FROM file_events WHERE id IN ("
+                    "SELECT id FROM file_events WHERE event_time < ? "
+                    "ORDER BY event_time ASC LIMIT ?"
+                    ")"
+                )
+                parameters: Iterable[Any] = (cutoff, limit)
+            else:
+                query = "DELETE FROM file_events WHERE event_time < ?"
+                parameters = (cutoff,)
+
+            with self._connection:
+                cursor = self._connection.execute(query, parameters)
+            deleted = cursor.rowcount or 0
+            if deleted < 0:
+                deleted = 0
+        return deleted
+
+    def vacuum(self) -> None:
+        """Run ``VACUUM`` on the SQLite database to reclaim free pages."""
+
+        with self._lock:
+            LOGGER.debug("Running VACUUM on %s", self.path)
+            self._connection.commit()
+            self._connection.execute("VACUUM")
+
     def fetch_newer_events(
         self,
         *,
@@ -154,3 +226,10 @@ class EventDatabase:
         """Close the underlying database connection."""
         LOGGER.debug("Closing database connection")
         self._connection.close()
+
+    @staticmethod
+    def _format_pragma_value(value: Any) -> str:
+        if isinstance(value, str):
+            escaped = value.replace("'", "''")
+            return f"'{escaped}'"
+        return str(value)

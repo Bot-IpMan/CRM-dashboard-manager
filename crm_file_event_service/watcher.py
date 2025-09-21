@@ -54,13 +54,18 @@ class DirectoryWatcher:
             LOGGER.warning("Watched path does not exist: %s", root.as_posix())
             return snapshot
 
-        for dirpath, dirnames, filenames in os.walk(root, followlinks=False):
+        for dirpath, dirnames, filenames in os.walk(
+            root, followlinks=self.config.follow_symlinks
+        ):
             # Apply exclusions to directories to avoid unnecessary traversal.
-            dirnames[:] = [
-                d
-                for d in dirnames
-                if self._should_consider(Path(dirpath) / d, is_dir=True)
-            ]
+            if self.config.recursive:
+                dirnames[:] = [
+                    d
+                    for d in dirnames
+                    if self._should_consider(Path(dirpath) / d, is_dir=True)
+                ]
+            else:
+                dirnames[:] = []
             for filename in filenames:
                 path = Path(dirpath) / filename
                 if not self._should_consider(path):
@@ -116,6 +121,8 @@ class DirectoryWatcher:
             return False
 
         match_target = relative.as_posix()
+        if self.config.ignore_hidden and self._is_hidden(relative):
+            return False
         if is_dir:
             match_target = f"{match_target}/"
 
@@ -142,7 +149,12 @@ class DirectoryWatcher:
             return None
 
     def _build_event(self, event_type: str, state: FileState) -> FileEvent:
-        details = f"watched_root={self.config.path}"
+        details_parts = [f"watched_root={self.config.path}"]
+        if self.config.metadata:
+            details_parts.extend(
+                f"{key}={value}" for key, value in sorted(self.config.metadata.items())
+            )
+        details = "; ".join(details_parts)
         return FileEvent(
             event_type=event_type,
             path=state.path,
@@ -160,6 +172,14 @@ class DirectoryWatcher:
             return True
         if self.config.compute_checksum and old_state.checksum != new_state.checksum:
             return True
+        return False
+
+    def _is_hidden(self, relative: Path) -> bool:
+        for part in relative.parts:
+            if part in {"", "."}:
+                continue
+            if part.startswith("."):
+                return True
         return False
 
     def _compute_checksum(self, path: Path) -> str | None:
@@ -266,7 +286,7 @@ class WatchfilesDirectoryWatcher(DirectoryWatcher):
         try:
             for changes in self._watch_callable(
                 self.config.path,
-                recursive=True,
+                recursive=self.config.recursive,
                 stop_event=self._stop_event,
             ):
                 if self._stop_event.is_set():

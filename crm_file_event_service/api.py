@@ -68,7 +68,7 @@ class ServiceRunner:
 
         LOGGER.info("Stopping background FileEventService thread")
         service.stop()
-        timeout = max(self._config.poll_interval * 2, 5.0)
+        timeout = max(self._config.shutdown_grace_period, 1.0)
         thread.join(timeout=timeout)
         if thread.is_alive():
             LOGGER.warning("FileEventService thread did not exit within %.1fs", timeout)
@@ -120,7 +120,7 @@ def create_app(config_path: Optional[Path] = None) -> FastAPI:
         runner.stop()
 
     def get_database() -> Iterator[EventDatabase]:
-        database = EventDatabase(service_config.database_path)
+        database = EventDatabase(service_config.database)
         try:
             yield database
         finally:
@@ -152,7 +152,7 @@ def create_app(config_path: Optional[Path] = None) -> FastAPI:
     async def events_stream(websocket: WebSocket) -> None:
         await websocket.accept()
         last_seen: Optional[datetime] = None
-        database = EventDatabase(service_config.database_path)
+        database = EventDatabase(service_config.database)
         try:
             while True:
                 rows = database.fetch_newer_events(since=last_seen)
