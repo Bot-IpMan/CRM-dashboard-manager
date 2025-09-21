@@ -3348,6 +3348,11 @@
             color: #b91c1c;
         }
 
+        .call-center-status.demo {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0369a1;
+        }
+
         .call-center-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -6920,8 +6925,117 @@
             neutral: 'Нейтрально'
         };
 
+        const CALL_CENTER_DEMO_DATA = {
+            summary: {
+                last_updated: '2024-06-05T12:00:00.000Z',
+                total_calls: 48,
+                active_calls: 7,
+                avg_handle_time: 310,
+                customer_satisfaction: 88,
+                service_level: 92,
+                abandonment_rate: 4,
+                queues: [
+                    {
+                        queue: 'Вхідна лінія',
+                        captured_at: '2024-06-05T12:00:00.000Z',
+                        active_calls: 4,
+                        service_level: 94
+                    },
+                    {
+                        queue: 'Підтримка VIP',
+                        captured_at: '2024-06-05T12:00:00.000Z',
+                        active_calls: 3,
+                        service_level: 89
+                    }
+                ]
+            },
+            history: [
+                {
+                    captured_at: '2024-06-05T08:00:00.000Z',
+                    total_calls: 22,
+                    active_calls: 4,
+                    avg_handle_time: 360,
+                    service_level: 88,
+                    customer_satisfaction: 84,
+                    abandonment_rate: 6
+                },
+                {
+                    captured_at: '2024-06-05T09:00:00.000Z',
+                    total_calls: 28,
+                    active_calls: 5,
+                    avg_handle_time: 340,
+                    service_level: 90,
+                    customer_satisfaction: 85,
+                    abandonment_rate: 5
+                },
+                {
+                    captured_at: '2024-06-05T10:00:00.000Z',
+                    total_calls: 35,
+                    active_calls: 6,
+                    avg_handle_time: 330,
+                    service_level: 91,
+                    customer_satisfaction: 86,
+                    abandonment_rate: 5
+                },
+                {
+                    captured_at: '2024-06-05T11:00:00.000Z',
+                    total_calls: 41,
+                    active_calls: 7,
+                    avg_handle_time: 320,
+                    service_level: 93,
+                    customer_satisfaction: 88,
+                    abandonment_rate: 4
+                },
+                {
+                    captured_at: '2024-06-05T12:00:00.000Z',
+                    total_calls: 48,
+                    active_calls: 7,
+                    avg_handle_time: 310,
+                    service_level: 92,
+                    customer_satisfaction: 88,
+                    abandonment_rate: 4
+                }
+            ],
+            quality: [
+                {
+                    captured_at: '2024-06-05T11:45:00.000Z',
+                    sentiment: 'positive',
+                    summary: 'Клієнт отримав допомогу зі зміною тарифу, залишився задоволений швидкістю.',
+                    agent: 'Марія',
+                    customer: 'Олег',
+                    duration_seconds: 420,
+                    key_phrases: ['Зміна тарифу', 'Дякую'],
+                    keywords: ['лояльність', 'апсел'],
+                    transcript_excerpt: 'Дякуємо, що звернулися — я вже змінила тариф, нові умови діятимуть з понеділка.'
+                },
+                {
+                    captured_at: '2024-06-05T11:20:00.000Z',
+                    sentiment: 'neutral',
+                    summary: 'Уточнення статусу відкритого звернення, клієнта проінформовано про дедлайни.',
+                    agent: 'Ігор',
+                    customer: 'Світлана',
+                    duration_seconds: 365,
+                    key_phrases: ['Статус заявки'],
+                    keywords: ['сервіс', 'контроль'],
+                    transcript_excerpt: 'Ми контролюємо питання і повернемося до вас до кінця дня.'
+                },
+                {
+                    captured_at: '2024-06-05T10:55:00.000Z',
+                    sentiment: 'negative',
+                    summary: 'Клієнт розчарований часом очікування, домовилися про зворотний дзвінок від керівника.',
+                    agent: 'Наталія',
+                    customer: 'Петро',
+                    duration_seconds: 510,
+                    key_phrases: ['Очікування', 'Проблема з оплатою'],
+                    keywords: ['ескалація', 'пріоритет'],
+                    transcript_excerpt: 'Я передам вашу ситуацію керівнику зміни і ми зателефонуємо вам до 15:00.'
+                }
+            ]
+        };
+
         const callCenterState = {
             initialized: false,
+            demoMode: false,
             metricsContainer: null,
             queuesContainer: null,
             qualityContainer: null,
@@ -19110,9 +19224,75 @@
             return url.toString();
         }
 
+        function enableCallCenterDemoMode() {
+            if (!callCenterState.metricsContainer) {
+                return false;
+            }
+            if (callCenterState.demoMode) {
+                setCallCenterStatus(false);
+                renderCallCenterDemoData();
+                return false;
+            }
+            callCenterState.demoMode = true;
+            disposeCallCenterSockets();
+            setCallCenterStatus(false);
+            renderCallCenterDemoData();
+            return true;
+        }
+
+        function renderCallCenterDemoData() {
+            if (!CALL_CENTER_DEMO_DATA || !callCenterState.metricsContainer) {
+                return;
+            }
+
+            const summary = CALL_CENTER_DEMO_DATA.summary ? {
+                ...CALL_CENTER_DEMO_DATA.summary,
+                queues: Array.isArray(CALL_CENTER_DEMO_DATA.summary.queues)
+                    ? CALL_CENTER_DEMO_DATA.summary.queues.map(queue => ({ ...queue }))
+                    : []
+            } : null;
+
+            const history = Array.isArray(CALL_CENTER_DEMO_DATA.history)
+                ? CALL_CENTER_DEMO_DATA.history
+                : [];
+
+            callCenterHistoryCache.length = 0;
+            history.forEach(item => {
+                callCenterHistoryCache.push({
+                    captured_at: item.captured_at,
+                    total_calls: Number(item.total_calls) || 0,
+                    active_calls: Number(item.active_calls) || 0,
+                    avg_handle_time: Number(item.avg_handle_time) || 0,
+                    service_level: Number(item.service_level) || 0,
+                    customer_satisfaction: Number(item.customer_satisfaction) || 0,
+                    abandonment_rate: Number(item.abandonment_rate) || 0
+                });
+            });
+
+            if (summary) {
+                updateCallCenterSummary(summary);
+            } else if (callCenterHistoryCache.length) {
+                renderCallCenterChart(callCenterHistoryCache);
+            }
+
+            const quality = Array.isArray(CALL_CENTER_DEMO_DATA.quality)
+                ? CALL_CENTER_DEMO_DATA.quality.map(item => ({ ...item }))
+                : [];
+            renderCallQualityFeed(quality);
+        }
+
         async function refreshCallCenterData() {
+            if (callCenterState.demoMode) {
+                renderCallCenterDemoData();
+                return;
+            }
+
+            await loadCallCenterSummary();
+            if (callCenterState.demoMode) {
+                return;
+            }
+
             await Promise.all([
-                loadCallCenterSummary(),
                 loadCallCenterHistory(),
                 loadCallCenterQuality()
             ]);
@@ -19129,7 +19309,7 @@
                 setCallCenterStatus(true);
             } catch (error) {
                 console.warn('Не вдалося отримати KPI контакт-центру', error);
-                setCallCenterStatus(false);
+                enableCallCenterDemoMode();
             }
         }
 
@@ -19430,9 +19610,13 @@
             if (!badge || !label) {
                 return;
             }
-            badge.classList.toggle('online', Boolean(isOnline));
-            badge.classList.toggle('offline', !isOnline);
-            label.textContent = isOnline ? 'Live оновлення' : 'Немає зʼєднання';
+            const isDemo = callCenterState.demoMode;
+            badge.classList.toggle('demo', isDemo);
+            badge.classList.toggle('online', !isDemo && Boolean(isOnline));
+            badge.classList.toggle('offline', !isDemo && !isOnline);
+            label.textContent = isDemo
+                ? 'Демо-режим'
+                : (isOnline ? 'Live оновлення' : 'Немає зʼєднання');
         }
 
         function initializeCallCenterAnalytics() {
@@ -19451,12 +19635,18 @@
             if (callCenterState.refreshButton) {
                 callCenterState.refreshButton.addEventListener('click', () => refreshCallCenterData());
             }
-            refreshCallCenterData();
-            connectCallCenterStreams();
+            refreshCallCenterData().finally(() => {
+                if (!callCenterState.demoMode) {
+                    connectCallCenterStreams();
+                }
+            });
             callCenterState.initialized = true;
         }
 
         function connectCallCenterStreams() {
+            if (callCenterState.demoMode) {
+                return;
+            }
             disposeCallCenterSockets();
             connectKpiStream();
             connectQualityStream();
@@ -19519,6 +19709,9 @@
         }
 
         function scheduleCallCenterReconnect() {
+            if (callCenterState.demoMode) {
+                return;
+            }
             if (callCenterState.reconnectHandle) {
                 return;
             }
