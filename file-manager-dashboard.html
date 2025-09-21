@@ -13702,18 +13702,18 @@
                     : '';
                 const metaParts = [
                     overdue ? `${due} • прострочено` : due,
-                    item.owner,
+                    item.owner ? escapeHtml(item.owner) : '',
                     contactLabel
                 ].filter(Boolean);
                 const actions = [
-                    item.relatedLeadId ? `<button class="btn btn-small-muted" data-open-lead="${item.relatedLeadId}">Угода</button>` : '',
-                    item.relatedContactId ? `<button class="btn btn-small-muted" data-open-contact="${item.relatedContactId}">Контакт</button>` : ''
+                    item.relatedLeadId ? `<button class="btn btn-small-muted" data-open-lead="${escapeHtml(item.relatedLeadId)}">Угода</button>` : '',
+                    item.relatedContactId ? `<button class="btn btn-small-muted" data-open-contact="${escapeHtml(item.relatedContactId)}">Контакт</button>` : ''
                 ].filter(Boolean).join('');
                 return `
                     <div class="upcoming-item">
                         <div class="badge ${badge}">${item.type === 'task' ? 'Завдання' : 'Угода'}</div>
                         <div>
-                            <strong>${item.title}</strong>
+                            <strong>${escapeHtml(item.title)}</strong>
                             <div class="metric-sub">${metaParts.join(' • ')}</div>
                         </div>
                         ${actions}
@@ -13748,7 +13748,7 @@
                     <div class="timeline-item">
                         <div class="timeline-icon"><i class="${icon}"></i></div>
                         <div class="timeline-content">
-                            <div>${activity.message}</div>
+                            <div>${escapeHtml(activity.message)}</div>
                             <div class="timeline-time">${formatRelativeTime(activity.timestamp)}</div>
                         </div>
                     </div>
@@ -13821,7 +13821,13 @@
                 if (!items.length) {
                     return '';
                 }
-                const labels = items.slice(0, 2).map(getLabel);
+                const labels = items.slice(0, 2)
+                    .map(item => {
+                        const raw = typeof getLabel === 'function' ? getLabel(item) : '';
+                        const text = typeof raw === 'string' ? raw : (raw ? String(raw) : '');
+                        return text ? escapeHtml(text) : '';
+                    })
+                    .filter(Boolean);
                 if (items.length > 2) {
                     labels.push(`+${items.length - 2}`);
                 }
@@ -19238,20 +19244,32 @@
                 extras.push(`<div class="metric-sub"><i class="fa-solid fa-paperclip"></i> ${attachmentsCount}</div>`);
             }
             const extrasMarkup = extras.join('');
+            const safeTaskId = escapeHtml(task.id);
+            const safeTitle = escapeHtml(task.title);
+            const safeOwner = escapeHtml(task.owner);
+            const leadMarkup = lead
+                ? `<div class="metric-sub" data-open-lead="${escapeHtml(lead.id)}"><i class="fa-solid fa-link"></i> ${escapeHtml(lead.name || '')}</div>`
+                : '';
+            const contactMarkup = contact
+                ? `<div class="metric-sub" data-open-contact="${escapeHtml(contact.id)}"><i class="fa-solid fa-user"></i> ${escapeHtml(contact.name || '')}${contact.company ? ` • ${escapeHtml(contact.company)}` : ''}</div>`
+                : '';
+            const descriptionMarkup = task.description
+                ? `<div class="metric-sub">${escapeHtml(task.description).replace(/\n/g, '<br>')}</div>`
+                : '';
             return `
-                <div class="task-card" data-task-id="${task.id}">
+                <div class="task-card" data-task-id="${safeTaskId}">
                     <div class="task-header">
                         <span class="priority priority-${task.priority}">${priorityLabel}</span>
                         <span class="metric-sub">${task.status === 'done' ? 'завершено ' + formatDate(task.completedAt || task.dueDate) : formatRelativeTime(task.dueDate)}</span>
                     </div>
-                    <div class="task-title">${task.title}</div>
+                    <div class="task-title">${safeTitle}</div>
                     <div class="task-meta">
                         <span><i class="fa-regular fa-calendar"></i> ${formatDate(task.dueDate)}${overdue ? ' • прострочено' : ''}</span>
-                        <span><i class="fa-regular fa-user"></i> ${task.owner}</span>
+                        <span><i class="fa-regular fa-user"></i> ${safeOwner}</span>
                     </div>
-                    ${lead ? `<div class="metric-sub" data-open-lead="${lead.id}"><i class="fa-solid fa-link"></i> ${escapeHtml(lead.name)}</div>` : ''}
-                    ${contact ? `<div class="metric-sub" data-open-contact="${contact.id}"><i class="fa-solid fa-user"></i> ${escapeHtml(contact.name)}${contact.company ? ` • ${escapeHtml(contact.company)}` : ''}</div>` : ''}
-                    ${task.description ? `<div class="metric-sub">${task.description}</div>` : ''}
+                    ${leadMarkup}
+                    ${contactMarkup}
+                    ${descriptionMarkup}
                     ${extrasMarkup}
                     <div class="task-actions">
                         ${task.status === 'inProgress' ? `<button class="btn-small-muted" data-task-action="back">Повернути</button>` : ''}
@@ -20678,7 +20696,7 @@
                 ${taskMatches.length ? `
                     <div class="search-group">
                         <div class="search-group-title">Завдання</div>
-                        ${taskMatches.map(task => `<div class="search-result" data-result-task="${task.id}"><span>${task.title}</span><span class="metric-sub">${formatDate(task.dueDate)}</span></div>`).join('')}
+                        ${taskMatches.map(task => `<div class="search-result" data-result-task="${escapeHtml(task.id)}"><span>${escapeHtml(task.title)}</span><span class="metric-sub">${formatDate(task.dueDate)}</span></div>`).join('')}
                     </div>` : ''}
             `;
 
@@ -21510,15 +21528,15 @@
                         </div>
                         <div class="task-items">
                             ${relatedTasks.length ? relatedTasks.map(task => `
-                                <div class="task-card" data-task-id="${task.id}">
+                                <div class="task-card" data-task-id="${escapeHtml(task.id)}">
                                     <div class="task-header">
                                         <span class="priority priority-${task.priority}">${task.priority === 'high' ? 'Високий' : task.priority === 'medium' ? 'Середній' : 'Низький'}</span>
                                         <span class="metric-sub">${task.status === 'done' ? 'виконано' : task.status === 'inProgress' ? 'в роботі' : 'до виконання'}</span>
                                     </div>
-                                    <div class="task-title">${task.title}</div>
+                                    <div class="task-title">${escapeHtml(task.title)}</div>
                                     <div class="task-meta">
                                         <span><i class="fa-regular fa-calendar"></i> ${formatDate(task.dueDate)}</span>
-                                        <span><i class="fa-regular fa-user"></i> ${task.owner}</span>
+                                        <span><i class="fa-regular fa-user"></i> ${escapeHtml(task.owner)}</span>
                                     </div>
                                 </div>
                             `).join('') : '<div class="empty-state">Завдання ще не додані</div>'}
