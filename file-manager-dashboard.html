@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" crossorigin="anonymous"></script>
     <style>
         :root {
             --primary: #6366f1;
@@ -706,6 +707,62 @@
             padding: 22px 24px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
+        }
+
+        .chart-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 260px;
+        }
+
+        .chart-summary {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .chart-summary span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.18);
+            color: inherit;
+            font-weight: 500;
+        }
+
+        .chart-summary span strong {
+            font-weight: 600;
+            color: inherit;
+        }
+
+        .chart-summary span.positive {
+            background: rgba(34, 197, 94, 0.18);
+            color: #166534;
+        }
+
+        .chart-summary span.info {
+            background: rgba(14, 165, 233, 0.18);
+            color: #0c4a6e;
+        }
+
+        .chart-summary span.negative {
+            background: rgba(239, 68, 68, 0.18);
+            color: #b91c1c;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 220px;
+            }
         }
 
         .layout-draggable {
@@ -4183,6 +4240,20 @@
                         <h3>Прогноз доходу</h3>
                         <div id="forecastCard"></div>
                     </div>
+                    <div class="card chart-card" data-block-id="dashboard-sales-performance">
+                        <h3>Динаміка продажів</h3>
+                        <div class="chart-container">
+                            <canvas id="salesPerformanceChart" aria-label="Динаміка прогнозованих та закритих угод за місяцями" role="img"></canvas>
+                        </div>
+                        <div class="chart-summary" id="salesPerformanceSummary"></div>
+                    </div>
+                    <div class="card chart-card" data-block-id="dashboard-team-productivity">
+                        <h3>Продуктивність команди</h3>
+                        <div class="chart-container">
+                            <canvas id="teamProductivityChart" aria-label="Розподіл завдань команди за статусами" role="img"></canvas>
+                        </div>
+                        <div class="chart-summary" id="teamProductivitySummary"></div>
+                    </div>
                     <div class="card" data-block-id="dashboard-process">
                         <h3>Контроль процесів</h3>
                         <div class="process-overview" id="processOverview"></div>
@@ -5142,6 +5213,8 @@
             'dashboard-upcoming',
             'dashboard-activity',
             'dashboard-forecast',
+            'dashboard-sales-performance',
+            'dashboard-team-productivity',
             'dashboard-process',
             'dashboard-feature-usage',
             'dashboard-feature-overview'
@@ -5157,6 +5230,8 @@
             'dashboard-upcoming': 'Майбутні активності',
             'dashboard-activity': 'Останні оновлення',
             'dashboard-forecast': 'Прогноз доходу',
+            'dashboard-sales-performance': 'Динаміка продажів',
+            'dashboard-team-productivity': 'Продуктивність команди',
             'dashboard-process': 'Контроль процесів',
             'dashboard-feature-usage': 'Залученість функціоналу',
             'dashboard-feature-overview': 'Огляд можливостей'
@@ -5238,6 +5313,8 @@
         let fileSearchTerm = '';
         let isScanningFolder = false;
         let taskFilters = { ...TASK_FILTER_DEFAULTS };
+        let salesPerformanceChart = null;
+        let teamProductivityChart = null;
 
         const persistentStorage = (() => {
             try {
@@ -9568,6 +9645,8 @@
             const tasksDueToday = crmData.tasks.filter(task => task.status !== 'done' && isDueToday(task.dueDate)).length;
             const activeTasksCount = crmData.tasks.filter(task => task.status !== 'done').length;
             const hotDeals = activeLeads.filter(lead => lead.probability >= 60).length;
+            const wonDealsValue = wonDeals.reduce((sum, lead) => sum + lead.value, 0);
+            const lostDealsValue = lostDeals.reduce((sum, lead) => sum + lead.value, 0);
 
             const metricsContainer = document.getElementById('metricCards');
             if (metricsContainer) {
@@ -9601,6 +9680,12 @@
             renderProcessOverview();
             renderFeatureUsage();
             renderForecastCard(pipelineValue, expectedRevenue);
+            renderSalesPerformanceChart({
+                totalPipelineValue: pipelineValue,
+                totalWonValue: wonDealsValue,
+                totalLostValue: lostDealsValue
+            });
+            renderTeamProductivityChart();
         }
 
         function renderStageDistribution() {
@@ -9988,6 +10073,346 @@
             }).join('');
 
             container.innerHTML = metricsMarkup;
+        }
+
+        function renderSalesPerformanceChart(totals = {}) {
+            const canvas = document.getElementById('salesPerformanceChart');
+            const summary = document.getElementById('salesPerformanceSummary');
+            if (!canvas || typeof Chart === 'undefined') {
+                if (summary) {
+                    summary.innerHTML = '';
+                }
+                return;
+            }
+
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            const parseDate = value => {
+                if (!value) {
+                    return null;
+                }
+                const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
+                return Number.isNaN(date.getTime()) ? null : date;
+            };
+
+            const relevantDates = leads.flatMap(lead => {
+                const dates = [];
+                const expected = parseDate(lead.expectedClose);
+                const closed = parseDate(lead.closedAt);
+                const lost = (lead.status === 'lost' || lead.stage === 'Втрачено') ? parseDate(lead.updatedAt) : null;
+                if (expected) dates.push(expected);
+                if (closed) dates.push(closed);
+                if (lost) dates.push(lost);
+                return dates;
+            });
+
+            const referenceDate = relevantDates.length
+                ? relevantDates.reduce((max, date) => (date > max ? date : max), relevantDates[0])
+                : new Date();
+
+            const months = [];
+            for (let offset = 5; offset >= 0; offset -= 1) {
+                months.push(new Date(referenceDate.getFullYear(), referenceDate.getMonth() - offset, 1));
+            }
+
+            const monthFormatter = new Intl.DateTimeFormat('uk-UA', { month: 'short', year: 'numeric' });
+            const getMonthKey = date => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+
+            const pipelineMap = new Map(months.map(date => [getMonthKey(date), 0]));
+            const wonMap = new Map(months.map(date => [getMonthKey(date), 0]));
+            const lostMap = new Map(months.map(date => [getMonthKey(date), 0]));
+
+            leads.forEach(lead => {
+                const value = Number(lead.value) || 0;
+                if (lead.status === 'won' || lead.stage === 'Угода') {
+                    const closedDate = parseDate(lead.closedAt) || parseDate(lead.updatedAt);
+                    if (closedDate) {
+                        const key = getMonthKey(new Date(closedDate.getFullYear(), closedDate.getMonth(), 1));
+                        if (wonMap.has(key)) {
+                            wonMap.set(key, wonMap.get(key) + value);
+                        }
+                    }
+                } else if (lead.stage !== 'Втрачено' && lead.status !== 'lost') {
+                    const expectedDate = parseDate(lead.expectedClose);
+                    if (expectedDate) {
+                        const key = getMonthKey(new Date(expectedDate.getFullYear(), expectedDate.getMonth(), 1));
+                        if (pipelineMap.has(key)) {
+                            pipelineMap.set(key, pipelineMap.get(key) + value);
+                        }
+                    }
+                }
+                if (lead.status === 'lost' || lead.stage === 'Втрачено') {
+                    const lostDate = parseDate(lead.updatedAt)
+                        || parseDate(lead.expectedClose)
+                        || parseDate(lead.closedAt)
+                        || parseDate(lead.createdAt);
+                    if (lostDate) {
+                        const key = getMonthKey(new Date(lostDate.getFullYear(), lostDate.getMonth(), 1));
+                        if (lostMap.has(key)) {
+                            lostMap.set(key, lostMap.get(key) + value);
+                        }
+                    }
+                }
+            });
+
+            const labels = months.map(date => monthFormatter.format(date));
+            const pipelineData = months.map(date => pipelineMap.get(getMonthKey(date)) || 0);
+            const wonData = months.map(date => wonMap.get(getMonthKey(date)) || 0);
+            const lostData = months.map(date => lostMap.get(getMonthKey(date)) || 0);
+
+            const pipelineTotal = Number.isFinite(totals.totalPipelineValue)
+                ? totals.totalPipelineValue
+                : pipelineData.reduce((sum, amount) => sum + amount, 0);
+            const wonTotal = Number.isFinite(totals.totalWonValue)
+                ? totals.totalWonValue
+                : wonData.reduce((sum, amount) => sum + amount, 0);
+            const lostTotal = Number.isFinite(totals.totalLostValue)
+                ? totals.totalLostValue
+                : lostData.reduce((sum, amount) => sum + amount, 0);
+
+            if (summary) {
+                summary.innerHTML = [
+                    `<span class="positive"><strong>${formatCurrency(wonTotal)}</strong> закрито</span>`,
+                    `<span class="info"><strong>${formatCurrency(pipelineTotal)}</strong> у прогнозі</span>`,
+                    `<span class="negative"><strong>${formatCurrency(lostTotal)}</strong> втрачено</span>`
+                ].join('');
+            }
+
+            if (salesPerformanceChart) {
+                salesPerformanceChart.data.labels = labels;
+                salesPerformanceChart.data.datasets[0].data = wonData;
+                salesPerformanceChart.data.datasets[1].data = pipelineData;
+                salesPerformanceChart.data.datasets[2].data = lostData;
+                salesPerformanceChart.update();
+                return;
+            }
+
+            salesPerformanceChart = new Chart(canvas.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Закриті угоди',
+                            data: wonData,
+                            borderColor: '#22c55e',
+                            backgroundColor: 'rgba(34, 197, 94, 0.18)',
+                            tension: 0.35,
+                            fill: false,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#22c55e',
+                            pointBorderColor: '#22c55e',
+                            order: 3
+                        },
+                        {
+                            label: 'Прогнозований обсяг',
+                            data: pipelineData,
+                            borderColor: '#6366f1',
+                            backgroundColor: 'rgba(99, 102, 241, 0.16)',
+                            borderDash: [6, 4],
+                            tension: 0.35,
+                            fill: false,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#6366f1',
+                            pointBorderColor: '#6366f1',
+                            order: 2
+                        },
+                        {
+                            label: 'Втрачено',
+                            data: lostData,
+                            type: 'bar',
+                            backgroundColor: 'rgba(239, 68, 68, 0.28)',
+                            borderRadius: 6,
+                            borderSkipped: false,
+                            barPercentage: 0.6,
+                            categoryPercentage: 0.6,
+                            order: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    scales: {
+                        x: {
+                            grid: { display: false }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: value => formatCurrency(Number(value), true)
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: context => {
+                                    const value = context.parsed.y ?? context.parsed;
+                                    return `${context.dataset.label}: ${formatCurrency(value)}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderTeamProductivityChart() {
+            const canvas = document.getElementById('teamProductivityChart');
+            const summary = document.getElementById('teamProductivitySummary');
+            if (!canvas || typeof Chart === 'undefined') {
+                if (summary) {
+                    summary.innerHTML = '';
+                }
+                return;
+            }
+
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
+            const ownerName = task => {
+                if (task && typeof task.owner === 'string' && task.owner.trim()) {
+                    return task.owner.trim();
+                }
+                return 'Без відповідального';
+            };
+            const owners = Array.from(new Set(tasks.map(task => ownerName(task))))
+                .sort((a, b) => a.localeCompare(b, 'uk', { sensitivity: 'base' }));
+
+            if (!owners.length) {
+                if (summary) {
+                    summary.innerHTML = '<span class="info">Немає задач для відображення</span>';
+                }
+                if (teamProductivityChart) {
+                    teamProductivityChart.destroy();
+                    teamProductivityChart = null;
+                }
+                const context = canvas.getContext('2d');
+                if (context) {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                }
+                return;
+            }
+
+            const countByStatus = (owner, status) => tasks.filter(task => ownerName(task) === owner && task.status === status).length;
+
+            const todoData = owners.map(owner => countByStatus(owner, 'todo'));
+            const inProgressData = owners.map(owner => countByStatus(owner, 'inProgress'));
+            const doneData = owners.map(owner => countByStatus(owner, 'done'));
+
+            const totalDone = doneData.reduce((sum, value) => sum + value, 0);
+            const totalActive = todoData.reduce((sum, value) => sum + value, 0)
+                + inProgressData.reduce((sum, value) => sum + value, 0);
+            const overdueCount = tasks.filter(task => task.status !== 'done' && isOverdue(task.dueDate)).length;
+
+            let topPerformer = { owner: null, count: 0 };
+            owners.forEach((owner, index) => {
+                const completed = doneData[index];
+                if (completed > topPerformer.count) {
+                    topPerformer = { owner, count: completed };
+                }
+            });
+
+            if (summary) {
+                const parts = [
+                    `<span class="positive"><strong>${totalDone}</strong> завершено</span>`,
+                    `<span class="info"><strong>${totalActive}</strong> в роботі</span>`
+                ];
+                if (overdueCount > 0) {
+                    parts.push(`<span class="negative"><strong>${overdueCount}</strong> прострочено</span>`);
+                }
+                if (topPerformer.owner && topPerformer.count > 0) {
+                    parts.push(`<span class="positive">${topPerformer.owner}: <strong>${topPerformer.count}</strong> закрито</span>`);
+                }
+                summary.innerHTML = parts.join('');
+            }
+
+            if (teamProductivityChart) {
+                teamProductivityChart.data.labels = owners;
+                teamProductivityChart.data.datasets[0].data = todoData;
+                teamProductivityChart.data.datasets[1].data = inProgressData;
+                teamProductivityChart.data.datasets[2].data = doneData;
+                teamProductivityChart.update();
+                return;
+            }
+
+            teamProductivityChart = new Chart(canvas.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: owners,
+                    datasets: [
+                        {
+                            label: 'До виконання',
+                            data: todoData,
+                            backgroundColor: 'rgba(99, 102, 241, 0.28)',
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            maxBarThickness: 36,
+                            stack: 'tasks'
+                        },
+                        {
+                            label: 'В роботі',
+                            data: inProgressData,
+                            backgroundColor: 'rgba(14, 165, 233, 0.32)',
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            maxBarThickness: 36,
+                            stack: 'tasks'
+                        },
+                        {
+                            label: 'Завершено',
+                            data: doneData,
+                            backgroundColor: 'rgba(34, 197, 94, 0.38)',
+                            borderRadius: 8,
+                            borderSkipped: false,
+                            maxBarThickness: 36,
+                            stack: 'tasks'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: { display: false }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0,
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                usePointStyle: true
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: context => {
+                                    const value = context.parsed.y ?? 0;
+                                    return `${context.dataset.label}: ${value} задач`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
         }
 
         function renderRoles() {
