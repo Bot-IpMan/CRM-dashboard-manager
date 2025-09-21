@@ -9576,6 +9576,10 @@
                 ownerAssignment.updatedBy = 'Система';
             }
 
+            data.roles.assignments.forEach(assignment => {
+                assignment.locked = assignment.roleId === 'owner';
+            });
+
             const currentAssignment = data.roles.assignments.find(item => item.name === CURRENT_USER.name);
             if (currentAssignment) {
                 CURRENT_USER.role = currentAssignment.roleId;
@@ -16205,13 +16209,18 @@
                         return;
                     }
                     currentOwner.roleId = 'manager';
+                    currentOwner.locked = false;
                     currentOwner.updatedAt = new Date().toISOString();
                     currentOwner.updatedBy = CURRENT_USER.name;
+                    if (currentOwner.name === CURRENT_USER.name) {
+                        CURRENT_USER.role = currentOwner.roleId;
+                    }
                     logActivity(`Роль ${currentOwner.name} змінена на ${getRoleLabel('manager')} після передачі Owner.`, 'role', currentOwner.id);
                 }
             }
 
             assignment.roleId = newRoleId;
+            assignment.locked = newRoleId === 'owner';
             assignment.updatedAt = new Date().toISOString();
             assignment.updatedBy = CURRENT_USER.name;
 
