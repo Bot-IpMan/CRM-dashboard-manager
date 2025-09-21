@@ -1695,7 +1695,7 @@
             border-radius: 18px;
             padding: 16px;
             display: grid;
-            gap: 10px;
+            gap: 14px;
             border: 1px solid rgba(99, 102, 241, 0.14);
             cursor: grab;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -1717,6 +1717,34 @@
             gap: 12px;
         }
 
+        .deal-updated {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .deal-owner-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .deal-owner {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .deal-owner strong {
+            font-size: 15px;
+        }
+
+        .deal-owner-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
         .deal-stage {
             font-size: 12px;
             font-weight: 600;
@@ -1731,19 +1759,64 @@
             font-size: 16px;
         }
 
-        .deal-meta {
+        .deal-meta-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .deal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+        }
+
+        .deal-info {
+            display: grid;
+            gap: 4px;
+        }
+
+        .deal-info-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .deal-info-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .deal-card-bottom {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            font-size: 14px;
-            color: var(--text-muted);
+            flex-wrap: wrap;
         }
 
-        .deal-tags {
+        .deal-badges {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
+        }
+
+        .deal-badge {
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            background: rgba(15, 23, 42, 0.08);
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .deal-badge.badge-outline {
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: var(--primary-dark);
         }
 
         .tag {
@@ -1754,11 +1827,41 @@
             color: var(--text);
         }
 
-        .deal-footer {
-            display: flex;
+        .deal-readiness {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
-            justify-content: space-between;
-            gap: 12px;
+            gap: 8px;
+            min-width: 180px;
+        }
+
+        .deal-readiness-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .deal-readiness-bar {
+            position: relative;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.15);
+            overflow: hidden;
+        }
+
+        .deal-readiness-bar span {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #6366f1 0%, #22d3ee 100%);
+        }
+
+        .deal-readiness-value {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--primary-dark);
         }
 
         .avatar {
@@ -3826,6 +3929,33 @@
             grid-column: 1 / -1;
         }
 
+        .form-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: -4px 0 0;
+        }
+
+        .form-hint strong {
+            color: var(--primary-dark);
+        }
+
+        .input-with-indicator {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-with-indicator input[type="range"] {
+            flex: 1;
+        }
+
+        .input-indicator {
+            min-width: 56px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
         label {
             font-size: 13px;
             font-weight: 600;
@@ -5510,8 +5640,28 @@
                     <input type="number" id="leadProbability" min="0" max="100" step="5" value="30">
                 </div>
                 <div class="form-group">
+                    <label for="leadExpectedClose">Очікувана дата закриття</label>
+                    <input type="date" id="leadExpectedClose">
+                </div>
+                <div class="form-group">
+                    <label for="leadSource">Джерело ліда</label>
+                    <select id="leadSource" required></select>
+                    <p class="form-hint" id="leadRoutingHint"></p>
+                </div>
+                <div class="form-group">
                     <label for="leadOwner">Менеджер</label>
                     <select id="leadOwner" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="leadQualification">Кваліфікація</label>
+                    <select id="leadQualification"></select>
+                </div>
+                <div class="form-group">
+                    <label for="leadScore">Готовність до купівлі, %</label>
+                    <div class="input-with-indicator">
+                        <input type="range" id="leadScore" min="0" max="100" step="5" value="50">
+                        <span class="input-indicator" id="leadScoreValue">50%</span>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="leadContactName">Контактна особа</label>
@@ -5951,6 +6101,56 @@
             mid: 'Mid-market (20–50 тис. ₴)',
             smb: 'SMB (<20 тис. ₴)'
         };
+
+        const LEAD_SOURCE_OPTIONS = [
+            { id: 'web', label: 'Вебформа', description: 'Автоматичне захоплення з сайту (netsuite.com)' },
+            { id: 'email', label: 'Email-кампанія', description: 'Відповідь на розсилку або лист' },
+            { id: 'event', label: 'Подія/виставка', description: 'Нетворкінг або демо' },
+            { id: 'referral', label: 'Рекомендація клієнта', description: 'Передано партнером чи клієнтом' },
+            { id: 'inbound', label: 'Вхідний дзвінок', description: 'Телефонний запит у відділ продажів' },
+            { id: 'partner', label: 'Партнерський канал', description: 'Реселери чи інтегратори' }
+        ];
+
+        const LEAD_SOURCE_LABELS = LEAD_SOURCE_OPTIONS.reduce((map, option) => {
+            map[option.id] = option.label;
+            return map;
+        }, {});
+
+        const LEAD_QUALIFICATION_OPTIONS = [
+            { id: 'new', label: 'Новий запит', description: 'Потрібна первинна кваліфікація' },
+            { id: 'mql', label: 'Marketing Qualified (MQL)', description: 'Лід відповідає ICP та зацікавлений' },
+            { id: 'sql', label: 'Sales Qualified (SQL)', description: 'Підтверджена потреба, готуємо пропозицію' },
+            { id: 'hot', label: 'Hot lead', description: 'Активні переговори й очікуване закриття' }
+        ];
+
+        const LEAD_QUALIFICATION_LABELS = LEAD_QUALIFICATION_OPTIONS.reduce((map, option) => {
+            map[option.id] = option.label;
+            return map;
+        }, {});
+
+        const LEAD_ROUTING_RULES = {
+            web: 'Марина',
+            email: 'Вікторія',
+            event: 'Олександр',
+            referral: 'Дмитро',
+            inbound: 'Марина',
+            partner: 'Олександр',
+            default: 'Марина'
+        };
+
+        const LEAD_STAGE_SCORE_RULES = [
+            { stage: 'Кваліфікація', minScore: 40 },
+            { stage: 'Пропозиція', minScore: 55 },
+            { stage: 'Переговори', minScore: 75 }
+        ];
+
+        const LEAD_AUTOMATION_CLOSE_RULE = { stage: 'Угода', probability: 90 };
+        const LEAD_REMINDER_DAYS = [7, 3, 1];
+        const LEAD_SCORE_DEFAULT = 50;
+        const STAGE_INDEX = STAGES.reduce((map, stage, index) => {
+            map[stage] = index;
+            return map;
+        }, {});
 
         const REPORT_PERIOD_OPTIONS = [
             { id: '30d', label: 'Останні 30 днів', days: 30 },
@@ -6428,6 +6628,7 @@
         let projectStageFilter = 'all';
         let projectMinProbability = 0;
         let projectSearchTerm = '';
+        let leadOwnerManuallySelected = false;
         let searchTimer = null;
         let activeFileSnapshotId = null;
         let activeFileSourceId = null;
@@ -6725,6 +6926,9 @@
                     stage: 'Кваліфікація',
                     value: 58000,
                     probability: 45,
+                    source: 'web',
+                    qualification: 'mql',
+                    score: 58,
                     owner: 'Марина',
                     status: 'active',
                     expectedClose: '2024-07-10',
@@ -6759,7 +6963,12 @@
                             lastModified: 1714640400000,
                             dataUrl: 'data:text/plain;base64,0JrQvtGA0L7RgtC60LjQuSDQsdGA0LjRhCDQv9C+INCy0LjQvNC+0LPQsNC8IE5vdmFQYXku'
                         }
-                    ]
+                    ],
+                    automation: {
+                        remindersSent: [],
+                        calendarSynced: false,
+                        lastAutoStage: null
+                    }
                 },
                 {
                     id: 'lead-2',
@@ -6768,6 +6977,9 @@
                     stage: 'Пропозиція',
                     value: 72000,
                     probability: 55,
+                    source: 'email',
+                    qualification: 'sql',
+                    score: 64,
                     owner: 'Олександр',
                     status: 'active',
                     expectedClose: '2024-07-25',
@@ -6792,7 +7004,12 @@
                         { id: 'tl-3', text: 'Запит на автоматизацію логістики', date: '2024-05-10T08:42:00.000Z' },
                         { id: 'tl-4', text: 'Відправлено попередній кошторис', date: '2024-05-26T15:20:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    automation: {
+                        remindersSent: [],
+                        calendarSynced: false,
+                        lastAutoStage: null
+                    }
                 },
                 {
                     id: 'lead-3',
@@ -6801,6 +7018,9 @@
                     stage: 'Переговори',
                     value: 91000,
                     probability: 70,
+                    source: 'event',
+                    qualification: 'hot',
+                    score: 82,
                     owner: 'Вікторія',
                     status: 'active',
                     expectedClose: '2024-08-05',
@@ -6825,7 +7045,12 @@
                         { id: 'tl-5', text: 'Проведено демонстрацію продукту', date: '2024-05-14T13:30:00.000Z' },
                         { id: 'tl-6', text: 'Вікторія оновила стадію на «Переговори»', date: '2024-06-03T15:45:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    automation: {
+                        remindersSent: [],
+                        calendarSynced: false,
+                        lastAutoStage: null
+                    }
                 },
                 {
                     id: 'lead-4',
@@ -6834,6 +7059,9 @@
                     stage: 'Новий',
                     value: 26000,
                     probability: 25,
+                    source: 'referral',
+                    qualification: 'new',
+                    score: 32,
                     owner: 'Дмитро',
                     status: 'active',
                     expectedClose: '2024-07-30',
@@ -6850,7 +7078,12 @@
                     timeline: [
                         { id: 'tl-7', text: 'Новий лід додано Дмитро', date: '2024-06-05T09:15:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    automation: {
+                        remindersSent: [],
+                        calendarSynced: false,
+                        lastAutoStage: null
+                    }
                 },
                 {
                     id: 'lead-5',
@@ -6859,6 +7092,9 @@
                     stage: 'Угода',
                     value: 45000,
                     probability: 100,
+                    source: 'partner',
+                    qualification: 'hot',
+                    score: 94,
                     owner: 'Марина',
                     status: 'won',
                     expectedClose: '2024-05-30',
@@ -6884,7 +7120,12 @@
                         { id: 'tl-8', text: 'Презентація рішень проведена', date: '2024-04-20T11:40:00.000Z' },
                         { id: 'tl-9', text: 'Угода виграна!', date: '2024-05-30T16:10:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    automation: {
+                        remindersSent: [],
+                        calendarSynced: true,
+                        lastAutoStage: 'Угода'
+                    }
                 },
                 {
                     id: 'lead-6',
@@ -6893,6 +7134,9 @@
                     stage: 'Втрачено',
                     value: 38000,
                     probability: 0,
+                    source: 'inbound',
+                    qualification: 'mql',
+                    score: 18,
                     owner: 'Олександр',
                     status: 'lost',
                     expectedClose: '2024-05-15',
@@ -6917,7 +7161,12 @@
                         { id: 'tl-10', text: 'Запит на інтеграцію ERP', date: '2024-03-18T09:00:00.000Z' },
                         { id: 'tl-11', text: 'Угоду втрачено', date: '2024-05-16T10:45:00.000Z' }
                     ],
-                    attachments: []
+                    attachments: [],
+                    automation: {
+                        remindersSent: ['2024-05-15|overdue'],
+                        calendarSynced: true,
+                        lastAutoStage: 'Втрачено'
+                    }
                 }
             ],
             projects: [
@@ -7685,6 +7934,13 @@
                     .filter(lead => lead && typeof lead === 'object')
                     .map(lead => {
                         const normalizedLead = { ...lead };
+                        normalizedLead.source = typeof lead.source === 'string' && LEAD_SOURCE_LABELS[lead.source]
+                            ? lead.source
+                            : 'web';
+                        normalizedLead.qualification = typeof lead.qualification === 'string' && LEAD_QUALIFICATION_LABELS[lead.qualification]
+                            ? lead.qualification
+                            : 'new';
+                        normalizedLead.score = Math.max(0, Math.min(100, Number(lead.score) || LEAD_SCORE_DEFAULT));
                         normalizedLead.attachments = Array.isArray(lead.attachments)
                             ? lead.attachments.map(file => normalizeAttachment(file, 'file')).filter(Boolean)
                             : [];
@@ -7696,6 +7952,13 @@
                         if (!Array.isArray(normalizedLead.timeline)) {
                             normalizedLead.timeline = [];
                         }
+                        normalizedLead.createdAt = typeof lead.createdAt === 'string' && lead.createdAt
+                            ? lead.createdAt
+                            : new Date().toISOString();
+                        normalizedLead.updatedAt = typeof lead.updatedAt === 'string' && lead.updatedAt
+                            ? lead.updatedAt
+                            : normalizedLead.createdAt;
+                        normalizedLead.automation = normalizeLeadAutomation(lead.automation);
                         return normalizedLead;
                     });
             }
@@ -7766,6 +8029,132 @@
             }
 
             return data;
+        }
+
+        function normalizeLeadAutomation(automation) {
+            const result = {
+                remindersSent: [],
+                calendarSynced: false,
+                lastAutoStage: null,
+                lastReminderAt: null
+            };
+
+            if (!automation || typeof automation !== 'object') {
+                return result;
+            }
+
+            const normalizeReminderKey = entry => {
+                if (!entry) {
+                    return '';
+                }
+
+                if (typeof entry === 'string' || typeof entry === 'number') {
+                    return String(entry).trim();
+                }
+
+                if (entry instanceof Date) {
+                    return entry.toISOString();
+                }
+
+                if (typeof entry !== 'object') {
+                    return '';
+                }
+
+                if (typeof entry.key === 'string' && entry.key.trim().length) {
+                    return entry.key.trim();
+                }
+
+                const dateFields = ['date', 'timestamp', 'sentAt'];
+                let datePart = '';
+                for (const field of dateFields) {
+                    const value = entry[field];
+                    if (value instanceof Date) {
+                        datePart = value.toISOString();
+                        break;
+                    }
+                    if (typeof value === 'number' && Number.isFinite(value)) {
+                        const asDate = new Date(value);
+                        if (!Number.isNaN(asDate.getTime())) {
+                            datePart = asDate.toISOString();
+                            break;
+                        }
+                    }
+                    if (typeof value === 'string' && value.trim().length) {
+                        datePart = value.trim();
+                        break;
+                    }
+                }
+
+                if (!datePart.length) {
+                    return '';
+                }
+
+                const candidateOffsets = ['offset', 'day', 'days'];
+                let offsetValue = null;
+                candidateOffsets.some(prop => {
+                    const value = entry[prop];
+                    if (typeof value === 'number' && Number.isFinite(value)) {
+                        offsetValue = value;
+                        return true;
+                    }
+                    if (typeof value === 'string' && value.trim().length) {
+                        const parsed = Number(value);
+                        if (!Number.isNaN(parsed)) {
+                            offsetValue = parsed;
+                            return true;
+                        }
+                    }
+                    return false;
+                });
+
+                const offsetLabel = offsetValue === null ? 'custom' : String(offsetValue);
+                return `${datePart}|${offsetLabel}`;
+            };
+
+            if (Array.isArray(automation.remindersSent)) {
+                const uniqueReminders = new Set();
+                automation.remindersSent.forEach(entry => {
+                    const normalized = normalizeReminderKey(entry);
+                    if (normalized) {
+                        uniqueReminders.add(normalized);
+                    }
+                });
+                result.remindersSent = Array.from(uniqueReminders);
+            }
+
+            if (typeof automation.calendarSynced === 'boolean') {
+                result.calendarSynced = automation.calendarSynced;
+            } else if (typeof automation.calendarSynced === 'string') {
+                const normalized = automation.calendarSynced.trim().toLowerCase();
+                result.calendarSynced = ['true', '1', 'yes', 'y', 'synced'].includes(normalized);
+            }
+
+            let rawStage = '';
+            if (typeof automation.lastAutoStage === 'string') {
+                rawStage = automation.lastAutoStage.trim();
+            } else if (automation.lastAutoStage && typeof automation.lastAutoStage === 'object' && typeof automation.lastAutoStage.stage === 'string') {
+                rawStage = automation.lastAutoStage.stage.trim();
+            }
+            if (rawStage) {
+                result.lastAutoStage = rawStage;
+            }
+
+            const reminderValue = automation.lastReminderAt;
+            if (reminderValue !== undefined && reminderValue !== null) {
+                let parsedReminderDate = null;
+                if (reminderValue instanceof Date) {
+                    parsedReminderDate = new Date(reminderValue.getTime());
+                } else if (typeof reminderValue === 'number' && Number.isFinite(reminderValue)) {
+                    parsedReminderDate = new Date(reminderValue);
+                } else if (typeof reminderValue === 'string' && reminderValue.trim().length) {
+                    parsedReminderDate = new Date(reminderValue.trim());
+                }
+                if (parsedReminderDate && !Number.isNaN(parsedReminderDate.getTime())) {
+                    result.lastReminderAt = parsedReminderDate.toISOString();
+                }
+            }
+
+            return result;
         }
 
         function normalizeProject(project) {
@@ -8619,8 +9008,8 @@
                 renderDashboard();
                 renderAnalytics();
             });
-            document.getElementById('openLeadModalBtn').addEventListener('click', () => openModal('addLeadModal'));
-            document.getElementById('addPipelineLeadBtn').addEventListener('click', () => openModal('addLeadModal'));
+            document.getElementById('openLeadModalBtn').addEventListener('click', openLeadCreationModal);
+            document.getElementById('addPipelineLeadBtn').addEventListener('click', openLeadCreationModal);
             document.getElementById('openContactModalBtn').addEventListener('click', () => openModal('addContactModal'));
             document.getElementById('openTaskModalBtn').addEventListener('click', () => openTaskModal());
             const projectModalBtn = document.getElementById('openProjectModalBtn');
@@ -8643,6 +9032,25 @@
             ownerSelects.forEach(select => {
                 select.innerHTML = TEAM_MEMBERS.map(member => `<option value="${member}">${member}</option>`).join('');
             });
+
+            const sourceSelect = document.getElementById('leadSource');
+            if (sourceSelect) {
+                sourceSelect.innerHTML = LEAD_SOURCE_OPTIONS
+                    .map(option => `<option value="${option.id}">${option.label}</option>`)
+                    .join('');
+                sourceSelect.value = LEAD_SOURCE_OPTIONS[0]?.id || '';
+            }
+
+            const qualificationSelect = document.getElementById('leadQualification');
+            if (qualificationSelect) {
+                qualificationSelect.innerHTML = LEAD_QUALIFICATION_OPTIONS
+                    .map(option => `<option value="${option.id}">${option.label}</option>`)
+                    .join('');
+                qualificationSelect.value = LEAD_QUALIFICATION_OPTIONS[0]?.id || 'new';
+            }
+
+            updateLeadScoreIndicator(document.getElementById('leadScore')?.value || LEAD_SCORE_DEFAULT);
+            updateLeadOwnerSuggestion(true);
 
             const projectStageSelect = document.getElementById('projectStage');
             if (projectStageSelect) {
@@ -8806,6 +9214,63 @@
             if (projectForm) {
                 projectForm.addEventListener('submit', handleProjectSubmit);
             }
+
+            const leadSourceSelect = document.getElementById('leadSource');
+            if (leadSourceSelect) {
+                leadSourceSelect.addEventListener('change', () => updateLeadOwnerSuggestion(false));
+            }
+
+            const leadOwnerSelect = document.getElementById('leadOwner');
+            if (leadOwnerSelect) {
+                leadOwnerSelect.addEventListener('change', () => {
+                    leadOwnerManuallySelected = true;
+                    updateLeadOwnerSuggestion(false);
+                });
+            }
+
+            const leadScoreInput = document.getElementById('leadScore');
+            if (leadScoreInput) {
+                leadScoreInput.addEventListener('input', event => updateLeadScoreIndicator(event.target.value));
+            }
+        }
+
+        function openLeadCreationModal() {
+            leadOwnerManuallySelected = false;
+            const form = document.getElementById('leadForm');
+            if (form) {
+                form.reset();
+            }
+
+            const sourceSelect = document.getElementById('leadSource');
+            if (sourceSelect && LEAD_SOURCE_OPTIONS.length) {
+                sourceSelect.value = LEAD_SOURCE_OPTIONS[0].id;
+            }
+
+            const qualificationSelect = document.getElementById('leadQualification');
+            if (qualificationSelect && LEAD_QUALIFICATION_OPTIONS.length) {
+                qualificationSelect.value = LEAD_QUALIFICATION_OPTIONS[0].id;
+            }
+
+            const scoreInput = document.getElementById('leadScore');
+            if (scoreInput) {
+                scoreInput.value = LEAD_SCORE_DEFAULT;
+                updateLeadScoreIndicator(LEAD_SCORE_DEFAULT);
+            }
+
+            const expectedCloseInput = document.getElementById('leadExpectedClose');
+            if (expectedCloseInput) {
+                const baseDate = startOfDay(new Date());
+                if (baseDate) {
+                    baseDate.setDate(baseDate.getDate() + 14);
+                    expectedCloseInput.value = formatDateForInput(baseDate);
+                } else {
+                    expectedCloseInput.value = '';
+                }
+            }
+
+            updateLeadOwnerSuggestion(true);
+            resetAttachmentArea('lead');
+            openModal('addLeadModal');
         }
 
         function initializeAttachmentAreas() {
@@ -10854,7 +11319,266 @@
             });
         }
 
+        function getLeadSourceLabel(source) {
+            return LEAD_SOURCE_LABELS[source] || 'Інше джерело';
+        }
+
+        function getLeadQualificationLabel(qualification) {
+            return LEAD_QUALIFICATION_LABELS[qualification] || 'Без кваліфікації';
+        }
+
+        function suggestLeadOwner(source) {
+            const normalized = typeof source === 'string' ? source : '';
+            return LEAD_ROUTING_RULES[normalized] || LEAD_ROUTING_RULES.default || TEAM_MEMBERS[0] || '';
+        }
+
+        function updateLeadOwnerSuggestion(force = false) {
+            const sourceSelect = document.getElementById('leadSource');
+            const ownerSelect = document.getElementById('leadOwner');
+            const hint = document.getElementById('leadRoutingHint');
+            if (!ownerSelect) {
+                return;
+            }
+
+            const sourceValue = sourceSelect ? sourceSelect.value : '';
+            const suggestedOwner = suggestLeadOwner(sourceValue);
+            if ((force || !leadOwnerManuallySelected) && suggestedOwner) {
+                ownerSelect.value = suggestedOwner;
+            }
+
+            if (hint) {
+                if (suggestedOwner) {
+                    const sourceLabel = getLeadSourceLabel(sourceValue);
+                    hint.innerHTML = `Рекомендований менеджер: <strong>${escapeHtml(suggestedOwner)}</strong>${sourceLabel ? ` • ${escapeHtml(sourceLabel)}` : ''}`;
+                } else {
+                    hint.textContent = 'Оберіть відповідального менеджера.';
+                }
+            }
+        }
+
+        function updateLeadScoreIndicator(value) {
+            const indicator = document.getElementById('leadScoreValue');
+            if (!indicator) {
+                return;
+            }
+            const numeric = Math.max(0, Math.min(100, Number(value) || LEAD_SCORE_DEFAULT));
+            indicator.textContent = `${numeric}%`;
+        }
+
+        function startOfDay(dateInput) {
+            const instance = dateInput instanceof Date ? new Date(dateInput.getTime()) : new Date(dateInput);
+            if (Number.isNaN(instance.getTime())) {
+                return null;
+            }
+            instance.setHours(0, 0, 0, 0);
+            return instance;
+        }
+
+        function calculateCalendarDayDiff(targetDate, referenceDate = new Date()) {
+            const target = startOfDay(targetDate);
+            const reference = startOfDay(referenceDate);
+            if (!target || !reference) {
+                return null;
+            }
+            const diffMs = target.getTime() - reference.getTime();
+            return Math.round(diffMs / (1000 * 60 * 60 * 24));
+        }
+
+        function formatDateForInput(dateInput) {
+            const normalized = startOfDay(dateInput);
+            if (!normalized) {
+                return '';
+            }
+            const year = normalized.getFullYear();
+            const month = String(normalized.getMonth() + 1).padStart(2, '0');
+            const day = String(normalized.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function runLeadAutomations() {
+            if (!crmData || !Array.isArray(crmData.leads) || !crmData.leads.length) {
+                return;
+            }
+
+            const now = new Date();
+            let hasChanges = false;
+
+            crmData.leads.forEach(lead => {
+                if (!lead || typeof lead !== 'object') {
+                    return;
+                }
+
+                if (!lead.automation || typeof lead.automation !== 'object') {
+                    lead.automation = normalizeLeadAutomation(lead.automation);
+                    hasChanges = true;
+                }
+
+                const automation = lead.automation;
+
+                if (!lead.owner || !lead.owner.trim()) {
+                    const suggestedOwner = suggestLeadOwner(lead.source);
+                    if (suggestedOwner) {
+                        lead.owner = suggestedOwner;
+                        addTimelineEntry(lead, `Лід автоматично призначено менеджеру ${suggestedOwner}.`);
+                        logActivity(`Система призначила ${suggestedOwner} відповідальним за ${lead.name}.`, 'automation', lead.id);
+                        hasChanges = true;
+                    }
+                }
+
+                const stageChanged = maybeAdvanceLeadStage(lead, automation, now);
+                const remindersTriggered = maybeSendLeadReminders(lead, automation, now);
+                const calendarSynced = maybeSyncLeadCalendar(lead, automation, now);
+
+                if (stageChanged || remindersTriggered || calendarSynced) {
+                    hasChanges = true;
+                }
+            });
+
+            if (hasChanges) {
+                saveData();
+            }
+        }
+
+        function maybeAdvanceLeadStage(lead, automation, now) {
+            if (!lead || typeof lead !== 'object') {
+                return false;
+            }
+
+            const currentStage = lead.stage || 'Новий';
+            if (currentStage === 'Втрачено') {
+                return false;
+            }
+
+            const currentIndex = STAGE_INDEX[currentStage] ?? 0;
+            let targetStage = currentStage;
+            let targetIndex = currentIndex;
+            const scoreValue = Math.max(0, Math.min(100, Number(lead.score) || 0));
+
+            LEAD_STAGE_SCORE_RULES.forEach(rule => {
+                const stageIndex = STAGE_INDEX[rule.stage] ?? -1;
+                if (stageIndex > targetIndex && scoreValue >= rule.minScore) {
+                    targetStage = rule.stage;
+                    targetIndex = stageIndex;
+                }
+            });
+
+            if (!['Угода', 'Втрачено'].includes(currentStage)) {
+                const probability = Number(lead.probability) || 0;
+                if (probability >= LEAD_AUTOMATION_CLOSE_RULE.probability) {
+                    let daysUntil = null;
+                    if (lead.expectedClose) {
+                        const diff = calculateCalendarDayDiff(lead.expectedClose, now);
+                        if (diff !== null) {
+                            daysUntil = diff;
+                        }
+                    }
+                    if (daysUntil === null || daysUntil <= 1) {
+                        const winIndex = STAGE_INDEX[LEAD_AUTOMATION_CLOSE_RULE.stage] ?? -1;
+                        if (winIndex > targetIndex) {
+                            targetStage = LEAD_AUTOMATION_CLOSE_RULE.stage;
+                            targetIndex = winIndex;
+                        }
+                    }
+                }
+            }
+
+            if (targetStage === currentStage) {
+                return false;
+            }
+
+            const previousStage = currentStage;
+            lead.stage = targetStage;
+            lead.updatedAt = now.toISOString();
+            if (targetStage === 'Угода') {
+                lead.status = 'won';
+                lead.closedAt = now.toISOString();
+                lead.probability = 100;
+            } else if (targetStage === 'Втрачено') {
+                lead.status = 'lost';
+                lead.probability = 0;
+            } else {
+                lead.status = 'active';
+            }
+            automation.lastAutoStage = targetStage;
+            addTimelineEntry(lead, `Автоматизація (support.monday.com) перемістила зі стадії ${previousStage} до ${targetStage}.`);
+            logActivity(`Автоматизація перемістила ${lead.name} на етап ${targetStage}.`, 'automation', lead.id);
+            return true;
+        }
+
+        function maybeSendLeadReminders(lead, automation, now) {
+            if (!lead || !lead.expectedClose || ['Угода', 'Втрачено'].includes(lead.stage)) {
+                return false;
+            }
+
+            const diffDays = calculateCalendarDayDiff(lead.expectedClose, now);
+            if (diffDays === null) {
+                return false;
+            }
+
+            let changed = false;
+
+            LEAD_REMINDER_DAYS.forEach(day => {
+                const key = `${lead.expectedClose}|${day}`;
+                if (diffDays === day && !automation.remindersSent.includes(key)) {
+                    const message = day === 1
+                        ? `До закриття залишився 1 день для ${lead.name}.`
+                        : `Закриття ${lead.name} заплановано через ${day} днів.`;
+                    addTimelineEntry(lead, `Нагадування: ${message}`);
+                    logActivity(message, 'reminder', lead.id);
+                    automation.remindersSent.push(key);
+                    automation.lastReminderAt = now.toISOString();
+                    changed = true;
+                }
+            });
+
+            if (diffDays === 0) {
+                const todayKey = `${lead.expectedClose}|0`;
+                if (!automation.remindersSent.includes(todayKey)) {
+                    addTimelineEntry(lead, `Нагадування: сьогодні дедлайн угоди ${lead.name}.`);
+                    logActivity(`Сьогодні дедлайн угоди ${lead.name}.`, 'reminder', lead.id);
+                    automation.remindersSent.push(todayKey);
+                    automation.lastReminderAt = now.toISOString();
+                    changed = true;
+                }
+            }
+
+            if (diffDays < 0) {
+                const overdueKey = `${lead.expectedClose}|overdue`;
+                if (!automation.remindersSent.includes(overdueKey)) {
+                    const overdueDays = Math.abs(diffDays);
+                    addTimelineEntry(lead, `Угода прострочена на ${overdueDays} дн. Перевірте наступні кроки.`);
+                    logActivity(`Угода ${lead.name} прострочена на ${overdueDays} дн.`, 'reminder', lead.id);
+                    automation.remindersSent.push(overdueKey);
+                    automation.lastReminderAt = now.toISOString();
+                    changed = true;
+                }
+            }
+
+            if (changed) {
+                automation.remindersSent = Array.from(new Set(automation.remindersSent));
+            }
+
+            return changed;
+        }
+
+        function maybeSyncLeadCalendar(lead, automation, now) {
+            if (!lead || automation.calendarSynced || !lead.expectedClose) {
+                return false;
+            }
+
+            const dueDate = new Date(lead.expectedClose);
+            if (Number.isNaN(dueDate.getTime())) {
+                return false;
+            }
+
+            automation.calendarSynced = true;
+            addTimelineEntry(lead, 'Подію додано до календаря команди (support.monday.com).');
+            logActivity(`Календар оновлено: ${lead.name} очікується ${formatDate(lead.expectedClose)}.`, 'calendar', lead.id);
+            return true;
+        }
+
         function renderAll() {
+            runLeadAutomations();
             renderDashboard();
             renderPipeline();
             renderProjects(projectSearchTerm);
@@ -13752,6 +14476,7 @@
                     const openTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id && task.status !== 'done');
                     const flags = [];
                     let score = 0;
+                    const readinessScore = Math.max(0, Math.min(100, Number(lead.score) || 0));
 
                     if (typeof dueDiff === 'number') {
                         if (dueDiff < 0) {
@@ -13777,6 +14502,11 @@
                     if ((Number(lead.value) || 0) >= 80000) {
                         score += 1;
                         flags.push({ type: 'info', text: 'Висока вартість' });
+                    }
+
+                    if (readinessScore >= 80 && (STAGE_INDEX[lead.stage] ?? 0) < (STAGE_INDEX['Переговори'] ?? 3)) {
+                        score += 1;
+                        flags.push({ type: 'info', text: `Готовність ${readinessScore}%` });
                     }
 
                     if (openTasks.length) {
@@ -14560,25 +15290,76 @@
         }
 
         function createDealCard(lead) {
-            const tags = lead.tags && lead.tags.length ? lead.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : '';
-            const contact = lead.contact?.person ? `<div class="metric-sub"><i class="fa-regular fa-user"></i> ${lead.contact.person}</div>` : '';
+            const tags = Array.isArray(lead.tags) ? lead.tags.filter(Boolean) : [];
             const stageClass = lead.stage === 'Угода' ? 'badge-success' : lead.stage === 'Втрачено' ? 'badge-danger' : 'badge-warning';
+            const ownerName = lead.owner && lead.owner.trim().length ? lead.owner.trim() : 'Не призначено';
+            const contactPieces = [];
+            if (lead.company) {
+                contactPieces.push(`<span><i class="fa-regular fa-building"></i> ${escapeHtml(lead.company)}</span>`);
+            }
+            if (lead.contact?.person) {
+                contactPieces.push(`<span><i class="fa-regular fa-user"></i> ${escapeHtml(lead.contact.person)}</span>`);
+            }
+            const expectedClose = lead.expectedClose ? formatDate(lead.expectedClose, { day: '2-digit', month: 'short' }) : '—';
+            const forecastValue = formatCurrency(Math.round((Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100)));
+            const readiness = Math.max(0, Math.min(100, Number(lead.score) || 0));
+            const badges = [];
+            const sourceLabel = getLeadSourceLabel(lead.source);
+            if (sourceLabel) {
+                badges.push(`<span class="deal-badge">${escapeHtml(sourceLabel)}</span>`);
+            }
+            const qualificationLabel = getLeadQualificationLabel(lead.qualification);
+            if (qualificationLabel) {
+                badges.push(`<span class="deal-badge badge-outline">${escapeHtml(qualificationLabel)}</span>`);
+            }
+            tags.forEach(tag => {
+                badges.push(`<span class="deal-badge">${escapeHtml(tag)}</span>`);
+            });
+
             return `
                 <div class="deal-card" draggable="true" data-lead-id="${lead.id}">
                     <div class="deal-card-top">
-                        <span class="deal-stage ${stageClass}">${lead.stage}</span>
-                        <span class="metric-sub">${formatRelativeTime(lead.updatedAt)}</span>
+                        <span class="deal-stage ${stageClass}">${escapeHtml(lead.stage)}</span>
+                        <span class="deal-updated">${formatRelativeTime(lead.updatedAt)}</span>
                     </div>
-                    <div class="deal-title">${lead.name}</div>
-                    <div class="metric-sub"><i class="fa-regular fa-building"></i> ${lead.company}</div>
-                    ${contact}
-                    <div class="deal-meta">
-                        <span><i class="fa-solid fa-coins"></i> ${formatCurrency(lead.value)}</span>
-                        <span><i class="fa-solid fa-bullseye"></i> ${lead.probability}%</span>
+                    <div class="deal-title">${escapeHtml(lead.name)}</div>
+                    <div class="deal-owner-row">
+                        <div class="deal-owner">
+                            <div class="avatar avatar-sm">${escapeHtml(getInitials(ownerName))}</div>
+                            <div>
+                                <strong>${escapeHtml(ownerName)}</strong>
+                                <div class="deal-owner-sub">Менеджер угоди</div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="deal-footer">
-                        <div class="avatar">${lead.owner.charAt(0)}</div>
-                        <div class="deal-tags">${tags}</div>
+                    <div class="deal-meta-line">
+                        ${contactPieces.join('')}
+                    </div>
+                    <div class="deal-info-grid">
+                        <div class="deal-info">
+                            <span class="deal-info-label">Вартість</span>
+                            <span class="deal-info-value">${formatCurrency(lead.value)}</span>
+                        </div>
+                        <div class="deal-info">
+                            <span class="deal-info-label">Ймовірність</span>
+                            <span class="deal-info-value">${formatIntegerDisplay(lead.probability)}%</span>
+                        </div>
+                        <div class="deal-info">
+                            <span class="deal-info-label">Очікуване закриття</span>
+                            <span class="deal-info-value">${escapeHtml(expectedClose)}</span>
+                        </div>
+                        <div class="deal-info">
+                            <span class="deal-info-label">Прогнозовано</span>
+                            <span class="deal-info-value">${forecastValue}</span>
+                        </div>
+                    </div>
+                    <div class="deal-card-bottom">
+                        <div class="deal-badges">${badges.join('')}</div>
+                        <div class="deal-readiness" aria-label="Готовність до купівлі ${readiness}%">
+                            <span class="deal-readiness-label">Готовність</span>
+                            <div class="deal-readiness-bar"><span style="width:${readiness}%"></span></div>
+                            <span class="deal-readiness-value">${readiness}%</span>
+                        </div>
                     </div>
                 </div>
             `;
@@ -16094,6 +16875,12 @@
                     return 'fa-solid fa-trophy';
                 case 'lost':
                     return 'fa-solid fa-face-frown';
+                case 'automation':
+                    return 'fa-solid fa-bolt';
+                case 'reminder':
+                    return 'fa-solid fa-bell';
+                case 'calendar':
+                    return 'fa-solid fa-calendar-check';
                 default:
                     return 'fa-solid fa-circle-info';
             }
@@ -16143,6 +16930,7 @@
                 projectMinProbability = 0;
                 projectSearchTerm = '';
                 saveData();
+                leadOwnerManuallySelected = false;
                 populateDropdowns();
 
                 const pipelineFilter = document.getElementById('pipelineOwnerFilter');
@@ -16220,16 +17008,36 @@
 
                 const attachments = await prepareAttachmentsForArea('lead');
                 const now = new Date().toISOString();
+                const stageValue = document.getElementById('leadStage').value;
+                const sourceValue = document.getElementById('leadSource').value;
+                const qualificationValue = document.getElementById('leadQualification').value || 'new';
+                const scoreValue = Math.max(0, Math.min(100, Number(document.getElementById('leadScore').value) || LEAD_SCORE_DEFAULT));
+                const probabilityValue = Number(document.getElementById('leadProbability').value) || 0;
+                const ownerSelect = document.getElementById('leadOwner');
+                let ownerValue = ownerSelect ? ownerSelect.value : '';
+                if (!ownerValue) {
+                    ownerValue = suggestLeadOwner(sourceValue);
+                }
+
+                const expectedCloseInput = document.getElementById('leadExpectedClose');
+                let expectedCloseValue = expectedCloseInput ? expectedCloseInput.value : '';
+                if (!expectedCloseValue && stageValue === 'Угода') {
+                    expectedCloseValue = now.split('T')[0];
+                }
+
                 const lead = {
                     id: generateId('lead'),
                     name: document.getElementById('leadTitle').value.trim(),
                     company: document.getElementById('leadCompany').value.trim(),
-                    stage: document.getElementById('leadStage').value,
+                    stage: stageValue,
                     value: Number(document.getElementById('leadValue').value) || 0,
-                    probability: Number(document.getElementById('leadProbability').value) || 0,
-                    owner: document.getElementById('leadOwner').value,
+                    probability: probabilityValue,
+                    owner: ownerValue,
+                    source: sourceValue,
+                    qualification: qualificationValue,
+                    score: scoreValue,
                     status: 'active',
-                    expectedClose: document.getElementById('leadStage').value === 'Угода' ? now.split('T')[0] : '',
+                    expectedClose: expectedCloseValue,
                     contact: {
                         id: generateId('contact'),
                         person: document.getElementById('leadContactName').value.trim(),
@@ -16241,13 +17049,16 @@
                     updatedAt: now,
                     notes: [],
                     timeline: [],
-                    attachments
+                    attachments,
+                    automation: normalizeLeadAutomation({})
                 };
 
                 if (lead.stage === 'Угода') {
                     lead.status = 'won';
                     lead.closedAt = now;
                     lead.probability = 100;
+                    lead.automation.lastAutoStage = 'Угода';
+                    lead.automation.calendarSynced = true;
                 }
 
                 const initialNote = document.getElementById('leadNotes').value.trim();
@@ -16257,6 +17068,7 @@
 
                 addTimelineEntry(lead, `Створено лід ${lead.name}`);
                 addTimelineEntry(lead, `Стадія встановлена: ${lead.stage}`);
+                addTimelineEntry(lead, `Джерело: ${getLeadSourceLabel(lead.source)} • Готовність ${lead.score}%`);
 
                 if (attachments.length) {
                     const preview = attachments.slice(0, 3).map(file => (file.name || '').replace(/[<>]/g, '')).join(', ');
@@ -16283,7 +17095,7 @@
                     }
                 }
 
-                logActivity(`Додано нову угоду ${lead.name} для ${lead.company}.`, 'stage', lead.id);
+                logActivity(`Додано нову угоду ${lead.name} для ${lead.company} (${getLeadSourceLabel(lead.source)}).`, 'stage', lead.id);
                 if (attachments.length) {
                     logActivity(`Додано ${attachments.length} файл(и) до ${lead.name}.`, 'note', lead.id);
                 }
@@ -16298,6 +17110,8 @@
                 console.error('Не вдалося створити лід', error);
                 alert('Не вдалося зберегти лід. Будь ласка, спробуйте ще раз.');
             } finally {
+                leadOwnerManuallySelected = false;
+                updateLeadOwnerSuggestion(true);
                 if (submitButton) {
                     submitButton.disabled = false;
                     submitButton.textContent = originalText;
@@ -16421,10 +17235,12 @@
             document.getElementById('taskStatus').value = 'todo';
             document.getElementById('taskPriority').value = 'medium';
             const dateInput = document.getElementById('taskDueDate');
-            if (!dateInput.value) {
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                dateInput.valueAsDate = tomorrow;
+            if (dateInput && !dateInput.value) {
+                const tomorrow = startOfDay(new Date());
+                if (tomorrow) {
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    dateInput.value = formatDateForInput(tomorrow);
+                }
             }
             openModal('addTaskModal');
         }
@@ -16540,10 +17356,14 @@
             const content = document.getElementById('leadDetailsContent');
             const contact = lead.contact || {};
             const relatedTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id);
-            const attachments = Array.isArray(lead.attachments) ? lead.attachments : [];
-            const attachmentsMarkup = attachments.length ? `
-                <div class="attachment-list">
-                    ${attachments.map(file => {
+                const attachments = Array.isArray(lead.attachments) ? lead.attachments : [];
+                const expectedCloseLabel = lead.expectedClose ? `${formatDate(lead.expectedClose, { day: '2-digit', month: 'short', year: 'numeric' })}` : '—';
+                const forecastValue = formatCurrency(Math.round((Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100)));
+                const sourceLabel = getLeadSourceLabel(lead.source);
+                const qualificationLabel = getLeadQualificationLabel(lead.qualification);
+                const attachmentsMarkup = attachments.length ? `
+                    <div class="attachment-list">
+                        ${attachments.map(file => {
                         const safeName = escapeHtml(file.name || 'Файл');
                         const downloadName = (file.name || 'file').replace(/["<>]/g, '');
                         const safeRelativePath = file.path && file.path !== file.name ? escapeHtml(file.path) : '';
@@ -16572,26 +17392,31 @@
                 </div>
             ` : '<span class="metric-sub">Файли ще не додані</span>';
 
-            content.innerHTML = `
-                <div class="lead-highlights">
-                    <div class="highlight-card">
-                        <div class="highlight-label">Вартість</div>
-                        <div class="highlight-value">${formatCurrency(lead.value)}</div>
-                        <div class="metric-sub">Ймовірність ${lead.probability}%</div>
+                content.innerHTML = `
+                    <div class="lead-highlights">
+                        <div class="highlight-card">
+                            <div class="highlight-label">Вартість</div>
+                            <div class="highlight-value">${formatCurrency(lead.value)}</div>
+                            <div class="metric-sub">Ймовірність ${lead.probability}%</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-label">Стадія</div>
+                            <div class="highlight-value">${lead.stage}</div>
+                            <div class="metric-sub">Оновлено ${formatRelativeTime(lead.updatedAt)}</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-label">Менеджер</div>
+                            <div class="highlight-value">${lead.owner}</div>
+                            <div class="metric-sub">Створено ${formatDate(lead.createdAt)}</div>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="highlight-label">Готовність</div>
+                            <div class="highlight-value">${lead.score}%</div>
+                            <div class="metric-sub">Канал: ${escapeHtml(sourceLabel)}</div>
+                        </div>
                     </div>
-                    <div class="highlight-card">
-                        <div class="highlight-label">Стадія</div>
-                        <div class="highlight-value">${lead.stage}</div>
-                        <div class="metric-sub">Оновлено ${formatRelativeTime(lead.updatedAt)}</div>
-                    </div>
-                    <div class="highlight-card">
-                        <div class="highlight-label">Менеджер</div>
-                        <div class="highlight-value">${lead.owner}</div>
-                        <div class="metric-sub">Створено ${formatDate(lead.createdAt)}</div>
-                    </div>
-                </div>
 
-                <div class="lead-columns">
+                    <div class="lead-columns">
                     <div class="card">
                         <h3>Інформація про угоду</h3>
                         <div class="info-grid">
@@ -16615,6 +17440,22 @@
                                     <input type="range" id="leadProbabilityRange" min="0" max="100" step="5" value="${lead.probability}">
                                     <span class="probability-value" id="leadProbabilityValue">${lead.probability}%</span>
                                 </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Джерело</div>
+                                <div class="info-value">${escapeHtml(sourceLabel)}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Кваліфікація</div>
+                                <div class="info-value">${escapeHtml(qualificationLabel)}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Очікуване закриття</div>
+                                <div class="info-value">${escapeHtml(expectedCloseLabel)}</div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Прогнозована вартість</div>
+                                <div class="info-value">${forecastValue}</div>
                             </div>
                             <div class="info-item">
                                 <div class="info-label">Мітки</div>
