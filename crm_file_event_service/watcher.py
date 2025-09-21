@@ -23,6 +23,7 @@ class DirectoryWatcher:
         self.config = config
         self.checksum_algorithm = checksum_algorithm
         self._snapshot: Dict[str, FileState] = {}
+        self._snapshot_lock = threading.RLock()
         self._initialised = False
         if self.config.compute_checksum:
             # Validate algorithm eagerly to fail fast on misconfiguration.
@@ -31,18 +32,18 @@ class DirectoryWatcher:
     def poll(self) -> List[FileEvent]:
         """Poll the filesystem and return any new events."""
         new_snapshot = self._build_snapshot()
-        events: List[FileEvent] = []
+        with self._snapshot_lock:
+            if not self._initialised:
+                self._initialised = True
+                events = (
+                    self._diff({}, new_snapshot) if self.config.emit_on_start else []
+                )
+                self._snapshot = new_snapshot
+                return events
 
-        if not self._initialised:
-            self._initialised = True
-            if self.config.emit_on_start:
-                events = self._diff({}, new_snapshot)
+            events = self._diff(self._snapshot, new_snapshot)
             self._snapshot = new_snapshot
             return events
-
-        events = self._diff(self._snapshot, new_snapshot)
-        self._snapshot = new_snapshot
-        return events
 
     def close(self) -> None:  # pragma: no cover - default implementation
         """Release any resources held by the watcher."""
@@ -232,7 +233,18 @@ class WatchfilesDirectoryWatcher(DirectoryWatcher):
             return initial_events
 
         self._ensure_thread()
-        return self._drain_queue()
+        events = self._drain_queue()
+        if events:
+            return events
+
+        fallback_events = super().poll()
+        if fallback_events:
+            LOGGER.debug(
+                "watchfiles backend fell back to polling and produced %s events for %s",
+                len(fallback_events),
+                self.config.path,
+            )
+        return fallback_events
 
     def close(self) -> None:
         self._closed = True
@@ -269,8 +281,9 @@ class WatchfilesDirectoryWatcher(DirectoryWatcher):
                 self.config.path,
             )
             new_snapshot = self._build_snapshot()
-            lost_events = self._diff(self._snapshot, new_snapshot)
-            self._snapshot = new_snapshot
+            with self._snapshot_lock:
+                lost_events = self._diff(self._snapshot, new_snapshot)
+                self._snapshot = new_snapshot
             for event in lost_events:
                 self._event_queue.put(event)
         self._stop_event.clear()
@@ -310,7 +323,8 @@ class WatchfilesDirectoryWatcher(DirectoryWatcher):
 
             path = Path(raw_path)
             if event_type == "deleted":
-                state = self._snapshot.pop(str(path), None)
+                with self._snapshot_lock:
+                    state = self._snapshot.pop(str(path), None)
                 if state is not None:
                     events.append(self._build_event("deleted", state))
                 continue
@@ -336,8 +350,22 @@ class WatchfilesDirectoryWatcher(DirectoryWatcher):
                 size=stat.st_size,
                 checksum=checksum,
             )
-            self._snapshot[str(path)] = state
-            events.append(self._build_event(event_type, state))
+            key = str(path)
+            resolved_type = event_type
+            with self._snapshot_lock:
+                previous_state = self._snapshot.get(key)
+
+                if event_type == "modified" and previous_state is None:
+                    resolved_type = "created"
+                elif event_type == "created" and previous_state is not None:
+                    if not self._has_changed(previous_state, state):
+                        continue
+                    resolved_type = "modified"
+                elif previous_state is not None and not self._has_changed(previous_state, state):
+                    continue
+
+                self._snapshot[key] = state
+            events.append(self._build_event(resolved_type, state))
         return events
 
     def _drain_queue(self) -> List[FileEvent]:
