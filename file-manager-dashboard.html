@@ -765,6 +765,243 @@
             }
         }
 
+        .custom-chart-toolbar {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .custom-chart-toolbar h3 {
+            margin-bottom: 6px;
+        }
+
+        .custom-chart-toolbar-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .custom-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+        }
+
+        .custom-chart-item {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(99, 102, 241, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            position: relative;
+        }
+
+        body.layout-compact .custom-chart-item {
+            padding: 12px;
+        }
+
+        .custom-chart-item-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .custom-chart-item-header h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .custom-chart-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .custom-chart-actions button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--primary-dark);
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .custom-chart-actions button i {
+            font-size: 13px;
+        }
+
+        .custom-chart-actions button:hover {
+            background: rgba(99, 102, 241, 0.16);
+            color: var(--primary);
+        }
+
+        .custom-chart-actions button.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #b91c1c;
+        }
+
+        .custom-chart-actions button.danger:hover {
+            background: rgba(239, 68, 68, 0.18);
+            color: #dc2626;
+        }
+
+        .custom-chart-canvas {
+            position: relative;
+            height: 240px;
+        }
+
+        body.layout-compact .custom-chart-canvas {
+            height: 200px;
+        }
+
+        .custom-chart-summary-info {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .custom-chart-empty {
+            border: 1px dashed rgba(99, 102, 241, 0.35);
+            border-radius: var(--radius-md);
+            padding: 28px 24px;
+            text-align: center;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .custom-chart-empty strong {
+            display: block;
+            font-size: 16px;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .custom-chart-empty p {
+            margin-bottom: 16px;
+        }
+
+        .custom-chart-options-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .custom-chart-option {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .custom-chart-option label {
+            font-weight: 500;
+            font-size: 13px;
+            color: var(--text);
+        }
+
+        .custom-chart-option select,
+        .custom-chart-option input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            font-size: 14px;
+            background: white;
+            color: var(--text);
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .custom-chart-option select:focus,
+        .custom-chart-option input[type="number"]:focus {
+            outline: none;
+            border-color: rgba(99, 102, 241, 0.55);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
+        }
+
+        .custom-chart-option .option-description {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .custom-chart-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(148, 163, 184, 0.12);
+            color: var(--text);
+        }
+
+        .custom-chart-checkbox input {
+            margin-top: 2px;
+            accent-color: var(--primary);
+        }
+
+        .custom-chart-checkbox span {
+            flex: 1;
+            font-size: 13px;
+        }
+
+        .custom-chart-checkbox small {
+            display: block;
+            margin-top: 4px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .custom-chart-toggle-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 6px;
+        }
+
+        .custom-chart-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary-dark);
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .custom-chart-toggle input {
+            accent-color: var(--primary);
+        }
+
+        .custom-chart-toggle[data-disabled="true"] {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .custom-chart-toggle:hover {
+            background: rgba(99, 102, 241, 0.18);
+            color: var(--primary);
+        }
+
+        @media (max-width: 900px) {
+            .custom-chart-toolbar-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
         .layout-draggable {
             cursor: grab;
             transition: transform 0.2s ease, opacity 0.2s ease;
@@ -4254,6 +4491,21 @@
                         </div>
                         <div class="chart-summary" id="teamProductivitySummary"></div>
                     </div>
+                    <div class="card chart-card" data-block-id="dashboard-custom-charts">
+                        <div class="custom-chart-toolbar">
+                            <div>
+                                <h3>Користувацькі графіки</h3>
+                                <p class="metric-sub">Створюйте власні аналітичні віджети, комбінуйте показники та обирайте будь-які типи діаграм.</p>
+                            </div>
+                            <div class="custom-chart-toolbar-actions">
+                                <button class="btn btn-small-primary" id="addCustomChartBtn" type="button">
+                                    <i class="fa-solid fa-plus"></i>
+                                    Новий графік
+                                </button>
+                            </div>
+                        </div>
+                        <div id="customChartsContainer" class="custom-charts-grid" aria-live="polite"></div>
+                    </div>
                     <div class="card" data-block-id="dashboard-process">
                         <h3>Контроль процесів</h3>
                         <div class="process-overview" id="processOverview"></div>
@@ -5113,6 +5365,47 @@
             <div class="lead-details" id="leadDetailsContent"></div>
         </div>
     </div>
+
+    <div class="modal" id="customChartModal">
+        <div class="modal-dialog wide">
+            <div class="modal-header">
+                <h3 id="customChartModalTitle">Новий графік</h3>
+                <button class="modal-close" type="button" data-close>&times;</button>
+            </div>
+            <form id="customChartForm" class="form-grid">
+                <input type="hidden" id="customChartId">
+                <div class="form-group">
+                    <label for="customChartTitle">Назва графіка</label>
+                    <input type="text" id="customChartTitle" placeholder="Наприклад, Динаміка нових угод" required>
+                </div>
+                <div class="form-group">
+                    <label for="customChartMetric">Показник</label>
+                    <select id="customChartMetric" required></select>
+                    <p class="metric-sub" id="customChartMetricHint"></p>
+                </div>
+                <div class="form-group">
+                    <label for="customChartType">Тип діаграми</label>
+                    <select id="customChartType" required></select>
+                </div>
+                <div class="form-group">
+                    <label for="customChartPalette">Кольорова схема</label>
+                    <select id="customChartPalette"></select>
+                </div>
+                <div class="form-group full" id="customChartOptionsSection">
+                    <label>Налаштування показника</label>
+                    <div id="customChartOptions" class="custom-chart-options-grid"></div>
+                </div>
+                <div class="form-group full">
+                    <label>Додаткові параметри відображення</label>
+                    <div class="custom-chart-toggle-list" id="customChartToggleList"></div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-small-muted" data-close>Скасувати</button>
+                    <button type="submit" class="btn btn-primary">Зберегти графік</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         const STORAGE_KEY = 'homeCRMData_v2';
         const STAGES = ['Новий', 'Кваліфікація', 'Пропозиція', 'Переговори', 'Угода', 'Втрачено'];
@@ -5293,8 +5586,275 @@
                 compactMode: false,
                 hiddenDashboardBlocks: [],
                 hiddenMetricBlocks: []
+            },
+            customCharts: []
+        };
+        const CHART_TYPE_LABELS = {
+            bar: 'Стовпчаста діаграма',
+            line: 'Лінійний графік',
+            doughnut: 'Кільцева діаграма',
+            polarArea: 'Полярна діаграма',
+            radar: 'Радарна діаграма'
+        };
+        const CUSTOM_CHART_PALETTES = {
+            aurora: {
+                label: 'Aurora',
+                description: 'Фіолетово-бірюзова гама для ключових KPI.',
+                colors: ['#6366F1', '#22D3EE', '#34D399', '#FBBF24', '#F472B6', '#A855F7', '#0EA5E9']
+            },
+            sunrise: {
+                label: 'Sunrise',
+                description: 'Теплі відтінки для маркетингових показників.',
+                colors: ['#F97316', '#F59E0B', '#FACC15', '#EAB308', '#FB7185', '#EF4444', '#FCD34D']
+            },
+            ocean: {
+                label: 'Ocean',
+                description: 'Холодна палітра для показників ефективності.',
+                colors: ['#0EA5E9', '#0284C7', '#38BDF8', '#14B8A6', '#0F766E', '#2563EB', '#22D3EE']
+            },
+            forest: {
+                label: 'Forest',
+                description: 'Насичені зелені кольори для контрольних метрик.',
+                colors: ['#22C55E', '#16A34A', '#4ADE80', '#65A30D', '#84CC16', '#15803D', '#166534']
+            },
+            graphite: {
+                label: 'Graphite',
+                description: 'Урбаністична монохромна палітра.',
+                colors: ['#1F2937', '#374151', '#4B5563', '#6B7280', '#9CA3AF', '#D1D5DB', '#111827']
             }
         };
+        const CUSTOM_CHART_TOGGLES = [
+            { id: 'showLegend', label: 'Показувати легенду', default: true },
+            { id: 'showGrid', label: 'Сітка осей', default: true, types: ['bar', 'line', 'radar'] },
+            { id: 'showTooltip', label: 'Підказки при наведенні', default: true },
+            { id: 'smoothLines', label: 'Плавні лінії', default: true, types: ['line'] },
+            { id: 'fillArea', label: 'Заповнювати під кривою', default: false, types: ['line'] }
+        ];
+        const CUSTOM_CHART_DATASETS = [
+            {
+                id: 'pipelineStage',
+                label: 'Розподіл угод за етапами',
+                description: 'Порівняйте обсяг угод у кожному етапі воронки продажів.',
+                allowedTypes: ['bar', 'doughnut', 'polarArea'],
+                defaultType: 'bar',
+                options: [
+                    {
+                        id: 'valueMode',
+                        type: 'select',
+                        label: 'Метрика',
+                        default: 'value',
+                        choices: [
+                            { value: 'value', label: 'Сума угод, ₴' },
+                            { value: 'count', label: 'Кількість угод' }
+                        ]
+                    },
+                    {
+                        id: 'includeLost',
+                        type: 'checkbox',
+                        label: 'Показувати етап «Втрачено»',
+                        default: false
+                    },
+                    {
+                        id: 'sort',
+                        type: 'select',
+                        label: 'Сортування',
+                        default: 'pipeline',
+                        choices: [
+                            { value: 'pipeline', label: 'Як у воронці' },
+                            { value: 'desc', label: 'За спаданням значення' }
+                        ]
+                    }
+                ],
+                compute: computePipelineStageDataset
+            },
+            {
+                id: 'revenueTrend',
+                label: 'Динаміка продажів',
+                description: 'Дивіться, як змінюються продажі та планові показники за місяцями.',
+                allowedTypes: ['line', 'bar'],
+                defaultType: 'line',
+                options: [
+                    {
+                        id: 'range',
+                        type: 'select',
+                        label: 'Період',
+                        default: '6',
+                        choices: [
+                            { value: '3', label: '3 місяці' },
+                            { value: '6', label: '6 місяців' },
+                            { value: '12', label: '12 місяців' }
+                        ]
+                    },
+                    {
+                        id: 'metric',
+                        type: 'select',
+                        label: 'Показник',
+                        default: 'wonValue',
+                        choices: [
+                            { value: 'wonValue', label: 'Виграно, ₴' },
+                            { value: 'wonCount', label: 'Виграно, шт.' },
+                            { value: 'newLeads', label: 'Нові ліди' },
+                            { value: 'pipelineValue', label: 'Очікуваний прогноз, ₴' }
+                        ]
+                    },
+                    {
+                        id: 'comparison',
+                        type: 'checkbox',
+                        label: 'Показувати план-факт',
+                        default: true,
+                        description: 'Додає другий ряд для порівняння прогнозу та факту.'
+                    }
+                ],
+                compute: computeRevenueTrendDataset
+            },
+            {
+                id: 'ownerPerformance',
+                label: 'Результати менеджерів',
+                description: 'Аналізуйте індивідуальні досягнення команди продажів.',
+                allowedTypes: ['bar', 'line', 'radar'],
+                defaultType: 'bar',
+                options: [
+                    {
+                        id: 'metric',
+                        type: 'select',
+                        label: 'Метрика',
+                        default: 'pipelineValue',
+                        choices: [
+                            { value: 'pipelineValue', label: 'Активна воронка, ₴' },
+                            { value: 'wonValue', label: 'Виграно, ₴' },
+                            { value: 'dealCount', label: 'Кількість угод' },
+                            { value: 'winRate', label: 'Win rate, %' }
+                        ]
+                    },
+                    {
+                        id: 'limit',
+                        type: 'select',
+                        label: 'Кількість менеджерів',
+                        default: 'all',
+                        choices: [
+                            { value: 'all', label: 'Вся команда' },
+                            { value: '3', label: 'Топ-3' },
+                            { value: '5', label: 'Топ-5' }
+                        ]
+                    },
+                    {
+                        id: 'showLost',
+                        type: 'checkbox',
+                        label: 'Враховувати втрачені угоди у підрахунку',
+                        default: false
+                    }
+                ],
+                compute: computeOwnerPerformanceDataset
+            },
+            {
+                id: 'taskStatus',
+                label: 'Задачі за категоріями',
+                description: 'Баланс активних, завершених та пріоритетних задач.',
+                allowedTypes: ['bar', 'doughnut', 'polarArea'],
+                defaultType: 'doughnut',
+                options: [
+                    {
+                        id: 'groupBy',
+                        type: 'select',
+                        label: 'Групування',
+                        default: 'status',
+                        choices: [
+                            { value: 'status', label: 'За статусом' },
+                            { value: 'priority', label: 'За пріоритетом' }
+                        ]
+                    },
+                    {
+                        id: 'includeDone',
+                        type: 'checkbox',
+                        label: 'Показувати завершені задачі',
+                        default: true
+                    },
+                    {
+                        id: 'onlyOverdue',
+                        type: 'checkbox',
+                        label: 'Лише прострочені задачі',
+                        default: false
+                    },
+                    {
+                        id: 'orientation',
+                        type: 'select',
+                        label: 'Орієнтація для стовпчиків',
+                        default: 'vertical',
+                        choices: [
+                            { value: 'vertical', label: 'Вертикальна' },
+                            { value: 'horizontal', label: 'Горизонтальна' }
+                        ]
+                    }
+                ],
+                compute: computeTaskStatusDataset
+            },
+            {
+                id: 'taskOwnerWorkload',
+                label: 'Навантаження команди задачами',
+                description: 'Порівняйте кількість задач у кожного менеджера.',
+                allowedTypes: ['bar', 'line'],
+                defaultType: 'bar',
+                options: [
+                    {
+                        id: 'status',
+                        type: 'select',
+                        label: 'Статус задач',
+                        default: 'active',
+                        choices: [
+                            { value: 'active', label: 'Активні' },
+                            { value: 'all', label: 'Усі' },
+                            { value: 'done', label: 'Завершені' }
+                        ]
+                    },
+                    {
+                        id: 'limit',
+                        type: 'select',
+                        label: 'Показати',
+                        default: 'all',
+                        choices: [
+                            { value: 'all', label: 'Вся команда' },
+                            { value: '5', label: 'Топ-5' }
+                        ]
+                    },
+                    {
+                        id: 'orientation',
+                        type: 'select',
+                        label: 'Орієнтація',
+                        default: 'vertical',
+                        choices: [
+                            { value: 'vertical', label: 'Вертикальна' },
+                            { value: 'horizontal', label: 'Горизонтальна' }
+                        ]
+                    }
+                ],
+                compute: computeTaskOwnerWorkloadDataset
+            },
+            {
+                id: 'contactStatus',
+                label: 'Контактна база за статусом',
+                description: 'Структура клієнтів, партнерів та потенційних контактів.',
+                allowedTypes: ['doughnut', 'bar', 'polarArea'],
+                defaultType: 'doughnut',
+                options: [
+                    {
+                        id: 'owner',
+                        type: 'select',
+                        label: 'Менеджер',
+                        default: 'all',
+                        choices: ({ crmData }) => {
+                            const contacts = Array.isArray(crmData?.contacts) ? crmData.contacts : [];
+                            const owners = Array.from(new Set(contacts.map(contact => contact.owner).filter(Boolean)))
+                                .sort((a, b) => a.localeCompare(b, 'uk', { sensitivity: 'base' }));
+                            return [
+                                { value: 'all', label: 'Вся команда' },
+                                ...owners.map(owner => ({ value: owner, label: owner }))
+                            ];
+                        }
+                    }
+                ],
+                compute: computeContactStatusDataset
+            }
+        ];
         const DASHBOARD_CARD_WIDTH_RANGE = { min: 260, max: 420 };
         const METRIC_CARD_WIDTH_RANGE = { min: 180, max: 320 };
         let uiPreferences = null;
@@ -5315,6 +5875,18 @@
         let taskFilters = { ...TASK_FILTER_DEFAULTS };
         let salesPerformanceChart = null;
         let teamProductivityChart = null;
+        const customChartInstances = new Map();
+        let customChartForm = null;
+        let customChartIdInput = null;
+        let customChartTitleInput = null;
+        let customChartMetricSelect = null;
+        let customChartTypeSelect = null;
+        let customChartPaletteSelect = null;
+        let customChartOptionsContainer = null;
+        let customChartOptionsSection = null;
+        let customChartToggleList = null;
+        let customChartMetricHint = null;
+        let customChartModalTitle = null;
 
         const persistentStorage = (() => {
             try {
@@ -7375,6 +7947,7 @@
             setupRoleManagement();
             setupSettingsPanel();
             initializeLayoutAreas();
+            setupCustomCharts();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
             document.getElementById('refreshDashboardBtn').addEventListener('click', () => {
                 renderDashboard();
@@ -9686,6 +10259,7 @@
                 totalLostValue: lostDealsValue
             });
             renderTeamProductivityChart();
+            renderCustomCharts();
         }
 
         function renderStageDistribution() {
@@ -10413,6 +10987,1594 @@
                     }
                 }
             });
+        }
+
+        function getCustomChartDataset(datasetId) {
+            return CUSTOM_CHART_DATASETS.find(dataset => dataset.id === datasetId) || null;
+        }
+
+        function getCustomCharts() {
+            return Array.isArray(uiPreferences?.customCharts) ? uiPreferences.customCharts.slice() : [];
+        }
+
+        function setCustomCharts(charts) {
+            if (!uiPreferences) {
+                uiPreferences = cloneDefaultPreferences();
+            }
+            const normalized = (Array.isArray(charts) ? charts : [])
+                .map(chart => normalizeCustomChart(chart))
+                .filter(Boolean);
+            uiPreferences.customCharts = normalized;
+            savePreferences();
+            renderCustomCharts();
+        }
+
+        function getDatasetDefaultOptions(dataset, context = {}) {
+            const result = {};
+            if (!dataset || !Array.isArray(dataset.options)) {
+                return result;
+            }
+            dataset.options.forEach(option => {
+                if (!option || typeof option.id !== 'string') {
+                    return;
+                }
+                if (option.type === 'checkbox') {
+                    result[option.id] = option.default === true;
+                } else if (option.type === 'select') {
+                    const choices = resolveOptionChoices(option, context);
+                    const defaultValue = typeof option.default === 'string'
+                        ? option.default
+                        : (choices[0]?.value ?? '');
+                    const normalized = choices.some(choice => String(choice.value) === String(defaultValue))
+                        ? String(defaultValue)
+                        : (choices[0] ? String(choices[0].value) : '');
+                    result[option.id] = normalized;
+                } else if (option.type === 'number') {
+                    const fallback = Number(option.default);
+                    result[option.id] = Number.isFinite(fallback) ? fallback : 0;
+                } else {
+                    result[option.id] = option.default ?? '';
+                }
+            });
+            return result;
+        }
+
+        function getDefaultToggleValues() {
+            const values = {};
+            CUSTOM_CHART_TOGGLES.forEach(toggle => {
+                values[toggle.id] = toggle.default !== false;
+            });
+            return values;
+        }
+
+        function resolveOptionChoices(option, context = {}) {
+            if (!option) {
+                return [];
+            }
+            if (typeof option.choices === 'function') {
+                try {
+                    const resolved = option.choices({ crmData, chartConfig: context.chartConfig || null });
+                    return Array.isArray(resolved)
+                        ? resolved.filter(choice => choice && typeof choice.value !== 'undefined')
+                        : [];
+                } catch (error) {
+                    console.warn('Не вдалося отримати список опцій для графіка', error);
+                    return [];
+                }
+            }
+            return Array.isArray(option.choices) ? option.choices : [];
+        }
+
+        function normalizeOptionValue(option, value, context = {}) {
+            if (!option) {
+                return value;
+            }
+            if (option.type === 'checkbox') {
+                if (typeof value === 'boolean') {
+                    return value;
+                }
+                if (typeof value === 'string') {
+                    return value === 'true';
+                }
+                return option.default === true;
+            }
+            if (option.type === 'select') {
+                const choices = resolveOptionChoices(option, context);
+                const allowed = choices.map(choice => String(choice.value));
+                const candidate = value != null ? String(value) : '';
+                if (allowed.includes(candidate)) {
+                    return candidate;
+                }
+                const fallback = typeof option.default === 'string' ? option.default : (allowed[0] ?? '');
+                return allowed.includes(fallback) ? fallback : (allowed[0] ?? '');
+            }
+            if (option.type === 'number') {
+                const numeric = Number(value);
+                if (Number.isFinite(numeric)) {
+                    return numeric;
+                }
+                const fallback = Number(option.default);
+                return Number.isFinite(fallback) ? fallback : 0;
+            }
+            return typeof value === 'string' ? value : (option.default ?? '');
+        }
+
+        function normalizeCustomChart(config) {
+            if (!config || typeof config !== 'object') {
+                return null;
+            }
+            const dataset = getCustomChartDataset(config.datasetId);
+            if (!dataset) {
+                return null;
+            }
+            const id = typeof config.id === 'string' && config.id.trim().length ? config.id.trim() : generateId('chart');
+            const title = typeof config.title === 'string' && config.title.trim().length ? config.title.trim() : dataset.label;
+            const palette = CUSTOM_CHART_PALETTES[config.palette] ? config.palette : 'aurora';
+            const allowedTypes = Array.isArray(dataset.allowedTypes) && dataset.allowedTypes.length ? dataset.allowedTypes : ['bar'];
+            const defaultType = dataset.defaultType && allowedTypes.includes(dataset.defaultType) ? dataset.defaultType : allowedTypes[0];
+            const chartType = allowedTypes.includes(config.chartType) ? config.chartType : defaultType;
+            const defaultDatasetOptions = getDatasetDefaultOptions(dataset, { chartConfig: config });
+            const providedDatasetOptions = config.datasetOptions && typeof config.datasetOptions === 'object' ? config.datasetOptions : {};
+            const datasetOptions = {};
+            Object.keys(defaultDatasetOptions).forEach(key => {
+                const optionDefinition = (dataset.options || []).find(option => option.id === key);
+                datasetOptions[key] = normalizeOptionValue(optionDefinition, providedDatasetOptions[key], { chartConfig: config, dataset });
+            });
+            const defaultToggleValues = getDefaultToggleValues();
+            const providedToggleValues = config.options && typeof config.options === 'object' ? config.options : {};
+            const toggleOptions = {};
+            Object.keys(defaultToggleValues).forEach(key => {
+                toggleOptions[key] = typeof providedToggleValues[key] === 'boolean' ? providedToggleValues[key] : defaultToggleValues[key];
+            });
+            return {
+                id,
+                title,
+                datasetId: dataset.id,
+                chartType,
+                palette,
+                datasetOptions,
+                options: toggleOptions
+            };
+        }
+
+        function createDefaultChartConfig(datasetId) {
+            const dataset = getCustomChartDataset(datasetId);
+            if (!dataset) {
+                return null;
+            }
+            return normalizeCustomChart({
+                id: generateId('chart'),
+                title: dataset.label,
+                datasetId: dataset.id,
+                chartType: dataset.defaultType,
+                palette: 'aurora',
+                datasetOptions: {},
+                options: {}
+            });
+        }
+
+        function populateCustomChartSelects() {
+            if (customChartMetricSelect) {
+                const options = CUSTOM_CHART_DATASETS.map(dataset => {
+                    const description = dataset.description ? ` data-description="${escapeHtml(dataset.description)}"` : '';
+                    return `<option value="${escapeHtml(dataset.id)}"${description}>${escapeHtml(dataset.label)}</option>`;
+                });
+                customChartMetricSelect.innerHTML = options.join('');
+            }
+
+            if (customChartPaletteSelect) {
+                const paletteOptions = Object.entries(CUSTOM_CHART_PALETTES).map(([id, palette]) => (
+                    `<option value="${escapeHtml(id)}">${escapeHtml(palette.label)}</option>`
+                ));
+                customChartPaletteSelect.innerHTML = paletteOptions.join('');
+            }
+        }
+
+        function renderCustomCharts() {
+            const container = document.getElementById('customChartsContainer');
+            if (!container) {
+                return;
+            }
+
+            const charts = getCustomCharts();
+            const activeIds = new Set(charts.map(chart => chart.id));
+            customChartInstances.forEach((instance, id) => {
+                if (!activeIds.has(id)) {
+                    instance.destroy();
+                    customChartInstances.delete(id);
+                }
+            });
+
+            if (!charts.length) {
+                container.innerHTML = `
+                    <div class="custom-chart-empty">
+                        <strong>Створіть перший графік</strong>
+                        <p>Натисніть «Новий графік», щоб додати персональний віджет з потрібними показниками.</p>
+                        <button type="button" class="btn btn-small-primary" data-chart-empty-create>Новий графік</button>
+                    </div>
+                `;
+                const cta = container.querySelector('[data-chart-empty-create]');
+                if (cta) {
+                    cta.addEventListener('click', () => {
+                        const trigger = document.getElementById('addCustomChartBtn');
+                        if (trigger) {
+                            trigger.click();
+                        }
+                    });
+                }
+                return;
+            }
+
+            container.innerHTML = charts.map(createCustomChartCardMarkup).join('');
+            charts.forEach(config => renderCustomChartCanvas(config));
+        }
+
+        function createCustomChartCardMarkup(config) {
+            const dataset = getCustomChartDataset(config.datasetId);
+            const chartId = typeof config.id === 'string' ? config.id : '';
+            const palette = CUSTOM_CHART_PALETTES[config.palette] || CUSTOM_CHART_PALETTES.aurora;
+            const typeLabel = CHART_TYPE_LABELS[config.chartType] || config.chartType || 'Діаграма';
+            const description = dataset?.description ? `<div class="metric-sub">${escapeHtml(dataset.description)}</div>` : '';
+            return `
+                <div class="custom-chart-item" data-chart-id="${escapeHtml(chartId)}">
+                    <div class="custom-chart-item-header">
+                        <div>
+                            <h4>${escapeHtml(config.title || dataset?.label || 'Графік')}</h4>
+                            ${description}
+                            <div class="metric-sub">Тип: ${escapeHtml(typeLabel)} • Палітра: ${escapeHtml(palette.label)}</div>
+                        </div>
+                        <div class="custom-chart-actions">
+                            <button type="button" data-chart-action="edit" data-chart-id="${escapeHtml(chartId)}">
+                                <i class="fa-solid fa-pen"></i>
+                                Редагувати
+                            </button>
+                            <button type="button" data-chart-action="duplicate" data-chart-id="${escapeHtml(chartId)}">
+                                <i class="fa-regular fa-clone"></i>
+                                Дублювати
+                            </button>
+                            <button type="button" class="danger" data-chart-action="delete" data-chart-id="${escapeHtml(chartId)}">
+                                <i class="fa-solid fa-trash"></i>
+                                Видалити
+                            </button>
+                        </div>
+                    </div>
+                    <div class="custom-chart-canvas">
+                        <canvas id="customChartCanvas-${escapeHtml(chartId)}" role="img" aria-label="${escapeHtml(config.title || dataset?.label || 'Графік')}"></canvas>
+                    </div>
+                    <div class="custom-chart-empty" data-chart-empty hidden></div>
+                    <div class="custom-chart-summary-info" data-chart-summary></div>
+                </div>
+            `;
+        }
+
+        function renderCustomChartCanvas(config) {
+            const card = document.querySelector(`[data-chart-id="${config.id}"]`);
+            if (!card) {
+                return;
+            }
+
+            const canvasWrapper = card.querySelector('.custom-chart-canvas');
+            const canvas = canvasWrapper ? canvasWrapper.querySelector('canvas') : null;
+            const summary = card.querySelector('[data-chart-summary]');
+            const emptyState = card.querySelector('[data-chart-empty]');
+            const dataset = getCustomChartDataset(config.datasetId);
+
+            const clearChartInstance = () => {
+                if (customChartInstances.has(config.id)) {
+                    const existing = customChartInstances.get(config.id);
+                    existing.destroy();
+                    customChartInstances.delete(config.id);
+                }
+                if (canvas) {
+                    const context = canvas.getContext('2d');
+                    if (context) {
+                        context.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                }
+            };
+
+            const showEmptyState = message => {
+                clearChartInstance();
+                if (canvasWrapper) {
+                    canvasWrapper.style.display = 'none';
+                }
+                if (emptyState) {
+                    emptyState.innerHTML = `<strong>Немає даних</strong><p>${escapeHtml(message)}</p>`;
+                    emptyState.hidden = false;
+                }
+                if (summary) {
+                    summary.textContent = '';
+                }
+            };
+
+            if (!canvas) {
+                return;
+            }
+
+            if (typeof Chart === 'undefined') {
+                showEmptyState('Бібліотека візуалізацій недоступна. Оновіть сторінку або перевірте підключення.');
+                return;
+            }
+
+            if (!dataset) {
+                showEmptyState('Показник більше не доступний. Відредагуйте графік або виберіть інший показник.');
+                return;
+            }
+
+            let computeResult = null;
+            if (typeof dataset.compute === 'function') {
+                try {
+                    computeResult = dataset.compute(crmData, config, dataset);
+                } catch (error) {
+                    console.warn('Не вдалося побудувати користувацький графік', error);
+                }
+            }
+
+            if (!computeResult || computeResult.error) {
+                showEmptyState('Виникла помилка під час побудови графіка. Спробуйте змінити налаштування.');
+                return;
+            }
+
+            const isEmpty = computeResult.empty === true;
+            const datasets = Array.isArray(computeResult.datasets) ? computeResult.datasets : [];
+            const hasValues = datasets.some(datasetItem => Array.isArray(datasetItem?.data)
+                && datasetItem.data.some(value => Number.isFinite(value) && Math.abs(value) > 0));
+
+            if (isEmpty || !datasets.length || !hasValues) {
+                showEmptyState(computeResult.emptyMessage || 'Недостатньо даних для цього графіка.');
+                return;
+            }
+
+            if (canvasWrapper) {
+                canvasWrapper.style.display = '';
+            }
+            if (emptyState) {
+                emptyState.hidden = true;
+                emptyState.innerHTML = '';
+            }
+
+            applyPaletteToDatasets(datasets, config.palette, config.chartType, config);
+
+            const baseOptions = buildBaseChartOptions(config, dataset, computeResult);
+            const mergedOptions = mergeChartOptions(baseOptions, computeResult.options || {});
+
+            const data = {
+                labels: Array.isArray(computeResult.labels) ? computeResult.labels : [],
+                datasets
+            };
+
+            clearChartInstance();
+            const context = canvas.getContext('2d');
+            const chartInstance = new Chart(context, {
+                type: config.chartType,
+                data,
+                options: mergedOptions
+            });
+            customChartInstances.set(config.id, chartInstance);
+
+            if (summary) {
+                if (Array.isArray(computeResult.summary) && computeResult.summary.length) {
+                    summary.innerHTML = computeResult.summary.map(item => `<div>${escapeHtml(String(item))}</div>`).join('');
+                } else if (typeof computeResult.summary === 'string') {
+                    summary.textContent = computeResult.summary;
+                } else {
+                    summary.textContent = '';
+                }
+            }
+        }
+
+        function buildColorArray(colors, length) {
+            const palette = Array.isArray(colors) && colors.length ? colors.filter(Boolean) : ['#6366F1'];
+            if (!length || length <= 0) {
+                return palette.slice();
+            }
+            return Array.from({ length }, (_, index) => palette[index % palette.length]);
+        }
+
+        function hexToRgba(hex, alpha = 1) {
+            if (typeof hex !== 'string') {
+                return `rgba(99, 102, 241, ${alpha})`;
+            }
+            const normalized = hex.replace('#', '').trim();
+            const expanded = normalized.length === 3
+                ? normalized.split('').map(char => char + char).join('')
+                : normalized.padEnd(6, '0').slice(0, 6);
+            const numeric = parseInt(expanded, 16);
+            if (Number.isNaN(numeric)) {
+                return `rgba(99, 102, 241, ${alpha})`;
+            }
+            const r = (numeric >> 16) & 255;
+            const g = (numeric >> 8) & 255;
+            const b = numeric & 255;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function applyPaletteToDatasets(datasets, paletteId, chartType, chartConfig) {
+            if (!Array.isArray(datasets)) {
+                return;
+            }
+            const palette = CUSTOM_CHART_PALETTES[paletteId] || CUSTOM_CHART_PALETTES.aurora;
+            const baseColors = palette.colors || ['#6366F1'];
+            datasets.forEach((dataset, index) => {
+                if (!dataset || typeof dataset !== 'object') {
+                    return;
+                }
+                const datasetType = dataset.type || chartType;
+                const color = baseColors[index % baseColors.length] || '#6366F1';
+                if (datasetType === 'line') {
+                    if (!dataset.borderColor) {
+                        dataset.borderColor = color;
+                    }
+                    if (!dataset.backgroundColor) {
+                        const alpha = chartConfig?.options?.fillArea ? 0.25 : 0.08;
+                        dataset.backgroundColor = hexToRgba(color, alpha);
+                    }
+                    if (!dataset.pointBackgroundColor) {
+                        dataset.pointBackgroundColor = color;
+                    }
+                    if (!dataset.pointBorderColor) {
+                        dataset.pointBorderColor = '#ffffff';
+                    }
+                    if (typeof dataset.borderWidth === 'undefined') {
+                        dataset.borderWidth = 2;
+                    }
+                    if (chartConfig?.options?.smoothLines === false) {
+                        dataset.tension = 0;
+                    } else if (typeof dataset.tension !== 'number') {
+                        dataset.tension = 0.35;
+                    }
+                    if (chartConfig?.options?.fillArea === false) {
+                        dataset.fill = false;
+                    } else if (typeof dataset.fill === 'undefined') {
+                        dataset.fill = chartType === 'line' ? 'origin' : false;
+                    }
+                } else if (datasetType === 'doughnut' || datasetType === 'polarArea') {
+                    const dataLength = Array.isArray(dataset.data) ? dataset.data.length : baseColors.length;
+                    if (!Array.isArray(dataset.backgroundColor) || !dataset.backgroundColor.length) {
+                        const alpha = datasetType === 'polarArea' ? 0.85 : 0.9;
+                        dataset.backgroundColor = buildColorArray(baseColors.map(value => hexToRgba(value, alpha)), dataLength);
+                    }
+                    if (!dataset.borderColor) {
+                        dataset.borderColor = '#ffffff';
+                    }
+                    if (typeof dataset.borderWidth === 'undefined') {
+                        dataset.borderWidth = 1;
+                    }
+                    if (typeof dataset.hoverOffset === 'undefined') {
+                        dataset.hoverOffset = 6;
+                    }
+                } else if (datasetType === 'radar') {
+                    if (!dataset.borderColor) {
+                        dataset.borderColor = color;
+                    }
+                    if (!dataset.backgroundColor) {
+                        dataset.backgroundColor = hexToRgba(color, 0.22);
+                    }
+                    if (!dataset.pointBackgroundColor) {
+                        dataset.pointBackgroundColor = color;
+                    }
+                    if (!dataset.pointBorderColor) {
+                        dataset.pointBorderColor = '#ffffff';
+                    }
+                    if (typeof dataset.borderWidth === 'undefined') {
+                        dataset.borderWidth = 2;
+                    }
+                    if (typeof dataset.fill === 'undefined') {
+                        dataset.fill = true;
+                    }
+                } else {
+                    if (!dataset.backgroundColor) {
+                        dataset.backgroundColor = hexToRgba(color, 0.75);
+                    }
+                    if (!dataset.borderColor) {
+                        dataset.borderColor = hexToRgba(color, 0.95);
+                    }
+                    if (typeof dataset.borderWidth === 'undefined') {
+                        dataset.borderWidth = 1;
+                    }
+                    if (typeof dataset.borderRadius === 'undefined') {
+                        dataset.borderRadius = 10;
+                    }
+                }
+            });
+        }
+
+        function buildBaseChartOptions(chartConfig, datasetDefinition, computeResult) {
+            const showLegend = chartConfig?.options?.showLegend !== false;
+            const showTooltip = chartConfig?.options?.showTooltip !== false;
+            const showGrid = chartConfig?.options?.showGrid !== false;
+            const chartType = chartConfig.chartType || datasetDefinition?.defaultType || 'bar';
+
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: showLegend,
+                        position: 'bottom',
+                        labels: { usePointStyle: true }
+                    },
+                    tooltip: {
+                        enabled: showTooltip,
+                        intersect: false,
+                        mode: 'index'
+                    }
+                }
+            };
+
+            if (chartType === 'line') {
+                options.interaction = { intersect: false, mode: 'index' };
+                options.scales = {
+                    x: { grid: { display: showGrid } },
+                    y: { grid: { display: showGrid }, beginAtZero: true }
+                };
+            } else if (chartType === 'bar') {
+                options.scales = {
+                    x: { grid: { display: showGrid } },
+                    y: { grid: { display: showGrid }, beginAtZero: true }
+                };
+            } else if (chartType === 'radar') {
+                options.scales = {
+                    r: {
+                        grid: { display: showGrid },
+                        beginAtZero: true
+                    }
+                };
+                options.plugins.tooltip.mode = 'nearest';
+            }
+
+            if (computeResult?.options?.indexAxis) {
+                options.indexAxis = computeResult.options.indexAxis;
+            }
+
+            return options;
+        }
+
+        function mergeChartOptions(base = {}, overrides = {}) {
+            if (!overrides || typeof overrides !== 'object') {
+                return Array.isArray(base) ? [...base] : { ...base };
+            }
+            const result = Array.isArray(base) ? [...base] : { ...base };
+            Object.keys(overrides).forEach(key => {
+                const overrideValue = overrides[key];
+                if (overrideValue && typeof overrideValue === 'object' && !Array.isArray(overrideValue)) {
+                    result[key] = mergeChartOptions(base[key] || {}, overrideValue);
+                } else {
+                    result[key] = overrideValue;
+                }
+            });
+            return result;
+        }
+
+        function renderCustomChartOptions(dataset, chartConfig) {
+            if (!customChartOptionsContainer || !customChartOptionsSection) {
+                return;
+            }
+            const options = Array.isArray(dataset?.options) ? dataset.options : [];
+            if (!options.length) {
+                customChartOptionsContainer.innerHTML = '';
+                customChartOptionsSection.hidden = true;
+                return;
+            }
+
+            customChartOptionsSection.hidden = false;
+            const markup = options.map(option => {
+                const optionId = `customChartOption-${option.id}`;
+                const value = chartConfig.datasetOptions?.[option.id];
+                if (option.type === 'checkbox') {
+                    const checked = value === true;
+                    const description = option.description ? `<small>${escapeHtml(option.description)}</small>` : '';
+                    return `
+                        <div class="custom-chart-option" data-option-id="${escapeHtml(option.id)}" data-option-type="checkbox">
+                            <label class="custom-chart-checkbox">
+                                <input type="checkbox" id="${escapeHtml(optionId)}" ${checked ? 'checked' : ''}>
+                                <span>${escapeHtml(option.label || option.id)}${description}</span>
+                            </label>
+                        </div>
+                    `;
+                }
+
+                if (option.type === 'number') {
+                    const numericValue = Number.isFinite(value) ? value : option.default || 0;
+                    const attrs = [
+                        typeof option.min !== 'undefined' ? `min="${option.min}"` : '',
+                        typeof option.max !== 'undefined' ? `max="${option.max}"` : '',
+                        typeof option.step !== 'undefined' ? `step="${option.step}"` : ''
+                    ].filter(Boolean).join(' ');
+                    const description = option.description ? `<div class="option-description">${escapeHtml(option.description)}</div>` : '';
+                    return `
+                        <div class="custom-chart-option" data-option-id="${escapeHtml(option.id)}" data-option-type="number">
+                            <label for="${escapeHtml(optionId)}">${escapeHtml(option.label || option.id)}</label>
+                            <input type="number" id="${escapeHtml(optionId)}" value="${escapeHtml(String(numericValue))}" ${attrs}>
+                            ${description}
+                        </div>
+                    `;
+                }
+
+                const choices = resolveOptionChoices(option, { crmData, chartConfig });
+                let optionsMarkup = choices.map(choice => {
+                    const choiceValue = String(choice.value);
+                    const selected = String(value) === choiceValue ? 'selected' : '';
+                    return `<option value="${escapeHtml(choiceValue)}" ${selected}>${escapeHtml(choice.label || choiceValue)}</option>`;
+                }).join('');
+                if (!choices.some(choice => String(choice.value) === String(value)) && typeof value !== 'undefined' && value !== null && value !== '') {
+                    const fallback = String(value);
+                    optionsMarkup = `<option value="${escapeHtml(fallback)}" selected>${escapeHtml(fallback)} (недоступно)</option>` + optionsMarkup;
+                }
+                const description = option.description ? `<div class="option-description">${escapeHtml(option.description)}</div>` : '';
+                return `
+                    <div class="custom-chart-option" data-option-id="${escapeHtml(option.id)}" data-option-type="select">
+                        <label for="${escapeHtml(optionId)}">${escapeHtml(option.label || option.id)}</label>
+                        <select id="${escapeHtml(optionId)}">${optionsMarkup}</select>
+                        ${description}
+                    </div>
+                `;
+            }).join('');
+
+            customChartOptionsContainer.innerHTML = markup;
+        }
+
+        function renderCustomChartToggles(chartConfig) {
+            if (!customChartToggleList) {
+                return;
+            }
+            const toggles = CUSTOM_CHART_TOGGLES;
+            if (!toggles.length) {
+                customChartToggleList.innerHTML = '';
+                return;
+            }
+
+            const markup = toggles.map(toggle => {
+                const supported = !Array.isArray(toggle.types) || toggle.types.includes(chartConfig.chartType);
+                const checked = supported && chartConfig.options?.[toggle.id] !== false;
+                const disabledAttr = supported ? '' : 'disabled';
+                const toggleId = `customChartToggle-${toggle.id}`;
+                return `
+                    <label class="custom-chart-toggle" data-disabled="${supported ? 'false' : 'true'}" for="${escapeHtml(toggleId)}">
+                        <input type="checkbox" id="${escapeHtml(toggleId)}" value="${escapeHtml(toggle.id)}" ${checked ? 'checked' : ''} ${disabledAttr}>
+                        ${escapeHtml(toggle.label)}
+                    </label>
+                `;
+            }).join('');
+
+            customChartToggleList.innerHTML = markup;
+        }
+
+        function updateCustomChartFormState(config) {
+            if (!customChartForm) {
+                return;
+            }
+
+            const nextConfig = { ...config };
+            let dataset = getCustomChartDataset(nextConfig.datasetId);
+            if (!dataset && CUSTOM_CHART_DATASETS.length) {
+                dataset = CUSTOM_CHART_DATASETS[0];
+                nextConfig.datasetId = dataset.id;
+            }
+            if (!dataset) {
+                return;
+            }
+
+            const datasetDefaults = getDatasetDefaultOptions(dataset, { chartConfig: nextConfig, dataset });
+            nextConfig.datasetOptions = {
+                ...datasetDefaults,
+                ...(nextConfig.datasetOptions || {})
+            };
+            const toggleDefaults = getDefaultToggleValues();
+            nextConfig.options = {
+                ...toggleDefaults,
+                ...(nextConfig.options || {})
+            };
+
+            if (customChartIdInput) {
+                customChartIdInput.value = nextConfig.id || '';
+            }
+
+            if (customChartMetricSelect) {
+                customChartMetricSelect.value = dataset.id;
+            }
+
+            if (customChartTitleInput) {
+                customChartTitleInput.value = nextConfig.title || dataset.label;
+            }
+
+            if (customChartMetricHint) {
+                customChartMetricHint.textContent = dataset.description || '';
+            }
+
+            if (customChartTypeSelect) {
+                const allowedTypes = Array.isArray(dataset.allowedTypes) && dataset.allowedTypes.length
+                    ? dataset.allowedTypes
+                    : ['bar'];
+                customChartTypeSelect.innerHTML = allowedTypes
+                    .map(type => `<option value="${escapeHtml(type)}">${escapeHtml(CHART_TYPE_LABELS[type] || type)}</option>`)
+                    .join('');
+                const selectedType = allowedTypes.includes(nextConfig.chartType)
+                    ? nextConfig.chartType
+                    : (dataset.defaultType || allowedTypes[0]);
+                customChartTypeSelect.value = selectedType;
+                nextConfig.chartType = selectedType;
+            }
+
+            if (customChartPaletteSelect) {
+                const paletteId = CUSTOM_CHART_PALETTES[nextConfig.palette] ? nextConfig.palette : 'aurora';
+                customChartPaletteSelect.value = paletteId;
+                nextConfig.palette = paletteId;
+            }
+
+            renderCustomChartOptions(dataset, nextConfig);
+            renderCustomChartToggles(nextConfig);
+        }
+
+        function collectCustomChartFormValues({ normalize = false } = {}) {
+            if (!customChartForm) {
+                return null;
+            }
+
+            const selectedDatasetId = customChartMetricSelect?.value || (CUSTOM_CHART_DATASETS[0]?.id ?? '');
+            const dataset = getCustomChartDataset(selectedDatasetId);
+            const paletteValue = customChartPaletteSelect?.value;
+            const palette = CUSTOM_CHART_PALETTES[paletteValue] ? paletteValue : 'aurora';
+            const rawType = customChartTypeSelect?.value || dataset?.defaultType || 'bar';
+            const allowedTypes = Array.isArray(dataset?.allowedTypes) && dataset.allowedTypes.length
+                ? dataset.allowedTypes
+                : [rawType];
+            const chartType = allowedTypes.includes(rawType) ? rawType : (dataset?.defaultType || allowedTypes[0]);
+
+            const baseConfig = {
+                id: customChartIdInput ? customChartIdInput.value : '',
+                title: customChartTitleInput ? customChartTitleInput.value.trim() : '',
+                datasetId: dataset ? dataset.id : selectedDatasetId,
+                chartType,
+                palette,
+                datasetOptions: {},
+                options: {}
+            };
+
+            const defaults = dataset ? getDatasetDefaultOptions(dataset, { chartConfig: baseConfig, dataset }) : {};
+            const datasetOptions = { ...defaults };
+            if (dataset && customChartOptionsContainer) {
+                dataset.options?.forEach(option => {
+                    const wrapper = customChartOptionsContainer.querySelector(`[data-option-id="${option.id}"]`);
+                    if (!wrapper) {
+                        return;
+                    }
+                    let value = defaults[option.id];
+                    if (option.type === 'checkbox') {
+                        const input = wrapper.querySelector('input[type="checkbox"]');
+                        value = input ? input.checked : defaults[option.id];
+                    } else if (option.type === 'number') {
+                        const input = wrapper.querySelector('input[type="number"]');
+                        value = input ? Number(input.value) : defaults[option.id];
+                    } else {
+                        const input = wrapper.querySelector('select, input');
+                        value = input ? input.value : defaults[option.id];
+                    }
+                    datasetOptions[option.id] = normalizeOptionValue(option, value, { chartConfig: baseConfig, dataset });
+                });
+            }
+
+            baseConfig.datasetOptions = datasetOptions;
+
+            const toggleDefaults = getDefaultToggleValues();
+            const toggleValues = { ...toggleDefaults };
+            if (customChartToggleList) {
+                customChartToggleList.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    const toggleId = input.value;
+                    if (!Object.prototype.hasOwnProperty.call(toggleValues, toggleId)) {
+                        toggleValues[toggleId] = input.checked;
+                        return;
+                    }
+                    toggleValues[toggleId] = input.disabled ? toggleDefaults[toggleId] : input.checked;
+                });
+            }
+            baseConfig.options = toggleValues;
+
+            if (!baseConfig.title) {
+                baseConfig.title = dataset ? dataset.label : 'Графік';
+            }
+
+            return normalize ? normalizeCustomChart(baseConfig) : baseConfig;
+        }
+
+        function handleCustomChartSubmit(event) {
+            event.preventDefault();
+            const config = collectCustomChartFormValues({ normalize: true });
+            if (!config) {
+                return;
+            }
+            const charts = getCustomCharts();
+            const index = charts.findIndex(chart => chart.id === config.id);
+            if (index >= 0) {
+                charts[index] = config;
+            } else {
+                charts.push(config);
+            }
+            setCustomCharts(charts);
+            closeModal('customChartModal');
+        }
+
+        function duplicateCustomChart(config) {
+            if (!config) {
+                return;
+            }
+            const copy = normalizeCustomChart({
+                ...config,
+                id: generateId('chart'),
+                title: config.title ? `${config.title} — копія` : config.title
+            });
+            const charts = getCustomCharts();
+            charts.push(copy);
+            setCustomCharts(charts);
+        }
+
+        function deleteCustomChart(chartId) {
+            if (!chartId) {
+                return;
+            }
+            if (!window.confirm('Видалити графік? Дію неможливо скасувати.')) {
+                return;
+            }
+            const charts = getCustomCharts().filter(chart => chart.id !== chartId);
+            if (customChartInstances.has(chartId)) {
+                const instance = customChartInstances.get(chartId);
+                instance.destroy();
+                customChartInstances.delete(chartId);
+            }
+            setCustomCharts(charts);
+        }
+
+        function openCustomChartModal(config = null) {
+            if (!customChartForm) {
+                return;
+            }
+            let preparedConfig = null;
+            if (config) {
+                preparedConfig = normalizeCustomChart(config);
+            } else if (CUSTOM_CHART_DATASETS.length) {
+                const dataset = CUSTOM_CHART_DATASETS[0];
+                preparedConfig = {
+                    id: '',
+                    title: dataset.label,
+                    datasetId: dataset.id,
+                    chartType: dataset.defaultType,
+                    palette: 'aurora',
+                    datasetOptions: getDatasetDefaultOptions(dataset, { chartConfig: { datasetId: dataset.id, chartType: dataset.defaultType }, dataset }),
+                    options: getDefaultToggleValues()
+                };
+            }
+
+            if (!preparedConfig) {
+                return;
+            }
+
+            if (!config) {
+                preparedConfig.id = '';
+            }
+
+            updateCustomChartFormState(preparedConfig);
+            if (customChartModalTitle) {
+                customChartModalTitle.textContent = config ? 'Редагувати графік' : 'Новий графік';
+            }
+            openModal('customChartModal');
+            if (customChartTitleInput) {
+                requestAnimationFrame(() => {
+                    if (config) {
+                        customChartTitleInput.focus();
+                    } else {
+                        customChartTitleInput.select();
+                    }
+                });
+            }
+        }
+
+        function setupCustomCharts() {
+            const container = document.getElementById('customChartsContainer');
+            customChartForm = document.getElementById('customChartForm');
+            if (!container || !customChartForm) {
+                return;
+            }
+
+            customChartIdInput = document.getElementById('customChartId');
+            customChartTitleInput = document.getElementById('customChartTitle');
+            customChartMetricSelect = document.getElementById('customChartMetric');
+            customChartTypeSelect = document.getElementById('customChartType');
+            customChartPaletteSelect = document.getElementById('customChartPalette');
+            customChartOptionsContainer = document.getElementById('customChartOptions');
+            customChartOptionsSection = document.getElementById('customChartOptionsSection');
+            customChartToggleList = document.getElementById('customChartToggleList');
+            customChartMetricHint = document.getElementById('customChartMetricHint');
+            customChartModalTitle = document.getElementById('customChartModalTitle');
+
+            populateCustomChartSelects();
+
+            const addButton = document.getElementById('addCustomChartBtn');
+            if (addButton) {
+                addButton.addEventListener('click', () => openCustomChartModal());
+            }
+
+            customChartForm.addEventListener('submit', handleCustomChartSubmit);
+
+            if (customChartMetricSelect) {
+                customChartMetricSelect.addEventListener('change', () => {
+                    const dataset = getCustomChartDataset(customChartMetricSelect.value);
+                    if (!dataset) {
+                        return;
+                    }
+                    const paletteValue = customChartPaletteSelect && CUSTOM_CHART_PALETTES[customChartPaletteSelect.value]
+                        ? customChartPaletteSelect.value
+                        : 'aurora';
+                    const config = {
+                        id: customChartIdInput ? customChartIdInput.value : '',
+                        title: customChartTitleInput ? (customChartTitleInput.value.trim() || dataset.label) : dataset.label,
+                        datasetId: dataset.id,
+                        chartType: dataset.defaultType,
+                        palette: paletteValue,
+                        datasetOptions: getDatasetDefaultOptions(dataset, { chartConfig: { datasetId: dataset.id, chartType: dataset.defaultType }, dataset }),
+                        options: getDefaultToggleValues()
+                    };
+                    updateCustomChartFormState(config);
+                });
+            }
+
+            if (customChartTypeSelect) {
+                customChartTypeSelect.addEventListener('change', () => {
+                    const current = collectCustomChartFormValues();
+                    if (!current) {
+                        return;
+                    }
+                    current.chartType = customChartTypeSelect.value;
+                    updateCustomChartFormState(current);
+                });
+            }
+
+            container.addEventListener('click', event => {
+                const actionButton = event.target.closest('[data-chart-action]');
+                if (!actionButton) {
+                    return;
+                }
+                const chartId = actionButton.dataset.chartId;
+                const action = actionButton.dataset.chartAction;
+                if (!chartId || !action) {
+                    return;
+                }
+                const charts = getCustomCharts();
+                const config = charts.find(chart => chart.id === chartId);
+                if (action === 'edit') {
+                    if (!config) {
+                        return;
+                    }
+                    updateCustomChartFormState(config);
+                    if (customChartModalTitle) {
+                        customChartModalTitle.textContent = 'Редагувати графік';
+                    }
+                    openModal('customChartModal');
+                    if (customChartTitleInput) {
+                        requestAnimationFrame(() => customChartTitleInput.focus());
+                    }
+                } else if (action === 'duplicate') {
+                    if (config) {
+                        duplicateCustomChart(config);
+                    }
+                } else if (action === 'delete') {
+                    deleteCustomChart(chartId);
+                }
+            });
+
+            renderCustomCharts();
+        }
+
+        function parseCustomChartDate(value) {
+            if (!value) {
+                return null;
+            }
+            const date = value instanceof Date ? new Date(value.getTime()) : new Date(value);
+            return Number.isNaN(date.getTime()) ? null : date;
+        }
+
+        function startOfMonth(date) {
+            return new Date(date.getFullYear(), date.getMonth(), 1);
+        }
+
+        function getMonthKeyValue(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+        }
+
+        function getRecentMonths(count, referenceDate = new Date()) {
+            const months = [];
+            const safeCount = Math.max(1, Math.round(count));
+            const start = startOfMonth(referenceDate);
+            for (let index = safeCount - 1; index >= 0; index -= 1) {
+                months.push(new Date(start.getFullYear(), start.getMonth() - index, 1));
+            }
+            return months;
+        }
+
+        function formatMonthLabel(date) {
+            const formatter = new Intl.DateTimeFormat('uk-UA', { month: 'short', year: 'numeric' });
+            return formatter.format(date);
+        }
+
+        function computePipelineStageDataset(crmData, chartConfig) {
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            if (!leads.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Додайте угоди у CRM, щоб побачити розподіл по етапах.'
+                };
+            }
+
+            const options = chartConfig?.datasetOptions || {};
+            const includeLost = options.includeLost === true;
+            const valueMode = options.valueMode === 'count' ? 'count' : 'value';
+            const sortMode = options.sort === 'desc' ? 'desc' : 'pipeline';
+
+            const stages = STAGES.filter(stage => includeLost || stage !== 'Втрачено');
+            const rows = stages.map(stage => {
+                const stageLeads = leads.filter(lead => lead.stage === stage);
+                const amount = stageLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+                return {
+                    stage,
+                    amount,
+                    count: stageLeads.length
+                };
+            });
+
+            if (sortMode === 'desc') {
+                rows.sort((a, b) => {
+                    const valueA = valueMode === 'value' ? a.amount : a.count;
+                    const valueB = valueMode === 'value' ? b.amount : b.count;
+                    return valueB - valueA;
+                });
+            }
+
+            const labels = rows.map(item => item.stage);
+            const values = rows.map(item => valueMode === 'value' ? item.amount : item.count);
+            const totalAmount = rows.reduce((sum, item) => sum + item.amount, 0);
+            const totalCount = rows.reduce((sum, item) => sum + item.count, 0);
+
+            const summaryParts = [];
+            if (valueMode === 'value') {
+                summaryParts.push(`Активна воронка: ${formatCurrency(totalAmount)}`);
+            } else {
+                summaryParts.push(`Усього угод: ${formatIntegerDisplay(totalCount)}`);
+            }
+            const leader = rows.reduce((best, item) => {
+                const value = valueMode === 'value' ? item.amount : item.count;
+                if (!best || value > best.value) {
+                    return { stage: item.stage, value };
+                }
+                return best;
+            }, null);
+            if (leader && leader.value > 0) {
+                summaryParts.push(`Лідирує етап «${leader.stage}»`);
+            }
+
+            const empty = values.every(value => !Number.isFinite(value) || value <= 0);
+
+            return {
+                labels,
+                datasets: [
+                    {
+                        label: valueMode === 'value' ? 'Сума угод, ₴' : 'Кількість угод',
+                        data: values
+                    }
+                ],
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                },
+                summary: summaryParts,
+                empty,
+                emptyMessage: 'Поки що немає угод у вибраному розрізі.'
+            };
+        }
+
+        function computeRevenueTrendDataset(crmData, chartConfig) {
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            if (!leads.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Додайте угоди, щоб побудувати динаміку.'
+                };
+            }
+
+            const rangeValue = Math.max(1, Number(chartConfig?.datasetOptions?.range) || 6);
+            const metric = chartConfig?.datasetOptions?.metric || 'wonValue';
+            const showComparison = chartConfig?.datasetOptions?.comparison !== false;
+
+            const relevantDates = leads.flatMap(lead => [
+                parseCustomChartDate(lead.closedAt),
+                parseCustomChartDate(lead.updatedAt),
+                parseCustomChartDate(lead.expectedClose),
+                parseCustomChartDate(lead.createdAt)
+            ].filter(Boolean));
+            const referenceDate = relevantDates.length
+                ? relevantDates.reduce((latest, current) => (current > latest ? current : latest), relevantDates[0])
+                : new Date();
+
+            const months = getRecentMonths(rangeValue, referenceDate);
+            const monthKeys = months.map(getMonthKeyValue);
+            const monthState = monthKeys.reduce((acc, key) => {
+                acc[key] = {
+                    wonValue: 0,
+                    wonCount: 0,
+                    newLeads: 0,
+                    pipelineValue: 0,
+                    pipelineCount: 0
+                };
+                return acc;
+            }, {});
+
+            leads.forEach(lead => {
+                const value = Number(lead.value) || 0;
+                const created = parseCustomChartDate(lead.createdAt);
+                if (created) {
+                    const key = getMonthKeyValue(startOfMonth(created));
+                    if (monthState[key]) {
+                        monthState[key].newLeads += 1;
+                    }
+                }
+                const closedDate = (lead.stage === 'Угода' || lead.status === 'won')
+                    ? (parseCustomChartDate(lead.closedAt) || parseCustomChartDate(lead.updatedAt))
+                    : null;
+                if (closedDate) {
+                    const key = getMonthKeyValue(startOfMonth(closedDate));
+                    if (monthState[key]) {
+                        monthState[key].wonValue += value;
+                        monthState[key].wonCount += 1;
+                    }
+                }
+                const expected = parseCustomChartDate(lead.expectedClose);
+                if (expected) {
+                    const key = getMonthKeyValue(startOfMonth(expected));
+                    if (monthState[key]) {
+                        const probability = Number(lead.probability);
+                        const weighted = Number.isFinite(probability) ? value * (probability / 100) : value;
+                        monthState[key].pipelineValue += weighted;
+                        monthState[key].pipelineCount += 1;
+                    }
+                }
+            });
+
+            const labels = months.map(formatMonthLabel);
+            const primaryData = monthKeys.map(key => {
+                if (metric === 'wonValue') return monthState[key].wonValue;
+                if (metric === 'wonCount') return monthState[key].wonCount;
+                if (metric === 'newLeads') return monthState[key].newLeads;
+                return monthState[key].pipelineValue;
+            });
+
+            let comparisonDataset = null;
+            if (showComparison) {
+                if (metric === 'wonValue') {
+                    comparisonDataset = {
+                        label: 'Прогноз, ₴',
+                        data: monthKeys.map(key => monthState[key].pipelineValue),
+                        borderDash: [6, 4],
+                        type: chartConfig.chartType === 'bar' ? 'line' : undefined,
+                        fill: false
+                    };
+                } else if (metric === 'wonCount') {
+                    comparisonDataset = {
+                        label: 'Очікувані угоди',
+                        data: monthKeys.map(key => monthState[key].pipelineCount),
+                        borderDash: [6, 4],
+                        fill: false
+                    };
+                } else if (metric === 'newLeads') {
+                    const average = monthKeys.length
+                        ? Math.round(monthKeys.reduce((sum, key) => sum + monthState[key].newLeads, 0) / monthKeys.length)
+                        : 0;
+                    comparisonDataset = {
+                        label: 'Середнє значення',
+                        data: monthKeys.map(() => average),
+                        borderDash: [6, 4],
+                        fill: false
+                    };
+                } else {
+                    comparisonDataset = {
+                        label: 'Закрито, ₴',
+                        data: monthKeys.map(key => monthState[key].wonValue),
+                        borderDash: [6, 4],
+                        type: chartConfig.chartType === 'bar' ? 'line' : undefined,
+                        fill: false
+                    };
+                }
+            }
+
+            const datasets = [
+                {
+                    label: metric === 'wonValue'
+                        ? 'Виграно, ₴'
+                        : metric === 'wonCount'
+                            ? 'Виграно, шт.'
+                            : metric === 'newLeads'
+                                ? 'Нові ліди'
+                                : 'Очікуваний прогноз, ₴',
+                    data: primaryData
+                }
+            ];
+            if (comparisonDataset) {
+                datasets.push(comparisonDataset);
+            }
+
+            const summaryParts = [];
+            const lastValue = primaryData[primaryData.length - 1] ?? 0;
+            if (metric === 'wonValue' || metric === 'pipelineValue') {
+                summaryParts.push(`Останній місяць: ${formatCurrency(lastValue)}`);
+            } else {
+                summaryParts.push(`Останній місяць: ${formatIntegerDisplay(lastValue)}`);
+            }
+            if (primaryData.length >= 2) {
+                const prev = primaryData[primaryData.length - 2];
+                const diff = lastValue - prev;
+                if (metric === 'wonValue' || metric === 'pipelineValue') {
+                    summaryParts.push(`${diff >= 0 ? 'Зростання' : 'Падіння'} проти попереднього місяця: ${formatCurrency(Math.abs(diff))}`);
+                } else {
+                    summaryParts.push(`${diff >= 0 ? 'Зростання' : 'Падіння'}: ${formatIntegerDisplay(Math.abs(diff))}`);
+                }
+            }
+
+            const hasValues = datasets.some(dataset => Array.isArray(dataset.data)
+                && dataset.data.some(value => Number.isFinite(value) && Math.abs(value) > 0));
+
+            return {
+                labels,
+                datasets,
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                },
+                summary: summaryParts,
+                empty: !hasValues,
+                emptyMessage: 'Немає історичних даних для побудови тренду.'
+            };
+        }
+
+        function computeOwnerPerformanceDataset(crmData, chartConfig) {
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            if (!leads.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Додайте угоди, щоб аналізувати результативність команди.'
+                };
+            }
+
+            const options = chartConfig?.datasetOptions || {};
+            const metric = options.metric || 'pipelineValue';
+            const limit = options.limit || 'all';
+            const includeLost = options.showLost === true;
+
+            const ownerMap = new Map();
+            leads.forEach(lead => {
+                const owner = typeof lead.owner === 'string' && lead.owner.trim().length ? lead.owner.trim() : 'Без відповідального';
+                if (!ownerMap.has(owner)) {
+                    ownerMap.set(owner, { pipelineValue: 0, wonValue: 0, total: 0, wonCount: 0, lostCount: 0 });
+                }
+                const stats = ownerMap.get(owner);
+                const value = Number(lead.value) || 0;
+                const stage = lead.stage;
+                const isWon = stage === 'Угода' || lead.status === 'won';
+                const isLost = stage === 'Втрачено' || lead.status === 'lost';
+                stats.total += 1;
+                if (!isLost) {
+                    stats.pipelineValue += value;
+                }
+                if (isWon) {
+                    stats.wonValue += value;
+                    stats.wonCount += 1;
+                }
+                if (isLost) {
+                    stats.lostCount += 1;
+                }
+            });
+
+            let entries = Array.from(ownerMap.entries()).map(([owner, stats]) => {
+                let metricValue = 0;
+                if (metric === 'pipelineValue') {
+                    metricValue = stats.pipelineValue;
+                } else if (metric === 'wonValue') {
+                    metricValue = stats.wonValue;
+                } else if (metric === 'dealCount') {
+                    metricValue = includeLost ? stats.total : Math.max(0, stats.total - stats.lostCount);
+                } else if (metric === 'winRate') {
+                    const denominator = stats.wonCount + stats.lostCount;
+                    metricValue = denominator ? Math.round((stats.wonCount / denominator) * 100) : 0;
+                }
+                return { owner, stats, metricValue };
+            });
+
+            entries.sort((a, b) => b.metricValue - a.metricValue);
+            if (limit !== 'all') {
+                const limitNumber = Number(limit);
+                if (Number.isFinite(limitNumber) && limitNumber > 0) {
+                    entries = entries.slice(0, limitNumber);
+                }
+            }
+
+            const labels = entries.map(entry => entry.owner);
+            const values = entries.map(entry => entry.metricValue);
+            const datasets = [
+                {
+                    label: metric === 'pipelineValue'
+                        ? 'Активна воронка, ₴'
+                        : metric === 'wonValue'
+                            ? 'Виграно, ₴'
+                            : metric === 'dealCount'
+                                ? 'Кількість угод'
+                                : 'Win rate, %',
+                    data: values
+                }
+            ];
+
+            const summaryParts = [];
+            if (metric === 'pipelineValue' || metric === 'wonValue') {
+                summaryParts.push(`У вибірці: ${formatCurrency(values.reduce((sum, value) => sum + value, 0))}`);
+            } else if (metric === 'dealCount') {
+                summaryParts.push(`У вибірці: ${formatIntegerDisplay(values.reduce((sum, value) => sum + value, 0))} угод`);
+            } else {
+                const averageWinRate = leads.reduce((acc, lead) => acc + (lead.stage === 'Угода' ? 1 : 0), 0);
+                const lost = leads.reduce((acc, lead) => acc + (lead.stage === 'Втрачено' ? 1 : 0), 0);
+                const denominator = averageWinRate + lost;
+                const avgRate = denominator ? Math.round((averageWinRate / denominator) * 100) : 0;
+                summaryParts.push(`Середній win rate: ${avgRate}%`);
+            }
+            const leader = entries[0];
+            if (leader && leader.metricValue > 0) {
+                if (metric === 'pipelineValue' || metric === 'wonValue') {
+                    summaryParts.push(`Лідер: ${leader.owner} — ${formatCurrency(leader.metricValue)}`);
+                } else if (metric === 'winRate') {
+                    summaryParts.push(`Лідер: ${leader.owner} — ${formatIntegerDisplay(leader.metricValue)}%`);
+                } else {
+                    summaryParts.push(`Лідер: ${leader.owner} — ${formatIntegerDisplay(leader.metricValue)}`);
+                }
+            }
+
+            return {
+                labels,
+                datasets,
+                summary: summaryParts,
+                empty: !entries.length,
+                emptyMessage: 'Додайте угоди, щоб аналізувати результативність команди.'
+            };
+        }
+
+        function computeTaskStatusDataset(crmData, chartConfig) {
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
+            if (!tasks.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Створіть хоча б одну задачу, щоб побачити розподіл.'
+                };
+            }
+
+            const options = chartConfig?.datasetOptions || {};
+            const groupBy = options.groupBy === 'priority' ? 'priority' : 'status';
+            const includeDone = options.includeDone !== false;
+            const onlyOverdue = options.onlyOverdue === true;
+            const orientation = options.orientation === 'horizontal' ? 'horizontal' : 'vertical';
+
+            let filtered = tasks.slice();
+            if (!includeDone) {
+                filtered = filtered.filter(task => task.status !== 'done');
+            }
+            if (onlyOverdue) {
+                filtered = filtered.filter(task => isOverdue(task.dueDate));
+            }
+
+            if (!filtered.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'За обраними умовами немає задач.'
+                };
+            }
+
+            let groups = [];
+            if (groupBy === 'priority') {
+                groups = ['high', 'medium', 'low'].map(id => ({
+                    id,
+                    label: TASK_PRIORITY_LABELS[id] || id,
+                    count: filtered.filter(task => task.priority === id).length
+                }));
+            } else {
+                groups = TASK_COLUMNS.map(column => ({
+                    id: column.id,
+                    label: column.title,
+                    count: filtered.filter(task => task.status === column.id).length
+                }));
+            }
+
+            const total = groups.reduce((sum, group) => sum + group.count, 0);
+            const labels = groups.map(group => group.label);
+            const values = groups.map(group => group.count);
+
+            const summaryParts = [`Усього задач: ${formatIntegerDisplay(total)}`];
+            const overdueCount = filtered.filter(task => isOverdue(task.dueDate)).length;
+            if (onlyOverdue) {
+                summaryParts.push(`Прострочено: ${formatIntegerDisplay(overdueCount)}`);
+            } else if (overdueCount > 0) {
+                summaryParts.push(`Потребують уваги: ${formatIntegerDisplay(overdueCount)}`);
+            }
+
+            const optionsOverrides = {};
+            if (chartConfig.chartType === 'bar' && orientation === 'horizontal') {
+                optionsOverrides.indexAxis = 'y';
+            }
+            if (chartConfig.chartType === 'bar') {
+                optionsOverrides.scales = {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                };
+            }
+
+            return {
+                labels,
+                datasets: [
+                    {
+                        label: 'Кількість задач',
+                        data: values
+                    }
+                ],
+                options: optionsOverrides,
+                summary: summaryParts,
+                empty: values.every(value => value === 0),
+                emptyMessage: 'За обраними умовами немає задач.'
+            };
+        }
+
+        function computeTaskOwnerWorkloadDataset(crmData, chartConfig) {
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
+            if (!tasks.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Додайте задачі, щоб побачити навантаження команди.'
+                };
+            }
+
+            const options = chartConfig?.datasetOptions || {};
+            const statusFilter = options.status || 'active';
+            const limit = options.limit || 'all';
+            const orientation = options.orientation === 'horizontal' ? 'horizontal' : 'vertical';
+
+            let filtered = tasks.slice();
+            if (statusFilter === 'active') {
+                filtered = filtered.filter(task => task.status !== 'done');
+            } else if (statusFilter === 'done') {
+                filtered = filtered.filter(task => task.status === 'done');
+            }
+
+            if (!filtered.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'За обраними умовами немає задач.'
+                };
+            }
+
+            const ownerMap = new Map();
+            filtered.forEach(task => {
+                const owner = typeof task.owner === 'string' && task.owner.trim().length ? task.owner.trim() : 'Без відповідального';
+                ownerMap.set(owner, (ownerMap.get(owner) || 0) + 1);
+            });
+
+            let entries = Array.from(ownerMap.entries()).map(([owner, count]) => ({ owner, count }));
+            entries.sort((a, b) => b.count - a.count);
+
+            if (limit !== 'all') {
+                const limitNumber = Number(limit);
+                if (Number.isFinite(limitNumber) && limitNumber > 0) {
+                    entries = entries.slice(0, limitNumber);
+                }
+            }
+
+            const labels = entries.map(entry => entry.owner);
+            const values = entries.map(entry => entry.count);
+
+            const summaryParts = [
+                `У вибірці: ${formatIntegerDisplay(filtered.length)} задач`
+            ];
+            const top = entries[0];
+            if (top) {
+                summaryParts.push(`Найбільше у ${top.owner}: ${formatIntegerDisplay(top.count)}`);
+            }
+
+            const optionsOverrides = {};
+            if (chartConfig.chartType === 'bar' && orientation === 'horizontal') {
+                optionsOverrides.indexAxis = 'y';
+            }
+            if (chartConfig.chartType === 'bar') {
+                optionsOverrides.scales = {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                };
+            }
+
+            return {
+                labels,
+                datasets: [
+                    {
+                        label: 'Кількість задач',
+                        data: values
+                    }
+                ],
+                options: optionsOverrides,
+                summary: summaryParts,
+                empty: !entries.length,
+                emptyMessage: 'За обраними умовами немає задач.'
+            };
+        }
+
+        function computeContactStatusDataset(crmData, chartConfig) {
+            const contacts = Array.isArray(crmData?.contacts) ? crmData.contacts : [];
+            if (!contacts.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'Додайте контакти, щоб побачити розподіл за статусами.'
+                };
+            }
+
+            const ownerFilter = chartConfig?.datasetOptions?.owner || 'all';
+            const filtered = ownerFilter === 'all'
+                ? contacts
+                : contacts.filter(contact => contact.owner === ownerFilter);
+
+            if (!filtered.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'За обраним менеджером поки немає контактів.'
+                };
+            }
+
+            const statusCounts = new Map(Object.keys(STATUS_LABELS).map(status => [status, 0]));
+            filtered.forEach(contact => {
+                const statusKey = statusCounts.has(contact.status) ? contact.status : (contact.status || 'potential');
+                if (!statusCounts.has(statusKey)) {
+                    statusCounts.set(statusKey, 0);
+                }
+                statusCounts.set(statusKey, (statusCounts.get(statusKey) || 0) + 1);
+            });
+
+            const entries = Array.from(statusCounts.entries()).filter(([, count]) => count > 0);
+            if (!entries.length) {
+                return {
+                    empty: true,
+                    emptyMessage: 'За обраними умовами немає контактів.'
+                };
+            }
+
+            const labels = entries.map(([status]) => STATUS_LABELS[status] || status);
+            const values = entries.map(([, count]) => count);
+
+            const total = values.reduce((sum, value) => sum + value, 0);
+            const mostCommonIndex = values.reduce((bestIndex, value, index, array) => {
+                if (bestIndex === -1 || value > array[bestIndex]) {
+                    return index;
+                }
+                return bestIndex;
+            }, -1);
+
+            const summaryParts = [`У базі: ${formatIntegerDisplay(total)} контактів`];
+            if (mostCommonIndex >= 0 && values[mostCommonIndex] > 0) {
+                summaryParts.push(`Найбільше статусів: ${labels[mostCommonIndex]}`);
+            }
+            if (ownerFilter !== 'all') {
+                summaryParts.push(`Менеджер: ${ownerFilter}`);
+            }
+
+            return {
+                labels,
+                datasets: [
+                    {
+                        label: 'Контакти',
+                        data: values
+                    }
+                ],
+                summary: summaryParts,
+                empty: total === 0,
+                emptyMessage: 'За обраними умовами немає контактів.'
+            };
         }
 
         function renderRoles() {
