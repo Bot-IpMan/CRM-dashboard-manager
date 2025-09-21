@@ -9503,6 +9503,10 @@
                 ? data.supportTickets.map(normalizeSupportTicket).filter(Boolean)
                 : deepClone(defaultData.supportTickets || []);
 
+            data.activities = Array.isArray(data.activities)
+                ? data.activities.map(normalizeActivity).filter(Boolean)
+                : deepClone(defaultData.activities || []);
+
             data.fileLibrary = Array.isArray(data.fileLibrary)
                 ? data.fileLibrary.map(normalizeFileSnapshot).filter(Boolean)
                 : [];
@@ -10158,6 +10162,35 @@
                 resolvedAt,
                 csat
             };
+        }
+
+        function normalizeActivity(activity) {
+            if (!activity || typeof activity !== 'object') {
+                return null;
+            }
+
+            const message = typeof activity.message === 'string' ? activity.message.trim() : '';
+            if (!message.length) {
+                return null;
+            }
+
+            const id = typeof activity.id === 'string' && activity.id.trim().length ? activity.id.trim() : generateId('act');
+            const type = typeof activity.type === 'string' && activity.type.trim().length
+                ? activity.type.trim()
+                : 'note';
+
+            let entityId = null;
+            if (activity.entityId !== undefined && activity.entityId !== null) {
+                if (typeof activity.entityId === 'string') {
+                    entityId = activity.entityId.trim() || null;
+                } else {
+                    entityId = String(activity.entityId);
+                }
+            }
+
+            const timestamp = normalizeToISOString(activity.timestamp) || new Date().toISOString();
+
+            return { id, type, entityId, message, timestamp };
         }
 
         function normalizeRoleDefinition(role, isCustom = false) {
@@ -13699,7 +13732,11 @@
 
         function renderActivityTimeline() {
             const container = document.getElementById('activityTimeline');
-            const latest = crmData.activities.slice(0, 6);
+            if (!container) {
+                return;
+            }
+            const activities = Array.isArray(crmData?.activities) ? crmData.activities : [];
+            const latest = activities.slice(0, 6);
             if (latest.length === 0) {
                 container.innerHTML = '<div class="empty-state">Ще не було активностей. Додайте перші угоди!</div>';
                 return;
@@ -16242,10 +16279,14 @@
         }
         function renderPipeline() {
             const board = document.getElementById('pipelineBoard');
-            const leads = pipelineFilterOwner === 'all' ? crmData.leads : crmData.leads.filter(lead => lead.owner === pipelineFilterOwner);
             if (!board) {
                 return;
             }
+
+            const allLeads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            const leads = pipelineFilterOwner === 'all'
+                ? allLeads
+                : allLeads.filter(lead => lead.owner === pipelineFilterOwner);
 
             board.innerHTML = STAGES.map(stage => {
                 const stageLeads = leads.filter(lead => lead.stage === stage);
@@ -16428,6 +16469,7 @@
             }
 
             const now = new Date();
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
             const items = leads
                 .filter(lead => !['Втрачено', 'Угода'].includes(lead.stage))
                 .map(lead => {
@@ -16437,7 +16479,7 @@
                     if (dueDate && !Number.isNaN(dueDate.getTime())) {
                         dueDiff = Math.ceil((dueDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
                     }
-                    const openTasks = crmData.tasks.filter(task => task.relatedLeadId === lead.id && task.status !== 'done');
+                    const openTasks = tasks.filter(task => task.relatedLeadId === lead.id && task.status !== 'done');
                     const flags = [];
                     let score = 0;
                     const readinessScore = Math.max(0, Math.min(100, Number(lead.score) || 0));
@@ -16522,6 +16564,7 @@
             }
 
             const ownerMap = new Map();
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
             leads.forEach(lead => {
                 const ownerName = lead.owner || 'Без менеджера';
                 if (!ownerMap.has(ownerName)) {
@@ -16548,7 +16591,7 @@
             });
 
             const stats = Array.from(ownerMap.values()).map(entry => {
-                const openTasks = crmData.tasks.filter(task => task.owner === entry.owner && task.status !== 'done').length;
+                const openTasks = tasks.filter(task => task.owner === entry.owner && task.status !== 'done').length;
                 const avgProbability = entry.leads ? Math.round(entry.probabilitySum / entry.leads) : 0;
                 const winRate = entry.won + entry.lost ? Math.round((entry.won / (entry.won + entry.lost)) * 100) : avgProbability;
                 return {
@@ -16594,7 +16637,8 @@
             }
 
             const leadIds = new Set(leads.map(lead => lead.id));
-            const relevantActivities = crmData.activities
+            const activities = Array.isArray(crmData?.activities) ? crmData.activities : [];
+            const relevantActivities = activities
                 .filter(activity => ['stage', 'note', 'won', 'lost'].includes(activity.type))
                 .filter(activity => leadIds.has(activity.entityId))
                 .slice(0, 8);
@@ -21218,6 +21262,9 @@
         }
 
         function logActivity(message, type = 'note', entityId = null) {
+            if (!Array.isArray(crmData?.activities)) {
+                crmData.activities = [];
+            }
             crmData.activities.unshift({
                 id: generateId('act'),
                 type,
