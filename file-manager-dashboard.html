@@ -6273,6 +6273,10 @@
             medium: 'Середній',
             low: 'Низький'
         };
+        const TASK_STATUS_LABELS = TASK_COLUMNS.reduce((map, column) => {
+            map[column.id] = column.title;
+            return map;
+        }, {});
         const TASK_FILTER_DEFAULTS = {
             search: '',
             owner: 'all',
@@ -6368,6 +6372,29 @@
             portal: 'Портал підтримки',
             system: 'CRM'
         };
+        const CONTACT_CHANNEL_ALIASES = {
+            телефон: 'phone',
+            дзвінок: 'phone',
+            phone: 'phone',
+            voice: 'phone',
+            call: 'phone',
+            email: 'email',
+            лист: 'email',
+            пошта: 'email',
+            'електронна пошта': 'email',
+            портал: 'portal',
+            'портал підтримки': 'portal',
+            portal: 'portal',
+            чат: 'chat',
+            messenger: 'chat',
+            месенджер: 'chat',
+            video: 'video',
+            відео: 'video',
+            zoom: 'video',
+            crm: 'system',
+            system: 'system',
+            внутрішній: 'system'
+        };
 
         const CONTACT_INTERACTION_TYPE_LABELS = {
             call: 'Дзвінок',
@@ -6377,6 +6404,7 @@
             chat: 'Чат',
             task: 'Завдання',
             ticket: 'Запит',
+            update: 'Оновлення',
             success: 'Успіх'
         };
 
@@ -6388,6 +6416,7 @@
             chat: 'fa-solid fa-comments',
             task: 'fa-solid fa-circle-check',
             ticket: 'fa-solid fa-life-ring',
+            update: 'fa-solid fa-arrow-trend-up',
             success: 'fa-solid fa-star'
         };
 
@@ -16175,6 +16204,294 @@
             datalist.innerHTML = options;
         }
 
+        function normalizeContactChannel(value, fallback = 'system') {
+            if (typeof value !== 'string') {
+                return fallback;
+            }
+
+            const normalized = value.trim().toLowerCase();
+            if (!normalized.length) {
+                return fallback;
+            }
+
+            if (CONTACT_CHANNEL_LABELS[normalized]) {
+                return normalized;
+            }
+
+            if (CONTACT_CHANNEL_ALIASES[normalized]) {
+                return CONTACT_CHANNEL_ALIASES[normalized];
+            }
+
+            return fallback;
+        }
+
+        function normalizeToISOString(value) {
+            if (value instanceof Date) {
+                return value.toISOString();
+            }
+
+            if (typeof value === 'number' && Number.isFinite(value)) {
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? '' : date.toISOString();
+            }
+
+            if (typeof value === 'string') {
+                const trimmed = value.trim();
+                if (!trimmed.length) {
+                    return '';
+                }
+                if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+                    return `${trimmed}T00:00:00.000Z`;
+                }
+                const date = new Date(trimmed);
+                return Number.isNaN(date.getTime()) ? '' : date.toISOString();
+            }
+
+            return '';
+        }
+
+        function getContactTimeline(contact) {
+            if (!contact) {
+                return [];
+            }
+
+            const events = [];
+            const seen = new Set();
+
+            const addEvent = (interaction, fallbackAuthor, origin, extraTags = []) => {
+                const normalized = normalizeContactInteraction(interaction, fallbackAuthor);
+                if (!normalized) {
+                    return;
+                }
+
+                if (!normalized.timestamp) {
+                    return;
+                }
+
+                const key = `${normalized.id}|${normalized.timestamp}`;
+                if (seen.has(key)) {
+                    return;
+                }
+
+                const tagSet = new Set(
+                    Array.isArray(normalized.tags)
+                        ? normalized.tags
+                            .filter(tag => typeof tag === 'string' && tag.trim().length)
+                            .map(tag => tag.trim())
+                        : []
+                );
+                extraTags.forEach(tag => {
+                    if (typeof tag === 'string' && tag.trim().length) {
+                        tagSet.add(tag.trim());
+                    }
+                });
+                normalized.tags = Array.from(tagSet);
+                normalized.origin = origin;
+                seen.add(key);
+                events.push(normalized);
+            };
+
+            if (Array.isArray(contact.interactions)) {
+                contact.interactions.forEach(interaction => {
+                    addEvent(interaction, contact.owner, 'contact', ['Контакт']);
+                });
+            }
+
+            if (Array.isArray(contact.notes)) {
+                contact.notes.forEach(note => {
+                    const timestamp = normalizeToISOString(note.date);
+                    if (!timestamp) {
+                        return;
+                    }
+                    addEvent(
+                        {
+                            id: note.id,
+                            type: 'note',
+                            channel: 'system',
+                            subject: 'Нотатка профілю',
+                            summary: note.text,
+                            timestamp,
+                            author: note.author
+                        },
+                        note.author || contact.owner,
+                        'contact-note',
+                        ['Профіль']
+                    );
+                });
+            }
+
+            const normalizedEmail = (typeof contact.email === 'string' ? contact.email : '').trim().toLowerCase();
+            const normalizedCompany = (typeof contact.company === 'string' ? contact.company : '').trim().toLowerCase();
+            const normalizedName = (typeof contact.name === 'string' ? contact.name : '').trim().toLowerCase();
+
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            const relatedLeads = leads.filter(lead => {
+                if (!lead || typeof lead !== 'object') {
+                    return false;
+                }
+                const leadContact = lead.contact || {};
+                const leadContactId = typeof leadContact.id === 'string' ? leadContact.id : '';
+                const leadEmail = typeof leadContact.email === 'string' ? leadContact.email.trim().toLowerCase() : '';
+                const leadCompany = typeof lead.company === 'string' ? lead.company.trim().toLowerCase() : '';
+                const leadName = typeof leadContact.person === 'string' ? leadContact.person.trim().toLowerCase() : '';
+                return (
+                    (leadContactId && leadContactId === contact.id) ||
+                    (normalizedEmail && leadEmail && leadEmail === normalizedEmail) ||
+                    (normalizedCompany && leadCompany && leadCompany === normalizedCompany) ||
+                    (normalizedName && leadName && leadName === normalizedName)
+                );
+            });
+
+            const relatedLeadIds = new Set(relatedLeads.map(lead => lead.id).filter(Boolean));
+
+            relatedLeads.forEach(lead => {
+                const leadLabel = lead.name || lead.company || contact.company || 'Угода';
+                const leadTag = `Угода: ${leadLabel}`;
+                if (Array.isArray(lead.timeline)) {
+                    lead.timeline.forEach(item => {
+                        const timestamp = normalizeToISOString(item.date || item.timestamp);
+                        if (!timestamp) {
+                            return;
+                        }
+                        addEvent(
+                            {
+                                id: item.id || generateId('cact'),
+                                type: 'update',
+                                channel: 'system',
+                                subject: `Оновлення угоди ${leadLabel}`,
+                                summary: item.text || `Оновлено статус угоди ${leadLabel}.`,
+                                timestamp,
+                                author: item.author || lead.owner,
+                                tags: ['Угода']
+                            },
+                            lead.owner,
+                            'lead-timeline',
+                            [leadTag]
+                        );
+                    });
+                }
+
+                if (Array.isArray(lead.notes)) {
+                    lead.notes.forEach(note => {
+                        const timestamp = normalizeToISOString(note.date);
+                        if (!timestamp) {
+                            return;
+                        }
+                        addEvent(
+                            {
+                                id: note.id || generateId('cact'),
+                                type: 'note',
+                                channel: 'system',
+                                subject: `Нотатка: ${leadLabel}`,
+                                summary: note.text,
+                                timestamp,
+                                author: note.author,
+                                tags: ['Угода']
+                            },
+                            note.author || lead.owner,
+                            'lead-note',
+                            [leadTag]
+                        );
+                    });
+                }
+            });
+
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
+            tasks.forEach(task => {
+                if (!task || typeof task !== 'object' || !task.relatedLeadId || !relatedLeadIds.has(task.relatedLeadId)) {
+                    return;
+                }
+                const lead = relatedLeads.find(item => item.id === task.relatedLeadId);
+                const leadLabel = lead ? (lead.name || lead.company || contact.company || 'Угода') : '';
+                const timestamp =
+                    normalizeToISOString(task.completedAt) ||
+                    normalizeToISOString(task.dueDate) ||
+                    normalizeToISOString(task.createdAt);
+                if (!timestamp) {
+                    return;
+                }
+                const summaryParts = [
+                    `Статус: ${TASK_STATUS_LABELS[task.status] || task.status}`,
+                    `Пріоритет: ${TASK_PRIORITY_LABELS[task.priority] || task.priority}`
+                ];
+                if (task.dueDate) {
+                    summaryParts.push(`Дедлайн: ${formatDate(task.dueDate)}`);
+                }
+                const summary = summaryParts.join('. ');
+                const extraTags = ['Завдання'];
+                if (leadLabel) {
+                    extraTags.push(`Угода: ${leadLabel}`);
+                }
+                addEvent(
+                    {
+                        id: task.id,
+                        type: 'task',
+                        channel: 'system',
+                        subject: `Завдання: ${task.title}`,
+                        summary: leadLabel ? `${summary}. Угода: ${leadLabel}.` : summary,
+                        timestamp,
+                        author: task.owner,
+                        tags: ['Завдання']
+                    },
+                    task.owner,
+                    'task',
+                    extraTags
+                );
+            });
+
+            const tickets = Array.isArray(crmData?.supportTickets) ? crmData.supportTickets : [];
+            tickets.forEach(ticket => {
+                if (!ticket || typeof ticket !== 'object') {
+                    return;
+                }
+                const client = typeof ticket.client === 'string' ? ticket.client.trim().toLowerCase() : '';
+                if (!client || (client !== normalizedCompany && client !== normalizedName)) {
+                    return;
+                }
+                const timestamp =
+                    normalizeToISOString(ticket.resolvedAt) ||
+                    normalizeToISOString(ticket.firstResponseAt) ||
+                    normalizeToISOString(ticket.createdAt);
+                if (!timestamp) {
+                    return;
+                }
+                const channel = normalizeContactChannel(ticket.channel, 'portal');
+                const summaryParts = [
+                    `Статус: ${SUPPORT_STATUS_LABELS[ticket.status] || ticket.status}`,
+                    `Пріоритет: ${SUPPORT_PRIORITY_LABELS[ticket.priority] || ticket.priority}`
+                ];
+                if (ticket.owner) {
+                    summaryParts.push(`Відповідальний: ${ticket.owner}`);
+                }
+                addEvent(
+                    {
+                        id: ticket.id,
+                        type: 'ticket',
+                        channel,
+                        subject: `Запит підтримки: ${ticket.subject}`,
+                        summary: summaryParts.join('. '),
+                        timestamp,
+                        author: ticket.owner || 'Служба підтримки',
+                        tags: ['Підтримка']
+                    },
+                    ticket.owner || 'Служба підтримки',
+                    'support-ticket',
+                    ['Підтримка']
+                );
+            });
+
+            const parseEventTime = value => {
+                if (!value) {
+                    return 0;
+                }
+                const date = new Date(value);
+                return Number.isNaN(date.getTime()) ? 0 : date.getTime();
+            };
+
+            events.sort((a, b) => parseEventTime(b.timestamp) - parseEventTime(a.timestamp));
+            return events;
+        }
+
         function renderContacts(searchTerm = '') {
             const container = document.getElementById('contactsTable');
             if (!container) {
@@ -16224,11 +16541,30 @@
                 });
             }
 
-            contacts.sort((a, b) => new Date(b.lastActivity || 0) - new Date(a.lastActivity || 0));
+            const activityCache = new Map();
+            contacts.forEach(contact => {
+                const timeline = getContactTimeline(contact);
+                const lastTimestamp = timeline.length
+                    ? timeline[0].timestamp
+                    : normalizeToISOString(contact.lastActivity);
+                activityCache.set(contact.id, {
+                    timeline,
+                    lastTimestamp,
+                });
+            });
+
+            const getActivityTimestamp = contact => {
+                const info = activityCache.get(contact.id);
+                const timestamp = info && info.lastTimestamp ? info.lastTimestamp : normalizeToISOString(contact.lastActivity);
+                const date = timestamp ? new Date(timestamp) : null;
+                return date && !Number.isNaN(date.getTime()) ? date.getTime() : 0;
+            };
+
+            contacts.sort((a, b) => getActivityTimestamp(b) - getActivityTimestamp(a));
 
             if (!contacts.length) {
                 container.innerHTML = '<div class="empty-state" style="padding: 32px;">Немає контактів за обраними фільтрами.</div>';
-                renderContactDetails(null);
+                renderContactDetails(null, activityCache);
                 return;
             }
 
@@ -16243,9 +16579,13 @@
                     : '';
                 const attachmentsCount = Array.isArray(contact.attachments) ? contact.attachments.length : 0;
                 const notesCount = Array.isArray(contact.notes) ? contact.notes.length : 0;
-                const interactionsCount = Array.isArray(contact.interactions) ? contact.interactions.length : 0;
+                const activity = activityCache.get(contact.id) || {
+                    timeline: [],
+                    lastTimestamp: normalizeToISOString(contact.lastActivity),
+                };
+                const interactionsCount = activity.timeline.length;
+                const lastActivityLabel = activity.lastTimestamp ? formatRelativeTime(activity.lastTimestamp) : '';
                 const extras = [];
-                const lastActivityLabel = contact.lastActivity ? formatRelativeTime(contact.lastActivity) : '';
                 if (lastActivityLabel) {
                     extras.push(`<span class="chip chip-ghost"><i class="fa-regular fa-clock"></i> ${escapeHtml(lastActivityLabel)}</span>`);
                 }
@@ -16311,14 +16651,14 @@
                     activeContactId = row.dataset.contactId;
                     container.querySelectorAll('.table-row').forEach(item => item.classList.remove('is-active'));
                     row.classList.add('is-active');
-                    renderContactDetails(activeContactId);
+                    renderContactDetails(activeContactId, activityCache);
                 });
             });
 
-            renderContactDetails(activeContactId);
+            renderContactDetails(activeContactId, activityCache);
         }
 
-        function renderContactDetails(contactId) {
+        function renderContactDetails(contactId, activityCache = null) {
             const profileContainer = document.getElementById('contactProfileCard');
             const timelineContainer = document.getElementById('contactTimelineCard');
             if (!profileContainer || !timelineContainer) {
@@ -16336,8 +16676,13 @@
             }
 
             const lifecycleLabel = CONTACT_LIFECYCLE_LABELS[contact.lifecycleStage] || '—';
+            const activityInfo = activityCache ? activityCache.get(contact.id) : null;
+            const timeline = activityInfo ? activityInfo.timeline : getContactTimeline(contact);
+            const recentTimestamp = activityInfo && activityInfo.lastTimestamp
+                ? activityInfo.lastTimestamp
+                : (timeline.length ? timeline[0].timestamp : normalizeToISOString(contact.lastActivity));
+            const lastActivityLabel = recentTimestamp ? formatRelativeTime(recentTimestamp) : '—';
             const channelLabel = CONTACT_CHANNEL_LABELS[contact.preferredChannel] || '—';
-            const lastActivityLabel = contact.lastActivity ? formatRelativeTime(contact.lastActivity) : '—';
             const segmentBadges = Array.isArray(contact.segments) && contact.segments.length
                 ? `<div class="chips">${contact.segments.map(segment => `<span class="chip chip-accent">${escapeHtml(STATUS_LABELS[segment] || segment)}</span>`).join('')}</div>`
                 : '';
@@ -16464,11 +16809,10 @@
                 ${actionsMarkup}
             `;
 
-            const interactions = Array.isArray(contact.interactions) ? contact.interactions.slice() : [];
-            if (!interactions.length) {
+            if (!timeline.length) {
                 timelineContainer.innerHTML = '<div class="contact-timeline-empty">Ще немає зафіксованих взаємодій. Заплануйте перший контакт.</div>';
             } else {
-                const timelineItems = interactions.map(interaction => {
+                const timelineItems = timeline.map(interaction => {
                     const typeLabel = CONTACT_INTERACTION_TYPE_LABELS[interaction.type] || 'Активність';
                     const channel = CONTACT_CHANNEL_LABELS[interaction.channel] || interaction.channel;
                     const icon = CONTACT_INTERACTION_ICONS[interaction.type] || 'fa-solid fa-circle-info';
@@ -16516,7 +16860,7 @@
                 timelineContainer.innerHTML = `
                     <div class="contact-timeline-header">
                         <h3>Історія взаємодій</h3>
-                        <p>Повний контекст дзвінків, листів і зустрічей команди.</p>
+                        <p>Повний контекст дзвінків, листів, задач і запитів підтримки.</p>
                     </div>
                     <div class="contact-timeline-list">${timelineItems}</div>
                 `;
