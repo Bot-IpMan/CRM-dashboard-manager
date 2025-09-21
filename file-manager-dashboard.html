@@ -763,6 +763,15 @@
             .chart-container {
                 height: 220px;
             }
+
+            .contact-insights-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .contact-insights-source {
+                align-self: flex-start;
+            }
         }
 
         .custom-chart-toolbar {
@@ -1807,6 +1816,81 @@
 
         .table-row:hover {
             background: rgba(99, 102, 241, 0.08);
+        }
+
+        .contact-insights-card {
+            margin-top: 22px;
+            display: grid;
+            gap: 20px;
+        }
+
+        .contact-insights-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .contact-insights-header h3 {
+            margin-bottom: 8px;
+        }
+
+        .contact-insights-header .metric-sub {
+            margin: 0;
+        }
+
+        .contact-insights-source {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(14, 165, 233, 0.12);
+            color: #0c4a6e;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .contact-insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .contact-insight-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            background: rgba(148, 163, 184, 0.12);
+            border: 1px solid rgba(148, 163, 184, 0.24);
+        }
+
+        .contact-insight-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.16), rgba(99, 102, 241, 0.32));
+            color: var(--primary-dark);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .contact-insight-item h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .contact-insight-item p {
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
         }
 
         .projects-table {
@@ -4674,6 +4758,57 @@
                         <div>Відповідальний</div>
                     </div>
                     <div id="contactsTable"></div>
+                </div>
+
+                <div class="card contact-insights-card" aria-labelledby="contactManagementTitle">
+                    <div class="contact-insights-header">
+                        <div>
+                            <h3 id="contactManagementTitle">Контакт-менеджмент</h3>
+                            <p class="metric-sub">Ключові практики ведення клієнтської бази за рекомендаціями NetSuite.</p>
+                        </div>
+                        <span class="contact-insights-source">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                            На основі рекомендацій NetSuite
+                        </span>
+                    </div>
+                    <div class="contact-insights-grid">
+                        <div class="contact-insight-item">
+                            <span class="contact-insight-icon" aria-hidden="true">
+                                <i class="fa-solid fa-address-book"></i>
+                            </span>
+                            <div>
+                                <h4>Єдина база контактів</h4>
+                                <p>CRM зберігає повний профіль клієнта: ім’я, контактні дані, адресу, соціальні мережі та історію взаємодій. Така база стає єдиним джерелом правди для маркетингу й продажів і допомагає персоналізувати комунікації.</p>
+                            </div>
+                        </div>
+                        <div class="contact-insight-item">
+                            <span class="contact-insight-icon" aria-hidden="true">
+                                <i class="fa-solid fa-handshake-simple"></i>
+                            </span>
+                            <div>
+                                <h4>Облік взаємодій</h4>
+                                <p>Листування, дзвінки, зустрічі та інші контакти логуються прямо в картці клієнта, даючи повну картину історії комунікацій для всієї команди.</p>
+                            </div>
+                        </div>
+                        <div class="contact-insight-item">
+                            <span class="contact-insight-icon" aria-hidden="true">
+                                <i class="fa-solid fa-envelope-open-text"></i>
+                            </span>
+                            <div>
+                                <h4>Інтеграція з поштою та месенджерами</h4>
+                                <p>CRM відправляє та отримує листи, синхронізує листування, підтримує шаблони й тригери на дії клієнтів, спрощуючи фолоу-апи.</p>
+                            </div>
+                        </div>
+                        <div class="contact-insight-item">
+                            <span class="contact-insight-icon" aria-hidden="true">
+                                <i class="fa-solid fa-file-contract"></i>
+                            </span>
+                            <div>
+                                <h4>Менеджер документів</h4>
+                                <p>Пропозиції, контракти та рахунки зберігаються в картці клієнта з можливістю заповнювати, погоджувати й надсилати документи безпосередньо з CRM.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
