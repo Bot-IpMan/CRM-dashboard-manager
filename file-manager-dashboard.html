@@ -2796,6 +2796,242 @@
             gap: 18px;
         }
 
+        .role-dashboard-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .role-dashboard-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .role-dashboard-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .role-dashboard-tab {
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--primary-dark);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .role-dashboard-tab[aria-selected="true"],
+        .role-dashboard-tab.active {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(79, 70, 229, 0.3));
+            color: #312e81;
+            border-color: rgba(79, 70, 229, 0.4);
+        }
+
+        .role-dashboard-content {
+            display: grid;
+            gap: 14px;
+        }
+
+        .role-dashboard-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .role-metric {
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(99, 102, 241, 0.14);
+            display: grid;
+            gap: 6px;
+        }
+
+        .role-metric strong {
+            font-size: 20px;
+            color: #1f2937;
+        }
+
+        .role-dashboard-insights {
+            display: grid;
+            gap: 8px;
+            padding-left: 18px;
+        }
+
+        .role-dashboard-insights li {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .report-builder-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .report-builder-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .report-builder-controls {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            align-items: end;
+        }
+
+        .report-control label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .report-control select {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .report-summary {
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.08);
+            color: #312e81;
+            font-weight: 500;
+        }
+
+        .report-preview {
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .report-preview-head,
+        .report-row {
+            display: grid;
+            gap: 10px;
+            padding: 12px 16px;
+        }
+
+        .report-preview-head {
+            background: rgba(148, 163, 184, 0.14);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .report-row:nth-child(even) {
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .report-row:nth-child(odd) {
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        .report-row span {
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .report-row span.align-right {
+            text-align: right;
+        }
+
+        .report-export-status {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .forecasting-card {
+            display: grid;
+            gap: 16px;
+        }
+
+        .forecasting-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .forecasting-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .forecasting-metric {
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: rgba(79, 70, 229, 0.08);
+            border: 1px solid rgba(79, 70, 229, 0.18);
+            display: grid;
+            gap: 6px;
+        }
+
+        .forecasting-metric strong {
+            font-size: 20px;
+            color: #1f2937;
+        }
+
+        .forecasting-table {
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .forecasting-head,
+        .forecasting-row {
+            display: grid;
+            gap: 12px;
+            padding: 12px 16px;
+        }
+
+        .forecasting-head {
+            background: rgba(148, 163, 184, 0.14);
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .forecasting-row {
+            background: rgba(255, 255, 255, 0.92);
+            font-size: 14px;
+            color: #1f2937;
+        }
+
+        .forecasting-row:nth-child(odd) {
+            background: rgba(248, 250, 252, 0.9);
+        }
+
+        .forecasting-row span.align-right {
+            text-align: right;
+        }
+
+        .report-empty,
+        .forecasting-empty {
+            padding: 16px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
         .progress-list {
             display: grid;
             gap: 14px;
@@ -5009,6 +5245,24 @@
                     </div>
                 </div>
                 <div class="analytics-grid">
+                    <div class="card role-dashboard-card">
+                        <div class="role-dashboard-header">
+                            <div>
+                                <h3>Рольові дашборди</h3>
+                                <p class="metric-sub">Готові перегляди для продажу, маркетингу та підтримки за рекомендаціями NetSuite.</p>
+                            </div>
+                            <span class="badge badge-info">
+                                <i class="fa-solid fa-chart-simple" aria-hidden="true"></i>
+                                NetSuite
+                            </span>
+                        </div>
+                        <div class="role-dashboard-tabs" role="tablist" aria-label="Рольові дашборди">
+                            <button type="button" class="role-dashboard-tab" data-role-dashboard="sales" aria-selected="true">Продажі</button>
+                            <button type="button" class="role-dashboard-tab" data-role-dashboard="marketing" aria-selected="false">Маркетинг</button>
+                            <button type="button" class="role-dashboard-tab" data-role-dashboard="support" aria-selected="false">Підтримка</button>
+                        </div>
+                        <div class="role-dashboard-content" id="roleDashboardContent" aria-live="polite"></div>
+                    </div>
                     <div class="card">
                         <h3>Конверсія по етапах</h3>
                         <div class="progress-list" id="conversionInsights"></div>
@@ -5024,6 +5278,63 @@
                     <div class="card">
                         <h3>Темп закриття</h3>
                         <div id="velocityInsights"></div>
+                    </div>
+                    <div class="card report-builder-card">
+                        <div class="report-builder-header">
+                            <div>
+                                <h3>Гнучкі звіти й фільтри</h3>
+                                <p class="metric-sub">Збирайте будь-які зрізи даних, групуйте за періодами, каналами чи сегментами клієнтів та експортуйте результати.</p>
+                            </div>
+                        </div>
+                        <div class="report-builder-controls">
+                            <div class="report-control">
+                                <label for="reportDataset">Дані</label>
+                                <select id="reportDataset">
+                                    <option value="leads">Угоди</option>
+                                    <option value="projects">Проекти</option>
+                                    <option value="support">Підтримка</option>
+                                </select>
+                            </div>
+                            <div class="report-control">
+                                <label for="reportPeriod">Період</label>
+                                <select id="reportPeriod"></select>
+                            </div>
+                            <div class="report-control">
+                                <label for="reportGrouping">Групування</label>
+                                <select id="reportGrouping"></select>
+                            </div>
+                            <div class="report-control">
+                                <label for="reportFilter">Фільтр</label>
+                                <select id="reportFilter"></select>
+                            </div>
+                            <button class="btn btn-small-primary" type="button" id="reportExportBtn">
+                                <i class="fa-solid fa-file-export" aria-hidden="true"></i>
+                                Експорт CSV
+                            </button>
+                        </div>
+                        <div class="report-summary" id="reportSummary"></div>
+                        <div class="report-preview">
+                            <div class="report-preview-head" id="reportPreviewHead"></div>
+                            <div id="reportPreviewBody"></div>
+                        </div>
+                        <div class="report-export-status" id="reportExportStatus" aria-live="polite"></div>
+                    </div>
+                    <div class="card forecasting-card">
+                        <div class="forecasting-header">
+                            <div>
+                                <h3>Прогнозування</h3>
+                                <p class="metric-sub">Автоматичне зважування угод за expected close date та close probability — підхід support.monday.com.</p>
+                            </div>
+                            <span class="badge badge-info">
+                                <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
+                                support.monday.com
+                            </span>
+                        </div>
+                        <div class="forecasting-summary" id="forecastingSummary"></div>
+                        <div class="forecasting-table">
+                            <div class="forecasting-head" id="forecastingHead"></div>
+                            <div id="forecastingTable"></div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -5620,6 +5931,122 @@
             potential: 'Потенційний',
             partner: 'Партнер',
             cold: 'Холодний'
+        };
+
+        const SUPPORT_STATUS_LABELS = {
+            open: 'В роботі',
+            inProgress: 'В процесі',
+            resolved: 'Закрито',
+            backlog: 'Backlog'
+        };
+
+        const SUPPORT_PRIORITY_LABELS = {
+            high: 'Високий',
+            medium: 'Середній',
+            low: 'Низький'
+        };
+
+        const LEAD_SEGMENT_LABELS = {
+            enterprise: 'Enterprise (≥50 тис. ₴)',
+            mid: 'Mid-market (20–50 тис. ₴)',
+            smb: 'SMB (<20 тис. ₴)'
+        };
+
+        const REPORT_PERIOD_OPTIONS = [
+            { id: '30d', label: 'Останні 30 днів', days: 30 },
+            { id: '90d', label: 'Квартал (90 днів)', days: 90 },
+            { id: '365d', label: 'Рік', days: 365 },
+            { id: 'all', label: 'Весь час', days: null }
+        ];
+
+        const roleDashboardState = {
+            active: 'sales',
+            initialized: false
+        };
+
+        const reportBuilderState = {
+            dataset: 'leads',
+            period: '90d',
+            grouping: 'stage',
+            filter: 'all',
+            initialized: false,
+            lastReport: null
+        };
+
+        const REPORT_DATASET_DEFAULT = 'leads';
+        const REPORT_PERIOD_DEFAULT = '90d';
+
+        const REPORT_CONFIGS = {
+            leads: {
+                id: 'leads',
+                label: 'Продажі',
+                entity: 'Угоди',
+                defaultGrouping: 'stage',
+                defaultFilter: 'all',
+                timeField: 'createdAt',
+                groupings: {
+                    stage: 'Етап воронки',
+                    owner: 'Менеджер',
+                    segment: 'Сегмент клієнта',
+                    month: 'Місяць створення'
+                },
+                filters: {
+                    all: 'Всі ліди',
+                    hot: 'Гарячі (ймовірність ≥60%)',
+                    cold: 'Холодні (ймовірність <30%)',
+                    lost: 'Втрачено'
+                },
+                getRecords: () => Array.isArray(crmData?.leads) ? crmData.leads.slice() : [],
+                applyFilter: (records, filter) => filterLeads(records, filter),
+                buildReport: (records, grouping) => buildLeadsReport(records, grouping)
+            },
+            projects: {
+                id: 'projects',
+                label: 'Маркетинг та delivery',
+                entity: 'Проекти',
+                defaultGrouping: 'stage',
+                defaultFilter: 'all',
+                timeField: 'updatedAt',
+                groupings: {
+                    stage: 'Етап проекту',
+                    owner: 'Відповідальний',
+                    tag: 'Напрям/мітка',
+                    month: 'Місяць оновлення'
+                },
+                filters: {
+                    all: 'Всі проекти',
+                    marketing: 'Маркетингові кампанії',
+                    delivery: 'Впровадження та підтримка',
+                    highProbability: 'Ймовірність ≥70%'
+                },
+                getRecords: () => Array.isArray(crmData?.projects) ? crmData.projects.slice() : [],
+                applyFilter: (records, filter) => filterProjects(records, filter),
+                buildReport: (records, grouping) => buildProjectsReport(records, grouping)
+            },
+            support: {
+                id: 'support',
+                label: 'Підтримка',
+                entity: 'Тікети',
+                defaultGrouping: 'status',
+                defaultFilter: 'all',
+                timeField: 'createdAt',
+                groupings: {
+                    status: 'Статус',
+                    channel: 'Канал звернення',
+                    priority: 'Пріоритет',
+                    owner: 'Виконавець'
+                },
+                filters: {
+                    all: 'Всі звернення',
+                    open: 'Активні звернення',
+                    backlog: 'Backlog',
+                    resolved: 'Закриті',
+                    high: 'Високий пріоритет'
+                },
+                getRecords: () => Array.isArray(crmData?.supportTickets) ? crmData.supportTickets.slice() : [],
+                applyFilter: (records, filter) => filterSupportTickets(records, filter),
+                buildReport: (records, grouping) => buildSupportReport(records, grouping)
+            }
         };
 
         const MAX_ATTACHMENT_SIZE = 1.5 * 1024 * 1024; // 1.5 МБ
@@ -6781,6 +7208,73 @@
                     createdAt: '2024-05-20T14:10:00.000Z'
                 }
             ],
+            supportTickets: [
+                {
+                    id: 'ticket-1',
+                    subject: 'Не оновлюється статус замовлення',
+                    client: 'NovaPay',
+                    channel: 'Email',
+                    status: 'open',
+                    priority: 'high',
+                    owner: 'Вікторія',
+                    createdAt: '2024-06-04T08:10:00.000Z',
+                    firstResponseAt: '2024-06-04T08:45:00.000Z',
+                    resolvedAt: '',
+                    csat: null
+                },
+                {
+                    id: 'ticket-2',
+                    subject: 'Питання з інтеграцією API',
+                    client: 'Rozetka',
+                    channel: 'Портал',
+                    status: 'inProgress',
+                    priority: 'medium',
+                    owner: 'Дмитро',
+                    createdAt: '2024-06-03T10:20:00.000Z',
+                    firstResponseAt: '2024-06-03T10:50:00.000Z',
+                    resolvedAt: '',
+                    csat: null
+                },
+                {
+                    id: 'ticket-3',
+                    subject: 'Запит на додаткові ролі користувачів',
+                    client: 'OKKO',
+                    channel: 'Чат',
+                    status: 'resolved',
+                    priority: 'low',
+                    owner: 'Марина',
+                    createdAt: '2024-05-30T09:40:00.000Z',
+                    firstResponseAt: '2024-05-30T09:55:00.000Z',
+                    resolvedAt: '2024-05-30T13:10:00.000Z',
+                    csat: 4.8
+                },
+                {
+                    id: 'ticket-4',
+                    subject: 'Звіт не експортується у CSV',
+                    client: 'Uklon',
+                    channel: 'Email',
+                    status: 'resolved',
+                    priority: 'medium',
+                    owner: 'Олександр',
+                    createdAt: '2024-05-28T11:05:00.000Z',
+                    firstResponseAt: '2024-05-28T11:30:00.000Z',
+                    resolvedAt: '2024-05-28T15:20:00.000Z',
+                    csat: 4.5
+                },
+                {
+                    id: 'ticket-5',
+                    subject: 'Підтримка мобільного додатку',
+                    client: 'Intertop',
+                    channel: 'Телефон',
+                    status: 'backlog',
+                    priority: 'high',
+                    owner: 'Вікторія',
+                    createdAt: '2024-06-01T07:20:00.000Z',
+                    firstResponseAt: '',
+                    resolvedAt: '',
+                    csat: null
+                }
+            ],
             activities: [
                 {
                     id: 'act-3',
@@ -7218,6 +7712,10 @@
                 ? data.tasks.map(normalizeTask).filter(Boolean)
                 : [];
 
+            data.supportTickets = Array.isArray(data.supportTickets)
+                ? data.supportTickets.map(normalizeSupportTicket).filter(Boolean)
+                : deepClone(defaultData.supportTickets || []);
+
             data.fileLibrary = Array.isArray(data.fileLibrary)
                 ? data.fileLibrary.map(normalizeFileSnapshot).filter(Boolean)
                 : [];
@@ -7419,6 +7917,39 @@
             }
 
             return normalizedTask;
+        }
+
+        function normalizeSupportTicket(ticket) {
+            if (!ticket || typeof ticket !== 'object') {
+                return null;
+            }
+
+            const id = typeof ticket.id === 'string' && ticket.id.trim().length ? ticket.id.trim() : generateId('ticket');
+            const subject = typeof ticket.subject === 'string' && ticket.subject.trim().length ? ticket.subject.trim() : 'Запит клієнта';
+            const client = typeof ticket.client === 'string' ? ticket.client.trim() : '';
+            const owner = typeof ticket.owner === 'string' && ticket.owner.trim().length ? ticket.owner.trim() : 'Команда підтримки';
+            const status = typeof ticket.status === 'string' && SUPPORT_STATUS_LABELS[ticket.status] ? ticket.status : 'open';
+            const priority = typeof ticket.priority === 'string' && SUPPORT_PRIORITY_LABELS[ticket.priority] ? ticket.priority : 'medium';
+            const channel = typeof ticket.channel === 'string' && ticket.channel.trim().length ? ticket.channel.trim() : 'Email';
+            const createdAt = typeof ticket.createdAt === 'string' && ticket.createdAt ? ticket.createdAt : new Date().toISOString();
+            const firstResponseAt = typeof ticket.firstResponseAt === 'string' ? ticket.firstResponseAt : '';
+            const resolvedAt = typeof ticket.resolvedAt === 'string' ? ticket.resolvedAt : '';
+            const csatValue = Number(ticket.csat);
+            const csat = Number.isFinite(csatValue) ? csatValue : null;
+
+            return {
+                id,
+                subject,
+                client,
+                owner,
+                status,
+                priority,
+                channel,
+                createdAt,
+                firstResponseAt,
+                resolvedAt,
+                csat
+            };
         }
 
         function normalizeRoleDefinition(role, isCustom = false) {
@@ -14633,6 +15164,11 @@
             renderTeamPerformance();
             renderLeadFocus();
             renderVelocityInsights();
+            setupRoleDashboardTabs();
+            renderRoleDashboards();
+            setupReportBuilderControls();
+            renderReportBuilder();
+            renderForecastingAnalytics();
         }
 
         function renderConversionInsights() {
@@ -14726,6 +15262,699 @@
                 <div class="metric-sub" style="margin-top:12px;">Без активності > 14 днів: ${stale.length}</div>
                 ${stale.slice(0, 3).map(lead => `<div class="timeline-entry"><strong>${lead.name}</strong><span>${lead.company} • оновлено ${formatRelativeTime(lead.updatedAt)}</span></div>`).join('')}
             `;
+        }
+
+        function setupRoleDashboardTabs() {
+            const tabs = document.querySelectorAll('[data-role-dashboard]');
+            if (!tabs.length) {
+                return;
+            }
+
+            if (!roleDashboardState.initialized) {
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        roleDashboardState.active = tab.dataset.roleDashboard || 'sales';
+                        renderRoleDashboards();
+                    });
+                });
+                roleDashboardState.initialized = true;
+            }
+
+            updateRoleDashboardTabState();
+        }
+
+        function updateRoleDashboardTabState() {
+            const tabs = document.querySelectorAll('[data-role-dashboard]');
+            if (!tabs.length) {
+                return;
+            }
+
+            const activeKey = roleDashboardState.active || 'sales';
+            tabs.forEach(tab => {
+                const isActive = tab.dataset.roleDashboard === activeKey;
+                tab.classList.toggle('active', isActive);
+                tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+        }
+
+        function renderRoleDashboards() {
+            const container = document.getElementById('roleDashboardContent');
+            if (!container) {
+                return;
+            }
+
+            const dashboards = getRoleDashboardData();
+            const activeKey = dashboards[roleDashboardState.active] ? roleDashboardState.active : 'sales';
+            roleDashboardState.active = activeKey;
+            updateRoleDashboardTabState();
+
+            const view = dashboards[activeKey];
+            if (!view) {
+                container.innerHTML = '<div class="report-empty">Немає даних для обраної ролі.</div>';
+                return;
+            }
+
+            container.innerHTML = `
+                <div>
+                    <h4 style="margin-bottom:6px;">${escapeHtml(view.title)}</h4>
+                    <p class="metric-sub">${escapeHtml(view.summary)}</p>
+                </div>
+                <div class="role-dashboard-metrics">
+                    ${view.metrics.map(metric => `
+                        <div class="role-metric">
+                            <span class="metric-sub" style="text-transform:uppercase; letter-spacing:0.04em;">${escapeHtml(metric.label)}</span>
+                            <strong>${escapeHtml(String(metric.value))}</strong>
+                            <span class="metric-sub">${escapeHtml(metric.hint)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div>
+                    <div class="metric-sub" style="font-weight:600;">Рекомендовані віджети</div>
+                    <ul class="role-dashboard-insights">
+                        ${view.insights.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function getRoleDashboardData() {
+            const leads = Array.isArray(crmData?.leads) ? crmData.leads : [];
+            const projects = Array.isArray(crmData?.projects) ? crmData.projects : [];
+            const tasks = Array.isArray(crmData?.tasks) ? crmData.tasks : [];
+            const tickets = Array.isArray(crmData?.supportTickets) ? crmData.supportTickets : [];
+
+            const activeLeads = leads.filter(lead => lead.stage !== 'Втрачено');
+            const pipelineValue = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0), 0);
+            const weightedPipeline = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100), 0);
+            const hotDeals = activeLeads.filter(lead => Number(lead.probability) >= 60).length;
+            const wonLeads = leads.filter(lead => lead.stage === 'Угода' || lead.status === 'won');
+            const lostLeads = leads.filter(lead => lead.stage === 'Втрачено' || lead.status === 'lost');
+            const totalClosed = wonLeads.length + lostLeads.length;
+            const winRate = totalClosed
+                ? Math.round((wonLeads.length / totalClosed) * 100)
+                : (activeLeads.length ? Math.round(activeLeads.reduce((sum, lead) => sum + (Number(lead.probability) || 0), 0) / activeLeads.length) : 0);
+            const avgCycle = wonLeads.length
+                ? Math.round(wonLeads.reduce((sum, lead) => {
+                    const start = lead.createdAt || lead.updatedAt || new Date().toISOString();
+                    const end = lead.closedAt || lead.updatedAt || new Date().toISOString();
+                    return sum + daysBetween(start, end);
+                }, 0) / wonLeads.length)
+                : 0;
+
+            const marketingProjects = projects.filter(project => Array.isArray(project.tags) && project.tags.some(tag => tag.toLowerCase().includes('маркет')));
+            const marketingBudget = marketingProjects.reduce((sum, project) => sum + (Number(project.budget) || 0), 0);
+            const marketingAvgProbability = marketingProjects.length
+                ? Math.round(marketingProjects.reduce((sum, project) => sum + (Number(project.probability) || 0), 0) / marketingProjects.length)
+                : 0;
+            const marketingActive = marketingProjects.filter(project => project.stage !== 'Підтримка');
+            const marketingTasks = tasks.filter(task => Array.isArray(task.tags) && task.tags.some(tag => ['контент', 'маркетинг', 'promo', 'demo'].includes(tag.toLowerCase())));
+            const marketingTasksOpen = marketingTasks.filter(task => task.status !== 'done').length;
+
+            const supportTickets = tickets;
+            const openTickets = supportTickets.filter(ticket => ['open', 'inProgress'].includes(ticket.status));
+            const backlogTickets = supportTickets.filter(ticket => ticket.status === 'backlog');
+            const resolvedTickets = supportTickets.filter(ticket => ticket.status === 'resolved');
+            const responseTimes = supportTickets.filter(ticket => ticket.firstResponseAt).map(ticket => hoursBetween(ticket.createdAt, ticket.firstResponseAt));
+            const avgResponse = responseTimes.length ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length : null;
+            const resolutionTimes = resolvedTickets.filter(ticket => ticket.resolvedAt).map(ticket => hoursBetween(ticket.createdAt, ticket.resolvedAt));
+            const avgResolution = resolutionTimes.length ? resolutionTimes.reduce((sum, value) => sum + value, 0) / resolutionTimes.length : null;
+            const csatValues = resolvedTickets.map(ticket => Number(ticket.csat)).filter(value => Number.isFinite(value) && value > 0);
+            const avgCsat = csatValues.length ? csatValues.reduce((sum, value) => sum + value, 0) / csatValues.length : null;
+            const slaRisk = openTickets.filter(ticket => ticket.priority === 'high' && hoursBetween(ticket.createdAt, new Date()) > 24).length;
+
+            return {
+                sales: {
+                    title: 'Продажі',
+                    summary: `Воронка ${formatCurrency(Math.round(pipelineValue), true)} • ${hotDeals} гарячих можливостей.`,
+                    metrics: [
+                        { label: 'Конверсія', value: `${winRate}%`, hint: totalClosed ? 'Win rate за закритими угодами' : 'Оцінка за поточними ймовірностями' },
+                        { label: 'Активні ліди', value: activeLeads.length.toLocaleString('uk-UA'), hint: `${hotDeals} із шансом ≥60%` },
+                        { label: 'Прогноз, ₴', value: formatCurrency(Math.round(weightedPipeline), true), hint: avgCycle ? `Середній цикл ${avgCycle} дн.` : 'Збираємо історію по виграних угодах' }
+                    ],
+                    insights: [
+                        'Використовуйте віджети «Прогноз доходу» та «Динаміка продажів» для щотижневого рев’ю.',
+                        'Слідкуйте за блоком «Угоди, що потребують уваги», щоб не втрачати темп у переговорах.'
+                    ]
+                },
+                marketing: {
+                    title: 'Маркетинг',
+                    summary: `${marketingProjects.length} активні ініціативи • ${formatCurrency(Math.round(marketingBudget), true)} у роботі.`,
+                    metrics: [
+                        { label: 'Активні кампанії', value: marketingActive.length.toLocaleString('uk-UA'), hint: `${marketingTasksOpen} пов’язаних задач у роботі` },
+                        { label: 'Бюджет, ₴', value: formatCurrency(Math.round(marketingBudget), true), hint: marketingAvgProbability ? `Середня ймовірність ${marketingAvgProbability}%` : 'Оцінка ймовірності ще не задана' },
+                        { label: 'Контентні спринти', value: marketingTasks.length.toLocaleString('uk-UA'), hint: `${marketingTasks.filter(task => task.status === 'done').length} завершено` }
+                    ],
+                    insights: [
+                        'Комбінуйте фільтри у «Гнучких звітах», щоб бачити ефективність за каналами.',
+                        'Контролюйте завантаження матеріалів через файлові віджети та нотатки проектів.'
+                    ]
+                },
+                support: {
+                    title: 'Підтримка',
+                    summary: `В роботі ${openTickets.length} звернень • backlog ${backlogTickets.length}.`,
+                    metrics: [
+                        { label: 'Активні звернення', value: (openTickets.length + backlogTickets.length).toLocaleString('uk-UA'), hint: `${slaRisk} SLA-подій із ризиком` },
+                        { label: 'CSAT', value: avgCsat ? `${avgCsat.toFixed(1)} / 5` : '—', hint: resolvedTickets.length ? `${resolvedTickets.length} опитаних клієнтів` : 'Ще немає оцінок' },
+                        { label: 'Час відповіді', value: formatHours(avgResponse), hint: avgResolution ? `Вирішення: ${formatHours(avgResolution)}` : 'Збираємо статистику' }
+                    ],
+                    insights: [
+                        'Будуйте звіти за каналами та пріоритетами, щоб відстежувати SLA.',
+                        'Додавайте клієнтів із повторними зверненнями у воронку продажів для апсейлу.'
+                    ]
+                }
+            };
+        }
+
+        function setupReportBuilderControls() {
+            const datasetSelect = document.getElementById('reportDataset');
+            const periodSelect = document.getElementById('reportPeriod');
+            const groupingSelect = document.getElementById('reportGrouping');
+            const filterSelect = document.getElementById('reportFilter');
+            const exportButton = document.getElementById('reportExportBtn');
+
+            if (!datasetSelect || !periodSelect || !groupingSelect || !filterSelect || !exportButton) {
+                return;
+            }
+
+            if (!reportBuilderState.initialized) {
+                datasetSelect.addEventListener('change', () => {
+                    const config = getReportConfig(datasetSelect.value);
+                    reportBuilderState.dataset = config.id;
+                    reportBuilderState.grouping = config.defaultGrouping;
+                    reportBuilderState.filter = config.defaultFilter;
+                    renderReportBuilder();
+                });
+
+                periodSelect.addEventListener('change', () => {
+                    reportBuilderState.period = periodSelect.value || REPORT_PERIOD_DEFAULT;
+                    renderReportBuilder();
+                });
+
+                groupingSelect.addEventListener('change', () => {
+                    reportBuilderState.grouping = groupingSelect.value;
+                    renderReportBuilder();
+                });
+
+                filterSelect.addEventListener('change', () => {
+                    reportBuilderState.filter = filterSelect.value;
+                    renderReportBuilder();
+                });
+
+                exportButton.addEventListener('click', () => exportReportToCsv());
+                reportBuilderState.initialized = true;
+            }
+        }
+
+        function getReportConfig(datasetId) {
+            return REPORT_CONFIGS[datasetId] || REPORT_CONFIGS[REPORT_DATASET_DEFAULT];
+        }
+
+        function renderReportBuilder() {
+            const datasetSelect = document.getElementById('reportDataset');
+            const periodSelect = document.getElementById('reportPeriod');
+            const groupingSelect = document.getElementById('reportGrouping');
+            const filterSelect = document.getElementById('reportFilter');
+            const summaryContainer = document.getElementById('reportSummary');
+            const head = document.getElementById('reportPreviewHead');
+            const body = document.getElementById('reportPreviewBody');
+            const status = document.getElementById('reportExportStatus');
+
+            if (!datasetSelect || !periodSelect || !groupingSelect || !filterSelect || !summaryContainer || !head || !body) {
+                return;
+            }
+
+            if (status) {
+                status.textContent = '';
+            }
+
+            const config = getReportConfig(reportBuilderState.dataset);
+            datasetSelect.value = config.id;
+
+            periodSelect.innerHTML = REPORT_PERIOD_OPTIONS.map(option => `<option value="${option.id}">${option.label}</option>`).join('');
+            if (!REPORT_PERIOD_OPTIONS.some(option => option.id === reportBuilderState.period)) {
+                reportBuilderState.period = REPORT_PERIOD_DEFAULT;
+            }
+            periodSelect.value = reportBuilderState.period;
+
+            groupingSelect.innerHTML = Object.entries(config.groupings).map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+            if (!config.groupings[reportBuilderState.grouping]) {
+                reportBuilderState.grouping = config.defaultGrouping;
+            }
+            groupingSelect.value = reportBuilderState.grouping;
+
+            filterSelect.innerHTML = Object.entries(config.filters).map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+            if (!config.filters[reportBuilderState.filter]) {
+                reportBuilderState.filter = config.defaultFilter;
+            }
+            filterSelect.value = reportBuilderState.filter;
+
+            const allRecords = config.getRecords();
+            const periodFiltered = filterRecordsByPeriod(allRecords, config.timeField, reportBuilderState.period);
+            const filteredRecords = config.applyFilter(periodFiltered, reportBuilderState.filter);
+            const report = config.buildReport(filteredRecords, reportBuilderState.grouping);
+            reportBuilderState.lastReport = report;
+
+            summaryContainer.textContent = report.summary?.text || 'Немає даних для звіту.';
+
+            const columns = report.columns || [];
+            const columnTemplate = getReportColumnTemplate(columns.length);
+            head.style.gridTemplateColumns = columnTemplate;
+            head.innerHTML = columns.map(column => `<span class="${column.align === 'right' ? 'align-right' : ''}">${escapeHtml(column.label)}</span>`).join('');
+
+            if (!report.rows || !report.rows.length) {
+                body.innerHTML = '<div class="report-empty">Немає даних для обраних фільтрів.</div>';
+                return;
+            }
+
+            body.innerHTML = report.rows.map(row => {
+                const cells = columns.map(column => {
+                    const rawValue = row[column.id];
+                    const formatted = typeof column.format === 'function'
+                        ? column.format(rawValue)
+                        : (rawValue === null || rawValue === undefined ? '—' : rawValue);
+                    const text = typeof formatted === 'string' ? formatted : String(formatted);
+                    return `<span class="${column.align === 'right' ? 'align-right' : ''}">${escapeHtml(text)}</span>`;
+                }).join('');
+                return `<div class="report-row" style="grid-template-columns:${columnTemplate};">${cells}</div>`;
+            }).join('');
+        }
+
+        function filterRecordsByPeriod(records, field, periodKey) {
+            const items = Array.isArray(records) ? records : [];
+            const option = REPORT_PERIOD_OPTIONS.find(period => period.id === periodKey);
+            if (!option || !option.days) {
+                return items;
+            }
+            const now = new Date();
+            const start = new Date(now.getTime() - option.days * 24 * 60 * 60 * 1000);
+            return items.filter(record => {
+                const value = record?.[field];
+                if (!value) {
+                    return false;
+                }
+                const date = new Date(value);
+                if (Number.isNaN(date.getTime())) {
+                    return false;
+                }
+                return date >= start && date <= now;
+            });
+        }
+
+        function filterLeads(records, filter) {
+            const items = Array.isArray(records) ? records : [];
+            switch (filter) {
+                case 'hot':
+                    return items.filter(lead => Number(lead.probability) >= 60 && lead.stage !== 'Втрачено');
+                case 'cold':
+                    return items.filter(lead => Number(lead.probability) < 30 && lead.stage !== 'Втрачено');
+                case 'lost':
+                    return items.filter(lead => lead.stage === 'Втрачено' || lead.status === 'lost');
+                default:
+                    return items;
+            }
+        }
+
+        function filterProjects(records, filter) {
+            const items = Array.isArray(records) ? records : [];
+            switch (filter) {
+                case 'marketing':
+                    return items.filter(project => Array.isArray(project.tags) && project.tags.some(tag => tag.toLowerCase().includes('маркет')));
+                case 'delivery':
+                    return items.filter(project => ['Розробка', 'Тестування', 'Запуск', 'Підтримка'].includes(project.stage));
+                case 'highProbability':
+                    return items.filter(project => Number(project.probability) >= 70);
+                default:
+                    return items;
+            }
+        }
+
+        function filterSupportTickets(records, filter) {
+            const items = Array.isArray(records) ? records : [];
+            switch (filter) {
+                case 'open':
+                    return items.filter(ticket => ['open', 'inProgress'].includes(ticket.status));
+                case 'backlog':
+                    return items.filter(ticket => ticket.status === 'backlog');
+                case 'resolved':
+                    return items.filter(ticket => ticket.status === 'resolved');
+                case 'high':
+                    return items.filter(ticket => ticket.priority === 'high');
+                default:
+                    return items;
+            }
+        }
+
+        function buildLeadsReport(records, grouping) {
+            const items = Array.isArray(records) ? records : [];
+            const config = REPORT_CONFIGS.leads;
+            const groupKey = config.groupings[grouping] ? grouping : config.defaultGrouping;
+            const groups = new Map();
+
+            items.forEach(lead => {
+                const group = getLeadGroup(lead, groupKey);
+                if (!groups.has(group.key)) {
+                    groups.set(group.key, { label: group.label, count: 0, value: 0, weighted: 0 });
+                }
+                const entry = groups.get(group.key);
+                const value = Number(lead.value) || 0;
+                const probability = Number(lead.probability) || 0;
+                entry.count += 1;
+                entry.value += value;
+                entry.weighted += value * (probability / 100);
+            });
+
+            const sorted = Array.from(groups.values()).sort((a, b) => b.value - a.value);
+            const totalValue = sorted.reduce((sum, item) => sum + item.value, 0);
+            const totalWeighted = sorted.reduce((sum, item) => sum + item.weighted, 0);
+            const totalCount = sorted.reduce((sum, item) => sum + item.count, 0);
+
+            return {
+                columns: [
+                    { id: 'group', label: 'Група', align: 'left' },
+                    { id: 'count', label: 'Угод', align: 'right', format: value => Number(value).toLocaleString('uk-UA') },
+                    { id: 'value', label: 'Обсяг, ₴', align: 'right', format: value => formatCurrency(Math.round(value), true) },
+                    { id: 'weighted', label: 'Очікувано, ₴', align: 'right', format: value => formatCurrency(Math.round(value), true) }
+                ],
+                rows: sorted.map(item => ({
+                    group: item.label,
+                    count: item.count,
+                    value: item.value,
+                    weighted: item.weighted
+                })),
+                summary: {
+                    text: sorted.length
+                        ? `У вибірці ${totalCount} угод на ${formatCurrency(Math.round(totalValue), true)}; зважений прогноз ${formatCurrency(Math.round(totalWeighted), true)}.`
+                        : 'Немає даних для обраних фільтрів.'
+                }
+            };
+        }
+
+        function getLeadGroup(lead, grouping) {
+            switch (grouping) {
+                case 'owner':
+                    return { key: lead.owner || 'no-owner', label: lead.owner || 'Без менеджера' };
+                case 'segment':
+                    const segmentKey = getLeadSegmentKey(lead);
+                    return { key: segmentKey, label: LEAD_SEGMENT_LABELS[segmentKey] || segmentKey };
+                case 'month':
+                    return getMonthGroup(lead.createdAt || lead.updatedAt);
+                default:
+                    return { key: lead.stage || 'Без етапу', label: lead.stage || 'Без етапу' };
+            }
+        }
+
+        function getLeadSegmentKey(lead) {
+            const value = Number(lead.value) || 0;
+            if (value >= 50000) {
+                return 'enterprise';
+            }
+            if (value >= 20000) {
+                return 'mid';
+            }
+            return 'smb';
+        }
+
+        function getMonthGroup(dateInput) {
+            if (!dateInput) {
+                return { key: 'no-date', label: 'Без дати' };
+            }
+            const date = new Date(dateInput);
+            if (Number.isNaN(date.getTime())) {
+                return { key: 'no-date', label: 'Без дати' };
+            }
+            const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+            const label = new Intl.DateTimeFormat('uk-UA', { month: 'long', year: 'numeric' }).format(date);
+            return { key, label };
+        }
+
+        function buildProjectsReport(records, grouping) {
+            const items = Array.isArray(records) ? records : [];
+            const config = REPORT_CONFIGS.projects;
+            const groupKey = config.groupings[grouping] ? grouping : config.defaultGrouping;
+            const groups = new Map();
+
+            items.forEach(project => {
+                const group = getProjectGroup(project, groupKey);
+                if (!groups.has(group.key)) {
+                    groups.set(group.key, { label: group.label, count: 0, budget: 0, probabilitySum: 0 });
+                }
+                const entry = groups.get(group.key);
+                entry.count += 1;
+                entry.budget += Number(project.budget) || 0;
+                entry.probabilitySum += Number(project.probability) || 0;
+            });
+
+            const sorted = Array.from(groups.values()).sort((a, b) => b.budget - a.budget);
+            const totalBudget = sorted.reduce((sum, item) => sum + item.budget, 0);
+            const totalCount = sorted.reduce((sum, item) => sum + item.count, 0);
+            const avgProbability = items.length
+                ? Math.round(items.reduce((sum, project) => sum + (Number(project.probability) || 0), 0) / items.length)
+                : 0;
+
+            return {
+                columns: [
+                    { id: 'group', label: 'Група', align: 'left' },
+                    { id: 'count', label: 'Проектів', align: 'right', format: value => Number(value).toLocaleString('uk-UA') },
+                    { id: 'budget', label: 'Бюджет, ₴', align: 'right', format: value => formatCurrency(Math.round(value), true) },
+                    { id: 'probability', label: 'Ймовірність, %', align: 'right', format: value => `${Math.round(value)}%` }
+                ],
+                rows: sorted.map(item => ({
+                    group: item.label,
+                    count: item.count,
+                    budget: item.budget,
+                    probability: item.count ? item.probabilitySum / item.count : 0
+                })),
+                summary: {
+                    text: sorted.length
+                        ? `Активних проектів ${totalCount} на ${formatCurrency(Math.round(totalBudget), true)} • середня ймовірність ${avgProbability}%`
+                        : 'Немає проектів у вибірці.'
+                }
+            };
+        }
+
+        function getProjectGroup(project, grouping) {
+            switch (grouping) {
+                case 'owner':
+                    return { key: project.owner || 'no-owner', label: project.owner || 'Без відповідального' };
+                case 'tag':
+                    if (Array.isArray(project.tags) && project.tags.length) {
+                        return { key: project.tags[0], label: project.tags[0] };
+                    }
+                    return { key: 'no-tag', label: 'Без мітки' };
+                case 'month':
+                    return getMonthGroup(project.updatedAt || project.createdAt);
+                default:
+                    return { key: project.stage || 'Без етапу', label: project.stage || 'Без етапу' };
+            }
+        }
+
+        function buildSupportReport(records, grouping) {
+            const items = Array.isArray(records) ? records : [];
+            const config = REPORT_CONFIGS.support;
+            const groupKey = config.groupings[grouping] ? grouping : config.defaultGrouping;
+            const groups = new Map();
+
+            items.forEach(ticket => {
+                const group = getSupportGroup(ticket, groupKey);
+                if (!groups.has(group.key)) {
+                    groups.set(group.key, { label: group.label, count: 0, csat: [], resolution: [] });
+                }
+                const entry = groups.get(group.key);
+                entry.count += 1;
+                const csatValue = Number(ticket.csat);
+                if (Number.isFinite(csatValue) && csatValue > 0) {
+                    entry.csat.push(csatValue);
+                }
+                if (ticket.resolvedAt) {
+                    entry.resolution.push(hoursBetween(ticket.createdAt, ticket.resolvedAt));
+                }
+            });
+
+            const sorted = Array.from(groups.values()).sort((a, b) => b.count - a.count);
+            const openCount = items.filter(ticket => ['open', 'inProgress'].includes(ticket.status)).length;
+            const backlogCount = items.filter(ticket => ticket.status === 'backlog').length;
+            const csatValues = items.map(ticket => Number(ticket.csat)).filter(value => Number.isFinite(value) && value > 0);
+            const avgCsat = csatValues.length ? csatValues.reduce((sum, value) => sum + value, 0) / csatValues.length : null;
+            const responseTimes = items.filter(ticket => ticket.firstResponseAt).map(ticket => hoursBetween(ticket.createdAt, ticket.firstResponseAt));
+            const avgResponse = responseTimes.length ? responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length : null;
+
+            return {
+                columns: [
+                    { id: 'group', label: 'Група', align: 'left' },
+                    { id: 'count', label: 'Звернень', align: 'right', format: value => Number(value).toLocaleString('uk-UA') },
+                    { id: 'csat', label: 'CSAT', align: 'right', format: value => value ? `${value.toFixed(1)} / 5` : '—' },
+                    { id: 'resolution', label: 'Сер. вирішення, год', align: 'right', format: value => formatHours(value) }
+                ],
+                rows: sorted.map(item => ({
+                    group: item.label,
+                    count: item.count,
+                    csat: item.csat.length ? item.csat.reduce((sum, value) => sum + value, 0) / item.csat.length : null,
+                    resolution: item.resolution.length ? item.resolution.reduce((sum, value) => sum + value, 0) / item.resolution.length : null
+                })),
+                summary: {
+                    text: `Активних звернень ${openCount}, backlog ${backlogCount}${avgCsat ? ` • середній CSAT ${avgCsat.toFixed(1)}/5` : ''}${avgResponse ? ` • час відповіді ${formatHours(avgResponse)}` : ''}`.trim()
+                }
+            };
+        }
+
+        function getSupportGroup(ticket, grouping) {
+            switch (grouping) {
+                case 'channel':
+                    return { key: ticket.channel || 'other', label: ticket.channel || 'Інший канал' };
+                case 'priority':
+                    return { key: ticket.priority || 'medium', label: SUPPORT_PRIORITY_LABELS[ticket.priority] || SUPPORT_PRIORITY_LABELS.medium };
+                case 'owner':
+                    return { key: ticket.owner || 'team', label: ticket.owner || 'Команда підтримки' };
+                default:
+                    return { key: ticket.status || 'open', label: SUPPORT_STATUS_LABELS[ticket.status] || SUPPORT_STATUS_LABELS.open };
+            }
+        }
+
+        function getReportColumnTemplate(columnCount) {
+            if (!Number.isFinite(columnCount) || columnCount <= 1) {
+                return 'minmax(0, 1fr)';
+            }
+            const trailing = new Array(columnCount - 1).fill('minmax(0, 0.9fr)').join(' ');
+            return `minmax(0, 1.4fr) ${trailing}`;
+        }
+
+        function exportReportToCsv() {
+            const report = reportBuilderState.lastReport;
+            const status = document.getElementById('reportExportStatus');
+            if (!report || !Array.isArray(report.columns)) {
+                if (status) {
+                    status.textContent = 'Немає даних для експорту.';
+                }
+                return;
+            }
+
+            const columns = report.columns;
+            const rows = Array.isArray(report.rows) ? report.rows : [];
+            const header = columns.map(column => `"${column.label.replace(/"/g, '""')}"`).join(';');
+            const body = rows.map(row => columns.map(column => {
+                const value = row[column.id];
+                if (value === null || value === undefined) {
+                    return '""';
+                }
+                if (typeof value === 'number') {
+                    return String(value);
+                }
+                const text = String(value).replace(/"/g, '""');
+                return `"${text}"`;
+            }).join(';'));
+            const csv = [header, ...body].join('\n');
+            const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const dataset = reportBuilderState.dataset || REPORT_DATASET_DEFAULT;
+            link.href = url;
+            link.download = `crm-report-${dataset}-${Date.now()}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            if (status) {
+                const config = getReportConfig(dataset);
+                status.textContent = `Експортовано ${config.entity.toLowerCase()} • ${new Date().toLocaleString('uk-UA')}`;
+            }
+        }
+
+        function renderForecastingAnalytics() {
+            const summaryContainer = document.getElementById('forecastingSummary');
+            const head = document.getElementById('forecastingHead');
+            const table = document.getElementById('forecastingTable');
+            if (!summaryContainer || !head || !table) {
+                return;
+            }
+
+            const activeLeads = Array.isArray(crmData?.leads)
+                ? crmData.leads.filter(lead => lead.stage !== 'Втрачено')
+                : [];
+
+            if (!activeLeads.length) {
+                summaryContainer.innerHTML = '<div class="forecasting-empty">Немає угод для прогнозу.</div>';
+                head.innerHTML = '';
+                table.innerHTML = '';
+                return;
+            }
+
+            const totalWeighted = activeLeads.reduce((sum, lead) => sum + (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100), 0);
+            const avgProbability = Math.round(activeLeads.reduce((sum, lead) => sum + (Number(lead.probability) || 0), 0) / activeLeads.length);
+            const now = new Date();
+            const thisMonthWeighted = activeLeads
+                .filter(lead => isSameMonth(lead.expectedClose, now.getFullYear(), now.getMonth()))
+                .reduce((sum, lead) => sum + (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100), 0);
+            const thisMonthCount = activeLeads.filter(lead => isSameMonth(lead.expectedClose, now.getFullYear(), now.getMonth())).length;
+            const nextMonthDate = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const nextMonthWeighted = activeLeads
+                .filter(lead => isSameMonth(lead.expectedClose, nextMonthDate.getFullYear(), nextMonthDate.getMonth()))
+                .reduce((sum, lead) => sum + (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100), 0);
+            const noDateCount = activeLeads.filter(lead => !lead.expectedClose).length;
+
+            summaryContainer.innerHTML = `
+                <div class="forecasting-metric">
+                    <span class="metric-label">Зважений прогноз</span>
+                    <strong>${formatCurrency(Math.round(totalWeighted))}</strong>
+                    <div class="metric-sub">Ураховано вартість та ймовірність закриття.</div>
+                </div>
+                <div class="forecasting-metric">
+                    <span class="metric-label">Очікувано цього місяця</span>
+                    <strong>${formatCurrency(Math.round(thisMonthWeighted))}</strong>
+                    <div class="metric-sub">${thisMonthCount ? `${thisMonthCount} угод у роботі` : 'Без очікуваних закриттів'}</div>
+                    <div class="metric-sub">Наступний місяць: ${formatCurrency(Math.round(nextMonthWeighted))}</div>
+                </div>
+                <div class="forecasting-metric">
+                    <span class="metric-label">Середня ймовірність</span>
+                    <strong>${avgProbability}%</strong>
+                    <div class="metric-sub">${noDateCount ? `${noDateCount} угод без дати` : 'Усі угоди мають дати'}</div>
+                </div>
+            `;
+
+            const columnTemplate = 'minmax(0, 1.4fr) repeat(4, minmax(0, 0.9fr))';
+            head.style.gridTemplateColumns = columnTemplate;
+            head.innerHTML = `
+                <span>Угода</span>
+                <span class="align-right">Менеджер</span>
+                <span class="align-right">Очікуване закриття</span>
+                <span class="align-right">Ймовірність</span>
+                <span class="align-right">Зважений дохід</span>
+            `;
+
+            const upcoming = activeLeads.slice().sort((a, b) => {
+                const dateA = a.expectedClose ? new Date(a.expectedClose) : null;
+                const dateB = b.expectedClose ? new Date(b.expectedClose) : null;
+                if (!dateA && !dateB) return 0;
+                if (!dateA) return 1;
+                if (!dateB) return -1;
+                return dateA - dateB;
+            });
+
+            const rows = upcoming.slice(0, 6).map(lead => {
+                const weighted = (Number(lead.value) || 0) * ((Number(lead.probability) || 0) / 100);
+                const expectedLabel = lead.expectedClose ? formatDate(lead.expectedClose, { day: '2-digit', month: 'short' }) : 'Без дати';
+                return `
+                    <div class="forecasting-row" style="grid-template-columns:${columnTemplate};">
+                        <span>${escapeHtml(lead.name || 'Угода')}</span>
+                        <span class="align-right">${escapeHtml(lead.owner || '—')}</span>
+                        <span class="align-right">${expectedLabel}</span>
+                        <span class="align-right">${Math.round(Number(lead.probability) || 0)}%</span>
+                        <span class="align-right">${formatCurrency(Math.round(weighted))}</span>
+                    </div>
+                `;
+            });
+
+            table.innerHTML = rows.length ? rows.join('') : '<div class="forecasting-empty">Угоди без визначеної дати закриття.</div>';
+        }
+
+        function isSameMonth(dateInput, year, month) {
+            if (!dateInput && dateInput !== 0) {
+                return false;
+            }
+            const date = new Date(dateInput);
+            if (Number.isNaN(date.getTime())) {
+                return false;
+            }
+            return date.getFullYear() === year && date.getMonth() === month;
         }
         function handleGlobalSearch(value) {
             const results = document.getElementById('searchResults');
@@ -15563,6 +16792,19 @@
             return Math.round(number).toLocaleString('uk-UA');
         }
 
+        function formatHours(hours) {
+            if (!Number.isFinite(hours) || hours <= 0) {
+                return '—';
+            }
+            if (hours < 1) {
+                return `${Math.round(hours * 60)} хв`;
+            }
+            if (hours < 10) {
+                return `${hours.toFixed(1)} год`;
+            }
+            return `${Math.round(hours)} год`;
+        }
+
         function formatRelativeTime(dateInput) {
             if (!dateInput) return '';
             const date = new Date(dateInput);
@@ -15594,6 +16836,16 @@
             const end = new Date(endDate);
             const diff = end.getTime() - start.getTime();
             return Math.max(0, Math.round(diff / (1000 * 60 * 60 * 24)));
+        }
+
+        function hoursBetween(startDate, endDate = new Date()) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) {
+                return 0;
+            }
+            const diff = end.getTime() - start.getTime();
+            return Math.max(0, diff / (1000 * 60 * 60));
         }
 
         function isSameDay(dateA, dateB) {
