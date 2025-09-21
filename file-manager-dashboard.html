@@ -17494,6 +17494,47 @@
             return '';
         }
 
+        function normalizeSearchText(value) {
+            if (typeof value !== 'string') {
+                return '';
+            }
+
+            return value
+                .toLowerCase()
+                .replace(/[^\p{L}\p{N}]+/gu, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function collapseSearchText(value) {
+            return value.replace(/\s+/g, '');
+        }
+
+        function matchesSearchQuery(source, query) {
+            const normalizedSource = normalizeSearchText(source);
+            if (!normalizedSource) {
+                return false;
+            }
+
+            const normalizedQuery = normalizeSearchText(query);
+            if (!normalizedQuery) {
+                return true;
+            }
+
+            const collapsedSource = collapseSearchText(normalizedSource);
+            const collapsedQuery = collapseSearchText(normalizedQuery);
+            if (collapsedQuery && collapsedSource.includes(collapsedQuery)) {
+                return true;
+            }
+
+            const tokens = normalizedQuery.split(' ').filter(Boolean);
+            if (!tokens.length) {
+                return false;
+            }
+
+            return tokens.every(token => normalizedSource.includes(token));
+        }
+
         function getContactTimeline(contact) {
             if (!contact) {
                 return [];
@@ -17758,7 +17799,7 @@
 
             updateContactTagOptions();
 
-            const query = searchTerm.trim().toLowerCase();
+            const query = typeof searchTerm === 'string' ? searchTerm.trim() : '';
             let contacts = Array.isArray(crmData?.contacts) ? crmData.contacts.slice() : [];
 
             if (contactStatusFilter !== 'all') {
@@ -17792,10 +17833,9 @@
                             ? contact.segments.map(segment => STATUS_LABELS[segment] || segment)
                             : [])
                     ]
-                        .filter(Boolean)
-                        .join(' ')
-                        .toLowerCase();
-                    return haystack.includes(query);
+                        .filter(value => typeof value === 'string' && value.trim().length)
+                        .join(' ');
+                    return matchesSearchQuery(haystack, query);
                 });
             }
 
@@ -20576,37 +20616,42 @@
         }
         function handleGlobalSearch(value) {
             const results = document.getElementById('searchResults');
-            const query = value.trim().toLowerCase();
+            const query = typeof value === 'string' ? value.trim() : '';
             if (!query) {
                 hideSearchResults();
                 return;
             }
 
             const projectMatches = crmData.projects.filter(project => {
-                return [
+                const haystack = [
                     project.name,
                     project.company,
                     project.owner,
                     project.contact,
                     ...(Array.isArray(project.tags) ? project.tags : [])
                 ]
-                    .filter(Boolean)
-                    .some(field => field.toLowerCase().includes(query));
+                    .filter(field => typeof field === 'string' && field.trim().length)
+                    .join(' ');
+                return matchesSearchQuery(haystack, query);
             }).slice(0, 4);
 
             const leadMatches = crmData.leads.filter(lead => {
-                return [lead.name, lead.company, lead.contact?.person]
-                    .filter(Boolean)
-                    .some(field => field.toLowerCase().includes(query));
+                const haystack = [lead.name, lead.company, lead.contact?.person]
+                    .filter(field => typeof field === 'string' && field.trim().length)
+                    .join(' ');
+                return matchesSearchQuery(haystack, query);
             }).slice(0, 4);
 
             const contactMatches = crmData.contacts.filter(contact => {
-                return [contact.name, contact.company, contact.email]
-                    .filter(Boolean)
-                    .some(field => field.toLowerCase().includes(query));
+                const haystack = [contact.name, contact.company, contact.email]
+                    .filter(field => typeof field === 'string' && field.trim().length)
+                    .join(' ');
+                return matchesSearchQuery(haystack, query);
             }).slice(0, 4);
 
-            const taskMatches = crmData.tasks.filter(task => task.title.toLowerCase().includes(query)).slice(0, 3);
+            const taskMatches = crmData.tasks
+                .filter(task => matchesSearchQuery(task.title || '', query))
+                .slice(0, 3);
 
             if (!projectMatches.length && !leadMatches.length && !contactMatches.length && !taskMatches.length) {
                 results.innerHTML = '<div class="search-empty">Нічого не знайдено</div>';
