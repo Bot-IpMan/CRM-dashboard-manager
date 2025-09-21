@@ -12477,6 +12477,8 @@
                     select.innerHTML = '<option value="">Папки ще не підключені</option>';
                     select.disabled = true;
                 }
+                activeFileSourceId = null;
+                renderFileSources();
                 renderFileProcesses(null);
                 return;
             }
@@ -12497,11 +12499,15 @@
             const previousSourceId = activeFileSourceId;
             const linkedSource = getFileSourceBySnapshotId(snapshot?.id);
             activeFileSourceId = linkedSource ? linkedSource.id : null;
+            const sourceChanged = previousSourceId !== activeFileSourceId;
             updateFileSummary(snapshot);
             renderFileProcesses(snapshot || null);
 
             if (!snapshot) {
                 treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">Не вдалося завантажити вибране сканування.</div>';
+                if (sourceChanged) {
+                    renderFileSources();
+                }
                 return;
             }
 
@@ -12510,6 +12516,9 @@
 
             if (!visibleEntries.length) {
                 treeBody.innerHTML = '<div class="empty-state" style="padding: 32px;">За вашим запитом нічого не знайдено.</div>';
+                if (sourceChanged) {
+                    renderFileSources();
+                }
                 return;
             }
 
@@ -12547,7 +12556,7 @@
                 `;
             }).join('');
 
-            if (previousSourceId !== activeFileSourceId) {
+            if (sourceChanged) {
                 renderFileSources();
             }
         }
