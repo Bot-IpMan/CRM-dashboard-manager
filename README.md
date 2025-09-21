@@ -52,12 +52,25 @@
 ### Ключові параметри
 
 - `database.path` — шлях до SQLite файлу з таблицею `file_events`.
+  - `database.retention_days` — автоматичне очищення записів старших за вказану кількість днів.
+  - `database.maintenance_interval` та `database.maintenance_batch_size` — як часто й якими порціями запускати фонове очищення.
+  - `database.maintenance_on_start` — виконати профілактичне очищення/вакуум одразу після старту сервісу.
+  - `database.vacuum_on_start` / `database.vacuum_on_maintenance` — керування запуском `VACUUM` для повернення вільного місця.
+  - `database.busy_timeout` — тайм-аут (мс) для блокувань SQLite, також впливає на `sqlite3` timeout.
+  - `database.journal_mode`, `database.synchronous`, `database.pragmas` — тонке налаштування режимів роботи SQLite (наприклад, `foreign_keys`, розмір кешу тощо).
 - `poll_interval` — глобальний інтервал опитування (у секундах). Можна перевизначити для окремого каталогу через `directories[].poll_interval`.
+- `max_events_per_batch` — обмеження на розмір транзакції під час запису подій у базу.
+- `idle_sleep_interval` — мінімальна пауза між циклами очікування, що допомагає точніше контролювати навантаження.
+- `shutdown_grace_period` — скільки секунд сервіс/фонова нитка FastAPI чекатиме на коректне завершення роботи.
 - `directories[].include`/`exclude` — патерни (fnmatch) для фільтрації файлів.
 - `directories[].backend` — `polling` (повне опитування) або `watchfiles` для подієвого моніторингу.
 - `directories[].compute_checksum` — чи обчислювати контрольну суму файлів.
 - `directories[].emit_on_start` — якщо `true`, то події для наявних файлів будуть зафіксовані одразу після запуску.
 - `directories[].min_file_size`/`max_file_size` — обмеження на розмір файлів у байтах (події поза діапазоном ігноруються).
+- `directories[].recursive` — дозволяє обмежити обхід лише кореневою директорією.
+- `directories[].follow_symlinks` — керує переходом за символічними посиланнями.
+- `directories[].ignore_hidden` — приховані файли та папки (починаються з крапки) ігноруються незалежно від патернів.
+- `directories[].metadata` — довільні пари `ключ=значення`, які додаються до поля `details` кожної події для подальшої аналітики.
 
 ## Запуск
 

@@ -1,10 +1,25 @@
 {
   "database": {
-    "path": "./file_events.db"
+    "path": "./file_events.db",
+    "busy_timeout": 10000,
+    "retention_days": 30,
+    "maintenance_interval": 1800,
+    "maintenance_on_start": true,
+    "maintenance_batch_size": 500,
+    "vacuum_on_start": false,
+    "vacuum_on_maintenance": true,
+    "journal_mode": "WAL",
+    "synchronous": "NORMAL",
+    "pragmas": {
+      "foreign_keys": "ON"
+    }
   },
   "poll_interval": 5,
   "checksum_algorithm": "md5",
   "log_level": "INFO",
+  "max_events_per_batch": 250,
+  "idle_sleep_interval": 0.2,
+  "shutdown_grace_period": 15,
   "directories": [
     {
       "path": "./watched",
@@ -17,7 +32,14 @@
       "min_file_size": 1024,
       "max_file_size": 52428800,
       "compute_checksum": false,
-      "emit_on_start": false
+      "emit_on_start": false,
+      "recursive": true,
+      "follow_symlinks": false,
+      "ignore_hidden": true,
+      "metadata": {
+        "environment": "staging",
+        "team": "file-ops"
+      }
     }
   ]
 }

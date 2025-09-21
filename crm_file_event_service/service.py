@@ -6,6 +6,7 @@ import signal
 import threading
 import time
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 from typing import List, Optional
 
 from .config import DirectoryConfig, ServiceConfig
@@ -30,7 +31,7 @@ class FileEventService:
 
     def __init__(self, config: ServiceConfig) -> None:
         self.config = config
-        self.database = EventDatabase(config.database_path)
+        self.database = EventDatabase(config.database)
         self.watchers: List[ManagedWatcher] = [
             ManagedWatcher(
                 watcher=self._create_watcher(directory),
@@ -41,6 +42,26 @@ class FileEventService:
         self._stop_event = threading.Event()
         if not self.watchers:
             raise ValueError("Service cannot start without configured watchers")
+        self._max_batch_size = config.max_events_per_batch
+        self._maintenance_interval = config.database.maintenance_interval
+        self._maintenance_batch_size = config.database.maintenance_batch_size
+        self._vacuum_on_maintenance = config.database.vacuum_on_maintenance
+        self._retention_days = config.database.retention_days
+        maintenance_required = (
+            self._retention_days is not None or self._vacuum_on_maintenance
+        )
+        if maintenance_required:
+            if config.database.maintenance_on_start:
+                initial_delay = 0.0
+            elif self._maintenance_interval is not None:
+                initial_delay = self._maintenance_interval
+            else:
+                initial_delay = None
+            self._next_maintenance = (
+                time.monotonic() + initial_delay if initial_delay is not None else None
+            )
+        else:
+            self._next_maintenance = None
 
     def start(self) -> None:
         """Run the service loop until stop is requested."""
@@ -53,7 +74,12 @@ class FileEventService:
                     # No watcher scheduled yet; fall back to default interval
                     sleep_for = self.config.poll_interval
                 LOGGER.debug("Sleeping for %.2fs", sleep_for)
-                self._stop_event.wait(timeout=max(sleep_for, 0.1))
+                idle_sleep = (
+                    self.config.idle_sleep_interval
+                    if self.config.idle_sleep_interval > 0
+                    else 0.1
+                )
+                self._stop_event.wait(timeout=max(sleep_for, idle_sleep))
         finally:
             self._shutdown_watchers()
             self.database.close()
@@ -89,6 +115,11 @@ class FileEventService:
             if next_deadline is None or managed.next_poll < next_deadline:
                 next_deadline = managed.next_poll
 
+        maintenance_deadline = self._maybe_schedule_maintenance(now)
+        if maintenance_deadline is not None:
+            if next_deadline is None or maintenance_deadline < next_deadline:
+                next_deadline = maintenance_deadline
+
         if next_deadline is None:
             return None
         return max(0.0, next_deadline - now)
@@ -97,7 +128,13 @@ class FileEventService:
         if not events:
             return
         LOGGER.info("Persisting %s events", len(events))
-        self.database.insert_events(events)
+        max_batch = self._max_batch_size
+        if not max_batch or max_batch <= 0:
+            self.database.insert_events(events)
+            return
+        for index in range(0, len(events), max_batch):
+            batch = events[index : index + max_batch]
+            self.database.insert_events(batch)
 
     def _create_watcher(self, directory: DirectoryConfig) -> DirectoryWatcher:
         if directory.backend == "watchfiles":
@@ -117,6 +154,42 @@ class FileEventService:
                     watcher.config.path,
                     exc,
                 )
+
+    def _maybe_schedule_maintenance(self, now: float) -> Optional[float]:
+        deadline = self._next_maintenance
+        if deadline is None:
+            return None
+        if now >= deadline:
+            self._perform_maintenance()
+            deadline = self._next_maintenance
+        return deadline
+
+    def _perform_maintenance(self) -> None:
+        LOGGER.debug("Running scheduled maintenance tasks")
+        if self._maintenance_interval:
+            self._next_maintenance = time.monotonic() + self._maintenance_interval
+        else:
+            self._next_maintenance = None
+
+        deleted = 0
+        if self._retention_days is not None:
+            cutoff = datetime.now(timezone.utc) - timedelta(days=self._retention_days)
+            deleted = self.database.purge_older_than(
+                cutoff,
+                limit=self._maintenance_batch_size,
+            )
+            if deleted:
+                LOGGER.info(
+                    "Purged %s events older than %s", deleted, cutoff.isoformat()
+                )
+            else:
+                LOGGER.debug(
+                    "No events older than %s to purge", cutoff.isoformat()
+                )
+
+        if self._vacuum_on_maintenance and (deleted or self._retention_days is None):
+            LOGGER.info("Running VACUUM as part of maintenance")
+            self.database.vacuum()
 
     def _install_signal_handlers(self) -> None:
         try:
