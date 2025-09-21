@@ -35,6 +35,47 @@
             --metric-card-min: 220px;
         }
 
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 24px;
+            padding: 12px 16px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            z-index: 100;
+            transition: top 0.2s ease;
+        }
+
+        .skip-link:focus {
+            top: 16px;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        .nav-item:focus-visible,
+        .task-filter-reset:focus-visible,
+        .file-browse-btn:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 3px;
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -208,6 +249,7 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: rgba(255, 255, 255, 0.55);
+            margin: 0;
         }
 
         .nav-item {
@@ -5339,6 +5381,7 @@
     </style>
 </head>
 <body>
+    <a class="skip-link" href="#mainContent">Перейти до основного вмісту</a>
     <div class="app-layout">
         <aside class="sidebar">
             <div class="sidebar-inner">
@@ -5366,58 +5409,58 @@
                     </select>
                 </div>
 
-                <nav class="nav" id="mainNav">
+                <nav class="nav" id="mainNav" aria-label="Основні розділи CRM">
                     <div class="nav-group" data-group="core">
-                        <div class="nav-group-label">Головне</div>
-                        <button class="nav-item active" data-section-target="dashboardSection" data-nav-category="sales analytics" data-nav-keywords="дашборд показники аналітика огляд">
+                        <h2 class="nav-group-label">Головне</h2>
+                        <button type="button" class="nav-item active" data-section-target="dashboardSection" data-nav-category="sales analytics" data-nav-keywords="дашборд показники аналітика огляд" aria-controls="dashboardSection" aria-current="page">
                             <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
                             Дашборд
                         </button>
-                        <button class="nav-item" data-section-target="pipelineSection" data-nav-category="sales" data-nav-keywords="воронка продажів ліди процес">
+                        <button type="button" class="nav-item" data-section-target="pipelineSection" data-nav-category="sales" data-nav-keywords="воронка продажів ліди процес" aria-controls="pipelineSection">
                             <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>
                             Воронка продажів
                         </button>
-                        <button class="nav-item" data-section-target="projectsSection" data-nav-category="sales operations" data-nav-keywords="проекти угоди бюджет">
+                        <button type="button" class="nav-item" data-section-target="projectsSection" data-nav-category="sales operations" data-nav-keywords="проекти угоди бюджет" aria-controls="projectsSection">
                             <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
                             Проекти
                         </button>
                     </div>
 
                     <div class="nav-group" data-group="clients">
-                        <div class="nav-group-label">Клієнти та робота</div>
-                        <button class="nav-item" data-section-target="contactsSection" data-nav-category="sales" data-nav-keywords="контакти клієнти партнери база">
+                        <h2 class="nav-group-label">Клієнти та робота</h2>
+                        <button type="button" class="nav-item" data-section-target="contactsSection" data-nav-category="sales" data-nav-keywords="контакти клієнти партнери база" aria-controls="contactsSection">
                             <i class="fa-solid fa-user-group" aria-hidden="true"></i>
                             Контакти
                         </button>
-                        <button class="nav-item" data-section-target="tasksSection" data-nav-category="operations sales" data-nav-keywords="завдання планер дії">
+                        <button type="button" class="nav-item" data-section-target="tasksSection" data-nav-category="operations sales" data-nav-keywords="завдання планер дії" aria-controls="tasksSection">
                             <i class="fa-solid fa-square-check" aria-hidden="true"></i>
                             Завдання
                         </button>
                     </div>
 
                     <div class="nav-group" data-group="operations">
-                        <div class="nav-group-label">Операційні</div>
-                        <button class="nav-item" data-section-target="filesSection" data-nav-category="operations" data-nav-keywords="файли документи сховище drag">
+                        <h2 class="nav-group-label">Операційні</h2>
+                        <button type="button" class="nav-item" data-section-target="filesSection" data-nav-category="operations" data-nav-keywords="файли документи сховище drag" aria-controls="filesSection">
                             <i class="fa-solid fa-folder-tree" aria-hidden="true"></i>
                             Файли
                         </button>
                     </div>
 
                     <div class="nav-group" data-group="analytics">
-                        <div class="nav-group-label">Аналітика</div>
-                        <button class="nav-item" data-section-target="analyticsSection" data-nav-category="analytics" data-nav-keywords="інсайти звіти конверсія">
+                        <h2 class="nav-group-label">Аналітика</h2>
+                        <button type="button" class="nav-item" data-section-target="analyticsSection" data-nav-category="analytics" data-nav-keywords="інсайти звіти конверсія" aria-controls="analyticsSection">
                             <i class="fa-solid fa-magnifying-glass-chart" aria-hidden="true"></i>
                             Інсайти
                         </button>
                     </div>
 
                     <div class="nav-group" data-group="admin">
-                        <div class="nav-group-label">Адміністрування</div>
-                        <button class="nav-item" data-section-target="rolesSection" data-nav-category="admin" data-nav-keywords="ролі права доступ команда">
+                        <h2 class="nav-group-label">Адміністрування</h2>
+                        <button type="button" class="nav-item" data-section-target="rolesSection" data-nav-category="admin" data-nav-keywords="ролі права доступ команда" aria-controls="rolesSection">
                             <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
                             Ролі та доступи
                         </button>
-                        <button class="nav-item" data-section-target="settingsSection" data-nav-category="admin" data-nav-keywords="налаштування макет вигляд блоки">
+                        <button type="button" class="nav-item" data-section-target="settingsSection" data-nav-category="admin" data-nav-keywords="налаштування макет вигляд блоки" aria-controls="settingsSection">
                             <i class="fa-solid fa-sliders" aria-hidden="true"></i>
                             Налаштування
                         </button>
@@ -5443,7 +5486,7 @@
             </div>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" id="mainContent" tabindex="-1">
             <header class="topbar">
                 <div>
                     <h2>Вітаю у вашій сучасній CRM</h2>
@@ -5452,7 +5495,8 @@
                 <div class="topbar-actions">
                     <div class="search-wrapper" id="globalSearchWrapper">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" id="globalSearch" placeholder="Пошук угод, контактів, задач...">
+                        <label class="visually-hidden" for="globalSearch">Глобальний пошук по CRM</label>
+                        <input type="search" id="globalSearch" placeholder="Пошук угод, контактів, задач...">
                         <div class="search-results" id="searchResults"></div>
                     </div>
                     <button class="btn btn-primary" id="openLeadModalBtn">
@@ -5462,10 +5506,10 @@
                 </div>
             </header>
 
-            <section id="dashboardSection" class="section active">
+            <section id="dashboardSection" class="section active" role="region" aria-labelledby="dashboardSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Огляд показників</h2>
+                        <h2 id="dashboardSectionTitle">Огляд показників</h2>
                         <p>Ключові метрики вашої системи продажів у реальному часі</p>
                     </div>
                     <div class="section-actions">
@@ -5563,13 +5607,14 @@
                 </div>
             </section>
 
-            <section id="pipelineSection" class="section">
+            <section id="pipelineSection" class="section" role="region" aria-labelledby="pipelineSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Воронка продажів</h2>
+                        <h2 id="pipelineSectionTitle">Воронка продажів</h2>
                         <p>Відстежуйте стан кожної можливості та працюйте з ними інтерактивно</p>
                     </div>
                     <div class="section-actions">
+                        <label class="visually-hidden" for="pipelineOwnerFilter">Фільтрувати угоди за менеджером</label>
                         <select id="pipelineOwnerFilter">
                             <option value="all">Всі менеджери</option>
                         </select>
@@ -5601,14 +5646,16 @@
                 </div>
             </section>
 
-            <section id="projectsSection" class="section">
+            <section id="projectsSection" class="section" role="region" aria-labelledby="projectsSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Портфель проектів</h2>
+                        <h2 id="projectsSectionTitle">Портфель проектів</h2>
                         <p>Контролюйте статус угод, команду та ймовірність успіху</p>
                     </div>
                     <div class="section-actions">
-                        <input type="text" id="projectSearch" placeholder="Пошук проектів...">
+                        <label class="visually-hidden" for="projectSearch">Пошук проектів за назвою</label>
+                        <input type="search" id="projectSearch" placeholder="Пошук проектів...">
+                        <label class="visually-hidden" for="projectStageFilter">Фільтр за етапом проекту</label>
                         <select id="projectStageFilter">
                             <option value="all">Всі етапи</option>
                         </select>
@@ -5661,16 +5708,19 @@
                 </div>
             </section>
 
-            <section id="contactsSection" class="section">
+            <section id="contactsSection" class="section" role="region" aria-labelledby="contactsSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Контактна база</h2>
+                        <h2 id="contactsSectionTitle">Контактна база</h2>
                         <p>Усі клієнти, партнери та ключові особи у вашій екосистемі</p>
                     </div>
                     <div class="section-actions">
-                        <input type="text" id="contactSearch" placeholder="Швидкий пошук...">
+                        <label class="visually-hidden" for="contactSearch">Пошук у контактній базі</label>
+                        <input type="search" id="contactSearch" placeholder="Швидкий пошук...">
+                        <label class="visually-hidden" for="contactTagFilter">Фільтр контактів за мітками</label>
                         <input type="text" id="contactTagFilter" placeholder="Мітки (через кому)" list="contactTagOptions">
                         <datalist id="contactTagOptions"></datalist>
+                        <label class="visually-hidden" for="contactStatusFilter">Фільтр контактів за категорією</label>
                         <select id="contactStatusFilter">
                             <option value="all">Всі категорії</option>
                             <option value="lead">Ліди</option>
@@ -5767,10 +5817,10 @@
                 </div>
             </section>
 
-            <section id="tasksSection" class="section">
+            <section id="tasksSection" class="section" role="region" aria-labelledby="tasksSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Планер дій</h2>
+                        <h2 id="tasksSectionTitle">Планер дій</h2>
                         <p>Пріоритетні задачі команди з можливістю швидкого оновлення статусу</p>
                     </div>
                     <div class="section-actions">
@@ -5837,14 +5887,14 @@
                 </div>
             </section>
 
-            <section id="filesSection" class="section">
+            <section id="filesSection" class="section" role="region" aria-labelledby="filesSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Файловий оглядач</h2>
+                        <h2 id="filesSectionTitle">Файловий оглядач</h2>
                         <p>Підключайте локальні папки (наприклад D:\O), щоб швидко переглядати маркетингові матеріали.</p>
                     </div>
                     <div class="section-actions">
-                        <span class="file-status" id="fileScanStatus"></span>
+                        <span class="file-status" id="fileScanStatus" role="status" aria-live="polite"></span>
                     </div>
                 </div>
                 <div class="file-manager">
@@ -5857,7 +5907,8 @@
                         <select id="folderSnapshotsSelect" aria-label="Збережені папки"></select>
                         <div class="file-search">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <input type="text" id="fileSearchInput" placeholder="Пошук у вибраній папці...">
+                            <label class="visually-hidden" for="fileSearchInput">Пошук серед файлів та папок</label>
+                            <input type="search" id="fileSearchInput" placeholder="Пошук у вибраній папці...">
                         </div>
                     </div>
                     <div class="file-sources">
@@ -5953,10 +6004,10 @@
                 </div>
             </section>
 
-            <section id="analyticsSection" class="section">
+            <section id="analyticsSection" class="section" role="region" aria-labelledby="analyticsSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Глибинні інсайти</h2>
+                        <h2 id="analyticsSectionTitle">Глибинні інсайти</h2>
                         <p>Показники ефективності команди та здоров'я воронки</p>
                     </div>
                     <div class="section-actions">
@@ -6101,10 +6152,10 @@
                 </div>
             </section>
 
-            <section id="rolesSection" class="section">
+            <section id="rolesSection" class="section" role="region" aria-labelledby="rolesSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Ролі та доступи</h2>
+                        <h2 id="rolesSectionTitle">Ролі та доступи</h2>
                         <p>Розподіляйте відповідальність та обмежуйте доступ до критичних дій</p>
                     </div>
                     <div class="section-actions">
@@ -6155,10 +6206,10 @@
                 </div>
             </section>
 
-            <section id="settingsSection" class="section">
+            <section id="settingsSection" class="section" role="region" aria-labelledby="settingsSectionTitle">
                 <div class="section-header">
                     <div>
-                        <h2>Налаштування інтерфейсу</h2>
+                        <h2 id="settingsSectionTitle">Налаштування інтерфейсу</h2>
                         <p>Керуйте розміщенням блоків та зовнішнім виглядом головної панелі</p>
                     </div>
                 </div>
@@ -6244,11 +6295,11 @@
         </main>
     </div>
     <!-- Модальні вікна -->
-    <div class="modal" id="addLeadModal">
+    <div class="modal" id="addLeadModal" role="dialog" aria-modal="true" aria-labelledby="addLeadModalTitle">
         <div class="modal-dialog">
             <div class="modal-header">
-                <h3>Новий лід</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <h3 id="addLeadModalTitle">Новий лід</h3>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="leadForm" class="form-grid">
                 <div class="form-group">
@@ -6345,11 +6396,11 @@
         </div>
     </div>
 
-    <div class="modal" id="addProjectModal">
+    <div class="modal" id="addProjectModal" role="dialog" aria-modal="true" aria-labelledby="addProjectModalTitle">
         <div class="modal-dialog">
             <div class="modal-header">
-                <h3>Новий проект</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <h3 id="addProjectModalTitle">Новий проект</h3>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="projectForm" class="form-grid">
                 <div class="form-group">
@@ -6427,11 +6478,11 @@
         </div>
     </div>
 
-    <div class="modal" id="addContactModal">
+    <div class="modal" id="addContactModal" role="dialog" aria-modal="true" aria-labelledby="addContactModalTitle">
         <div class="modal-dialog">
             <div class="modal-header">
-                <h3>Новий контакт</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <h3 id="addContactModalTitle">Новий контакт</h3>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="contactForm" class="form-grid">
                 <div class="form-group">
@@ -6565,11 +6616,11 @@
         </div>
     </div>
 
-    <div class="modal" id="addTaskModal">
+    <div class="modal" id="addTaskModal" role="dialog" aria-modal="true" aria-labelledby="addTaskModalTitle">
         <div class="modal-dialog">
             <div class="modal-header">
-                <h3>Нове завдання</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <h3 id="addTaskModalTitle">Нове завдання</h3>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="taskForm" class="form-grid">
                 <div class="form-group">
@@ -6644,21 +6695,21 @@
         </div>
     </div>
 
-    <div class="modal" id="leadDetailsModal">
+    <div class="modal" id="leadDetailsModal" role="dialog" aria-modal="true" aria-labelledby="leadDetailsTitle">
         <div class="modal-dialog wide">
             <div class="modal-header">
                 <h3 id="leadDetailsTitle">Деталі угоди</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <div class="lead-details" id="leadDetailsContent"></div>
         </div>
     </div>
 
-    <div class="modal" id="customChartModal">
+    <div class="modal" id="customChartModal" role="dialog" aria-modal="true" aria-labelledby="customChartModalTitle">
         <div class="modal-dialog wide">
             <div class="modal-header">
                 <h3 id="customChartModalTitle">Новий графік</h3>
-                <button class="modal-close" type="button" data-close>&times;</button>
+                <button class="modal-close" type="button" data-close aria-label="Закрити модальне вікно">&times;</button>
             </div>
             <form id="customChartForm" class="form-grid">
                 <input type="hidden" id="customChartId">
@@ -10266,6 +10317,17 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            const skipLink = document.querySelector('.skip-link');
+            if (skipLink) {
+                skipLink.addEventListener('click', event => {
+                    const main = document.getElementById('mainContent');
+                    if (main) {
+                        event.preventDefault();
+                        main.focus();
+                    }
+                });
+            }
+
             crmData = loadData();
             uiPreferences = loadPreferences();
             updateLayoutVariables();
@@ -10784,6 +10846,23 @@
             taskLeadSelect.innerHTML = options.join('');
         }
 
+        function enhanceDecorativeIcons() {
+            document.querySelectorAll('i[class*="fa-"]').forEach(icon => {
+                if (icon.getAttribute('aria-label')) {
+                    return;
+                }
+                if (icon.textContent && icon.textContent.trim().length > 0) {
+                    return;
+                }
+                if (!icon.hasAttribute('aria-hidden')) {
+                    icon.setAttribute('aria-hidden', 'true');
+                }
+                if (!icon.hasAttribute('role')) {
+                    icon.setAttribute('role', 'presentation');
+                }
+            });
+        }
+
         function setupNavigation() {
             const nav = document.getElementById('mainNav');
             if (!nav) {
@@ -10816,10 +10895,20 @@
                 const section = document.getElementById(target);
                 if (section) {
                     section.classList.add('active');
+                    const heading = section.querySelector('h2');
+                    if (heading && typeof heading.focus === 'function') {
+                        heading.setAttribute('tabindex', '-1');
+                        heading.focus();
+                        heading.addEventListener('blur', () => heading.removeAttribute('tabindex'), { once: true });
+                    }
                 }
 
-                navItems.forEach(btn => btn.classList.remove('active'));
+                navItems.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.removeAttribute('aria-current');
+                });
                 item.classList.add('active');
+                item.setAttribute('aria-current', 'page');
             };
 
             navItems.forEach(item => {
@@ -10840,11 +10929,12 @@
                     const isVisible = matchesSearch && matchesFilter;
 
                     item.classList.toggle('is-hidden', !isVisible);
-                    item.setAttribute('aria-hidden', isVisible ? 'false' : 'true');
                     if (isVisible) {
+                        item.removeAttribute('aria-hidden');
                         item.removeAttribute('tabindex');
                         visibleCount += 1;
                     } else {
+                        item.setAttribute('aria-hidden', 'true');
                         item.setAttribute('tabindex', '-1');
                     }
                 });
@@ -10889,10 +10979,14 @@
             }
 
             const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => item.classList.remove('active'));
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                item.removeAttribute('aria-current');
+            });
             const contactsNav = document.querySelector('.nav-item[data-section-target="contactsSection"]');
             if (contactsNav) {
                 contactsNav.classList.add('active');
+                contactsNav.setAttribute('aria-current', 'page');
             }
 
             if (contactId) {
@@ -13317,6 +13411,7 @@
             renderRoles();
             renderFileExplorer(fileSearchTerm);
             renderAnalytics();
+            enhanceDecorativeIcons();
         }
 
         function updateSidebar() {
