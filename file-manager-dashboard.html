@@ -2083,6 +2083,60 @@
             color: var(--text-muted);
         }
 
+        .contact-automation-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .contact-automation-item {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 14px;
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(14, 165, 233, 0.24);
+        }
+
+        .contact-automation-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(99, 102, 241, 0.24));
+            color: #0c4a6e;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .contact-automation-item h4 {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .contact-automation-item p {
+            margin: 6px 0 0;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .contact-automation-meta {
+            margin: 10px 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .contact-automation-meta li strong {
+            color: var(--text);
+        }
+
         .contact-profile-actions {
             display: flex;
             flex-wrap: wrap;
@@ -5350,7 +5404,7 @@
                             </span>
                             <div>
                                 <h4>Облік взаємодій</h4>
-                                <p>Листування, дзвінки, зустрічі та інші контакти логуються прямо в картці клієнта, даючи повну картину історії комунікацій для всієї команди.</p>
+                                <p>Листування, дзвінки, зустрічі та інші контакти логуються прямо в картці клієнта, а Zoom Contact Center (zoom.com) автоматично зберігає записи, теги й фолоу-ап стратегії.</p>
                             </div>
                         </div>
                         <div class="contact-insight-item">
@@ -5358,8 +5412,17 @@
                                 <i class="fa-solid fa-envelope-open-text"></i>
                             </span>
                             <div>
-                                <h4>Інтеграція з поштою та месенджерами</h4>
-                                <p>CRM відправляє та отримує листи, синхронізує листування, підтримує шаблони й тригери на дії клієнтів, спрощуючи фолоу-апи.</p>
+                                <h4>Автооновлення контактів</h4>
+                                <p>Імпорт з електронних скриньок і веб-форм за рекомендаціями Discover CRM (discovercrm.com) автоматично створює та оновлює записи без ручного введення.</p>
+                            </div>
+                        </div>
+                        <div class="contact-insight-item">
+                            <span class="contact-insight-icon" aria-hidden="true">
+                                <i class="fa-solid fa-circle-nodes"></i>
+                            </span>
+                            <div>
+                                <h4>Збагачення профілю</h4>
+                                <p>API-інтеграції з бізнес-довідниками й маркетинговими платформами (Discover CRM) додають галузь, розмір компанії та соціальні профілі без додаткових зусиль.</p>
                             </div>
                         </div>
                         <div class="contact-insight-item">
@@ -7672,7 +7735,62 @@
                             author: 'Марина',
                             tags: ['Kick-off']
                         }
-                    ]
+                    ],
+                    automation: {
+                        autoUpdate: {
+                            emailInboxes: [
+                                {
+                                    label: 'sales@novapay.ua',
+                                    provider: 'Gmail',
+                                    status: 'connected',
+                                    lastSync: '2024-06-05T07:45:00.000Z',
+                                    newRecords: 2
+                                }
+                            ],
+                            webForms: [
+                                {
+                                    label: 'Запис на консультацію',
+                                    status: 'active',
+                                    lastSync: '2024-06-05T07:30:00.000Z',
+                                    newRecords: 1
+                                }
+                            ]
+                        },
+                        enrichment: {
+                            providers: [
+                                {
+                                    name: 'Clearbit',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T18:00:00.000Z',
+                                    fields: ['галузь', 'розмір компанії']
+                                },
+                                {
+                                    name: 'LinkedIn Sales Navigator',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T18:00:00.000Z',
+                                    fields: ['соціальні профілі ключових осіб']
+                                }
+                            ],
+                            enrichedFields: ['галузь', 'розмір компанії', 'соціальні профілі']
+                        },
+                        communicationLog: {
+                            calls: {
+                                provider: 'Zoom Contact Center',
+                                lastSync: '2024-06-02T12:15:00.000Z',
+                                recordings: true,
+                                loggedCount: 3,
+                                tags: ['Впровадження', 'Фолоу-ап'],
+                                followUp: 'Контроль впровадження 7 червня'
+                            },
+                            emails: {
+                                provider: 'Outlook',
+                                mailbox: 'sales@novapay.ua',
+                                autoLink: true,
+                                threadsTracked: 5,
+                                lastSync: '2024-06-02T12:15:00.000Z'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'contact-2',
@@ -7737,7 +7855,62 @@
                             author: 'Олександр',
                             tags: ['Kick-off']
                         }
-                    ]
+                    ],
+                    automation: {
+                        autoUpdate: {
+                            emailInboxes: [
+                                {
+                                    label: 'logistics@rozetka.ua',
+                                    provider: 'Office 365',
+                                    status: 'connected',
+                                    lastSync: '2024-06-05T06:40:00.000Z',
+                                    newRecords: 1
+                                }
+                            ],
+                            webForms: [
+                                {
+                                    label: 'RFP на логістику',
+                                    status: 'active',
+                                    lastSync: '2024-06-05T06:30:00.000Z',
+                                    newRecords: 3
+                                }
+                            ]
+                        },
+                        enrichment: {
+                            providers: [
+                                {
+                                    name: 'Apollo.io',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T17:20:00.000Z',
+                                    fields: ['контакти команди', 'технологічний стек']
+                                },
+                                {
+                                    name: 'Clearbit',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T17:20:00.000Z',
+                                    fields: ['галузь', 'розмір компанії']
+                                }
+                            ],
+                            enrichedFields: ['галузь', 'розмір компанії', 'контакти команди', 'технологічний стек']
+                        },
+                        communicationLog: {
+                            calls: {
+                                provider: 'Zoom Contact Center',
+                                lastSync: '2024-06-01T11:00:00.000Z',
+                                recordings: true,
+                                loggedCount: 2,
+                                tags: ['Demo'],
+                                followUp: 'Підготувати SLA-матеріали'
+                            },
+                            emails: {
+                                provider: 'Gmail',
+                                mailbox: 'sales@ourcrm.ua',
+                                autoLink: true,
+                                threadsTracked: 4,
+                                lastSync: '2024-05-26T15:20:00.000Z'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'contact-3',
@@ -7812,7 +7985,62 @@
                             author: 'Вікторія',
                             tags: ['Kick-off']
                         }
-                    ]
+                    ],
+                    automation: {
+                        autoUpdate: {
+                            emailInboxes: [
+                                {
+                                    label: 'digital@greenbank.ua',
+                                    provider: 'Microsoft 365',
+                                    status: 'connected',
+                                    lastSync: '2024-06-03T15:50:00.000Z',
+                                    newRecords: 1
+                                }
+                            ],
+                            webForms: [
+                                {
+                                    label: 'Запит на KYC',
+                                    status: 'active',
+                                    lastSync: '2024-06-03T15:30:00.000Z',
+                                    newRecords: 2
+                                }
+                            ]
+                        },
+                        enrichment: {
+                            providers: [
+                                {
+                                    name: 'Crunchbase',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-03T08:10:00.000Z',
+                                    fields: ['інвестиції', 'дата заснування']
+                                },
+                                {
+                                    name: 'LinkedIn',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-03T08:10:00.000Z',
+                                    fields: ['соціальні профілі команди']
+                                }
+                            ],
+                            enrichedFields: ['галузь', 'розмір компанії', 'інвестиції', 'соціальні профілі']
+                        },
+                        communicationLog: {
+                            calls: {
+                                provider: 'Zoom Contact Center',
+                                lastSync: '2024-06-03T15:45:00.000Z',
+                                recordings: true,
+                                loggedCount: 3,
+                                tags: ['Безпека', 'Фолоу-ап'],
+                                followUp: 'Відправити чекліст безпеки'
+                            },
+                            emails: {
+                                provider: 'Outlook',
+                                mailbox: 'project@greenbank.ua',
+                                autoLink: true,
+                                threadsTracked: 6,
+                                lastSync: '2024-05-24T10:10:00.000Z'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'contact-4',
@@ -7865,7 +8093,62 @@
                             author: 'Дмитро',
                             tags: ['Discovery']
                         }
-                    ]
+                    ],
+                    automation: {
+                        autoUpdate: {
+                            emailInboxes: [
+                                {
+                                    label: 'marketing@okko.ua',
+                                    provider: 'Gmail',
+                                    status: 'connected',
+                                    lastSync: '2024-06-05T09:15:00.000Z',
+                                    newRecords: 2
+                                }
+                            ],
+                            webForms: [
+                                {
+                                    label: 'Партнерська програма',
+                                    status: 'active',
+                                    lastSync: '2024-06-05T09:00:00.000Z',
+                                    newRecords: 2
+                                }
+                            ]
+                        },
+                        enrichment: {
+                            providers: [
+                                {
+                                    name: 'Clearbit',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T12:00:00.000Z',
+                                    fields: ['галузь', 'соціальні профілі']
+                                },
+                                {
+                                    name: 'SimilarWeb',
+                                    status: 'active',
+                                    lastRefresh: '2024-06-04T12:00:00.000Z',
+                                    fields: ['цифрові канали', 'трафік']
+                                }
+                            ],
+                            enrichedFields: ['галузь', 'соціальні профілі', 'цифрові канали', 'трафік']
+                        },
+                        communicationLog: {
+                            calls: {
+                                provider: 'Zoom Contact Center',
+                                lastSync: '2024-05-29T16:40:00.000Z',
+                                recordings: true,
+                                loggedCount: 2,
+                                tags: ['Discovery'],
+                                followUp: 'Підготувати контент-стратегію'
+                            },
+                            emails: {
+                                provider: 'Gmail',
+                                mailbox: 'marketing@okko.ua',
+                                autoLink: true,
+                                threadsTracked: 3,
+                                lastSync: '2024-06-05T09:15:00.000Z'
+                            }
+                        }
+                    }
                 },
                 {
                     id: 'contact-5',
@@ -7940,7 +8223,62 @@
                             author: 'Марина',
                             tags: ['Документи']
                         }
-                    ]
+                    ],
+                    automation: {
+                        autoUpdate: {
+                            emailInboxes: [
+                                {
+                                    label: 'product@uklon.com',
+                                    provider: 'Google Workspace',
+                                    status: 'connected',
+                                    lastSync: '2024-05-31T09:05:00.000Z',
+                                    newRecords: 1
+                                }
+                            ],
+                            webForms: [
+                                {
+                                    label: 'Партнерський доступ',
+                                    status: 'active',
+                                    lastSync: '2024-05-30T18:00:00.000Z',
+                                    newRecords: 1
+                                }
+                            ]
+                        },
+                        enrichment: {
+                            providers: [
+                                {
+                                    name: 'LinkedIn',
+                                    status: 'active',
+                                    lastRefresh: '2024-05-29T12:30:00.000Z',
+                                    fields: ['соціальні профілі команди']
+                                },
+                                {
+                                    name: 'BuiltWith',
+                                    status: 'active',
+                                    lastRefresh: '2024-05-29T12:30:00.000Z',
+                                    fields: ['технологічний стек']
+                                }
+                            ],
+                            enrichedFields: ['галузь', 'соціальні профілі', 'технологічний стек']
+                        },
+                        communicationLog: {
+                            calls: {
+                                provider: 'Zoom Contact Center',
+                                lastSync: '2024-05-22T14:45:00.000Z',
+                                recordings: true,
+                                loggedCount: 4,
+                                tags: ['Інтеграція', 'Підтримка'],
+                                followUp: 'Оновити публічний SDK'
+                            },
+                            emails: {
+                                provider: 'Gmail',
+                                mailbox: 'success@ourcrm.ua',
+                                autoLink: true,
+                                threadsTracked: 4,
+                                lastSync: '2024-05-31T09:00:00.000Z'
+                            }
+                        }
+                    }
                 }
             ],
             tasks: [
@@ -8831,6 +9169,189 @@
             };
         }
 
+        function normalizeAutomationEndpoint(endpoint, defaultStatus = 'connected') {
+            if (!endpoint || typeof endpoint !== 'object') {
+                return null;
+            }
+
+            const label = typeof endpoint.label === 'string' ? endpoint.label.trim() : '';
+            if (!label.length) {
+                return null;
+            }
+
+            const provider = typeof endpoint.provider === 'string' ? endpoint.provider.trim() : '';
+            const statusRaw = typeof endpoint.status === 'string' ? endpoint.status.trim().toLowerCase() : '';
+            const status = statusRaw.length ? statusRaw : defaultStatus;
+            const lastSync = normalizeToISOString(endpoint.lastSync);
+            const recordsValue = Number(endpoint.newRecords);
+            const newRecords = Number.isFinite(recordsValue) ? Math.max(0, Math.round(recordsValue)) : 0;
+
+            return {
+                label,
+                provider,
+                status,
+                lastSync,
+                newRecords
+            };
+        }
+
+        function normalizeEnrichmentProvider(provider) {
+            if (!provider || typeof provider !== 'object') {
+                return null;
+            }
+
+            const name = typeof provider.name === 'string' ? provider.name.trim() : '';
+            if (!name.length) {
+                return null;
+            }
+
+            const statusRaw = typeof provider.status === 'string' ? provider.status.trim().toLowerCase() : '';
+            const status = statusRaw.length ? statusRaw : 'active';
+            const lastRefresh = normalizeToISOString(provider.lastRefresh);
+            const fieldsSource = Array.isArray(provider.fields)
+                ? provider.fields
+                : typeof provider.fields === 'string'
+                    ? provider.fields.split(',')
+                    : [];
+            const fields = fieldsSource
+                .map(field => (typeof field === 'string' ? field.trim() : String(field || '').trim()))
+                .filter(Boolean);
+
+            return {
+                name,
+                status,
+                lastRefresh,
+                fields
+            };
+        }
+
+        function normalizeContactCallLog(log) {
+            if (!log || typeof log !== 'object') {
+                return null;
+            }
+
+            const provider = typeof log.provider === 'string' ? log.provider.trim() : '';
+            const lastSync = normalizeToISOString(log.lastSync);
+            const recordings = typeof log.recordings === 'boolean'
+                ? log.recordings
+                : Boolean(log.recorded || log.hasRecordings);
+            const countValue = Number(log.loggedCount ?? log.total ?? log.count);
+            const loggedCount = Number.isFinite(countValue) ? Math.max(0, Math.round(countValue)) : null;
+            const tagsSource = Array.isArray(log.tags)
+                ? log.tags
+                : typeof log.tags === 'string'
+                    ? log.tags.split(',')
+                    : [];
+            const tags = tagsSource
+                .map(tag => (typeof tag === 'string' ? tag.trim() : String(tag || '').trim()))
+                .filter(Boolean);
+            const followUp = typeof log.followUp === 'string' ? log.followUp.trim() : '';
+
+            return {
+                provider,
+                lastSync,
+                recordings,
+                loggedCount,
+                tags,
+                followUp
+            };
+        }
+
+        function normalizeContactEmailLog(log) {
+            if (!log || typeof log !== 'object') {
+                return null;
+            }
+
+            const provider = typeof log.provider === 'string' ? log.provider.trim() : '';
+            const mailbox = typeof log.mailbox === 'string' ? log.mailbox.trim() : '';
+            const lastSync = normalizeToISOString(log.lastSync);
+            const autoLink = typeof log.autoLink === 'boolean'
+                ? log.autoLink
+                : Boolean(log.autoLogging || log.autoAttach);
+            const threadsValue = Number(log.threadsTracked ?? log.threads ?? log.conversations);
+            const threadsTracked = Number.isFinite(threadsValue) ? Math.max(0, Math.round(threadsValue)) : null;
+            const followUp = typeof log.followUp === 'string' ? log.followUp.trim() : '';
+
+            return {
+                provider,
+                mailbox,
+                lastSync,
+                autoLink,
+                threadsTracked,
+                followUp
+            };
+        }
+
+        function normalizeContactAutomation(automation) {
+            const result = {
+                autoUpdate: {
+                    emailInboxes: [],
+                    webForms: []
+                },
+                enrichment: {
+                    providers: [],
+                    fields: [],
+                    lastRefresh: ''
+                },
+                communicationLog: {
+                    calls: null,
+                    emails: null
+                }
+            };
+
+            if (!automation || typeof automation !== 'object') {
+                return result;
+            }
+
+            if (automation.autoUpdate && typeof automation.autoUpdate === 'object') {
+                const autoUpdate = automation.autoUpdate;
+                if (Array.isArray(autoUpdate.emailInboxes)) {
+                    result.autoUpdate.emailInboxes = autoUpdate.emailInboxes
+                        .map(item => normalizeAutomationEndpoint(item, 'connected'))
+                        .filter(Boolean);
+                }
+                if (Array.isArray(autoUpdate.webForms)) {
+                    result.autoUpdate.webForms = autoUpdate.webForms
+                        .map(item => normalizeAutomationEndpoint(item, 'active'))
+                        .filter(Boolean);
+                }
+            }
+
+            if (automation.enrichment && typeof automation.enrichment === 'object') {
+                const enrichment = automation.enrichment;
+                const providers = Array.isArray(enrichment.providers)
+                    ? enrichment.providers.map(normalizeEnrichmentProvider).filter(Boolean)
+                    : [];
+                const fieldsSource = Array.isArray(enrichment.enrichedFields)
+                    ? enrichment.enrichedFields
+                    : typeof enrichment.enrichedFields === 'string'
+                        ? enrichment.enrichedFields.split(',')
+                        : [];
+                const explicitFields = fieldsSource
+                    .map(field => (typeof field === 'string' ? field.trim() : String(field || '').trim()))
+                    .filter(Boolean);
+                const providerFields = providers.flatMap(provider => provider.fields || []);
+                const allFields = Array.from(new Set([...explicitFields, ...providerFields]));
+                const refreshCandidates = [normalizeToISOString(enrichment.lastRefresh), ...providers.map(provider => provider.lastRefresh)].filter(Boolean);
+                let lastRefresh = '';
+                if (refreshCandidates.length) {
+                    lastRefresh = refreshCandidates.sort().pop() || '';
+                }
+
+                result.enrichment.providers = providers;
+                result.enrichment.fields = allFields;
+                result.enrichment.lastRefresh = lastRefresh;
+            }
+
+            if (automation.communicationLog && typeof automation.communicationLog === 'object') {
+                const communication = automation.communicationLog;
+                result.communicationLog.calls = normalizeContactCallLog(communication.calls);
+                result.communicationLog.emails = normalizeContactEmailLog(communication.emails);
+            }
+
+            return result;
+        }
+
         function normalizeContact(contact) {
             if (!contact || typeof contact !== 'object') {
                 return null;
@@ -8959,6 +9480,8 @@
                 lastActivity = new Date().toISOString();
             }
 
+            const automation = normalizeContactAutomation(contact.automation);
+
             return {
                 id,
                 name,
@@ -8980,7 +9503,8 @@
                 attachments,
                 notes,
                 interactions,
-                lastActivity
+                lastActivity,
+                automation
             };
         }
 
@@ -16598,6 +17122,14 @@
                 if (interactionsCount) {
                     extras.push(`<span class="chip chip-ghost"><i class="fa-solid fa-comments"></i> ${interactionsCount}</span>`);
                 }
+                const hasAutomationSync = contact.automation
+                    && ((Array.isArray(contact.automation.autoUpdate?.emailInboxes)
+                        && contact.automation.autoUpdate.emailInboxes.length)
+                        || (Array.isArray(contact.automation.autoUpdate?.webForms)
+                            && contact.automation.autoUpdate.webForms.length));
+                if (hasAutomationSync) {
+                    extras.push('<span class="chip chip-ghost"><i class="fa-solid fa-arrows-rotate"></i> Автосинхронізація</span>');
+                }
                 const extrasMarkup = extras.length ? `<div class="chips" style="margin-top:6px;">${extras.join('')}</div>` : '';
                 const segmentChips = Array.isArray(contact.segments)
                     ? contact.segments
@@ -16658,6 +17190,239 @@
             renderContactDetails(activeContactId, activityCache);
         }
 
+        function renderContactAutomation(automation) {
+            if (!automation || typeof automation !== 'object') {
+                return '';
+            }
+
+            const sections = [];
+
+            const mapStatus = (status, type) => {
+                const normalized = typeof status === 'string' ? status.trim().toLowerCase() : '';
+                if (type === 'form') {
+                    switch (normalized) {
+                        case 'active':
+                            return 'Активна';
+                        case 'paused':
+                            return 'Призупинено';
+                        case 'inactive':
+                            return 'Неактивна';
+                        default:
+                            return normalized.length ? normalized : 'Активна';
+                    }
+                }
+                switch (normalized) {
+                    case 'connected':
+                        return 'Підключено';
+                    case 'disconnected':
+                        return 'Відключено';
+                    case 'syncing':
+                        return 'Синхронізується';
+                    case 'error':
+                        return 'Помилка';
+                    default:
+                        return normalized.length ? normalized : 'Підключено';
+                }
+            };
+
+            const mapProviderStatus = status => {
+                const normalized = typeof status === 'string' ? status.trim().toLowerCase() : '';
+                switch (normalized) {
+                    case 'active':
+                        return 'Активний';
+                    case 'paused':
+                        return 'Призупинено';
+                    case 'inactive':
+                        return 'Неактивний';
+                    case 'trial':
+                        return 'Пробний режим';
+                    default:
+                        return normalized.length ? normalized : 'Активний';
+                }
+            };
+
+            const autoUpdateItems = [];
+            const emailInboxes = Array.isArray(automation.autoUpdate?.emailInboxes)
+                ? automation.autoUpdate.emailInboxes
+                : [];
+            emailInboxes.forEach(inbox => {
+                if (!inbox || typeof inbox !== 'object' || !inbox.label) {
+                    return;
+                }
+                const details = [];
+                details.push(mapStatus(inbox.status, 'email'));
+                if (inbox.provider) {
+                    details.push(`Платформа: ${inbox.provider}`);
+                }
+                if (Number.isFinite(inbox.newRecords) && inbox.newRecords > 0) {
+                    details.push(`${inbox.newRecords} нових записів`);
+                }
+                const syncRelative = formatRelativeTime(inbox.lastSync);
+                if (syncRelative) {
+                    details.push(`синхр. ${syncRelative}`);
+                }
+                const detailText = details.map(value => escapeHtml(value)).join(' • ');
+                autoUpdateItems.push(`
+                    <li><strong>${escapeHtml(inbox.label)}</strong>${detailText ? ` — ${detailText}` : ''}</li>
+                `);
+            });
+
+            const webForms = Array.isArray(automation.autoUpdate?.webForms)
+                ? automation.autoUpdate.webForms
+                : [];
+            webForms.forEach(form => {
+                if (!form || typeof form !== 'object' || !form.label) {
+                    return;
+                }
+                const details = [];
+                details.push(mapStatus(form.status, 'form'));
+                if (Number.isFinite(form.newRecords) && form.newRecords > 0) {
+                    details.push(`${form.newRecords} нових заявок`);
+                }
+                const syncRelative = formatRelativeTime(form.lastSync);
+                if (syncRelative) {
+                    details.push(`синхр. ${syncRelative}`);
+                }
+                const detailText = details.map(value => escapeHtml(value)).join(' • ');
+                autoUpdateItems.push(`
+                    <li>Форма «${escapeHtml(form.label)}»${detailText ? ` — ${detailText}` : ''}</li>
+                `);
+            });
+
+            if (autoUpdateItems.length) {
+                sections.push(`
+                    <div class="contact-automation-item">
+                        <div class="contact-automation-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+                        <div>
+                            <h4>Автоматичне оновлення даних</h4>
+                            <p>Імпорт з електронних скриньок і веб-форм за рекомендаціями Discover CRM (discovercrm.com) оновлює картку клієнта без ручного введення.</p>
+                            <ul class="contact-automation-meta">${autoUpdateItems.join('')}</ul>
+                        </div>
+                    </div>
+                `);
+            }
+
+            const enrichmentItems = [];
+            const enrichmentProviders = Array.isArray(automation.enrichment?.providers)
+                ? automation.enrichment.providers
+                : [];
+            enrichmentProviders.forEach(provider => {
+                if (!provider || typeof provider !== 'object' || !provider.name) {
+                    return;
+                }
+                const details = [];
+                const statusLabel = mapProviderStatus(provider.status);
+                if (statusLabel) {
+                    details.push(statusLabel);
+                }
+                if (Array.isArray(provider.fields) && provider.fields.length) {
+                    details.push(`Поля: ${provider.fields.join(', ')}`);
+                }
+                const refreshRelative = formatRelativeTime(provider.lastRefresh);
+                if (refreshRelative) {
+                    details.push(`оновлено ${refreshRelative}`);
+                }
+                const detailText = details.map(value => escapeHtml(value)).join(' • ');
+                enrichmentItems.push(`
+                    <li><strong>${escapeHtml(provider.name)}</strong>${detailText ? ` — ${detailText}` : ''}</li>
+                `);
+            });
+
+            const enrichmentFields = Array.isArray(automation.enrichment?.fields)
+                ? automation.enrichment.fields.filter(field => typeof field === 'string' && field.trim().length)
+                : [];
+            if (enrichmentFields.length) {
+                enrichmentItems.push(`
+                    <li><strong>Збагачені поля:</strong> ${escapeHtml(enrichmentFields.join(', '))}</li>
+                `);
+            }
+
+            if (enrichmentItems.length) {
+                sections.push(`
+                    <div class="contact-automation-item">
+                        <div class="contact-automation-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                        <div>
+                            <h4>Збагачення профілю</h4>
+                            <p>API-інтеграції з бізнес-довідниками та маркетинговими платформами (Discover CRM) додають галузь, розмір компанії та соціальні профілі без зайвої ручної роботи.</p>
+                            <ul class="contact-automation-meta">${enrichmentItems.join('')}</ul>
+                        </div>
+                    </div>
+                `);
+            }
+
+            const communicationItems = [];
+            const callLog = automation.communicationLog?.calls;
+            if (callLog) {
+                const details = [];
+                details.push(callLog.recordings ? 'Записи та теги збережені' : 'Без записів');
+                if (Number.isFinite(callLog.loggedCount) && callLog.loggedCount > 0) {
+                    details.push(`${callLog.loggedCount} дзвінків`);
+                }
+                if (Array.isArray(callLog.tags) && callLog.tags.length) {
+                    details.push(`Теги: ${callLog.tags.join(', ')}`);
+                }
+                if (callLog.followUp) {
+                    details.push(`Фолоу-ап: ${callLog.followUp}`);
+                }
+                const syncRelative = formatRelativeTime(callLog.lastSync);
+                if (syncRelative) {
+                    details.push(`синхр. ${syncRelative}`);
+                }
+                const detailText = details.map(value => escapeHtml(value)).join(' • ');
+                const providerLabel = callLog.provider ? ` (${escapeHtml(callLog.provider)})` : '';
+                communicationItems.push(`
+                    <li>Дзвінки${providerLabel}${detailText ? `: ${detailText}` : ''}</li>
+                `);
+            }
+
+            const emailLog = automation.communicationLog?.emails;
+            if (emailLog) {
+                const details = [];
+                details.push(emailLog.autoLink ? 'Листи автоматично прив’язуються' : 'Потрібна ручна прив’язка');
+                if (Number.isFinite(emailLog.threadsTracked) && emailLog.threadsTracked > 0) {
+                    details.push(`${emailLog.threadsTracked} потоків`);
+                }
+                if (emailLog.followUp) {
+                    details.push(`Фолоу-ап: ${emailLog.followUp}`);
+                }
+                const syncRelative = formatRelativeTime(emailLog.lastSync);
+                if (syncRelative) {
+                    details.push(`синхр. ${syncRelative}`);
+                }
+                const detailText = details.map(value => escapeHtml(value)).join(' • ');
+                const mailboxLabel = emailLog.mailbox ? ` (${escapeHtml(emailLog.mailbox)})` : '';
+                communicationItems.push(`
+                    <li>Листи${mailboxLabel}${detailText ? `: ${detailText}` : ''}</li>
+                `);
+            }
+
+            if (communicationItems.length) {
+                sections.push(`
+                    <div class="contact-automation-item">
+                        <div class="contact-automation-icon"><i class="fa-solid fa-headset"></i></div>
+                        <div>
+                            <h4>Автологування дзвінків і листів</h4>
+                            <p>Zoom Contact Center (zoom.com) автоматично фіксує дзвінки, записи, теги та прив’язує електронні листи до потрібних контактів.</p>
+                            <ul class="contact-automation-meta">${communicationItems.join('')}</ul>
+                        </div>
+                    </div>
+                `);
+            }
+
+            if (!sections.length) {
+                return '';
+            }
+
+            return `
+                <div class="contact-profile-section">
+                    <h4>Автоматизації</h4>
+                    <div class="contact-automation-grid">
+                        ${sections.join('')}
+                    </div>
+                </div>
+            `;
+        }
+
         function renderContactDetails(contactId, activityCache = null) {
             const profileContainer = document.getElementById('contactProfileCard');
             const timelineContainer = document.getElementById('contactTimelineCard');
@@ -16689,6 +17454,7 @@
             const tagsMarkup = Array.isArray(contact.tags) && contact.tags.length
                 ? `<div class="chips">${contact.tags.map(tag => `<span class="chip">${escapeHtml(tag)}</span>`).join('')}</div>`
                 : '';
+            const automationMarkup = renderContactAutomation(contact.automation);
             const addressLines = [
                 contact.address?.street,
                 [contact.address?.city, contact.address?.country].filter(Boolean).join(', '),
@@ -16805,6 +17571,7 @@
                         </div>
                     </div>
                 </div>
+                ${automationMarkup}
                 ${tagsMarkup ? `<div class="contact-profile-section"><h4>Мітки</h4>${tagsMarkup}</div>` : ''}
                 ${actionsMarkup}
             `;
