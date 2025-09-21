@@ -28,6 +28,10 @@
             --radius-lg: 24px;
             --radius-md: 16px;
             --radius-sm: 12px;
+            --dashboard-columns: auto-fit;
+            --dashboard-card-min: 320px;
+            --metrics-columns: auto-fit;
+            --metric-card-min: 220px;
         }
 
         * {
@@ -453,7 +457,7 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(var(--metrics-columns, auto-fit), minmax(var(--metric-card-min, 220px), 1fr));
             gap: 18px;
             margin-bottom: 24px;
         }
@@ -692,7 +696,7 @@
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr);
+            grid-template-columns: repeat(var(--dashboard-columns, auto-fit), minmax(var(--dashboard-card-min, 320px), 1fr));
             gap: 20px;
         }
 
@@ -702,6 +706,234 @@
             padding: 22px 24px;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
+        }
+
+        .layout-draggable {
+            cursor: grab;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .layout-draggable.is-dragging {
+            opacity: 0.65;
+            cursor: grabbing;
+        }
+
+        [data-layout-area] {
+            position: relative;
+        }
+
+        [data-layout-area].is-drag-over {
+            outline: 2px dashed rgba(99, 102, 241, 0.45);
+            outline-offset: 6px;
+        }
+
+        .layout-hidden {
+            display: none !important;
+        }
+
+        body.layout-compact .dashboard-grid {
+            gap: 16px;
+        }
+
+        body.layout-compact .metrics-grid {
+            gap: 14px;
+        }
+
+        body.layout-compact .card {
+            padding: 18px 20px;
+        }
+
+        body.layout-compact .metric-card {
+            padding: 16px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+        }
+
+        .settings-card {
+            display: grid;
+            gap: 14px;
+        }
+
+        .setting-control {
+            display: grid;
+            gap: 10px;
+        }
+
+        .setting-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+
+        .setting-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .option-pill {
+            position: relative;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .option-pill input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .option-pill span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            background: rgba(99, 102, 241, 0.08);
+            transition: border 0.2s ease, background 0.2s ease, color 0.2s ease;
+        }
+
+        .option-pill input:focus + span {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+        }
+
+        .option-pill input:checked + span {
+            border-color: rgba(99, 102, 241, 0.45);
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary-dark);
+        }
+
+        .setting-toggle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .setting-toggle input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .setting-toggle-indicator {
+            width: 42px;
+            height: 24px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.35);
+            position: relative;
+            transition: background 0.2s ease;
+        }
+
+        .setting-toggle-indicator::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+            transition: transform 0.2s ease;
+        }
+
+        .setting-toggle input:checked + .setting-toggle-indicator {
+            background: rgba(99, 102, 241, 0.45);
+        }
+
+        .setting-toggle input:checked + .setting-toggle-indicator::after {
+            transform: translateX(16px);
+        }
+
+        .setting-toggle-label {
+            font-weight: 500;
+        }
+
+        .setting-slider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-slider input[type="range"] {
+            flex: 1;
+        }
+
+        .setting-slider-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            min-width: 52px;
+            text-align: right;
+        }
+
+        .settings-order-columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .settings-order-list {
+            margin: 0;
+            padding-left: 18px;
+            display: grid;
+            gap: 6px;
+            font-size: 14px;
+        }
+
+        .settings-order-list li {
+            list-style: decimal inside;
+            padding: 6px 10px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.08);
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .settings-order-list li.is-hidden {
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        .settings-tag {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(148, 163, 184, 0.26);
+        }
+
+        .setting-checkbox-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .setting-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .setting-checkbox input {
+            width: 16px;
+            height: 16px;
         }
 
         .card h3 {
@@ -3671,7 +3903,11 @@
             }
 
             .dashboard-grid {
-                grid-template-columns: 1fr;
+                --dashboard-columns: 1;
+            }
+
+            .metrics-grid {
+                --metrics-columns: 1;
             }
 
             .pipeline {
@@ -3869,6 +4105,10 @@
                             <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
                             Ролі та доступи
                         </button>
+                        <button class="nav-item" data-section-target="settingsSection" data-nav-category="admin" data-nav-keywords="налаштування макет вигляд блоки">
+                            <i class="fa-solid fa-sliders" aria-hidden="true"></i>
+                            Налаштування
+                        </button>
                     </div>
                 </nav>
 
@@ -3924,34 +4164,34 @@
                     </div>
                 </div>
 
-                <div class="metrics-grid" id="metricCards"></div>
+                <div class="metrics-grid" id="metricCards" data-layout-area="metrics"></div>
 
-                <div class="dashboard-grid">
-                    <div class="card">
+                <div class="dashboard-grid" data-layout-area="dashboard">
+                    <div class="card" data-block-id="dashboard-stage">
                         <h3>Розподіл воронки</h3>
                         <div class="stage-distribution" id="stageDistribution"></div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-block-id="dashboard-upcoming">
                         <h3>Майбутні активності</h3>
                         <div class="upcoming-list" id="upcomingActivities"></div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-block-id="dashboard-activity">
                         <h3>Останні оновлення</h3>
                         <div class="timeline" id="activityTimeline"></div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-block-id="dashboard-forecast">
                         <h3>Прогноз доходу</h3>
                         <div id="forecastCard"></div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-block-id="dashboard-process">
                         <h3>Контроль процесів</h3>
                         <div class="process-overview" id="processOverview"></div>
                     </div>
-                    <div class="card">
+                    <div class="card" data-block-id="dashboard-feature-usage">
                         <h3>Залученість функціоналу</h3>
                         <div class="feature-usage" id="featureUsage"></div>
                     </div>
-                    <div class="card card-feature-overview">
+                    <div class="card card-feature-overview" data-block-id="dashboard-feature-overview">
                         <h3>Основні блоки майбутньої CRM</h3>
                         <p>Облік контактів та лідів — серце системи. Базові модулі поєднують клієнтську базу, календар та нагадування з таск-менеджером і конструктором звітів, а також інтерактивною панеллю моніторингу.</p>
                         <div class="feature-note">
@@ -4383,6 +4623,93 @@
                     </form>
                 </div>
             </section>
+
+            <section id="settingsSection" class="section">
+                <div class="section-header">
+                    <div>
+                        <h2>Налаштування інтерфейсу</h2>
+                        <p>Керуйте розміщенням блоків та зовнішнім виглядом головної панелі</p>
+                    </div>
+                </div>
+                <div class="settings-grid">
+                    <div class="card settings-card">
+                        <h3>Макет дашборду</h3>
+                        <p class="metric-sub">Перетягуйте картки прямо на дашборді або зафіксуйте бажану кількість колонок.</p>
+                        <div class="setting-control">
+                            <span class="setting-label">Колонки дашборду</span>
+                            <div class="setting-options" role="radiogroup" aria-label="Кількість колонок дашборду">
+                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="auto"><span>Авто</span></label>
+                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="1"><span>1</span></label>
+                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="2"><span>2</span></label>
+                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="3"><span>3</span></label>
+                                <label class="option-pill"><input type="radio" name="dashboardColumns" value="4"><span>4</span></label>
+                            </div>
+                        </div>
+                        <div class="setting-control">
+                            <span class="setting-label">Колонки швидких метрик</span>
+                            <div class="setting-options" role="radiogroup" aria-label="Кількість колонок швидких метрик">
+                                <label class="option-pill"><input type="radio" name="metricsColumns" value="auto"><span>Авто</span></label>
+                                <label class="option-pill"><input type="radio" name="metricsColumns" value="1"><span>1</span></label>
+                                <label class="option-pill"><input type="radio" name="metricsColumns" value="2"><span>2</span></label>
+                                <label class="option-pill"><input type="radio" name="metricsColumns" value="3"><span>3</span></label>
+                                <label class="option-pill"><input type="radio" name="metricsColumns" value="4"><span>4</span></label>
+                            </div>
+                        </div>
+                        <div class="setting-control">
+                            <span class="setting-label">Мінімальна ширина карток дашборду</span>
+                            <div class="setting-slider">
+                                <input type="range" id="dashboardMinWidthSlider" min="260" max="420" step="10" aria-label="Мінімальна ширина карток дашборду">
+                                <span class="setting-slider-value" id="dashboardMinWidthValue"></span>
+                            </div>
+                        </div>
+                        <div class="setting-control">
+                            <span class="setting-label">Мінімальна ширина швидких метрик</span>
+                            <div class="setting-slider">
+                                <input type="range" id="metricsMinWidthSlider" min="180" max="320" step="10" aria-label="Мінімальна ширина метрик">
+                                <span class="setting-slider-value" id="metricsMinWidthValue"></span>
+                            </div>
+                        </div>
+                        <label class="setting-toggle">
+                            <input type="checkbox" id="compactLayoutToggle">
+                            <span class="setting-toggle-indicator" aria-hidden="true"></span>
+                            <span class="setting-toggle-label">Компактний режим карток</span>
+                        </label>
+                        <p class="metric-sub">Компактний режим зменшує відступи та дозволяє вмістити більше інформації на екран.</p>
+                    </div>
+                    <div class="card settings-card">
+                        <h3>Видимість блоків</h3>
+                        <p class="metric-sub">Увімкніть лише найважливіші для вас картки. Приховані елементи можна повернути будь-коли.</p>
+                        <div class="settings-order-columns">
+                            <div>
+                                <h4>Дашборд</h4>
+                                <div class="setting-checkbox-list" id="dashboardVisibilityControls"></div>
+                            </div>
+                            <div>
+                                <h4>Швидкі метрики</h4>
+                                <div class="setting-checkbox-list" id="metricsVisibilityControls"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card settings-card">
+                        <h3>Поточний порядок</h3>
+                        <p class="metric-sub">Перетягніть блоки на сторінці або скористайтесь кнопкою нижче, щоб повернути стандартний вигляд.</p>
+                        <div class="settings-order-columns">
+                            <div>
+                                <h4>Дашборд</h4>
+                                <ol class="settings-order-list" id="dashboardOrderPreview"></ol>
+                            </div>
+                            <div>
+                                <h4>Швидкі метрики</h4>
+                                <ol class="settings-order-list" id="metricsOrderPreview"></ol>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-small-muted" id="resetLayoutBtn">
+                            <i class="fa-solid fa-arrows-rotate"></i>
+                            Скинути макет
+                        </button>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
     <!-- Модальні вікна -->
@@ -4809,6 +5136,94 @@
         const navigationState = { search: '', filter: 'all' };
         let applyNavigationFilters = () => {};
 
+        const PREFERENCES_KEY = 'homeCRMPreferences_v1';
+        const DASHBOARD_BLOCK_IDS = [
+            'dashboard-stage',
+            'dashboard-upcoming',
+            'dashboard-activity',
+            'dashboard-forecast',
+            'dashboard-process',
+            'dashboard-feature-usage',
+            'dashboard-feature-overview'
+        ];
+        const METRIC_BLOCK_IDS = [
+            'metric-active-deals',
+            'metric-pipeline-value',
+            'metric-win-rate',
+            'metric-today-tasks'
+        ];
+        const DASHBOARD_BLOCK_LABELS = {
+            'dashboard-stage': 'Розподіл воронки',
+            'dashboard-upcoming': 'Майбутні активності',
+            'dashboard-activity': 'Останні оновлення',
+            'dashboard-forecast': 'Прогноз доходу',
+            'dashboard-process': 'Контроль процесів',
+            'dashboard-feature-usage': 'Залученість функціоналу',
+            'dashboard-feature-overview': 'Огляд можливостей'
+        };
+        const METRIC_BLOCK_LABELS = {
+            'metric-active-deals': 'Активні угоди',
+            'metric-pipeline-value': 'Вартість воронки',
+            'metric-win-rate': 'Win rate',
+            'metric-today-tasks': 'Завдання на сьогодні'
+        };
+        const METRIC_RENDERERS = {
+            'metric-active-deals': stats => `
+                <div class="metric-icon">
+                    <i class="fa-solid fa-fire"></i>
+                </div>
+                <div>
+                    <div class="metric-label">Активні угоди</div>
+                    <div class="metric-value">${stats.activeLeadsCount}</div>
+                    <div class="metric-sub">${stats.hotDealsCount} гарячих можливостей</div>
+                </div>
+            `,
+            'metric-pipeline-value': stats => `
+                <div class="metric-icon">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div>
+                    <div class="metric-label">Вартість воронки</div>
+                    <div class="metric-value">${formatCurrency(stats.pipelineValue)}</div>
+                    <div class="metric-sub">${formatCurrency(stats.expectedRevenue)} прогнозовано</div>
+                </div>
+            `,
+            'metric-win-rate': stats => `
+                <div>
+                    <div class="metric-label">Win rate</div>
+                    <div class="metric-value">${stats.winRate}%</div>
+                    <div class="metric-sub">${stats.wonDealsCount} виграно / ${stats.lostDealsCount} втрачено</div>
+                </div>
+                <div class="metric-progress" style="--angle: ${Math.max(0, Math.min(100, stats.winRate)) * 3.6}deg">${stats.winRate}%</div>
+            `,
+            'metric-today-tasks': stats => `
+                <div class="metric-icon">
+                    <i class="fa-solid fa-calendar-day"></i>
+                </div>
+                <div>
+                    <div class="metric-label">Завдання на сьогодні</div>
+                    <div class="metric-value">${stats.tasksDueToday}</div>
+                    <div class="metric-sub">${stats.activeTasksCount} активних задач</div>
+                </div>
+            `
+        };
+        const DEFAULT_PREFERENCES = {
+            layout: {
+                dashboardOrder: [...DASHBOARD_BLOCK_IDS],
+                metricsOrder: [...METRIC_BLOCK_IDS],
+                dashboardColumns: 'auto-fit',
+                metricsColumns: 'auto-fit',
+                dashboardCardMin: 320,
+                metricCardMin: 220,
+                compactMode: false,
+                hiddenDashboardBlocks: [],
+                hiddenMetricBlocks: []
+            }
+        };
+        const DASHBOARD_CARD_WIDTH_RANGE = { min: 260, max: 420 };
+        const METRIC_CARD_WIDTH_RANGE = { min: 180, max: 320 };
+        let uiPreferences = null;
+
         let crmData = null;
         let activeLeadId = null;
         let pipelineFilterOwner = 'all';
@@ -4840,6 +5255,255 @@
             }
         })();
         let canPersistData = !!persistentStorage;
+
+        function cloneDefaultPreferences() {
+            return JSON.parse(JSON.stringify(DEFAULT_PREFERENCES));
+        }
+
+        function normalizeOrder(order, defaults) {
+            const result = Array.isArray(order) ? order.filter(id => defaults.includes(id)) : [];
+            defaults.forEach(id => {
+                if (!result.includes(id)) {
+                    result.push(id);
+                }
+            });
+            return result;
+        }
+
+        function normalizeHidden(list, defaults) {
+            const set = new Set();
+            (Array.isArray(list) ? list : []).forEach(id => {
+                if (defaults.includes(id)) {
+                    set.add(id);
+                }
+            });
+            return Array.from(set);
+        }
+
+        function normalizeColumns(value) {
+            if (typeof value === 'number' && Number.isFinite(value)) {
+                value = String(Math.round(value));
+            }
+            if (typeof value === 'string') {
+                const trimmed = value.trim();
+                if (!trimmed) {
+                    return 'auto-fit';
+                }
+                if (trimmed === 'auto' || trimmed === 'auto-fit' || trimmed === 'auto-fill') {
+                    return 'auto-fit';
+                }
+                const numeric = Number(trimmed);
+                if (Number.isInteger(numeric) && numeric >= 1 && numeric <= 6) {
+                    return String(numeric);
+                }
+            }
+            return 'auto-fit';
+        }
+
+        function normalizeCardWidth(value, range, fallback) {
+            const numeric = Number(value);
+            if (Number.isFinite(numeric)) {
+                const min = range?.min ?? fallback;
+                const max = range?.max ?? fallback;
+                return Math.min(max, Math.max(min, Math.round(numeric)));
+            }
+            return fallback;
+        }
+
+        function loadPreferences() {
+            let preferences = cloneDefaultPreferences();
+            let stored = null;
+
+            if (persistentStorage && canPersistData) {
+                try {
+                    stored = persistentStorage.getItem(PREFERENCES_KEY);
+                } catch (error) {
+                    canPersistData = false;
+                    console.warn('Не вдалося прочитати налаштування інтерфейсу.', error);
+                }
+            }
+
+            if (stored) {
+                try {
+                    const parsed = JSON.parse(stored);
+                    if (parsed && typeof parsed === 'object') {
+                        const layout = parsed.layout || {};
+                        preferences.layout.dashboardOrder = normalizeOrder(layout.dashboardOrder, DASHBOARD_BLOCK_IDS);
+                        preferences.layout.metricsOrder = normalizeOrder(layout.metricsOrder, METRIC_BLOCK_IDS);
+                        preferences.layout.dashboardColumns = normalizeColumns(layout.dashboardColumns);
+                        preferences.layout.metricsColumns = normalizeColumns(layout.metricsColumns);
+                        preferences.layout.dashboardCardMin = normalizeCardWidth(
+                            layout.dashboardCardMin,
+                            DASHBOARD_CARD_WIDTH_RANGE,
+                            DEFAULT_PREFERENCES.layout.dashboardCardMin
+                        );
+                        preferences.layout.metricCardMin = normalizeCardWidth(
+                            layout.metricCardMin,
+                            METRIC_CARD_WIDTH_RANGE,
+                            DEFAULT_PREFERENCES.layout.metricCardMin
+                        );
+                        preferences.layout.compactMode = Boolean(layout.compactMode);
+                        preferences.layout.hiddenDashboardBlocks = normalizeHidden(layout.hiddenDashboardBlocks, DASHBOARD_BLOCK_IDS);
+                        preferences.layout.hiddenMetricBlocks = normalizeHidden(layout.hiddenMetricBlocks, METRIC_BLOCK_IDS);
+                    }
+                } catch (error) {
+                    console.warn('Не вдалося розпарсити налаштування інтерфейсу, використовую стандартні значення.', error);
+                }
+            }
+
+            return preferences;
+        }
+
+        function savePreferences() {
+            if (!persistentStorage || !canPersistData) {
+                return;
+            }
+
+            try {
+                persistentStorage.setItem(PREFERENCES_KEY, JSON.stringify(uiPreferences));
+            } catch (error) {
+                canPersistData = false;
+                console.warn('Не вдалося зберегти налаштування інтерфейсу.', error);
+            }
+        }
+
+        function getLayoutOrder(areaId) {
+            const defaults = areaId === 'dashboard' ? DASHBOARD_BLOCK_IDS : METRIC_BLOCK_IDS;
+            const key = areaId === 'dashboard' ? 'dashboardOrder' : 'metricsOrder';
+            const order = uiPreferences?.layout?.[key];
+            return Array.isArray(order) ? normalizeOrder(order, defaults) : [...defaults];
+        }
+
+        function setLayoutOrder(areaId, order) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            const defaults = areaId === 'dashboard' ? DASHBOARD_BLOCK_IDS : METRIC_BLOCK_IDS;
+            const key = areaId === 'dashboard' ? 'dashboardOrder' : 'metricsOrder';
+            uiPreferences.layout[key] = normalizeOrder(order, defaults);
+            savePreferences();
+            updateLayoutOrderPreview();
+        }
+
+        function getHiddenBlocks(areaId) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return [];
+            }
+            const key = areaId === 'dashboard' ? 'hiddenDashboardBlocks' : 'hiddenMetricBlocks';
+            return Array.isArray(uiPreferences.layout[key]) ? [...uiPreferences.layout[key]] : [];
+        }
+
+        function setBlockVisibility(areaId, blockId, isVisible) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            const defaults = areaId === 'dashboard' ? DASHBOARD_BLOCK_IDS : METRIC_BLOCK_IDS;
+            if (!defaults.includes(blockId)) {
+                return;
+            }
+            const key = areaId === 'dashboard' ? 'hiddenDashboardBlocks' : 'hiddenMetricBlocks';
+            const hidden = new Set(getHiddenBlocks(areaId));
+            if (isVisible) {
+                hidden.delete(blockId);
+            } else {
+                hidden.add(blockId);
+            }
+            uiPreferences.layout[key] = Array.from(hidden);
+            savePreferences();
+            updateLayoutOrderPreview();
+        }
+
+        function getLayoutColumns(areaId) {
+            const key = areaId === 'dashboard' ? 'dashboardColumns' : 'metricsColumns';
+            return uiPreferences?.layout?.[key] || 'auto-fit';
+        }
+
+        function setLayoutColumns(areaId, value) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            const key = areaId === 'dashboard' ? 'dashboardColumns' : 'metricsColumns';
+            const normalized = normalizeColumns(value);
+            if (uiPreferences.layout[key] !== normalized) {
+                uiPreferences.layout[key] = normalized;
+                savePreferences();
+                updateLayoutVariables();
+                syncColumnControls();
+            }
+        }
+
+        function getColumnInputValue(areaId) {
+            const columns = getLayoutColumns(areaId);
+            return columns === 'auto-fit' ? 'auto' : columns;
+        }
+
+        function setCompactMode(enabled) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            const normalized = Boolean(enabled);
+            if (uiPreferences.layout.compactMode !== normalized) {
+                uiPreferences.layout.compactMode = normalized;
+                savePreferences();
+                updateLayoutVariables();
+                syncCompactToggle();
+            }
+        }
+
+        function getCardMinWidth(areaId) {
+            const key = areaId === 'dashboard' ? 'dashboardCardMin' : 'metricCardMin';
+            const fallback = areaId === 'dashboard'
+                ? DEFAULT_PREFERENCES.layout.dashboardCardMin
+                : DEFAULT_PREFERENCES.layout.metricCardMin;
+            const value = uiPreferences?.layout?.[key];
+            return Number.isFinite(value) ? value : fallback;
+        }
+
+        function setCardMinWidth(areaId, value) {
+            if (!uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            const key = areaId === 'dashboard' ? 'dashboardCardMin' : 'metricCardMin';
+            const fallback = areaId === 'dashboard'
+                ? DEFAULT_PREFERENCES.layout.dashboardCardMin
+                : DEFAULT_PREFERENCES.layout.metricCardMin;
+            const range = areaId === 'dashboard' ? DASHBOARD_CARD_WIDTH_RANGE : METRIC_CARD_WIDTH_RANGE;
+            const normalized = normalizeCardWidth(value, range, fallback);
+            if (uiPreferences.layout[key] !== normalized) {
+                uiPreferences.layout[key] = normalized;
+                savePreferences();
+                updateLayoutVariables();
+                syncCardWidthControls();
+            }
+        }
+
+        function updateLayoutVariables() {
+            const root = document.documentElement;
+            if (!root || !uiPreferences || !uiPreferences.layout) {
+                return;
+            }
+            root.style.setProperty('--dashboard-columns', getLayoutColumns('dashboard'));
+            root.style.setProperty('--metrics-columns', getLayoutColumns('metrics'));
+            root.style.setProperty('--dashboard-card-min', `${getCardMinWidth('dashboard')}px`);
+            root.style.setProperty('--metric-card-min', `${getCardMinWidth('metrics')}px`);
+            if (document.body) {
+                document.body.classList.toggle('layout-compact', Boolean(uiPreferences.layout.compactMode));
+            }
+        }
+
+        function resetLayoutPreferences() {
+            uiPreferences = cloneDefaultPreferences();
+            savePreferences();
+            updateLayoutVariables();
+            renderDashboard();
+            layoutManager.refreshArea('dashboard');
+            layoutManager.refreshArea('metrics');
+            renderVisibilityControls();
+            syncColumnControls();
+            syncCardWidthControls();
+            syncCompactToggle();
+            updateLayoutOrderPreview();
+        }
 
         const defaultData = {
             leads: [
@@ -6245,6 +6909,8 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             crmData = loadData();
+            uiPreferences = loadPreferences();
+            updateLayoutVariables();
             const snapshots = Array.isArray(crmData.fileLibrary) ? crmData.fileLibrary : [];
             const linkedSnapshot = Array.isArray(crmData.fileSources)
                 ? snapshots.find(snapshot => crmData.fileSources.some(source => source.snapshotId === snapshot.id))
@@ -6261,6 +6927,365 @@
             renderAll();
         });
 
+        const layoutManager = (() => {
+            const areas = new Map();
+            let draggingBlock = null;
+            let draggingAreaId = null;
+
+            function registerArea(areaId, container) {
+                if (!container) {
+                    return;
+                }
+                container.dataset.layoutArea = areaId;
+                if (!areas.has(areaId)) {
+                    container.addEventListener('dragover', handleDragOver);
+                    container.addEventListener('drop', handleDrop);
+                    container.addEventListener('dragenter', handleDragEnter);
+                    container.addEventListener('dragleave', handleDragLeave);
+                }
+                areas.set(areaId, { container });
+                refreshArea(areaId);
+            }
+
+            function refreshArea(areaId) {
+                const area = areas.get(areaId);
+                if (!area || !area.container) {
+                    return;
+                }
+
+                const container = area.container;
+                const blocks = Array.from(container.querySelectorAll('[data-block-id]'));
+                area.blocks = blocks;
+
+                const order = getLayoutOrder(areaId);
+                const blockMap = new Map(blocks.map(block => [block.dataset.blockId, block]));
+                order.forEach(id => {
+                    const block = blockMap.get(id);
+                    if (block) {
+                        container.appendChild(block);
+                    }
+                });
+
+                blocks.forEach(block => {
+                    const id = block.dataset.blockId;
+                    if (id && !order.includes(id)) {
+                        container.appendChild(block);
+                    }
+                });
+
+                const hiddenSet = new Set(getHiddenBlocks(areaId));
+                blocks.forEach(block => {
+                    const blockId = block.dataset.blockId;
+                    if (!blockId) {
+                        return;
+                    }
+                    const hidden = hiddenSet.has(blockId);
+                    block.dataset.layoutArea = areaId;
+                    block.classList.toggle('layout-hidden', hidden);
+                    block.removeEventListener('dragstart', handleDragStart);
+                    block.removeEventListener('dragend', handleDragEnd);
+
+                    if (hidden) {
+                        block.setAttribute('draggable', 'false');
+                        block.classList.remove('layout-draggable', 'is-dragging');
+                    } else {
+                        block.setAttribute('draggable', 'true');
+                        block.classList.add('layout-draggable');
+                        block.addEventListener('dragstart', handleDragStart);
+                        block.addEventListener('dragend', handleDragEnd);
+                    }
+                });
+            }
+
+            function handleDragStart(event) {
+                const block = event.currentTarget;
+                draggingBlock = block;
+                draggingAreaId = block.dataset.layoutArea;
+                if (event.dataTransfer) {
+                    event.dataTransfer.effectAllowed = 'move';
+                    event.dataTransfer.setData('text/plain', block.dataset.blockId || '');
+                }
+                requestAnimationFrame(() => block.classList.add('is-dragging'));
+            }
+
+            function handleDragEnd(event) {
+                const block = event.currentTarget;
+                block.classList.remove('is-dragging');
+                const areaId = block.dataset.layoutArea;
+                draggingBlock = null;
+                draggingAreaId = null;
+                if (areaId) {
+                    finalizeAreaOrder(areaId);
+                }
+            }
+
+            function handleDragEnter(event) {
+                const container = event.currentTarget;
+                if (!draggingBlock) {
+                    return;
+                }
+                if (container.dataset.layoutArea === draggingAreaId) {
+                    container.classList.add('is-drag-over');
+                }
+            }
+
+            function handleDragLeave(event) {
+                const container = event.currentTarget;
+                if (!container.dataset.layoutArea) {
+                    return;
+                }
+                if (!draggingBlock || !container.contains(event.relatedTarget)) {
+                    container.classList.remove('is-drag-over');
+                }
+            }
+
+            function handleDragOver(event) {
+                if (!draggingBlock) {
+                    return;
+                }
+                const container = event.currentTarget;
+                const areaId = container.dataset.layoutArea;
+                if (!areaId || areaId !== draggingAreaId) {
+                    return;
+                }
+                event.preventDefault();
+                const afterElement = getDragAfterElement(container, event);
+                if (!afterElement) {
+                    container.appendChild(draggingBlock);
+                } else if (afterElement !== draggingBlock) {
+                    container.insertBefore(draggingBlock, afterElement);
+                }
+            }
+
+            function handleDrop(event) {
+                const container = event.currentTarget;
+                container.classList.remove('is-drag-over');
+                if (!draggingBlock) {
+                    return;
+                }
+                const areaId = container.dataset.layoutArea;
+                if (!areaId || areaId !== draggingAreaId) {
+                    return;
+                }
+                event.preventDefault();
+                finalizeAreaOrder(areaId);
+                draggingBlock = null;
+                draggingAreaId = null;
+            }
+
+            function getDragAfterElement(container, event) {
+                const blocks = Array.from(container.querySelectorAll('[data-block-id]:not(.layout-hidden):not(.is-dragging)'));
+                if (!blocks.length) {
+                    return null;
+                }
+                const pointerY = event.clientY;
+                let closest = { offset: Number.NEGATIVE_INFINITY, element: null };
+                blocks.forEach(block => {
+                    const rect = block.getBoundingClientRect();
+                    const offset = pointerY - rect.top - rect.height / 2;
+                    if (offset < 0 && offset > closest.offset) {
+                        closest = { offset, element: block };
+                    }
+                });
+                return closest.element;
+            }
+
+            function finalizeAreaOrder(areaId) {
+                const area = areas.get(areaId);
+                if (!area || !area.container) {
+                    return;
+                }
+                const ids = Array.from(area.container.querySelectorAll('[data-block-id]')).map(el => el.dataset.blockId);
+                setLayoutOrder(areaId, ids);
+            }
+
+            return {
+                registerArea,
+                refreshArea
+            };
+        })();
+
+        function initializeLayoutAreas() {
+            const dashboardGrid = document.querySelector('[data-layout-area="dashboard"]');
+            if (dashboardGrid) {
+                layoutManager.registerArea('dashboard', dashboardGrid);
+            }
+            const metricsGrid = document.querySelector('[data-layout-area="metrics"]');
+            if (metricsGrid) {
+                layoutManager.registerArea('metrics', metricsGrid);
+            }
+        }
+
+        function setupSettingsPanel() {
+            renderVisibilityControls();
+            syncColumnControls();
+            syncCardWidthControls();
+            syncCompactToggle();
+            updateLayoutOrderPreview();
+
+            document.querySelectorAll('input[name="dashboardColumns"]').forEach(radio => {
+                radio.addEventListener('change', event => {
+                    if (event.target.checked) {
+                        setLayoutColumns('dashboard', event.target.value);
+                    }
+                });
+            });
+
+            document.querySelectorAll('input[name="metricsColumns"]').forEach(radio => {
+                radio.addEventListener('change', event => {
+                    if (event.target.checked) {
+                        setLayoutColumns('metrics', event.target.value);
+                    }
+                });
+            });
+
+            const compactToggle = document.getElementById('compactLayoutToggle');
+            if (compactToggle) {
+                compactToggle.addEventListener('change', event => {
+                    setCompactMode(event.target.checked);
+                });
+            }
+
+            const dashboardSlider = document.getElementById('dashboardMinWidthSlider');
+            const dashboardValue = document.getElementById('dashboardMinWidthValue');
+            if (dashboardSlider && dashboardValue) {
+                dashboardSlider.value = getCardMinWidth('dashboard');
+                dashboardValue.textContent = `${dashboardSlider.value}px`;
+                dashboardSlider.addEventListener('input', event => {
+                    const value = Number(event.target.value);
+                    dashboardValue.textContent = `${value}px`;
+                    setCardMinWidth('dashboard', value);
+                });
+            }
+
+            const metricsSlider = document.getElementById('metricsMinWidthSlider');
+            const metricsValue = document.getElementById('metricsMinWidthValue');
+            if (metricsSlider && metricsValue) {
+                metricsSlider.value = getCardMinWidth('metrics');
+                metricsValue.textContent = `${metricsSlider.value}px`;
+                metricsSlider.addEventListener('input', event => {
+                    const value = Number(event.target.value);
+                    metricsValue.textContent = `${value}px`;
+                    setCardMinWidth('metrics', value);
+                });
+            }
+
+            const resetButton = document.getElementById('resetLayoutBtn');
+            if (resetButton) {
+                resetButton.addEventListener('click', () => {
+                    if (confirm('Скинути макет до стандартного вигляду?')) {
+                        resetLayoutPreferences();
+                    }
+                });
+            }
+        }
+
+        function renderVisibilityControls() {
+            const dashboardContainer = document.getElementById('dashboardVisibilityControls');
+            if (dashboardContainer) {
+                const hidden = new Set(getHiddenBlocks('dashboard'));
+                dashboardContainer.innerHTML = DASHBOARD_BLOCK_IDS.map(id => {
+                    const label = escapeHtml(DASHBOARD_BLOCK_LABELS[id] || id);
+                    const checked = hidden.has(id) ? '' : 'checked';
+                    return `<label class="setting-checkbox"><input type="checkbox" value="${id}" ${checked}>${label}</label>`;
+                }).join('');
+
+                dashboardContainer.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.addEventListener('change', event => {
+                        setBlockVisibility('dashboard', event.target.value, event.target.checked);
+                        layoutManager.refreshArea('dashboard');
+                    });
+                });
+            }
+
+            const metricsContainer = document.getElementById('metricsVisibilityControls');
+            if (metricsContainer) {
+                const hiddenMetrics = new Set(getHiddenBlocks('metrics'));
+                metricsContainer.innerHTML = METRIC_BLOCK_IDS.map(id => {
+                    const label = escapeHtml(METRIC_BLOCK_LABELS[id] || id);
+                    const checked = hiddenMetrics.has(id) ? '' : 'checked';
+                    return `<label class="setting-checkbox"><input type="checkbox" value="${id}" ${checked}>${label}</label>`;
+                }).join('');
+
+                metricsContainer.querySelectorAll('input[type="checkbox"]').forEach(input => {
+                    input.addEventListener('change', event => {
+                        setBlockVisibility('metrics', event.target.value, event.target.checked);
+                        renderDashboard();
+                    });
+                });
+            }
+        }
+
+        function updateLayoutOrderPreview() {
+            const dashboardList = document.getElementById('dashboardOrderPreview');
+            if (dashboardList) {
+                const order = getLayoutOrder('dashboard');
+                const hidden = new Set(getHiddenBlocks('dashboard'));
+                dashboardList.innerHTML = order.map(id => {
+                    const label = escapeHtml(DASHBOARD_BLOCK_LABELS[id] || id);
+                    const hiddenLabel = hidden.has(id) ? '<span class="settings-tag">приховано</span>' : '';
+                    const className = hidden.has(id) ? ' class="is-hidden"' : '';
+                    return `<li${className}>${label}${hiddenLabel}</li>`;
+                }).join('');
+            }
+
+            const metricsList = document.getElementById('metricsOrderPreview');
+            if (metricsList) {
+                const order = getLayoutOrder('metrics');
+                const hidden = new Set(getHiddenBlocks('metrics'));
+                metricsList.innerHTML = order.map(id => {
+                    const label = escapeHtml(METRIC_BLOCK_LABELS[id] || id);
+                    const hiddenLabel = hidden.has(id) ? '<span class="settings-tag">приховано</span>' : '';
+                    const className = hidden.has(id) ? ' class="is-hidden"' : '';
+                    return `<li${className}>${label}${hiddenLabel}</li>`;
+                }).join('');
+            }
+        }
+
+        function syncColumnControls() {
+            const dashboardValue = getColumnInputValue('dashboard');
+            document.querySelectorAll('input[name="dashboardColumns"]').forEach(radio => {
+                radio.checked = radio.value === dashboardValue;
+            });
+            const metricsValue = getColumnInputValue('metrics');
+            document.querySelectorAll('input[name="metricsColumns"]').forEach(radio => {
+                radio.checked = radio.value === metricsValue;
+            });
+        }
+
+        function syncCardWidthControls() {
+            const dashboardSlider = document.getElementById('dashboardMinWidthSlider');
+            const dashboardValue = document.getElementById('dashboardMinWidthValue');
+            if (dashboardSlider) {
+                const value = getCardMinWidth('dashboard');
+                if (dashboardSlider.value !== String(value)) {
+                    dashboardSlider.value = value;
+                }
+                if (dashboardValue) {
+                    dashboardValue.textContent = `${value}px`;
+                }
+            }
+
+            const metricsSlider = document.getElementById('metricsMinWidthSlider');
+            const metricsValue = document.getElementById('metricsMinWidthValue');
+            if (metricsSlider) {
+                const value = getCardMinWidth('metrics');
+                if (metricsSlider.value !== String(value)) {
+                    metricsSlider.value = value;
+                }
+                if (metricsValue) {
+                    metricsValue.textContent = `${value}px`;
+                }
+            }
+        }
+
+        function syncCompactToggle() {
+            const toggle = document.getElementById('compactLayoutToggle');
+            if (toggle) {
+                toggle.checked = Boolean(uiPreferences?.layout?.compactMode);
+            }
+        }
+
         function setupUI() {
             populateDropdowns();
             setupNavigation();
@@ -6271,6 +7296,8 @@
             setupFilters();
             setupFileLibrary();
             setupRoleManagement();
+            setupSettingsPanel();
+            initializeLayoutAreas();
             document.getElementById('resetDataBtn').addEventListener('click', resetDemoData);
             document.getElementById('refreshDashboardBtn').addEventListener('click', () => {
                 renderDashboard();
@@ -8531,56 +9558,42 @@
 
         function renderDashboard() {
             updateSidebar();
-            const metricCards = document.getElementById('metricCards');
             const activeLeads = crmData.leads.filter(lead => lead.stage !== 'Втрачено');
             const wonDeals = crmData.leads.filter(lead => lead.stage === 'Угода');
             const lostDeals = crmData.leads.filter(lead => lead.stage === 'Втрачено');
             const pipelineValue = activeLeads.reduce((sum, lead) => sum + lead.value, 0);
             const expectedRevenue = activeLeads.reduce((sum, lead) => sum + lead.value * (lead.probability / 100), 0);
-            const winRate = wonDeals.length + lostDeals.length === 0 ? 0 : Math.round((wonDeals.length / (wonDeals.length + lostDeals.length)) * 100);
+            const totalClosedDeals = wonDeals.length + lostDeals.length;
+            const winRate = totalClosedDeals === 0 ? 0 : Math.round((wonDeals.length / totalClosedDeals) * 100);
             const tasksDueToday = crmData.tasks.filter(task => task.status !== 'done' && isDueToday(task.dueDate)).length;
+            const activeTasksCount = crmData.tasks.filter(task => task.status !== 'done').length;
             const hotDeals = activeLeads.filter(lead => lead.probability >= 60).length;
 
-            metricCards.innerHTML = `
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fa-solid fa-fire"></i>
-                    </div>
-                    <div>
-                        <div class="metric-label">Активні угоди</div>
-                        <div class="metric-value">${activeLeads.length}</div>
-                        <div class="metric-sub">${hotDeals} гарячих можливостей</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fa-solid fa-coins"></i>
-                    </div>
-                    <div>
-                        <div class="metric-label">Вартість воронки</div>
-                        <div class="metric-value">${formatCurrency(pipelineValue)}</div>
-                        <div class="metric-sub">${formatCurrency(expectedRevenue)} прогнозовано</div>
-                    </div>
-                </div>
-                <div class="metric-card">
-                    <div>
-                        <div class="metric-label">Win rate</div>
-                        <div class="metric-value">${winRate}%</div>
-                        <div class="metric-sub">${wonDeals.length} виграно / ${lostDeals.length} втрачено</div>
-                    </div>
-                    <div class="metric-progress" style="--angle: ${winRate * 3.6}deg">${winRate}%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-icon">
-                        <i class="fa-solid fa-calendar-day"></i>
-                    </div>
-                    <div>
-                        <div class="metric-label">Завдання на сьогодні</div>
-                        <div class="metric-value">${tasksDueToday}</div>
-                        <div class="metric-sub">${crmData.tasks.filter(t => t.status !== 'done').length} активних задач</div>
-                    </div>
-                </div>
-            `;
+            const metricsContainer = document.getElementById('metricCards');
+            if (metricsContainer) {
+                const metricsState = {
+                    activeLeadsCount: activeLeads.length,
+                    hotDealsCount: hotDeals,
+                    pipelineValue,
+                    expectedRevenue,
+                    winRate,
+                    wonDealsCount: wonDeals.length,
+                    lostDealsCount: lostDeals.length,
+                    tasksDueToday,
+                    activeTasksCount
+                };
+                const order = getLayoutOrder('metrics');
+                const hidden = new Set(getHiddenBlocks('metrics'));
+                metricsContainer.innerHTML = order.map(id => {
+                    const renderMetric = METRIC_RENDERERS[id];
+                    if (!renderMetric) {
+                        return '';
+                    }
+                    const hiddenClass = hidden.has(id) ? ' layout-hidden' : '';
+                    return `<div class="metric-card${hiddenClass}" data-block-id="${id}">${renderMetric(metricsState)}</div>`;
+                }).join('');
+                layoutManager.refreshArea('metrics');
+            }
 
             renderStageDistribution();
             renderUpcomingActivities();
