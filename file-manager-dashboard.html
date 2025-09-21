@@ -16867,7 +16867,7 @@
                     <div>
                         <div class="metric-label">Проєкти в роботі</div>
                         <div class="metric-value">${formatIntegerDisplay(activeProjects)}</div>
-                        <div class="metric-sub">Оновлено за 7 днів: ${formatIntegerDisplay(recentUpdates)}</div>
+                        <div class="metric-sub">Оновлено за 7 днів: ${formatCountWithNoun(recentUpdates, ['оновлення', 'оновлення', 'оновлень'])}</div>
                     </div>
                 </div>
                 <div class="metric-card">
@@ -16883,7 +16883,7 @@
                     <div>
                         <div class="metric-label">Середня ймовірність</div>
                         <div class="metric-value">${averageProbability}%</div>
-                        <div class="metric-sub">≥70% шансів: ${formatIntegerDisplay(highProbability)}</div>
+                        <div class="metric-sub">≥70% шансів: ${formatCountWithNoun(highProbability, ['проєкт', 'проєкти', 'проєктів'])}</div>
                     </div>
                 </div>
                 <div class="metric-card">
@@ -16931,7 +16931,7 @@
                     <div class="project-stage-row">
                         <div class="project-stage-info">
                             <strong>${escapeHtml(stageLabel)}</strong>
-                            <span class="metric-sub">${formatIntegerDisplay(stats.count)} проєктів • ${formatCurrency(stats.budget, true)}</span>
+                            <span class="metric-sub">${formatCountWithNoun(stats.count, ['проєкт', 'проєкти', 'проєктів'])} • ${formatCurrency(stats.budget, true)}</span>
                         </div>
                         <div class="project-stage-progress">
                             <div class="project-stage-track"><span class="project-stage-fill" style="width:${progressWidth}%"></span></div>
@@ -17130,7 +17130,7 @@
                         <div class="avatar avatar-sm">${escapeHtml(initials)}</div>
                         <div class="project-team-info">
                             <strong>${escapeHtml(entry.name)}</strong>
-                            <span class="metric-sub">${formatIntegerDisplay(entry.projects)} проєктів • ${formatCurrency(entry.budget, true)}</span>
+                            <span class="metric-sub">${formatCountWithNoun(entry.projects, ['проєкт', 'проєкти', 'проєктів'])} • ${formatCurrency(entry.budget, true)}</span>
                         </div>
                         <div class="project-team-progress">
                             <div class="project-team-progress-track"><span class="project-team-progress-fill" style="width:${fillWidth}%"></span></div>
@@ -17148,7 +17148,7 @@
             const counter = document.getElementById('projectUpdatesCount');
             if (!container) {
                 if (counter) {
-                    counter.textContent = '0 записів';
+                    counter.textContent = formatCountWithNoun(0, ['запис', 'записи', 'записів']);
                 }
                 return;
             }
@@ -17156,7 +17156,7 @@
             if (!projects.length) {
                 container.innerHTML = '<div class="empty-state">Додайте проєкт або зніміть фільтри, щоб бачити оновлення.</div>';
                 if (counter) {
-                    counter.textContent = '0 записів';
+                    counter.textContent = formatCountWithNoun(0, ['запис', 'записи', 'записів']);
                 }
                 return;
             }
@@ -17200,7 +17200,7 @@
             if (!topUpdates.length) {
                 container.innerHTML = '<div class="empty-state">Немає активності по проєктах.</div>';
                 if (counter) {
-                    counter.textContent = '0 записів';
+                    counter.textContent = formatCountWithNoun(0, ['запис', 'записи', 'записів']);
                 }
                 return;
             }
@@ -17236,7 +17236,7 @@
             }).join('');
 
             if (counter) {
-                counter.textContent = `${formatIntegerDisplay(updates.length)} записів`;
+                counter.textContent = formatCountWithNoun(updates.length, ['запис', 'записи', 'записів']);
             }
         }
 
@@ -21643,6 +21643,44 @@
                 return '0';
             }
             return Math.round(number).toLocaleString('uk-UA');
+        }
+
+        function getUkrainianPluralForm(count, forms) {
+            if (!Array.isArray(forms) || forms.length !== 3) {
+                return '';
+            }
+
+            const numeric = Math.abs(Math.floor(Number(count)));
+            if (!Number.isFinite(numeric)) {
+                return forms[2];
+            }
+
+            const value = numeric % 100;
+            const lastDigit = value % 10;
+
+            if (value >= 11 && value <= 14) {
+                return forms[2];
+            }
+
+            if (lastDigit === 1) {
+                return forms[0];
+            }
+
+            if (lastDigit >= 2 && lastDigit <= 4) {
+                return forms[1];
+            }
+
+            return forms[2];
+        }
+
+        function formatCountWithNoun(count, forms) {
+            if (!Array.isArray(forms) || forms.length !== 3) {
+                return formatIntegerDisplay(count);
+            }
+
+            const pluralForm = getUkrainianPluralForm(count, forms);
+            const formattedNumber = formatIntegerDisplay(count);
+            return pluralForm ? `${formattedNumber} ${pluralForm}`.trim() : formattedNumber;
         }
 
         function formatHours(hours) {
