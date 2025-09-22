@@ -1394,6 +1394,45 @@
             color: #166534;
         }
 
+        .settings-blueprint-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 4px 0 16px;
+        }
+
+        .settings-blueprint-chip {
+            border-radius: 999px;
+            border: 1px solid rgba(99, 102, 241, 0.16);
+            background: rgba(99, 102, 241, 0.08);
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 14px;
+            cursor: pointer;
+            transition: border 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .settings-blueprint-chip:hover:not([disabled]),
+        .settings-blueprint-chip:focus-visible {
+            border-color: rgba(99, 102, 241, 0.45);
+            background: rgba(99, 102, 241, 0.16);
+            color: var(--primary-dark);
+            box-shadow: 0 8px 18px rgba(99, 102, 241, 0.18);
+        }
+
+        .settings-blueprint-chip[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .settings-blueprint-chip.is-active {
+            background: rgba(99, 102, 241, 0.24);
+            border-color: rgba(99, 102, 241, 0.45);
+            color: var(--primary-dark);
+            box-shadow: 0 8px 18px rgba(99, 102, 241, 0.22);
+        }
+
         .settings-category-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1409,6 +1448,12 @@
             padding: 18px;
             background: rgba(255, 255, 255, 0.95);
             box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+            scroll-margin-top: 24px;
+        }
+
+        .settings-category-card.is-highlighted {
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 16px 32px rgba(99, 102, 241, 0.18);
         }
 
         .settings-category-header h4 {
@@ -6733,11 +6778,12 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="settings-blueprint-meta">
-                            <div id="settingsBlueprintSummary"></div>
-                            <div id="settingsBlueprintCounter"></div>
-                        </div>
-                        <div class="settings-status-legend">
+                    <div class="settings-blueprint-meta">
+                        <div id="settingsBlueprintSummary"></div>
+                        <div id="settingsBlueprintCounter"></div>
+                    </div>
+                    <nav class="settings-blueprint-nav" id="settingsBlueprintNav" aria-label="Категорії налаштувань"></nav>
+                    <div class="settings-status-legend">
                             <span data-status="planned">У беклозі</span>
                             <span data-status="inProgress">У роботі</span>
                             <span data-status="done">Готово</span>
@@ -7738,6 +7784,8 @@
         const navigationState = { search: '', filter: 'all' };
         let applyNavigationFilters = () => {};
         const settingsState = { blueprintSearch: '', blueprintStatus: 'all' };
+        let activeSettingsCategoryId = null;
+        const settingsHighlightTimers = new Map();
 
         const PREFERENCES_KEY = 'homeCRMPreferences_v1';
         const DASHBOARD_BLOCK_IDS = [
@@ -11774,6 +11822,7 @@
                 });
             }
 
+            renderSettingsBlueprintNav();
             renderSettingsBlueprint();
             renderQuickStartToggles();
             renderUseCasePlaybook();
@@ -11979,6 +12028,99 @@
             savePreferences();
         }
 
+        function renderSettingsBlueprintNav() {
+            const nav = document.getElementById('settingsBlueprintNav');
+            if (!nav) {
+                return;
+            }
+
+            nav.innerHTML = SETTINGS_BLUEPRINT.map(category => `
+                <button type="button" class="settings-blueprint-chip" data-category-id="${escapeHtml(category.id)}" aria-pressed="false">
+                    ${escapeHtml(category.title)}
+                </button>
+            `).join('');
+
+            nav.querySelectorAll('.settings-blueprint-chip').forEach(button => {
+                button.addEventListener('click', () => {
+                    scrollToSettingsCategory(button.dataset.categoryId);
+                });
+            });
+        }
+
+        function updateSettingsBlueprintNavState(visibleCategories) {
+            const nav = document.getElementById('settingsBlueprintNav');
+            if (!nav) {
+                return;
+            }
+
+            const buttons = nav.querySelectorAll('.settings-blueprint-chip');
+            buttons.forEach(button => {
+                const categoryId = button.dataset.categoryId;
+                const isVisible = !visibleCategories || visibleCategories.has(categoryId);
+                if (!isVisible && activeSettingsCategoryId === categoryId) {
+                    activeSettingsCategoryId = null;
+                }
+                button.disabled = !isVisible;
+                if (isVisible) {
+                    button.removeAttribute('aria-disabled');
+                } else {
+                    button.setAttribute('aria-disabled', 'true');
+                    const pendingTimer = settingsHighlightTimers.get(categoryId);
+                    if (pendingTimer) {
+                        clearTimeout(pendingTimer);
+                        settingsHighlightTimers.delete(categoryId);
+                    }
+                }
+                const isActive = Boolean(activeSettingsCategoryId) && activeSettingsCategoryId === categoryId && isVisible;
+                button.classList.toggle('is-active', isActive);
+                button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            });
+        }
+
+        function scrollToSettingsCategory(categoryId) {
+            if (!categoryId) {
+                return;
+            }
+
+            const safeId = (typeof CSS !== 'undefined' && typeof CSS.escape === 'function')
+                ? CSS.escape(categoryId)
+                : String(categoryId).replace(/"/g, '\"');
+            const section = document.querySelector(`.settings-category-card[data-category-id="${safeId}"]`);
+            if (!section) {
+                return;
+            }
+
+            const nav = document.getElementById('settingsBlueprintNav');
+            if (nav) {
+                nav.querySelectorAll('.settings-blueprint-chip').forEach(button => {
+                    const isActive = button.dataset.categoryId === categoryId && !button.disabled;
+                    button.classList.toggle('is-active', isActive);
+                    button.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+            }
+
+            activeSettingsCategoryId = categoryId;
+            section.classList.add('is-highlighted');
+            if (typeof section.focus === 'function') {
+                try {
+                    section.focus({ preventScroll: true });
+                } catch (error) {
+                    section.focus();
+                }
+            }
+            section.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+
+            const existingTimer = settingsHighlightTimers.get(categoryId);
+            if (existingTimer) {
+                clearTimeout(existingTimer);
+            }
+            const timeoutId = setTimeout(() => {
+                section.classList.remove('is-highlighted');
+                settingsHighlightTimers.delete(categoryId);
+            }, 1800);
+            settingsHighlightTimers.set(categoryId, timeoutId);
+        }
+
         function renderSettingsBlueprint() {
             const container = document.getElementById('settingsBlueprintGrid');
             if (!container) {
@@ -11992,6 +12134,7 @@
                 : 'all';
             settingsState.blueprintStatus = statusFilter;
             let visibleCount = 0;
+            const visibleCategories = new Set();
 
             const categoryHtml = SETTINGS_BLUEPRINT.map(category => {
                 const featuresHtml = category.features.map(feature => {
@@ -12043,8 +12186,9 @@
                     return '';
                 }
 
+                visibleCategories.add(category.id);
                 return `
-                    <section class="settings-category-card" data-category-id="${escapeHtml(category.id)}">
+                    <section class="settings-category-card" data-category-id="${escapeHtml(category.id)}" tabindex="-1">
                         <header class="settings-category-header">
                             <h4>${escapeHtml(category.title)}</h4>
                             ${category.summary ? `<p class="settings-category-summary">${escapeHtml(category.summary)}</p>` : ''}
@@ -12057,6 +12201,7 @@
             }).filter(Boolean).join('');
 
             container.innerHTML = categoryHtml;
+            updateSettingsBlueprintNavState(visibleCategories);
 
             const emptyState = document.getElementById('settingsBlueprintEmpty');
             if (emptyState) {
